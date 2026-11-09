@@ -117,6 +117,7 @@ pub fn install() {
     let _ = std::fs::create_dir_all(dir());
     // SAFETY: plain sigaction setup; the handler below only uses
     // async-signal-safe calls until it has written the basic note.
+    #[cfg(unix)]
     unsafe {
         // An alternate stack, so a stack overflow can still run the handler.
         let size = 64 * 1024;
@@ -149,8 +150,10 @@ pub fn install() {
     }
 }
 
+#[cfg(unix)]
 static mut OLD: [libc::sigaction; 5] = unsafe { std::mem::zeroed() };
 
+#[cfg(unix)]
 fn slot(sig: libc::c_int) -> usize {
     match sig {
         libc::SIGSEGV => 0,
@@ -161,6 +164,7 @@ fn slot(sig: libc::c_int) -> usize {
     }
 }
 
+#[cfg(unix)]
 fn sig_name(sig: libc::c_int) -> &'static [u8] {
     match sig {
         libc::SIGSEGV => b"SIGSEGV (invalid memory access)",
@@ -171,6 +175,7 @@ fn sig_name(sig: libc::c_int) -> &'static [u8] {
     }
 }
 
+#[cfg(unix)]
 extern "C" fn on_signal(sig: libc::c_int, info: *mut libc::siginfo_t, ctx: *mut libc::c_void) {
     // SAFETY: async-signal-safe calls (open/write/close/alarm/sigaction) for
     // the note; the backtrace after it is best effort under a 5 s alarm, so
