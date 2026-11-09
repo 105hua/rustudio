@@ -1,0 +1,303 @@
+{
+ "TestService": {
+  "missing": [
+   "property ErrorCount",
+   "property TestCount",
+   "property WarnCount",
+   "function Check",
+   "function Checkpoint",
+   "function Done",
+   "function Error",
+   "function Fail",
+   "function GetTestControlSchema",
+   "function GetTestControls",
+   "function ListTests",
+   "function Message",
+   "function RegisterSuite",
+   "function RegisterTest",
+   "function RegisterTestLegacy",
+   "function Require",
+   "function ResetTestControl",
+   "function ResetTestRegistry",
+   "function ScopeTime",
+   "function SetTestControl",
+   "function SignalProfilingCapture",
+   "function SignalProfilingStart",
+   "function SignalProfilingStop",
+   "function StartTestSession",
+   "function StopTestSession",
+   "function TakeSnapshot",
+   "function Warn",
+   "function getTestSessionProviderStats",
+   "function isFeatureEnabled",
+   "function CaptureScreenshotAsync",
+   "function FetchTestControlsAsync",
+   "function RequestValidationAsync",
+   "function RunTestsAsync",
+   "function StartAudioCaptureAsync",
+   "function StartVideoCaptureAsync",
+   "function StopAudioCaptureAsync",
+   "function StopVideoCaptureAsync"
+  ],
+  "events_to_check": [
+   "ServerCollectConditionalResult",
+   "ServerCollectResult",
+   "TestRegistryChanged"
+  ]
+ },
+ "TestCase": {
+  "missing": [
+   "property SuiteName",
+   "property TestId",
+   "property TestName",
+   "property TimeoutSec",
+   "function Assert",
+   "function AssertLegacy",
+   "function Check",
+   "function EndTest",
+   "function GetTestTags",
+   "function Message",
+   "function Require",
+   "function RequireLegacy"
+  ],
+  "events_to_check": []
+ },
+ "TestResult": {
+  "missing": [
+   "property Duration",
+   "property FailedChecks",
+   "property PassedChecks",
+   "property SkipReason",
+   "property Status",
+   "property SuiteName",
+   "property TestId",
+   "property TestName",
+   "property UncaughtError",
+   "function GetFailures",
+   "function GetTestTags"
+  ],
+  "events_to_check": []
+ },
+ "TestSuite": {
+  "missing": [
+   "property SuiteName",
+   "property TimeoutSec",
+   "function GetTestTags",
+   "function RegisterTest"
+  ],
+  "events_to_check": []
+ },
+ "TestFailure": {
+  "missing": [
+   "property Line",
+   "property Matcher",
+   "property Message",
+   "property StackTrace",
+   "function GetActual",
+   "function GetContext",
+   "function GetExpected",
+   "function GetSource"
+  ],
+  "events_to_check": []
+ },
+ "TestRunResult": {
+  "missing": [
+   "property Duration",
+   "property Failed",
+   "property Passed",
+   "property Skipped",
+   "property Status",
+   "property Summary",
+   "property Total",
+   "function GetTests"
+  ],
+  "events_to_check": []
+ },
+ "TestExecutionContext": {
+  "missing": [
+   "function Skip"
+  ],
+  "events_to_check": []
+ },
+ "FunctionalTest": {
+  "missing": [
+   "function Error",
+   "function Failed",
+   "function Pass",
+   "function Passed",
+   "function Warn"
+  ],
+  "events_to_check": []
+ },
+ "StudioTestService": {
+  "missing": [
+   "function AddPlayers",
+   "function CanLeaveTest",
+   "function EndTest",
+   "function LeaveTest"
+  ],
+  "events_to_check": []
+ },
+ "TestCoordinatorService": {
+  "missing": [
+   "function Participant",
+   "function Signal",
+   "function AwaitAllAsync",
+   "function AwaitAnyAsync",
+   "function AwaitSignalAsync",
+   "function BarrierAsync"
+  ],
+  "events_to_check": []
+ },
+ "RenderingTest": {
+  "missing": [
+   "function RenderdocTriggerCapture"
+  ],
+  "events_to_check": [
+   "TestFramesCountdownAboutToStart"
+  ]
+ },
+ "ScriptDebugger": {
+  "missing": [
+   "property CurrentLine",
+   "property IsDebugging",
+   "property IsPaused",
+   "property Script",
+   "function AddWatch",
+   "function GetBreakpoints",
+   "function GetGlobals",
+   "function GetLocals",
+   "function GetStack",
+   "function GetUpvalues",
+   "function GetWatchValue",
+   "function GetWatches",
+   "function SetBreakpoint",
+   "function SetGlobal",
+   "function SetLocal",
+   "function SetUpvalue"
+  ],
+  "events_to_check": [
+   "BreakpointAdded",
+   "BreakpointRemoved",
+   "EncounteredBreak",
+   "Resuming",
+   "WatchAdded",
+   "WatchRemoved"
+  ]
+ },
+ "DebuggerManager": {
+  "missing": [
+   "property DebuggingEnabled",
+   "function AddDebugger",
+   "function GetDebuggers",
+   "function Resume",
+   "function StepIn",
+   "function StepOut",
+   "function StepOver"
+  ],
+  "events_to_check": [
+   "DebuggerAdded",
+   "DebuggerRemoved"
+  ]
+ },
+ "DebuggerBreakpoint": {
+  "missing": [
+   "property Line"
+  ],
+  "events_to_check": []
+ },
+ "StudioService": {
+  "missing": [
+   "property ActiveScript",
+   "property DraggerSolveConstraints",
+   "property DrawConstraintsOnTop",
+   "property GridSize",
+   "property RotateIncrement",
+   "property ShowConstraintDetails",
+   "property StudioLocaleId"
+  ],
+  "events_to_check": []
+ },
+ "DraggerService": {
+  "missing": [
+   "property AlignDraggedObjects",
+   "property AngleSnapEnabled",
+   "property AngleSnapIncrement",
+   "property AnimateHover",
+   "property CollisionsEnabled",
+   "property DraggerCoordinateSpace",
+   "property DraggerMovementMode",
+   "property GeometrySnapColor",
+   "property HoverAnimateFrequency",
+   "property HoverThickness",
+   "property JointsEnabled",
+   "property LinearSnapEnabled",
+   "property LinearSnapIncrement",
+   "property ShowHover",
+   "property ShowPivotIndicator"
+  ],
+  "events_to_check": []
+ },
+ "Collaborator": {
+  "missing": [
+   "property CollaboratorColor",
+   "property CollaboratorColor3",
+   "property CurDocGUID",
+   "property CurScriptLineNumber",
+   "property IsIdle",
+   "property Status",
+   "property Username"
+  ],
+  "events_to_check": []
+ },
+ "LiveSyncService": {
+  "missing": [
+   "property HasSyncedInstances",
+   "function GetSyncState"
+  ],
+  "events_to_check": [
+   "SyncStatusChanged"
+  ]
+ },
+ "Studio": {
+  "missing": [
+   "property LocalAssetsFolder"
+  ],
+  "events_to_check": []
+ },
+ "Plugin": {
+  "missing": [
+   "property CollisionEnabled",
+   "property GridSize"
+  ],
+  "events_to_check": []
+ },
+ "PluginAction": {
+  "missing": [
+   "property ActionId",
+   "property AllowBinding",
+   "property StatusTip"
+  ],
+  "events_to_check": []
+ },
+ "PluginDragEvent": {
+  "missing": [
+   "property Data",
+   "property MimeType",
+   "property Sender"
+  ],
+  "events_to_check": []
+ },
+ "PluginGui": {
+  "missing": [
+   "function BindToClose"
+  ],
+  "events_to_check": []
+ },
+ "DockWidgetPluginGui": {
+  "missing": [
+   "property HostWidgetWasRestored"
+  ],
+  "events_to_check": []
+ }
+}

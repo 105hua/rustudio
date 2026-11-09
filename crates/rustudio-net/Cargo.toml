@@ -1,0 +1,32 @@
+[package]
+name = "rustudio-net"
+description = "Roblox Team Create live-session client for rustudio: matchmaker, join-script parsing, transport, and the CloudEdit DataModel stream"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+rustudio-account = { path = "../rustudio-account" }
+rbx_dom_weak = "4"
+rbx_types = "3"
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["preserve_order"] }
+# RbxTransport (QUIC). quinn + rustls (ring provider); the transport seam in
+# transport.rs is wired to these once the capture pins ALPN / cert pinning /
+# the SessionCrypto-over-TLS layer.
+quinn = { version = "0.11", default-features = false, features = ["runtime-tokio", "rustls-ring"] }
+rustls = { version = "0.23", default-features = false, features = ["ring", "std"] }
+tokio = { version = "1", features = ["rt", "net", "time", "macros"] }
+# replicator payloads (schema, initial-stream chunks, instance batches) are zstd frames
+zstd = "0.13"
+base64 = "0.23"
+ring = "0.17"
+
+# Roblox shared/protected string content identifiers use BLAKE2b-128.
+blake2 = "0.10"
+
+# LiveScripting atomic updates compare the current source MD5 hex digest.
+md-5 = "0.10"
+
+[dev-dependencies]
+rbx_binary = "3"

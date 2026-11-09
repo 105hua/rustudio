@@ -1,0 +1,200 @@
+GLOBALS|client|identity.__rs_user_game_settings|true
+GLOBALS|client|identity.__rs_window_focus|true
+GLOBALS|client|identity.__ws_begin|true
+GLOBALS|client|identity.__ws_bundle_details|true
+GLOBALS|client|identity.__ws_campaign_record|true
+GLOBALS|client|identity.__ws_filter|true
+GLOBALS|client|identity.__ws_filter_text|true
+GLOBALS|client|identity.__ws_info_type|true
+GLOBALS|client|identity.__ws_owned|true
+GLOBALS|client|identity.__ws_page_copy|true
+GLOBALS|client|identity.__ws_poll|true
+GLOBALS|client|identity.__ws_send|true
+GLOBALS|client|identity.__ws_subscription_override|true
+GLOBALS|client|identity.addDialog|true
+GLOBALS|client|identity.assert|true
+GLOBALS|client|identity.bit32|true
+GLOBALS|client|identity.buffer|true
+GLOBALS|client|identity.checkForLeaveArea|true
+GLOBALS|client|identity.collectgarbage|true
+GLOBALS|client|identity.coroutine|true
+GLOBALS|client|identity.createChatNotificationGui|true
+GLOBALS|client|identity.createMessageDialog|true
+GLOBALS|client|identity.currentTone|true
+GLOBALS|client|identity.debug|true
+GLOBALS|client|identity.delay|true
+GLOBALS|client|identity.dialogIsValid|true
+GLOBALS|client|identity.doDialog|true
+GLOBALS|client|identity.elapsedTime|true
+GLOBALS|client|identity.endDialog|true
+GLOBALS|client|identity.error|true
+GLOBALS|client|identity.game|true
+GLOBALS|client|identity.gcinfo|true
+GLOBALS|client|identity.getChatColor|true
+GLOBALS|client|identity.getLocalHumanoidRootPart|true
+GLOBALS|client|identity.getfenv|true
+GLOBALS|client|identity.getmetatable|true
+GLOBALS|client|identity.initialize|true
+GLOBALS|client|identity.integer|true
+GLOBALS|client|identity.ipairs|true
+GLOBALS|client|identity.loadstring|true
+GLOBALS|client|identity.math|true
+GLOBALS|client|identity.newChoice|true
+GLOBALS|client|identity.newproxy|true
+GLOBALS|client|identity.next|true
+GLOBALS|client|identity.normalEndDialog|true
+GLOBALS|client|identity.onLoad|true
+GLOBALS|client|identity.os|true
+GLOBALS|client|identity.pairs|true
+GLOBALS|client|identity.pcall|true
+GLOBALS|client|identity.presentDialogChoices|true
+GLOBALS|client|identity.print|true
+GLOBALS|client|identity.printidentity|true
+GLOBALS|client|identity.rawequal|true
+GLOBALS|client|identity.rawget|true
+GLOBALS|client|identity.rawlen|true
+GLOBALS|client|identity.rawset|true
+GLOBALS|client|identity.removeDialog|true
+GLOBALS|client|identity.renewKillswitch|true
+GLOBALS|client|identity.require|true
+GLOBALS|client|identity.resetColor|true
+GLOBALS|client|identity.sanitizeMessage|true
+GLOBALS|client|identity.script|false
+GLOBALS|client|identity.select|true
+GLOBALS|client|identity.selectChoice|true
+GLOBALS|client|identity.setChatNotificationTone|true
+GLOBALS|client|identity.setUsingGamepad|true
+GLOBALS|client|identity.setfenv|true
+GLOBALS|client|identity.setmetatable|true
+GLOBALS|client|identity.settings|true
+GLOBALS|client|identity.shared|true
+GLOBALS|client|identity.showMessage|true
+GLOBALS|client|identity.spawn|true
+GLOBALS|client|identity.startDialog|true
+GLOBALS|client|identity.stats|true
+GLOBALS|client|identity.string|true
+GLOBALS|client|identity.styleChoices|true
+GLOBALS|client|identity.styleMainFrame|true
+GLOBALS|client|identity.table|true
+GLOBALS|client|identity.task|true
+GLOBALS|client|identity.tick|true
+GLOBALS|client|identity.time|true
+GLOBALS|client|identity.timeoutDialog|true
+GLOBALS|client|identity.tonumber|true
+GLOBALS|client|identity.tostring|true
+GLOBALS|client|identity.type|true
+GLOBALS|client|identity.typeof|true
+GLOBALS|client|identity.unpack|true
+GLOBALS|client|identity.utf8|true
+GLOBALS|client|identity.variableDelay|true
+GLOBALS|client|identity.vector|true
+GLOBALS|client|identity.version|true
+GLOBALS|client|identity.wait|true
+GLOBALS|client|identity.wanderDialog|true
+GLOBALS|client|identity.warn|true
+GLOBALS|client|identity.workspace|true
+GLOBALS|client|identity.xpcall|true
+GLOBALS|client|identity.ypcall|true
+GLOBALS|client|tostring.tab|table | table | table: 0xce0d9d7bd492eabe | table: 0xce0d9d7bd492eabe | true
+GLOBALS|client|tostring.buf|buffer | buffer | buffer: 0x1245af028ab41cee | buffer: 0x1245af028ab41cee | true
+GLOBALS|client|tostring.instance|userdata | Instance | Game | Game | true
+GLOBALS|client|tostring.proxy|userdata | userdata | userdata: 0x17b9ad0280d6e6c1 | userdata: 0x17b9ad0280d6e6c1 | true
+GLOBALS|client|tostring.func|function | function | function: 0x5bc5c24ac08cdcda | function: 0x5bc5c24ac08cdcda | true
+GLOBALS|client|tostring.thread|thread | thread | thread: 0x86bfb320b8199e5b | thread: 0x86bfb320b8199e5b | true
+GLOBALS|client|gc.count|true | 1259
+GLOBALS|client|gc.collect|false | Players.Player.PlayerScripts.GlobalsProbe2:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|client|gc.stop|false | Players.Player.PlayerScripts.GlobalsProbe2:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|client|gc.restart|false | Players.Player.PlayerScripts.GlobalsProbe2:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|client|gc.step|false | Players.Player.PlayerScripts.GlobalsProbe2:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|client|gc.setpause|false | Players.Player.PlayerScripts.GlobalsProbe2:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|client|gc.setstepmul|false | Players.Player.PlayerScripts.GlobalsProbe2:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|client|gc.isrunning|false | Players.Player.PlayerScripts.GlobalsProbe2:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|client|gc.bad|false | Players.Player.PlayerScripts.GlobalsProbe2:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|client|gc.default|false | Players.Player.PlayerScripts.GlobalsProbe2:21: missing argument #1 to 'collectgarbage' (string expected)
+GLOBALS|client|gc.info|true | 1265 | 1265 | true
+GLOBALS|client|error.level0|false | message
+GLOBALS|client|error.level1|false | Players.Player.PlayerScripts.GlobalsProbe2:23: message
+GLOBALS|client|error.level2|false | message
+GLOBALS|client|error.level10|false | message
+GLOBALS|client|error.level-1|false | message
+GLOBALS|client|error.value.number|false | Players.Player.PlayerScripts.GlobalsProbe2:24: 23
+GLOBALS|client|error.value.boolean|false | false
+GLOBALS|client|error.value.table|false | table: 0x295657507c64f821
+GLOBALS|client|error.value.userdata|false | userdata: 0x0d5ff30bd59d1d2d
+GLOBALS|client|assert.default|false | Players.Player.PlayerScripts.GlobalsProbe2:25: assertion failed!
+GLOBALS|client|assert.table|false | Players.Player.PlayerScripts.GlobalsProbe2:26: invalid argument #2 to 'assert' (string expected, got table)
+GLOBALS|client|assert.returns|true | true | a | 4
+GLOBALS|client|xpcall.handler|true | false | error in error handling
+GLOBALS|client|trace.default|true | Players.Player.PlayerScripts.GlobalsProbe2:29\nPlayers.Player.PlayerScripts.GlobalsProbe2:6 function probe\nPlayers.Player.PlayerScripts.GlobalsProbe2:29\n
+GLOBALS|client|trace.message|true | message\nPlayers.Player.PlayerScripts.GlobalsProbe2:30\nPlayers.Player.PlayerScripts.GlobalsProbe2:6 function probe\nPlayers.Player.PlayerScripts.GlobalsProbe2:30\n
+GLOBALS|client|trace.coroutine|true | co\nPlayers.Player.PlayerScripts.GlobalsProbe2:31\n
+GLOBALS|client|debug.level0|true | [C] | -1 | info | 0 | true
+GLOBALS|client|debug.level1|true | Players.Player.PlayerScripts.GlobalsProbe2 | 32 |  | 0 | false
+GLOBALS|client|debug.level2|true | [C] | -1 | pcall | 0 | true
+GLOBALS|client|debug.level50|true
+GLOBALS|client|debug.level-1|false | Players.Player.PlayerScripts.GlobalsProbe2:32: invalid argument #1 to 'info' (level can't be negative)
+GLOBALS|client|debug.thread|true | Players.Player.PlayerScripts.GlobalsProbe2 | 33 |  | 0 | false
+GLOBALS|client|getfenv.0|true | table | true | GlobalsProbe1
+GLOBALS|client|getfenv.1|true | table | true | GlobalsProbe1
+GLOBALS|client|getfenv.2|true | table | true | GlobalsProbe1
+GLOBALS|client|getfenv.50|false | Players.Player.PlayerScripts.GlobalsProbe2:34: invalid argument #1 to 'getfenv' (invalid level)
+GLOBALS|client|getfenv.-1|false | Players.Player.PlayerScripts.GlobalsProbe2:34: invalid argument #1 to 'getfenv' (level must be non-negative)
+GLOBALS|client|getfenv.C|true | true | true
+GLOBALS|client|setfenv.C|false | Players.Player.PlayerScripts.GlobalsProbe2:36: 'setfenv' cannot change environment of given object
+GLOBALS|client|setfenv.lua|true | 42
+GLOBALS|client|setfenv.-1|false | Players.Player.PlayerScripts.GlobalsProbe2:38: invalid argument #1 to 'setfenv' (level must be non-negative)
+GLOBALS|client|setfenv.50|false | Players.Player.PlayerScripts.GlobalsProbe2:38: invalid argument #1 to 'setfenv' (invalid level)
+GLOBALS|client|loadstring|false | loadstring() is not available
+GLOBALS|client|loadstring.syntax|false | loadstring() is not available
+GLOBALS|client|loadstring.named|false | loadstring() is not available
+GLOBALS|client|require.boolean.false|false | require(assetId) cannot be called from a client.  assetId = 0
+GLOBALS|client|require.table.table: 0x4c17fe072974049b|false | Attempted to call require with invalid argument(s).
+GLOBALS|client|require.userdata.Game|false | Attempted to call require with invalid argument(s).
+GLOBALS|client|require.userdata.GlobalsProbe1|false | Attempted to call require with invalid argument(s).
+GLOBALS|client|require.string.bad|false | error requiring "bad": require path must start with a valid prefix: ./, ../, or @
+GLOBALS|client|require.number.0|false | require(assetId) cannot be called from a client.  assetId = 0
+GLOBALS|client|require.number.-1|false | require(assetId) cannot be called from a client.  assetId = -1
+GLOBALS|client|coroutine.running|thread: 0x94055d330b8061ca | running | true
+GLOBALS|client|coroutine.pcall|true | true | true
+GLOBALS|client|coroutine.metamethod|true | false
+GLOBALS|client|task.spawn|true | thread: 0xf155f2914b036f32
+GLOBALS|client|task.defer|true | thread: 0xd3471c0598be1ecc
+GLOBALS|client|task.delay|true | thread: 0x6d0854543a887612
+GLOBALS|client|spawn|true
+GLOBALS|client|delay|true
+GLOBALS|client|task.cancel.running|false | Players.Player.PlayerScripts.GlobalsProbe2:51: cannot cancel thread
+GLOBALS|client|coroutine.close.running|false | Players.Player.PlayerScripts.GlobalsProbe2:52: cannot close running coroutine
+GLOBALS|client|coroutine.close.suspended|true | true
+GLOBALS|client|misc.Version|true | string | string | 0.744.0.7441077
+GLOBALS|client|misc.version|true | string | string | 0.744.0.7441077
+GLOBALS|client|misc.elapsedTime|true | number | number | 196.7750938300006
+GLOBALS|client|misc.time|true | number | number | 0.09583333926275373
+GLOBALS|client|misc.tick|true | number | number | 1794155422.6362164
+GLOBALS|client|misc.DebuggerManager|false | The current thread cannot call 'DebuggerManager' (lacking capability Plugin)
+GLOBALS|client|misc.PluginManager|false | The current thread cannot call 'PluginManager' (lacking capability Plugin)
+GLOBALS|client|misc.settings|false | The current thread cannot call 'settings' (lacking capability Plugin)
+GLOBALS|client|misc.stats|true | userdata | Instance | Stats
+GLOBALS|client|misc.UserSettings|true | userdata | Instance | GlobalBasicSettings
+GLOBALS|client|string.metatable|true | string | The metatable is locked | false
+GLOBALS|client|string.setmetatable|false | Players.Player.PlayerScripts.GlobalsProbe2:56: invalid argument #1 to 'setmetatable' (table expected, got string)
+GLOBALS|client|rawlen.userdata|false | Players.Player.PlayerScripts.GlobalsProbe2:57: invalid argument #1 to 'rawlen' (table or string expected)
+GLOBALS|client|rawequal.userdata|true | false
+GLOBALS|client|newproxy.bad|false | Players.Player.PlayerScripts.GlobalsProbe2:59: invalid argument #1 to 'newproxy' (nil or boolean expected, got number)
+GLOBALS|client|freeze|true | true | false | Players.Player.PlayerScripts.GlobalsProbe2:60: attempt to modify a readonly table
+GLOBALS|client|os|true | 1794184222 | 195.91879039999912 | 2026-11-09 | 7
+GLOBALS|client|os.date.table|true | 1970 | 1 | 1 | 0 | 0 | 0 | 5 | 1 | false
+GLOBALS|client|random.seed|true | 0.5576342002772471 | 1 | 0.24915606029512696 | true | true | true
+GLOBALS|client|shared.G|true | false | true | true
+GLOBALS|client|script.callback|true | true
+GLOBALS|client|task.wait.0|true | 0.05050869999999463 | nil | 0.050512499999967986
+GLOBALS|client|task.wait.0|true | 0.019761299999998982 | nil | 0.019764000000577653
+GLOBALS|client|task.wait.0.001|true | 0.009472700000003442 | nil | 0.009475900000325055
+GLOBALS|client|task.wait.0.001|true | 0.009537399999999252 | nil | 0.009539599999698112
+GLOBALS|client|clock.delta|true | 0.30361859999902663 | 0.30273280199887154 | 0.1541666747070849 | 0.303619384765625
+GLOBALS|client|EXTRA_DONE|
+GLOBALS|client|task.wait.0.02|true | 0.20963189999997667 | nil | 0.2096373999993375
+GLOBALS|client|task.wait.0.02|true | 0.20960160000001338 | nil | 0.2096044999998412
+GLOBALS|client|wait|true | 0.45652350000000297 | 0.8029741831123829
+GLOBALS|client|DONE|
+GLOBALS|client|wait|true | 0.5137792000000161 | 1.2606125064194202
+GLOBALS|client|DONE|

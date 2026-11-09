@@ -1,0 +1,41 @@
+Info: rustudio 0.1.0 ready. Reflection database has 931 classes.
+Info: Loaded the sample scene
+Info: Checking the Roblox session…
+Info: Signed in as @testuser1 (session from the login keyring)
+Info: Loading the avatar for Play…
+Info: Avatar of user 10000000001: R6 with 2 worn items
+Info: Not shown yet:  (MoodAnimation)
+Info: Avatar ready for Play (user 10000000001, R6): the next character uses it
+Info: Default player scripts from Studio: PlayerScriptsLoader, PlayerModule, RbxCharacterSounds
+Info: ▶ Play: a server and a client are running; WASD + Space to move, Shift+F5 to stop
+Info: [Server] Hello from rustudio  —  ServerScriptService.Main:1
+Info: Character: R15 (from the place setting)
+Info: Sky: 1024px faces, light from above 0.156 0.399 0.666
+Info: [Server] GLOBALS|server|setfenv.native|false | ServerScriptService.GlobalsExtra:4: 'setfenv' cannot change environment of given object  —  ServerScriptService.GlobalsExtra:2
+Info: [Server] GLOBALS|server|debug.absence.getinfo|nil  —  ServerScriptService.GlobalsExtra:2
+Info: [Server] GLOBALS|server|debug.absence.getlocal|nil  —  ServerScriptService.GlobalsExtra:2
+Info: [Server] GLOBALS|server|debug.absence.setlocal|nil  —  ServerScriptService.GlobalsExtra:2
+Info: [Server] GLOBALS|server|debug.absence.getupvalue|nil  —  ServerScriptService.GlobalsExtra:2
+Info: [Server] GLOBALS|server|debug.absence.setupvalue|nil  —  ServerScriptService.GlobalsExtra:2
+Info: [Server] GLOBALS|server|debug.absence.getregistry|nil  —  ServerScriptService.GlobalsExtra:2
+Info: [Server] GLOBALS|server|debug.absence.getmetatable|nil  —  ServerScriptService.GlobalsExtra:2
+Info: [Server] GLOBALS|server|debug.absence.setmetatable|nil  —  ServerScriptService.GlobalsExtra:2
+Info: [Server] GLOBALS|server|safeenv.import|true | 99  —  ServerScriptService.GlobalsExtra:2
+Info: [Server] GLOBALS|server|coroutine.main.wrap|true | true | thread: 0x000055a8dd7a5a20 | true  —  ServerScriptService.GlobalsExtra:2
+Info: [Server] GLOBALS|server|error.level2.lua|false | ServerScriptService.GlobalsExtra:8: two  —  ServerScriptService.GlobalsExtra:2
+Info: [Server] GLOBALS|server|error.nil|false | nil  —  ServerScriptService.GlobalsExtra:2
+Info: [Server] GLOBALS|server|error.table.identity|true | false | true | table  —  ServerScriptService.GlobalsExtra:2
+Info: [Server] GLOBALS|server|newproxy.metatable|true | nil | table | false | ServerScriptService.GlobalsExtra:11: invalid argument #1 to 'newproxy' (nil or boolean expected, got userdata)  —  ServerScriptService.GlobalsExtra:2
+Info: [Server] GLOBALS|server|shared.isolation|true | 42 | nil  —  ServerScriptService.GlobalsExtra:2
+Info: [Server] GLOBALS|server|require.cycle|false | ServerScriptService.GlobalsExtra:13: Requested module experienced an error while loading: ServerScriptService.GlobalsExtra.Cycle:1: Requested module was required recursively  —  ServerScriptService.GlobalsExtra:2
+Info: [Server] GLOBALS|server|require.noresult|false | ServerScriptService.GlobalsExtra:14: Module code did not return exactly one value  —  ServerScriptService.GlobalsExtra:2
+Info: [Server] GLOBALS|server|require.tworesults|false | ServerScriptService.GlobalsExtra:15: Module code did not return exactly one value  —  ServerScriptService.GlobalsExtra:2
+Info: [Server] GLOBALS|server|require.module.context|true | table: 0x000055a8df099400  —  ServerScriptService.GlobalsExtra:2
+Info: [Server] GLOBALS|server|require.nil|false | ServerScriptService.GlobalsExtra:17: Attempted to call require with invalid argument(s).  —  ServerScriptService.GlobalsExtra:2
+Info: [Server] GLOBALS|server|gc.types|true | number | number  —  ServerScriptService.GlobalsExtra:2
+Info: [Server] GLOBALS|server|gc.arg.boolean|false | ServerScriptService.GlobalsExtra:19: invalid argument #1 (string expected, got boolean)  —  ServerScriptService.GlobalsExtra:2
+Info: [Server] GLOBALS|server|gc.arg.number|false | ServerScriptService.GlobalsExtra:19: collectgarbage called with invalid option  —  ServerScriptService.GlobalsExtra:2
+Info: [Server] GLOBALS|server|clock.delta|true | 0.10136568600000029 | 0.1167200393974781 | 0.1167200393974781 | 0.10136651992797852  —  ServerScriptService.GlobalsExtra:2
+Info: [Server] GLOBALS|server|EXTRA_DONE|  —  ServerScriptService.GlobalsExtra:2
+[shot] /home/user/projects/rustudio/app/tools/parity_probe/globals/extra-server.png
+[shot] /home/user/projects/rustudio/app/tools/parity_probe/globals/extra-server.view.png

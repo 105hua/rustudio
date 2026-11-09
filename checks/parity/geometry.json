@@ -1,0 +1,117 @@
+{
+ "PathfindingService": {
+  "missing": [
+   "function CreatePath",
+   "function ComputeRawPathAsync",
+   "function ComputeSmoothPathAsync",
+   "function FindPathAsync"
+  ],
+  "events_to_check": []
+ },
+ "Path": {
+  "missing": [
+   "property Status",
+   "function GetPointCoordinates",
+   "function GetWaypoints",
+   "function CheckOcclusionAsync",
+   "function ComputeAsync"
+  ],
+  "events_to_check": [
+   "Blocked",
+   "Unblocked"
+  ]
+ },
+ "GeometryService": {
+  "missing": [
+   "function CalculateConstraintsToPreserve",
+   "function CreateBasicMeshPart",
+   "function GenerateFragmentSites",
+   "function FragmentAsync",
+   "function IntersectAsync",
+   "function SubtractAsync",
+   "function SweepPartAsync",
+   "function UnionAsync",
+   "function BakeToMeshAsync"
+  ],
+  "events_to_check": []
+ },
+ "PartOperation": {
+  "missing": [
+   "function SubstituteGeometry"
+  ],
+  "events_to_check": []
+ },
+ "EditableMesh": {
+  "missing": [
+   "property FixedSize",
+   "function AddBone",
+   "function AddFace",
+   "function BatchGetFaceAttributes",
+   "function BatchGetVertexAttributes",
+   "function BatchGetVertexFaceAttributes",
+   "function BatchRemove",
+   "function BatchSetFaceAttributes",
+   "function BatchSetVertexFaceAttributes",
+   "function FindClosestPointOnSurface",
+   "function GetAdjacentFaces",
+   "function GetBoneByName",
+   "function GetBoneCFrame",
+   "function GetBoneIsVirtual",
+   "function GetBoneName",
+   "function GetBoneParent",
+   "function GetBones",
+   "function GetFacesWithAttribute",
+   "function GetFacesWithColor",
+   "function GetFacesWithNormal",
+   "function GetFacesWithUV",
+   "function GetFacsCorrectivePose",
+   "function GetFacsCorrectivePoses",
+   "function GetFacsPose",
+   "function GetFacsPoses",
+   "function GetVertexBoneWeights",
+   "function GetVertexBones",
+   "function GetVertexColors",
+   "function GetVertexFaceColor",
+   "function GetVertexFaceNormal",
+   "function GetVertexFaceUV",
+   "function GetVertexNormals",
+   "function GetVertexUVs",
+   "function GetVerticesWithAttribute",
+   "function GetVerticesWithColor",
+   "function GetVerticesWithNormal",
+   "function GetVerticesWithUV",
+   "function IdDebugString",
+   "function MergeVertices",
+   "function RemoveBone",
+   "function ResetNormal",
+   "function SetBoneCFrame",
+   "function SetBoneIsVirtual",
+   "function SetBoneName",
+   "function SetBoneParent",
+   "function SetFacsBonePose",
+   "function SetFacsCorrectivePose",
+   "function SetFacsPose",
+   "function SetVertexBoneWeights",
+   "function SetVertexBones",
+   "function SetVertexFaceColor",
+   "function SetVertexFaceNormal",
+   "function SetVertexFaceUV",
+   "function Triangulate"
+  ],
+  "events_to_check": []
+ },
+ "EditableImage": {
+  "missing": [
+   "function DrawImageProjected",
+   "function SampleImageProjected"
+  ],
+  "events_to_check": []
+ },
+ "MeshPart": {
+  "missing": [
+   "function ApplyMesh",
+   "function GetSurfaceSlotsAsync"
+  ],
+  "events_to_check": []
+ }
+}

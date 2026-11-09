@@ -1,0 +1,42 @@
+Info: rustudio 0.1.0 ready. Reflection database has 931 classes.
+Error: rustudio crashed last time: rustudio crashed: fatal signal SIGILL. Report: /home/user/.cache/rustudio/crash/20261108-163019-365056.txt
+Info: Loaded the sample scene
+Info: Checking the Roblox session…
+Info: Signed in as @testuser1 (session from the login keyring)
+Info: Loading the avatar for Play…
+Info: Avatar of user 10000000001: R6 with 2 worn items
+Info: Not shown yet:  (MoodAnimation)
+Info: Avatar ready for Play (user 10000000001, R6): the next character uses it
+Info: Default player scripts from Studio: PlayerScriptsLoader, PlayerModule, RbxCharacterSounds
+Info: ▶ Play: a server and a client are running; WASD + Space to move, Shift+F5 to stop
+Info: [Server] Hello from rustudio  —  ServerScriptService.Main:1
+Info: Character: R15 (from the place setting)
+Info: Sky: 1024px faces, light from above 0.156 0.399 0.666
+Info: [Client] GLOBALS|client|setfenv.native|false | Players.testuser1.PlayerScripts.GlobalsExtra:4: 'setfenv' cannot change environment of given object  —  Players.testuser1.PlayerScripts.GlobalsExtra:2
+Info: [Client] GLOBALS|client|debug.absence.getinfo|nil  —  Players.testuser1.PlayerScripts.GlobalsExtra:2
+Info: [Client] GLOBALS|client|debug.absence.getlocal|nil  —  Players.testuser1.PlayerScripts.GlobalsExtra:2
+Info: [Client] GLOBALS|client|debug.absence.setlocal|nil  —  Players.testuser1.PlayerScripts.GlobalsExtra:2
+Info: [Client] GLOBALS|client|debug.absence.getupvalue|nil  —  Players.testuser1.PlayerScripts.GlobalsExtra:2
+Info: [Client] GLOBALS|client|debug.absence.setupvalue|nil  —  Players.testuser1.PlayerScripts.GlobalsExtra:2
+Info: [Client] GLOBALS|client|debug.absence.getregistry|nil  —  Players.testuser1.PlayerScripts.GlobalsExtra:2
+Info: [Client] GLOBALS|client|debug.absence.getmetatable|nil  —  Players.testuser1.PlayerScripts.GlobalsExtra:2
+Info: [Client] GLOBALS|client|debug.absence.setmetatable|nil  —  Players.testuser1.PlayerScripts.GlobalsExtra:2
+Info: [Client] GLOBALS|client|safeenv.import|true | 99  —  Players.testuser1.PlayerScripts.GlobalsExtra:2
+Info: [Client] GLOBALS|client|coroutine.main.wrap|true | true | thread: 0x000055f0f5570c80 | true  —  Players.testuser1.PlayerScripts.GlobalsExtra:2
+Info: [Client] GLOBALS|client|error.level2.lua|false | Players.testuser1.PlayerScripts.GlobalsExtra:8: two  —  Players.testuser1.PlayerScripts.GlobalsExtra:2
+Info: [Client] GLOBALS|client|error.nil|false | nil  —  Players.testuser1.PlayerScripts.GlobalsExtra:2
+Info: [Client] GLOBALS|client|error.table.identity|true | false | true | table  —  Players.testuser1.PlayerScripts.GlobalsExtra:2
+Info: [Client] GLOBALS|client|newproxy.metatable|true | nil | table | false | Players.testuser1.PlayerScripts.GlobalsExtra:11: invalid argument #1 to 'newproxy' (nil or boolean expected, got userdata)  —  Players.testuser1.PlayerScripts.GlobalsExtra:2
+Info: [Client] GLOBALS|client|shared.isolation|true | 42 | nil  —  Players.testuser1.PlayerScripts.GlobalsExtra:2
+Info: [Client] GLOBALS|client|require.cycle|false | Players.testuser1.PlayerScripts.GlobalsExtra:13: Requested module experienced an error while loading: Players.testuser1.PlayerScripts.GlobalsExtra.Cycle:1: Requested module was required recursively  —  Players.testuser1.PlayerScripts.GlobalsExtra:2
+Info: [Client] GLOBALS|client|require.noresult|false | Players.testuser1.PlayerScripts.GlobalsExtra:14: Module code did not return exactly one value  —  Players.testuser1.PlayerScripts.GlobalsExtra:2
+Info: [Client] GLOBALS|client|require.tworesults|false | Players.testuser1.PlayerScripts.GlobalsExtra:15: Module code did not return exactly one value  —  Players.testuser1.PlayerScripts.GlobalsExtra:2
+Info: [Client] GLOBALS|client|require.module.context|true | table: 0x000055f0f74c92e0  —  Players.testuser1.PlayerScripts.GlobalsExtra:2
+Info: [Client] GLOBALS|client|require.nil|false | Players.testuser1.PlayerScripts.GlobalsExtra:17: Attempted to call require with invalid argument(s).  —  Players.testuser1.PlayerScripts.GlobalsExtra:2
+Info: [Client] GLOBALS|client|gc.types|true | number | number  —  Players.testuser1.PlayerScripts.GlobalsExtra:2
+Info: [Client] GLOBALS|client|gc.arg.boolean|false | Players.testuser1.PlayerScripts.GlobalsExtra:19: invalid argument #1 (string expected, got boolean)  —  Players.testuser1.PlayerScripts.GlobalsExtra:2
+Info: [Client] GLOBALS|client|gc.arg.number|false | Players.testuser1.PlayerScripts.GlobalsExtra:19: collectgarbage called with invalid option  —  Players.testuser1.PlayerScripts.GlobalsExtra:2
+Info: [Client] GLOBALS|client|clock.delta|true | 0.10084124200000044 | 0.11656087636947632 | 0.11656087636947632 | 0.10084080696105957  —  Players.testuser1.PlayerScripts.GlobalsExtra:2
+Info: [Client] GLOBALS|client|EXTRA_DONE|  —  Players.testuser1.PlayerScripts.GlobalsExtra:2
+[shot] /home/user/projects/rustudio/app/tools/parity_probe/globals/extra-client.png
+[shot] /home/user/projects/rustudio/app/tools/parity_probe/globals/extra-client.view.png

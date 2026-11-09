@@ -1,0 +1,261 @@
+{
+ "MarketplaceService": {
+  "missing": [
+   "function BindReceiptHandler",
+   "function OpenShop",
+   "function PromptBulkPurchase",
+   "function PromptBundlePurchase",
+   "function PromptCancelSubscription",
+   "function PromptPremiumPurchase",
+   "function PromptRobloxSubscriptionPurchase",
+   "function PromptSubscriptionPurchase",
+   "function PromptVIPServerPurchase",
+   "function CanUsersTransferRobuxAsync",
+   "function GetDeveloperProductsAsync",
+   "function GetPassOwnershipAsync",
+   "function GetRobloxSubscriptionDetailsAsync",
+   "function GetSubscriptionProductInfoAsync",
+   "function GetUserSubscriptionDetailsAsync",
+   "function GetUserSubscriptionPaymentHistoryAsync",
+   "function GetUserSubscriptionStatusAsync",
+   "function GetUsersPriceLevelsAsync",
+   "function PlayerOwnsAssetAsync",
+   "function PlayerOwnsBundle",
+   "function PlayerOwnsBundleAsync",
+   "function PromptRobuxTransferAsync",
+   "function RankProductsAsync",
+   "function RecommendTopProductsAsync"
+  ],
+  "events_to_check": [
+   "PromptBulkPurchaseFinished",
+   "PromptBundlePurchaseFinished",
+   "PromptGamePassPurchaseFinished",
+   "PromptPremiumPurchaseFinished",
+   "PromptProductPurchaseFinished",
+   "PromptPurchaseFinished",
+   "PromptRobloxSubscriptionPurchaseFinished",
+   "PromptSubscriptionPurchaseFinished"
+  ]
+ },
+ "BadgeService": {
+  "missing": [
+   "function AwardBadgeAsync",
+   "function CheckUserBadgesAsync",
+   "function GetBadgeInfoAsync",
+   "function GetUserBadgesAsync",
+   "function IsDisabled",
+   "function IsLegal",
+   "function UserHasBadge"
+  ],
+  "events_to_check": []
+ },
+ "GroupService": {
+  "missing": [
+   "function GetAlliesAsync",
+   "function GetEnemiesAsync",
+   "function GetGroupInfoAsync",
+   "function GetGroupsAsync",
+   "function PromptJoinAsync"
+  ],
+  "events_to_check": []
+ },
+ "SocialService": {
+  "missing": [
+   "function GetPlayersByPartyId",
+   "function HideSelfView",
+   "function PromptGameInvite",
+   "function PromptPhoneBook",
+   "function ShowSelfView",
+   "function CanSendCallInviteAsync",
+   "function CanSendGameInviteAsync",
+   "function GetEventRsvpStatusAsync",
+   "function GetExperienceEventAsync",
+   "function GetPartyAsync",
+   "function GetUpcomingExperienceEventsAsync",
+   "function PromptFeedbackSubmissionAsync",
+   "function PromptLinkSharing",
+   "function PromptLinkSharingAsync",
+   "function PromptRsvpToEventAsync"
+  ],
+  "events_to_check": [
+   "CallInviteStateChanged",
+   "GameInvitePromptClosed",
+   "PhoneBookPromptClosed",
+   "ShareSheetClosed"
+  ]
+ },
+ "PolicyService": {
+  "missing": [
+   "function CanViewBrandProjectAsync",
+   "function GetPolicyInfoForPlayerAsync"
+  ],
+  "events_to_check": []
+ },
+ "UserService": {
+  "missing": [
+   "function GetUserFromGlobalUserIdAsync",
+   "function GetUserInfosByUserIdsAsync"
+  ],
+  "events_to_check": []
+ },
+ "PointsService": {
+  "missing": [
+   "function GetAwardablePoints",
+   "function AwardPoints",
+   "function GetGamePointBalance",
+   "function GetPointBalance"
+  ],
+  "events_to_check": [
+   "PointsAwarded"
+  ]
+ },
+ "RecommendationService": {
+  "missing": [
+   "function LogActionEvent",
+   "function LogImpressionEvent",
+   "function LogPreferenceEvent",
+   "function GenerateItemListAsync",
+   "function GetRecommendationItemAsync",
+   "function RegisterItemAsync",
+   "function RemoveItemAsync",
+   "function UpdateItemAsync"
+  ],
+  "events_to_check": []
+ },
+ "CommerceService": {
+  "missing": [
+   "function PromptCommerceProductPurchase",
+   "function PromptRealWorldCommerceBrowser",
+   "function GetCommerceProductInfoAsync",
+   "function UserEligibleForRealWorldCommerceAsync"
+  ],
+  "events_to_check": [
+   "PromptCommerceProductPurchaseFinished"
+  ]
+ },
+ "ExperienceNotificationService": {
+  "missing": [
+   "function PromptOptIn",
+   "function CanPromptOptInAsync"
+  ],
+  "events_to_check": [
+   "OptInPromptClosed"
+  ]
+ },
+ "TeleportService": {
+  "missing": [
+   "function GetArrivingTeleportGui",
+   "function GetLocalPlayerTeleportData",
+   "function GetTeleportSetting",
+   "function SetTeleportGui",
+   "function SetTeleportSetting",
+   "function TeleportToPlaceInstance",
+   "function TeleportToPrivateServer",
+   "function TeleportToSpawnByName",
+   "function GetPlayerPlaceInstanceAsync",
+   "function PromptExperienceDetailsAsync",
+   "function ReserveServer",
+   "function ReserveServerAsync",
+   "function TeleportPartyAsync"
+  ],
+  "events_to_check": [
+   "LocalPlayerArrivedFromTeleport",
+   "TeleportInitFailed"
+  ]
+ },
+ "TeleportOptions": {
+  "missing": [
+   "function GetTeleportData",
+   "function SetTeleportData"
+  ],
+  "events_to_check": []
+ },
+ "TeleportAsyncResult": {
+  "missing": [
+   "property PrivateServerId",
+   "property ReservedServerAccessCode"
+  ],
+  "events_to_check": []
+ },
+ "AdService": {
+  "missing": [
+   "function CreateAdRewardFromDevProductId",
+   "function RegisterDisclosureButton",
+   "function RegisterImpressionSource",
+   "function ShowVideoAd",
+   "function UnregisterAdOpportunity",
+   "function GetAdAvailabilityNowAsync",
+   "function GetCampaignEligibilityAsync",
+   "function RegisterAdOpportunityAsync",
+   "function ShowRewardedVideoAdAsync"
+  ],
+  "events_to_check": [
+   "VideoAdClosed"
+  ]
+ },
+ "AdGui": {
+  "missing": [
+   "property Status"
+  ],
+  "events_to_check": []
+ },
+ "AdPlacement": {
+  "missing": [
+   "property RewardId",
+   "property RewardImageContent",
+   "property RewardName"
+  ],
+  "events_to_check": []
+ },
+ "AdPortal": {
+  "missing": [
+   "property PortalInvalidReason",
+   "property Status"
+  ],
+  "events_to_check": []
+ },
+ "MatchmakingService": {
+  "missing": [
+   "function GetServerAttribute",
+   "function InitializeServerAttributesForStudio",
+   "function SetServerAttribute"
+  ],
+  "events_to_check": []
+ },
+ "ModerationService": {
+  "missing": [
+   "function BindReviewableContentEventProcessor",
+   "function BindViolationProcessor",
+   "function CreateReviewableContentKey",
+   "function MockViolationCallbackAsync",
+   "function CreateReviewableContentAsync",
+   "function InternalRequestReviewableContentReviewAsync"
+  ],
+  "events_to_check": []
+ },
+ "GamePassService": {
+  "missing": [
+   "function PlayerHasPass"
+  ],
+  "events_to_check": []
+ },
+ "TextFilterTranslatedResult": {
+  "missing": [
+   "property SourceLanguage",
+   "property SourceText",
+   "function GetTranslationForLocale",
+   "function GetTranslations"
+  ],
+  "events_to_check": []
+ },
+ "TextService": {
+  "missing": [
+   "function GetTextSize",
+   "function FilterAndTranslateStringAsync",
+   "function GetFamilyInfoAsync",
+   "function GetTextBoundsAsync",
+   "function GetTextSizeOffsetAsync"
+  ],
+  "events_to_check": []
+ }
+}

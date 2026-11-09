@@ -1,0 +1,297 @@
+{
+ "AvatarEditorService": {
+  "missing": [
+   "function GetAccessoryType",
+   "function PromptAllowInventoryReadAccess",
+   "function PromptCreateOutfit",
+   "function PromptDeleteOutfit",
+   "function PromptRenameOutfit",
+   "function PromptSaveAvatar",
+   "function PromptSetFavorite",
+   "function PromptUpdateOutfit",
+   "function CheckApplyDefaultClothing",
+   "function CheckApplyDefaultClothingAsync",
+   "function ConformToAvatarRules",
+   "function ConformToAvatarRulesAsync",
+   "function GetAvatarRules",
+   "function GetAvatarRulesAsync",
+   "function GetBatchItemDetails",
+   "function GetBatchItemDetailsAsync",
+   "function GetBundlesByAssetIdAsync",
+   "function GetFavorite",
+   "function GetFavoriteAsync",
+   "function GetHeadShapesAsync",
+   "function GetInventory",
+   "function GetInventoryAsync",
+   "function GetItemDetails",
+   "function GetItemDetailsAsync",
+   "function GetOutfitDetails",
+   "function GetOutfitDetailsAsync",
+   "function GetOutfits",
+   "function GetOutfitsAsync",
+   "function GetRecommendedAssets",
+   "function GetRecommendedAssetsAsync",
+   "function GetRecommendedBundles",
+   "function GetRecommendedBundlesAsync",
+   "function SearchCatalog",
+   "function SearchCatalogAsync"
+  ],
+  "events_to_check": [
+   "PromptAllowInventoryReadAccessCompleted",
+   "PromptCreateOutfitCompleted",
+   "PromptDeleteOutfitCompleted",
+   "PromptRenameOutfitCompleted",
+   "PromptSaveAvatarCompleted",
+   "PromptSetFavoriteCompleted",
+   "PromptUpdateOutfitCompleted"
+  ]
+ },
+ "AvatarCreationService": {
+  "missing": [
+   "function GetValidationRules",
+   "function AutoSetupAvatarAsync",
+   "function GenerateAvatar2DPreviewAsync",
+   "function GenerateAvatarAsync",
+   "function GetBatchTokenDetailsAsync",
+   "function LoadAvatar2DPreviewAsync",
+   "function LoadGeneratedAvatarAsync",
+   "function PrepareAvatarForPreviewAsync",
+   "function PromptCreateAvatarAssetAsync",
+   "function PromptCreateAvatarAsync",
+   "function PromptCreateMakeupAsync",
+   "function PromptSelectAvatarGenerationImageAsync",
+   "function RequestAvatarGenerationSessionAsync",
+   "function ValidateUGCAccessoryAsync",
+   "function ValidateUGCBodyPartAsync",
+   "function ValidateUGCFullBodyAsync"
+  ],
+  "events_to_check": [
+   "AvatarAssetModerationCompleted",
+   "AvatarModerationCompleted",
+   "AvatarOutfitModerationCompleted"
+  ]
+ },
+ "HumanoidDescription": {
+  "missing": [
+   "function AddEmote",
+   "function GetAccessories",
+   "function GetEmotes",
+   "function GetEquippedEmotes",
+   "function RemoveEmote",
+   "function SetAccessories",
+   "function SetEmotes",
+   "function SetEquippedEmotes"
+  ],
+  "events_to_check": [
+   "EmotesChanged",
+   "EquippedEmotesChanged"
+  ]
+ },
+ "HumanoidRigDescription": {
+  "missing": [
+   "function GetJoint",
+   "function GetJointFromName",
+   "function GetJointNames",
+   "function GetR15JointLabels",
+   "function GetR15JointNames",
+   "function GetR6JointNames",
+   "function SetJoint",
+   "function SetTposeAdjustment"
+  ],
+  "events_to_check": []
+ },
+ "DigitsRigDescription": {
+  "missing": [
+   "function GetFingerControl",
+   "function GetFingerTip",
+   "function SetFingerControl",
+   "function SetFingerTip",
+   "function SetJoint"
+  ],
+  "events_to_check": []
+ },
+ "AvatarAccessoryRules": {
+  "missing": [
+   "property BackAccessoryOverride",
+   "property FaceAccessoryOverride",
+   "property FrontAccessoryOverride",
+   "property HairAccessoryOverride",
+   "property HeadAccessoryOverride",
+   "property NeckAccessoryOverride",
+   "property ShoulderAccessoryOverride",
+   "property WaistAccessoryOverride"
+  ],
+  "events_to_check": []
+ },
+ "AvatarAnimationRules": {
+  "missing": [
+   "property ClimbAnimationOverride",
+   "property FallAnimationOverride",
+   "property IdleAltAnimationOverride",
+   "property IdleAnimationOverride",
+   "property JumpAnimationOverride",
+   "property MoodAnimationOverride",
+   "property RunAnimationOverride",
+   "property SwimAnimationOverride",
+   "property SwimIdleAnimationOverride",
+   "property WalkAnimationOverride"
+  ],
+  "events_to_check": []
+ },
+ "AvatarBodyRules": {
+  "missing": [
+   "property AvatarType",
+   "property CustomBuildBodyType",
+   "property CustomBuildHead",
+   "property CustomBuildHeight",
+   "property CustomBuildProportions",
+   "property CustomBuildWidth",
+   "property CustomWorldHeight",
+   "property HeadOverride",
+   "property LeftArmOverride",
+   "property LeftLegOverride",
+   "property RightArmOverride",
+   "property RightLegOverride",
+   "property TorsoOverride"
+  ],
+  "events_to_check": []
+ },
+ "AvatarClothingRules": {
+  "missing": [
+   "property ClassicPantsOverride",
+   "property ClassicShirtOverride",
+   "property ClassicTShirtOverride",
+   "property DressSkirtAccessoryOverride",
+   "property JacketAccessoryOverride",
+   "property LeftShoeAccessoryOverride",
+   "property PantsAccessoryOverride",
+   "property RightShoeAccessoryOverride",
+   "property ShirtAccessoryOverride",
+   "property ShortsAccessoryOverride",
+   "property SweaterAccessoryOverride",
+   "property TShirtAccessoryOverride"
+  ],
+  "events_to_check": []
+ },
+ "AvatarCollisionRules": {
+  "missing": [
+   "property BodyPartsCollidableOnDeath"
+  ],
+  "events_to_check": []
+ },
+ "AccessoryDescription": {
+  "missing": [
+   "function GetAppliedInstance"
+  ],
+  "events_to_check": []
+ },
+ "MakeupDescription": {
+  "missing": [
+   "function GetAppliedInstance"
+  ],
+  "events_to_check": []
+ },
+ "WrapLayer": {
+  "missing": [
+   "property DebugMode",
+   "property ReferenceOriginWorld",
+   "property RotateScaleDeformationMap",
+   "property ScaleOnlyDeformationMap",
+   "property TargetShaping"
+  ],
+  "events_to_check": []
+ },
+ "WrapTarget": {
+  "missing": [
+   "property DebugMode",
+   "function CreateTextureInCageSpaceAsync",
+   "function CreateTextureInTargetSpaceAsync"
+  ],
+  "events_to_check": []
+ },
+ "WrapDeformer": {
+  "missing": [
+   "function SetCageMeshContent",
+   "function CreateEditableMeshAsync",
+   "function GetDeformedCFrameAsync"
+  ],
+  "events_to_check": []
+ },
+ "BaseWrap": {
+  "missing": [
+   "property CageOriginWorld",
+   "property ImportOriginWorld"
+  ],
+  "events_to_check": []
+ },
+ "WrapTextureTransfer": {
+  "missing": [
+   "function PrepareProjectionMeshDataAsync"
+  ],
+  "events_to_check": []
+ },
+ "FaceControls": {
+  "missing": [
+   "property ChinRaiser",
+   "property ChinRaiserUpperLip",
+   "property Corrugator",
+   "property EyesLookDown",
+   "property EyesLookLeft",
+   "property EyesLookRight",
+   "property EyesLookUp",
+   "property FlatPucker",
+   "property Funneler",
+   "property JawDrop",
+   "property JawLeft",
+   "property JawRight",
+   "property LeftBrowLowerer",
+   "property LeftCheekPuff",
+   "property LeftCheekRaiser",
+   "property LeftDimpler",
+   "property LeftEyeClosed",
+   "property LeftEyeUpperLidRaiser",
+   "property LeftInnerBrowRaiser",
+   "property LeftLipCornerDown",
+   "property LeftLipCornerPuller",
+   "property LeftLipStretcher",
+   "property LeftLowerLipDepressor",
+   "property LeftNoseWrinkler",
+   "property LeftOuterBrowRaiser",
+   "property LeftUpperLipRaiser",
+   "property LipPresser",
+   "property LipsTogether",
+   "property LowerLipSuck",
+   "property MouthLeft",
+   "property MouthRight",
+   "property Pucker",
+   "property RightBrowLowerer",
+   "property RightCheekPuff",
+   "property RightCheekRaiser",
+   "property RightDimpler",
+   "property RightEyeClosed",
+   "property RightEyeUpperLidRaiser",
+   "property RightInnerBrowRaiser",
+   "property RightLipCornerDown",
+   "property RightLipCornerPuller",
+   "property RightLipStretcher",
+   "property RightLowerLipDepressor",
+   "property RightNoseWrinkler",
+   "property RightOuterBrowRaiser",
+   "property RightUpperLipRaiser",
+   "property TongueDown",
+   "property TongueOut",
+   "property TongueUp",
+   "property UpperLipSuck"
+  ],
+  "events_to_check": []
+ },
+ "Accoutrement": {
+  "missing": [
+   "property AttachmentForward",
+   "property AttachmentPos",
+   "property AttachmentRight",
+   "property AttachmentUp"
+  ],
+  "events_to_check": []
+ }
+}

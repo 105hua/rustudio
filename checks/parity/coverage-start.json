@@ -1,0 +1,2413 @@
+{
+  "dump": {
+    "classes": 944,
+    "functions": 3402,
+    "properties": 3806,
+    "events": 849
+  },
+  "missing_deprecated": 236,
+  "functions": {
+    "exists": 1574,
+    "implemented": 432,
+    "total": 3402,
+    "game_scripts_exists": 1569,
+    "game_scripts_implemented": 427,
+    "game_scripts_total": 1626
+  },
+  "properties": {
+    "exists": 3767,
+    "implemented": 2889,
+    "total": 3806,
+    "game_scripts_exists": 2801,
+    "game_scripts_implemented": 2286,
+    "game_scripts_total": 2802
+  },
+  "events": {
+    "exists": 398,
+    "implemented": 172,
+    "total": 849,
+    "game_scripts_exists": 398,
+    "game_scripts_implemented": 172,
+    "game_scripts_total": 410
+  },
+  "callbacks": {
+    "exists": 19,
+    "implemented": 3,
+    "total": 19,
+    "game_scripts_exists": 13,
+    "game_scripts_implemented": 3,
+    "game_scripts_total": 13
+  },
+  "missing_game_members_by_class": {
+    "AccessoryDescription": [
+      "function GetAppliedInstance"
+    ],
+    "Accoutrement": [
+      "property AttachmentForward",
+      "property AttachmentPos",
+      "property AttachmentRight",
+      "property AttachmentUp"
+    ],
+    "AdGui": [
+      "property Status"
+    ],
+    "AdPlacement": [
+      "property RewardId",
+      "property RewardImageContent",
+      "property RewardName"
+    ],
+    "AdPortal": [
+      "property PortalInvalidReason",
+      "property Status"
+    ],
+    "AdService": [
+      "function CreateAdRewardFromDevProductId",
+      "function RegisterDisclosureButton",
+      "function RegisterImpressionSource",
+      "function ShowVideoAd",
+      "function UnregisterAdOpportunity",
+      "function GetAdAvailabilityNowAsync",
+      "function GetCampaignEligibilityAsync",
+      "function RegisterAdOpportunityAsync",
+      "function ShowRewardedVideoAdAsync"
+    ],
+    "AirController": [
+      "property LinearImpulse"
+    ],
+    "AlignOrientation": [
+      "property LookAtPosition",
+      "property PrimaryAxis",
+      "property SecondaryAxis"
+    ],
+    "AnalyticsService": [
+      "function FireCustomEvent",
+      "function FireEvent",
+      "function FireInGameEconomyEvent",
+      "function FireLogEvent",
+      "function FirePlayerProgressionEvent",
+      "function GetDurationLoggerTimestamp",
+      "function LogCustomEvent",
+      "function LogEconomyEvent",
+      "function LogFunnelStepEvent",
+      "function LogJourneyEvent",
+      "function LogOnboardingFunnelStepEvent",
+      "function LogProgressionCompleteEvent",
+      "function LogProgressionEvent",
+      "function LogProgressionFailEvent",
+      "function LogProgressionStartEvent",
+      "function GetPlayerSegmentsAsync"
+    ],
+    "AnimationClip": [
+      "property Length"
+    ],
+    "AnimationClipProvider": [
+      "function RegisterActiveAnimationClip",
+      "function RegisterAnimationClip",
+      "function GetAnimationClipAsync",
+      "function GetAnimations",
+      "function GetAnimationsAsync",
+      "function GetClipEvaluatorAsync"
+    ],
+    "AnimationController": [
+      "function GetPlayingAnimationTracks"
+    ],
+    "AnimationNodeDefinition": [
+      "function AddInputPin",
+      "function GetOrderedInputPinNames",
+      "function RemoveInputPin",
+      "function SetOrderedInputPinNames"
+    ],
+    "AnimationRigData": [
+      "function LoadFromModel"
+    ],
+    "AnimationStreamTrack": [
+      "property Animation",
+      "property FACSDataLod",
+      "property IsPlaying",
+      "property Priority",
+      "property WeightCurrent",
+      "property WeightTarget"
+    ],
+    "AnimationTrack": [
+      "function GetParameter",
+      "function GetParameterDefaults",
+      "function GetTargetInstance",
+      "function GetTargetNames",
+      "function SetParameter",
+      "function SetTargetInstance"
+    ],
+    "Animator": [
+      "property EvaluationThrottled",
+      "property RootMotion",
+      "property RootMotionWeight",
+      "function ApplyJointVelocities",
+      "function GetTrackByAnimationId",
+      "function RegisterEvaluationParallelCallback",
+      "function StepAnimations"
+    ],
+    "AppHandle": [
+      "function Call",
+      "function Close",
+      "function ExecuteLuau",
+      "function RunTest"
+    ],
+    "AssetService": [
+      "function ComposeDecalAsync",
+      "function CreateAssetAsync",
+      "function CreateAssetVersionAsync",
+      "function CreateDataModelContentAsync",
+      "function CreateDecalAsync",
+      "function CreatePlaceAsync",
+      "function CreatePlaceInPlayerInventoryAsync",
+      "function CreateTextureAsync",
+      "function GetAssetIdsForPackage",
+      "function GetAssetIdsForPackageAsync",
+      "function GetAudioMetadataAsync",
+      "function GetBundleDetailsAsync",
+      "function GetCreatorAssetID",
+      "function GetGamePlacesAsync",
+      "function GetLatestVersionUriAsync",
+      "function LoadAssetAsync",
+      "function PromptCreatePlatformContentAsync",
+      "function PromptImportAnimationClipFromVideoAsync",
+      "function SavePlaceAsync",
+      "function SearchAudio",
+      "function SearchAudioAsync"
+    ],
+    "AtmosphereSensor": [
+      "property AirDensity",
+      "property RelativeWindVelocity"
+    ],
+    "Attachment": [
+      "function GetConstraints",
+      "function SetAxis",
+      "function SetSecondaryAxis"
+    ],
+    "AudioAnalyzer": [
+      "property PeakLevel",
+      "property RmsLevel",
+      "function GetConnectedWires",
+      "function GetInputPins",
+      "function GetOutputPins",
+      "function GetSpectrum"
+    ],
+    "AudioChannelMixer": [
+      "function GetConnectedWires",
+      "function GetInputPins",
+      "function GetOutputPins"
+    ],
+    "AudioChannelSplitter": [
+      "function GetConnectedWires",
+      "function GetInputPins",
+      "function GetOutputPins"
+    ],
+    "AudioChorus": [
+      "function GetConnectedWires",
+      "function GetInputPins",
+      "function GetOutputPins"
+    ],
+    "AudioCompressor": [
+      "function GetConnectedWires",
+      "function GetInputPins",
+      "function GetOutputPins"
+    ],
+    "AudioDeviceInput": [
+      "function GetConnectedWires",
+      "function GetInputPins",
+      "function GetOutputPins",
+      "function GetUserIdAccessList",
+      "function SetUserIdAccessList"
+    ],
+    "AudioDeviceOutput": [
+      "function GetConnectedWires",
+      "function GetInputPins",
+      "function GetOutputPins"
+    ],
+    "AudioDistortion": [
+      "function GetConnectedWires",
+      "function GetInputPins",
+      "function GetOutputPins"
+    ],
+    "AudioEcho": [
+      "function GetConnectedWires",
+      "function GetInputPins",
+      "function GetOutputPins"
+    ],
+    "AudioEmitter": [
+      "function GetAngleAttenuation",
+      "function GetAudibilityFor",
+      "function GetConnectedWires",
+      "function GetDistanceAttenuation",
+      "function GetInputPins",
+      "function GetInteractingListeners",
+      "function GetOutputPins",
+      "function SetAngleAttenuation",
+      "function SetDistanceAttenuation"
+    ],
+    "AudioEqualizer": [
+      "function GetConnectedWires",
+      "function GetInputPins",
+      "function GetOutputPins"
+    ],
+    "AudioFader": [
+      "function GetConnectedWires",
+      "function GetInputPins",
+      "function GetOutputPins"
+    ],
+    "AudioFilter": [
+      "function GetConnectedWires",
+      "function GetGainAt",
+      "function GetInputPins",
+      "function GetOutputPins"
+    ],
+    "AudioFlanger": [
+      "function GetConnectedWires",
+      "function GetInputPins",
+      "function GetOutputPins"
+    ],
+    "AudioGate": [
+      "function GetConnectedWires",
+      "function GetInputPins",
+      "function GetOutputPins"
+    ],
+    "AudioLimiter": [
+      "function GetConnectedWires",
+      "function GetInputPins",
+      "function GetOutputPins"
+    ],
+    "AudioListener": [
+      "function GetAngleAttenuation",
+      "function GetAudibilityFor",
+      "function GetConnectedWires",
+      "function GetDistanceAttenuation",
+      "function GetInputPins",
+      "function GetInteractingEmitters",
+      "function GetOutputPins",
+      "function SetAngleAttenuation",
+      "function SetDistanceAttenuation"
+    ],
+    "AudioPitchShifter": [
+      "function GetConnectedWires",
+      "function GetInputPins",
+      "function GetOutputPins"
+    ],
+    "AudioPlayer": [
+      "property IsPlaying",
+      "property IsReady",
+      "property TimeLength",
+      "function Cancel",
+      "function GetConnectedWires",
+      "function GetInputPins",
+      "function GetOutputPins",
+      "function Play",
+      "function Stop",
+      "function GetWaveformAsync"
+    ],
+    "AudioRecorder": [
+      "property TimeLength",
+      "function Clear",
+      "function GetConnectedWires",
+      "function GetInputPins",
+      "function GetOutputPins",
+      "function GetTemporaryContent",
+      "function Stop",
+      "function CanRecordAsync",
+      "function GetUnrecordableInstancesAsync",
+      "function RecordAsync"
+    ],
+    "AudioReverb": [
+      "function GetConnectedWires",
+      "function GetInputPins",
+      "function GetOutputPins"
+    ],
+    "AudioSearchParams": [
+      "property MaxPageSize",
+      "property SortType"
+    ],
+    "AudioSpeechToText": [
+      "property VoiceDetected",
+      "function GetConnectedWires",
+      "function GetInputPins",
+      "function GetOutputPins"
+    ],
+    "AudioTextToSpeech": [
+      "property IsLoaded",
+      "property IsPlaying",
+      "property TimeLength",
+      "function GetConnectedWires",
+      "function GetInputPins",
+      "function GetOutputPins",
+      "function Pause",
+      "function Play",
+      "function Unload",
+      "function GetWaveformAsync",
+      "function LoadAsync"
+    ],
+    "AudioTremolo": [
+      "function GetConnectedWires",
+      "function GetInputPins",
+      "function GetOutputPins"
+    ],
+    "AudioWindSynthesizer": [
+      "function GetConnectedWires",
+      "function GetInputPins",
+      "function GetOutputPins"
+    ],
+    "AvatarAccessoryRules": [
+      "property BackAccessoryOverride",
+      "property FaceAccessoryOverride",
+      "property FrontAccessoryOverride",
+      "property HairAccessoryOverride",
+      "property HeadAccessoryOverride",
+      "property NeckAccessoryOverride",
+      "property ShoulderAccessoryOverride",
+      "property WaistAccessoryOverride"
+    ],
+    "AvatarAnimationRules": [
+      "property ClimbAnimationOverride",
+      "property FallAnimationOverride",
+      "property IdleAltAnimationOverride",
+      "property IdleAnimationOverride",
+      "property JumpAnimationOverride",
+      "property MoodAnimationOverride",
+      "property RunAnimationOverride",
+      "property SwimAnimationOverride",
+      "property SwimIdleAnimationOverride",
+      "property WalkAnimationOverride"
+    ],
+    "AvatarBodyRules": [
+      "property AvatarType",
+      "property CustomBuildBodyType",
+      "property CustomBuildHead",
+      "property CustomBuildHeight",
+      "property CustomBuildProportions",
+      "property CustomBuildWidth",
+      "property CustomWorldHeight",
+      "property HeadOverride",
+      "property LeftArmOverride",
+      "property LeftLegOverride",
+      "property RightArmOverride",
+      "property RightLegOverride",
+      "property TorsoOverride"
+    ],
+    "AvatarClothingRules": [
+      "property ClassicPantsOverride",
+      "property ClassicShirtOverride",
+      "property ClassicTShirtOverride",
+      "property DressSkirtAccessoryOverride",
+      "property JacketAccessoryOverride",
+      "property LeftShoeAccessoryOverride",
+      "property PantsAccessoryOverride",
+      "property RightShoeAccessoryOverride",
+      "property ShirtAccessoryOverride",
+      "property ShortsAccessoryOverride",
+      "property SweaterAccessoryOverride",
+      "property TShirtAccessoryOverride"
+    ],
+    "AvatarCollisionRules": [
+      "property BodyPartsCollidableOnDeath"
+    ],
+    "AvatarCreationService": [
+      "function GetValidationRules",
+      "function AutoSetupAvatarAsync",
+      "function GenerateAvatar2DPreviewAsync",
+      "function GenerateAvatarAsync",
+      "function GetBatchTokenDetailsAsync",
+      "function LoadAvatar2DPreviewAsync",
+      "function LoadGeneratedAvatarAsync",
+      "function PrepareAvatarForPreviewAsync",
+      "function PromptCreateAvatarAssetAsync",
+      "function PromptCreateAvatarAsync",
+      "function PromptCreateMakeupAsync",
+      "function PromptSelectAvatarGenerationImageAsync",
+      "function RequestAvatarGenerationSessionAsync",
+      "function ValidateUGCAccessoryAsync",
+      "function ValidateUGCBodyPartAsync",
+      "function ValidateUGCFullBodyAsync"
+    ],
+    "AvatarEditorService": [
+      "function GetAccessoryType",
+      "function PromptAllowInventoryReadAccess",
+      "function PromptCreateOutfit",
+      "function PromptDeleteOutfit",
+      "function PromptRenameOutfit",
+      "function PromptSaveAvatar",
+      "function PromptSetFavorite",
+      "function PromptUpdateOutfit",
+      "function CheckApplyDefaultClothing",
+      "function CheckApplyDefaultClothingAsync",
+      "function ConformToAvatarRules",
+      "function ConformToAvatarRulesAsync",
+      "function GetAvatarRules",
+      "function GetAvatarRulesAsync",
+      "function GetBatchItemDetails",
+      "function GetBatchItemDetailsAsync",
+      "function GetBundlesByAssetIdAsync",
+      "function GetFavorite",
+      "function GetFavoriteAsync",
+      "function GetHeadShapesAsync",
+      "function GetInventory",
+      "function GetInventoryAsync",
+      "function GetItemDetails",
+      "function GetItemDetailsAsync",
+      "function GetOutfitDetails",
+      "function GetOutfitDetailsAsync",
+      "function GetOutfits",
+      "function GetOutfitsAsync",
+      "function GetRecommendedAssets",
+      "function GetRecommendedAssetsAsync",
+      "function GetRecommendedBundles",
+      "function GetRecommendedBundlesAsync",
+      "function SearchCatalog",
+      "function SearchCatalogAsync"
+    ],
+    "BadgeService": [
+      "function AwardBadgeAsync",
+      "function CheckUserBadgesAsync",
+      "function GetBadgeInfoAsync",
+      "function GetUserBadgesAsync",
+      "function IsDisabled",
+      "function IsLegal",
+      "function UserHasBadge"
+    ],
+    "BallSocketConstraint": [
+      "property MaxFrictionTorque"
+    ],
+    "BaseImportData": [
+      "property Id"
+    ],
+    "BasePart": [
+      "property AssemblyRootPart",
+      "property CurrentPhysicalProperties",
+      "property ReceiveAge",
+      "property ResizeIncrement",
+      "property ResizeableFaces",
+      "property SpecificGravity",
+      "function AngularAccelerationToTorque",
+      "function BindToCollisionSummaries",
+      "function GetNetworkOwnershipAuto",
+      "function IsGrounded",
+      "function TorqueToAngularAcceleration",
+      "function IntersectAsync",
+      "function SubtractAsync",
+      "function UnionAsync"
+    ],
+    "BasePlayerGui": [
+      "function GetGuiObjectsAtPosition"
+    ],
+    "BaseWrap": [
+      "property CageOriginWorld",
+      "property ImportOriginWorld"
+    ],
+    "Beam": [
+      "function SetTextureOffset"
+    ],
+    "BillboardGui": [
+      "property CurrentDistance"
+    ],
+    "BodyPosition": [
+      "function GetLastForce",
+      "function lastForce"
+    ],
+    "BodyVelocity": [
+      "function GetLastForce",
+      "function lastForce"
+    ],
+    "BubbleChatMessageProperties": [
+      "property BackgroundColor3",
+      "property BackgroundTransparency",
+      "property TailVisible",
+      "property TextColor3"
+    ],
+    "Camera": [
+      "property DiagonalFieldOfView",
+      "property MaxAxisFieldOfView",
+      "property OrthographicMode",
+      "property OrthographicSize",
+      "property ProjectionType",
+      "property ViewStretch",
+      "function GetPanSpeed",
+      "function GetTiltSpeed",
+      "function PanUnits",
+      "function SetCameraPanMode",
+      "function TiltUnits"
+    ],
+    "Capture": [
+      "property CaptureTime",
+      "property CaptureType",
+      "property LocalId",
+      "property SourcePlaceId",
+      "property SourceUniverseId"
+    ],
+    "CaptureService": [
+      "function CaptureScreenshot",
+      "function GetDeviceInfo",
+      "function PromptSaveCapturesToGallery",
+      "function PromptShareCapture",
+      "function StopVideoCapture",
+      "function TakeScreenshotCaptureAsync",
+      "function CheckUploadCaptureStatusAsync",
+      "function InternalCheckPlayabilityAsync",
+      "function InternalGetStartPlaceIdAsync",
+      "function PromptCaptureGalleryPermissionAsync",
+      "function ReadCapturesFromGalleryAsync",
+      "function StartUploadCaptureAsync",
+      "function StartVideoCaptureAsync",
+      "function UploadCaptureAsync"
+    ],
+    "ChannelTabsConfiguration": [
+      "property AbsolutePosition",
+      "property AbsoluteSize"
+    ],
+    "Chat": [
+      "function InvokeChatCallback",
+      "function RegisterChatCallback",
+      "function SetBubbleChatSettings",
+      "function CanUserChatAsync",
+      "function CanUsersChatAsync",
+      "function FilterStringAsync",
+      "function FilterStringForBroadcast",
+      "function FilterStringForPlayerAsync"
+    ],
+    "ChatInputBarConfiguration": [
+      "property AbsolutePosition",
+      "property AbsoluteSize",
+      "property IsFocused",
+      "property TextBox"
+    ],
+    "ChatWindowConfiguration": [
+      "property AbsolutePosition",
+      "property AbsoluteSize",
+      "function DeriveNewMessageProperties"
+    ],
+    "ChatWindowMessageProperties": [
+      "property PrefixTextProperties",
+      "property TextColor3",
+      "property TextStrokeColor3",
+      "property TextStrokeTransparency"
+    ],
+    "Collaborator": [
+      "property CollaboratorColor",
+      "property CollaboratorColor3",
+      "property CurDocGUID",
+      "property CurScriptLineNumber",
+      "property IsIdle",
+      "property Status",
+      "property Username"
+    ],
+    "CollectionService": [
+      "function CreateCollection",
+      "function GetCollection",
+      "function GetCollections"
+    ],
+    "CommerceService": [
+      "function PromptCommerceProductPurchase",
+      "function PromptRealWorldCommerceBrowser",
+      "function GetCommerceProductInfoAsync",
+      "function UserEligibleForRealWorldCommerceAsync"
+    ],
+    "CompositeValueCurve": [
+      "function GetComponentCurves",
+      "function GetValueAtTime"
+    ],
+    "ConfigService": [
+      "function ClearTestingValue",
+      "function SetTestingValue",
+      "function GetConfigAsync",
+      "function GetConfigForPlayerAsync"
+    ],
+    "ConfigSnapshot": [
+      "property Error",
+      "property Outdated",
+      "function GetValue",
+      "function GetValueChangedSignal",
+      "function Refresh"
+    ],
+    "Constraint": [
+      "property Active",
+      "function GetDebugAppliedForce",
+      "function GetDebugAppliedTorque"
+    ],
+    "ContentProvider": [
+      "property BaseUrl",
+      "property RequestQueueSize",
+      "function GetAssetFetchStatus",
+      "function GetAssetFetchStatusChangedSignal",
+      "function ListEncryptedAssets",
+      "function Preload",
+      "function RegisterDefaultEncryptionKey",
+      "function RegisterDefaultSessionKey",
+      "function RegisterEncryptedAsset",
+      "function RegisterSessionEncryptedAsset",
+      "function UnregisterDefaultEncryptionKey",
+      "function UnregisterEncryptedAsset"
+    ],
+    "ContextActionService": [
+      "function BindActionToInputTypes",
+      "function GetCurrentLocalToolIcon"
+    ],
+    "ControlState": [
+      "function AddBoolField",
+      "function AddCFrameField",
+      "function AddInstanceField",
+      "function AddIntField",
+      "function AddNumberField",
+      "function AddUnitVector3Field",
+      "function AddVector2Field",
+      "function AddVector3Field",
+      "function GetChangedState",
+      "function GetReplicationWeight",
+      "function GetState",
+      "function HasField",
+      "function SetField",
+      "function UpdateFields"
+    ],
+    "Controller": [
+      "function BindButton",
+      "function GetButton",
+      "function UnbindButton",
+      "function bindButton",
+      "function getButton"
+    ],
+    "ControllerBase": [
+      "property Active"
+    ],
+    "CoreGui": [
+      "property Version"
+    ],
+    "CustomEvent": [
+      "function GetAttachedReceivers",
+      "function SetValue"
+    ],
+    "CustomEventReceiver": [
+      "function GetCurrentValue"
+    ],
+    "CustomLog": [
+      "function Close",
+      "function GetLogPath",
+      "function Open",
+      "function WriteAppend"
+    ],
+    "CylindricalConstraint": [
+      "property CurrentAngle",
+      "property WorldRotationAxis"
+    ],
+    "DataModel": [
+      "property GearGenreSetting",
+      "function GetMessage",
+      "function GetRemoteBuildMode",
+      "function IsGearTypeAllowed",
+      "function SavePlace"
+    ],
+    "DataStore": [
+      "function GetVersionAsync",
+      "function GetVersionAtTimeAsync",
+      "function ListKeysAsync",
+      "function ListVersionsAsync",
+      "function RemoveVersionAsync"
+    ],
+    "DataStoreIncrementOptions": [
+      "function GetMetadata",
+      "function SetMetadata"
+    ],
+    "DataStoreInfo": [
+      "property CreatedTime",
+      "property DataStoreName",
+      "property UpdatedTime"
+    ],
+    "DataStoreKey": [
+      "property KeyName"
+    ],
+    "DataStoreKeyInfo": [
+      "property CreatedTime",
+      "property UpdatedTime",
+      "property Version",
+      "function GetMetadata",
+      "function GetUserIds"
+    ],
+    "DataStoreKeyPages": [
+      "property Cursor"
+    ],
+    "DataStoreListingPages": [
+      "property Cursor"
+    ],
+    "DataStoreObjectVersionInfo": [
+      "property CreatedTime",
+      "property IsDeleted",
+      "property Version"
+    ],
+    "DataStoreOptions": [
+      "function SetExperimentalFeatures"
+    ],
+    "DataStoreService": [
+      "function GetRequestBudgetForRequestType",
+      "function SetRateLimitForRequestType",
+      "function ListDataStoresAsync"
+    ],
+    "DataStoreSetOptions": [
+      "function GetMetadata",
+      "function SetMetadata"
+    ],
+    "DebuggerBreakpoint": [
+      "property Line"
+    ],
+    "DebuggerManager": [
+      "property DebuggingEnabled",
+      "function AddDebugger",
+      "function GetDebuggers",
+      "function Resume",
+      "function StepIn",
+      "function StepOut",
+      "function StepOver"
+    ],
+    "Decal": [
+      "property ResampleMode"
+    ],
+    "Dialog": [
+      "property InUse",
+      "function GetCurrentPlayers"
+    ],
+    "DigitsRigDescription": [
+      "function GetFingerControl",
+      "function GetFingerTip",
+      "function SetFingerControl",
+      "function SetFingerTip",
+      "function SetJoint"
+    ],
+    "DockWidgetPluginGui": [
+      "property HostWidgetWasRestored"
+    ],
+    "DragDetector": [
+      "function AddConstraintFunction",
+      "function GetReferenceFrame",
+      "function RestartDrag",
+      "function SetDragStyleFunction",
+      "function SetPermissionPolicyFunction"
+    ],
+    "Dragger": [
+      "function AxisRotate",
+      "function MouseDown",
+      "function MouseMove",
+      "function MouseUp"
+    ],
+    "DraggerService": [
+      "property AlignDraggedObjects",
+      "property AngleSnapEnabled",
+      "property AngleSnapIncrement",
+      "property AnimateHover",
+      "property CollisionsEnabled",
+      "property DraggerCoordinateSpace",
+      "property DraggerMovementMode",
+      "property GeometrySnapColor",
+      "property HoverAnimateFrequency",
+      "property HoverThickness",
+      "property JointsEnabled",
+      "property LinearSnapEnabled",
+      "property LinearSnapIncrement",
+      "property ShowHover",
+      "property ShowPivotIndicator"
+    ],
+    "EditableImage": [
+      "function DrawImageProjected",
+      "function SampleImageProjected"
+    ],
+    "EditableMesh": [
+      "property FixedSize",
+      "function AddBone",
+      "function AddFace",
+      "function BatchGetFaceAttributes",
+      "function BatchGetVertexAttributes",
+      "function BatchGetVertexFaceAttributes",
+      "function BatchRemove",
+      "function BatchSetFaceAttributes",
+      "function BatchSetVertexFaceAttributes",
+      "function FindClosestPointOnSurface",
+      "function GetAdjacentFaces",
+      "function GetBoneByName",
+      "function GetBoneCFrame",
+      "function GetBoneIsVirtual",
+      "function GetBoneName",
+      "function GetBoneParent",
+      "function GetBones",
+      "function GetFacesWithAttribute",
+      "function GetFacesWithColor",
+      "function GetFacesWithNormal",
+      "function GetFacesWithUV",
+      "function GetFacsCorrectivePose",
+      "function GetFacsCorrectivePoses",
+      "function GetFacsPose",
+      "function GetFacsPoses",
+      "function GetVertexBoneWeights",
+      "function GetVertexBones",
+      "function GetVertexColors",
+      "function GetVertexFaceColor",
+      "function GetVertexFaceNormal",
+      "function GetVertexFaceUV",
+      "function GetVertexNormals",
+      "function GetVertexUVs",
+      "function GetVerticesWithAttribute",
+      "function GetVerticesWithColor",
+      "function GetVerticesWithNormal",
+      "function GetVerticesWithUV",
+      "function IdDebugString",
+      "function MergeVertices",
+      "function RemoveBone",
+      "function ResetNormal",
+      "function SetBoneCFrame",
+      "function SetBoneIsVirtual",
+      "function SetBoneName",
+      "function SetBoneParent",
+      "function SetFacsBonePose",
+      "function SetFacsCorrectivePose",
+      "function SetFacsPose",
+      "function SetVertexBoneWeights",
+      "function SetVertexBones",
+      "function SetVertexFaceColor",
+      "function SetVertexFaceNormal",
+      "function SetVertexFaceUV",
+      "function Triangulate"
+    ],
+    "EncodingService": [
+      "function Base64Decode",
+      "function Base64Encode",
+      "function CompressBuffer",
+      "function ComputeBufferHash",
+      "function ComputeStringHash",
+      "function DecompressBuffer",
+      "function GetDecompressedBufferSize"
+    ],
+    "EulerRotationCurve": [
+      "function GetAnglesAtTime",
+      "function GetRotationAtTime",
+      "function X",
+      "function Y",
+      "function Z"
+    ],
+    "ExecutedRemoteCommand": [
+      "function RunMoreCode",
+      "function SendUpdate",
+      "function Stop"
+    ],
+    "ExperienceNotificationService": [
+      "function PromptOptIn",
+      "function CanPromptOptInAsync"
+    ],
+    "ExplorerServiceVisibilityService": [
+      "function GetServiceVisibility"
+    ],
+    "FaceControls": [
+      "property ChinRaiser",
+      "property ChinRaiserUpperLip",
+      "property Corrugator",
+      "property EyesLookDown",
+      "property EyesLookLeft",
+      "property EyesLookRight",
+      "property EyesLookUp",
+      "property FlatPucker",
+      "property Funneler",
+      "property JawDrop",
+      "property JawLeft",
+      "property JawRight",
+      "property LeftBrowLowerer",
+      "property LeftCheekPuff",
+      "property LeftCheekRaiser",
+      "property LeftDimpler",
+      "property LeftEyeClosed",
+      "property LeftEyeUpperLidRaiser",
+      "property LeftInnerBrowRaiser",
+      "property LeftLipCornerDown",
+      "property LeftLipCornerPuller",
+      "property LeftLipStretcher",
+      "property LeftLowerLipDepressor",
+      "property LeftNoseWrinkler",
+      "property LeftOuterBrowRaiser",
+      "property LeftUpperLipRaiser",
+      "property LipPresser",
+      "property LipsTogether",
+      "property LowerLipSuck",
+      "property MouthLeft",
+      "property MouthRight",
+      "property Pucker",
+      "property RightBrowLowerer",
+      "property RightCheekPuff",
+      "property RightCheekRaiser",
+      "property RightDimpler",
+      "property RightEyeClosed",
+      "property RightEyeUpperLidRaiser",
+      "property RightInnerBrowRaiser",
+      "property RightLipCornerDown",
+      "property RightLipCornerPuller",
+      "property RightLipStretcher",
+      "property RightLowerLipDepressor",
+      "property RightNoseWrinkler",
+      "property RightOuterBrowRaiser",
+      "property RightUpperLipRaiser",
+      "property TongueDown",
+      "property TongueOut",
+      "property TongueUp",
+      "property UpperLipSuck"
+    ],
+    "FeatureMatchingService": [
+      "function CreateTable",
+      "function Load",
+      "function LoadAsync"
+    ],
+    "FeatureMatchingSession": [
+      "function GetChannels",
+      "function GetDimensionCount",
+      "function GetFeatureRow",
+      "function GetFeatureRows",
+      "function GetMetadataRow",
+      "function GetRowCount",
+      "function GetSchemaName",
+      "function GetTagColumns",
+      "function StandardizeQuery"
+    ],
+    "FeatureMatchingTable": [
+      "property SchemaName",
+      "function GetSchema"
+    ],
+    "FloatCurve": [
+      "property Length",
+      "function GetKeyAtIndex",
+      "function GetKeyIndicesAtTime",
+      "function GetKeys",
+      "function GetValueAtTime",
+      "function InsertKey",
+      "function RemoveKeyAtIndex",
+      "function SetKeys"
+    ],
+    "FluidForceSensor": [
+      "property BuoyancyForce",
+      "property BuoyancyTorque",
+      "property CenterOfPressure",
+      "property Torque",
+      "function EvaluateAsync"
+    ],
+    "FunctionalTest": [
+      "function Error",
+      "function Failed",
+      "function Pass",
+      "function Passed",
+      "function Warn"
+    ],
+    "GamePassService": [
+      "function PlayerHasPass"
+    ],
+    "GamepadService": [
+      "function DisableGamepadCursor",
+      "function EnableGamepadCursor"
+    ],
+    "GeneratedFolder": [
+      "function SetPrimaryPart"
+    ],
+    "GenerationService": [
+      "function ConnectAsync",
+      "function DisconnectAsync",
+      "function GenerateMeshAsync",
+      "function GenerateModelAsync",
+      "function GetVideoGenSessionAsync",
+      "function GetVideoGenTriggersAsync",
+      "function LoadGeneratedMeshAsync",
+      "function SegmentMeshAsync",
+      "function StartVideoGenSessionAsync",
+      "function UpdateVideoGenSessionPromptAsync",
+      "function UpdateVideoGenSessionTriggersAsync"
+    ],
+    "GeometryService": [
+      "function CalculateConstraintsToPreserve",
+      "function CreateBasicMeshPart",
+      "function GenerateFragmentSites",
+      "function FragmentAsync",
+      "function IntersectAsync",
+      "function SubtractAsync",
+      "function SweepPartAsync",
+      "function UnionAsync",
+      "function BakeToMeshAsync"
+    ],
+    "GlobalDataStore": [
+      "function OnUpdate",
+      "function BatchGetAsync",
+      "function GetAsync",
+      "function IncrementAsync",
+      "function RemoveAsync",
+      "function SetAsync",
+      "function UpdateAsync"
+    ],
+    "GlobalSettings": [
+      "function GetFFlag",
+      "function GetFVariable"
+    ],
+    "GroupService": [
+      "function GetAlliesAsync",
+      "function GetEnemiesAsync",
+      "function GetGroupInfoAsync",
+      "function GetGroupsAsync",
+      "function PromptJoinAsync"
+    ],
+    "GuiObject": [
+      "property GuiState",
+      "property InputSink"
+    ],
+    "GuiService": [
+      "property CoreGuiNavigationEnabled",
+      "property PreferredTextSize",
+      "property PreferredTransparency",
+      "property ReducedMotionEnabled",
+      "property TopbarInset",
+      "property ViewportDisplaySize",
+      "function AddSelectionParent",
+      "function AddSelectionTuple",
+      "function CloseInspectMenu",
+      "function DismissNotification",
+      "function GetGameplayPausedNotificationEnabled",
+      "function GetInsetArea",
+      "function InspectPlayerFromHumanoidDescription",
+      "function InspectPlayerFromUserId",
+      "function RemoveSelectionGroup",
+      "function Select",
+      "function SendNotification",
+      "function SetEmotesMenuOpen",
+      "function SetGameplayPausedNotificationEnabled",
+      "function SetInspectMenuEnabled"
+    ],
+    "HapticEffect": [
+      "function Play",
+      "function SetWaveformKeys",
+      "function Stop"
+    ],
+    "HapticService": [
+      "function GetMotor",
+      "function IsMotorSupported",
+      "function IsVibrationSupported",
+      "function SetMotor"
+    ],
+    "HingeConstraint": [
+      "property CurrentAngle"
+    ],
+    "HttpRbxApiService": [
+      "function RequestLimitedAsync"
+    ],
+    "HttpService": [
+      "function CreateWebStreamClient",
+      "function GetSecret"
+    ],
+    "Humanoid": [
+      "function AddCustomStatus",
+      "function AddStatus",
+      "function GetAppliedDescription",
+      "function GetRelativeVelocityAtFloor",
+      "function GetStatuses",
+      "function HasCustomStatus",
+      "function HasStatus",
+      "function RemoveCustomStatus",
+      "function RemoveStatus",
+      "function ReplaceBodyPartR15",
+      "function ApplyAvatarRulesAsync",
+      "function ApplyDescriptionAsync",
+      "function ApplyDescriptionReset",
+      "function ApplyDescriptionResetAsync",
+      "function PlayEmote",
+      "function PlayEmoteAsync"
+    ],
+    "HumanoidDescription": [
+      "function AddEmote",
+      "function GetAccessories",
+      "function GetEmotes",
+      "function GetEquippedEmotes",
+      "function RemoveEmote",
+      "function SetAccessories",
+      "function SetEmotes",
+      "function SetEquippedEmotes"
+    ],
+    "HumanoidRigDescription": [
+      "function GetJoint",
+      "function GetJointFromName",
+      "function GetJointNames",
+      "function GetR15JointLabels",
+      "function GetR15JointNames",
+      "function GetR6JointNames",
+      "function SetJoint",
+      "function SetTposeAdjustment"
+    ],
+    "IKControl": [
+      "function GetChainCount",
+      "function GetChainLength",
+      "function GetNodeLocalCFrame",
+      "function GetNodeWorldCFrame",
+      "function GetRawFinalTarget",
+      "function GetSmoothedFinalTarget"
+    ],
+    "ImageButton": [
+      "property IsLoaded"
+    ],
+    "ImageLabel": [
+      "property IsLoaded"
+    ],
+    "InputAction": [
+      "property PreferredBinding",
+      "function Fire",
+      "function GetState"
+    ],
+    "InputActionLabel": [
+      "property ResolvedImageContent",
+      "property ResolvedText"
+    ],
+    "InputBinding": [
+      "property Deadzone",
+      "function Fire"
+    ],
+    "InsertService": [
+      "function ApproveAssetId",
+      "function ApproveAssetVersionId",
+      "function Insert",
+      "function GetBaseCategories",
+      "function GetBaseSets",
+      "function GetCollection",
+      "function GetFreeDecals",
+      "function GetFreeDecalsAsync",
+      "function GetFreeModels",
+      "function GetFreeModelsAsync",
+      "function GetLatestAssetVersionAsync",
+      "function GetUserCategories",
+      "function GetUserSets"
+    ],
+    "Instance": [
+      "property IsInSandbox",
+      "property PredictionMode",
+      "property Sandboxed",
+      "function GetStyled",
+      "function GetStyledPropertyChangedSignal",
+      "function IsPropertyModified",
+      "function QueryDescendants",
+      "function ResetPropertyToDefault"
+    ],
+    "JointInstance": [
+      "property Active"
+    ],
+    "JointsService": [
+      "function ClearJoinAfterMoveJoints",
+      "function CreateJoinAfterMoveJoints",
+      "function SetJoinAfterMoveInstance",
+      "function SetJoinAfterMoveTarget",
+      "function ShowPermissibleJoints"
+    ],
+    "Keyframe": [
+      "function AddMarker",
+      "function AddPose",
+      "function GetMarkers",
+      "function GetPoses",
+      "function RemoveMarker",
+      "function RemovePose"
+    ],
+    "KeyframeSequence": [
+      "function AddKeyframe",
+      "function GetKeyframes",
+      "function RemoveKeyframe"
+    ],
+    "KeyframeSequenceProvider": [
+      "function GetAnimations",
+      "function GetAnimationsAsync"
+    ],
+    "LanguageService": [
+      "function GetCapabilitiesUsedInPackageAsync"
+    ],
+    "LayerCollector": [
+      "function GetGuiObjectsAtPosition",
+      "function GetLayoutNodeTree"
+    ],
+    "LiveSyncService": [
+      "property HasSyncedInstances",
+      "function GetSyncState"
+    ],
+    "LocalizationService": [
+      "property RobloxLocaleId",
+      "property SystemLocaleId",
+      "function GetCorescriptLocalizations",
+      "function GetTableEntries",
+      "function GetCountryRegionForPlayerAsync"
+    ],
+    "LocalizationTable": [
+      "property Root",
+      "function GetContents",
+      "function GetEntries",
+      "function GetString",
+      "function GetTranslator",
+      "function RemoveEntry",
+      "function RemoveEntryValue",
+      "function RemoveKey",
+      "function RemoveTargetLocale",
+      "function SetContents",
+      "function SetEntries",
+      "function SetEntry",
+      "function SetEntryContext",
+      "function SetEntryExample",
+      "function SetEntryKey",
+      "function SetEntrySource",
+      "function SetEntryValue"
+    ],
+    "LodDataEntity": [
+      "property EntityLodEnabled"
+    ],
+    "LogService": [
+      "function ClearOutput",
+      "function Error",
+      "function GetLogHistory",
+      "function GetLogger",
+      "function Info",
+      "function Log",
+      "function Output",
+      "function Warn",
+      "function GetLogHistoryAsync"
+    ],
+    "Logger": [
+      "property FullPath",
+      "function Error",
+      "function GetLogger",
+      "function Info",
+      "function Log",
+      "function Output",
+      "function Warn"
+    ],
+    "MLService": [
+      "function IsPostProcessReady",
+      "function SetPostProcessEnabled",
+      "function CreateSessionAsync",
+      "function LoadPostProcessModelAsync"
+    ],
+    "MLSession": [
+      "function ForwardAsync"
+    ],
+    "MakeupDescription": [
+      "function GetAppliedInstance"
+    ],
+    "MarkerCurve": [
+      "property Length",
+      "function GetMarkerAtIndex",
+      "function GetMarkers",
+      "function InsertMarkerAtTime",
+      "function RemoveMarkerAtIndex"
+    ],
+    "MarketplaceService": [
+      "function BindReceiptHandler",
+      "function OpenShop",
+      "function PromptBulkPurchase",
+      "function PromptBundlePurchase",
+      "function PromptCancelSubscription",
+      "function PromptPremiumPurchase",
+      "function PromptRobloxSubscriptionPurchase",
+      "function PromptSubscriptionPurchase",
+      "function PromptVIPServerPurchase",
+      "function CanUsersTransferRobuxAsync",
+      "function GetDeveloperProductsAsync",
+      "function GetPassOwnershipAsync",
+      "function GetRobloxSubscriptionDetailsAsync",
+      "function GetSubscriptionProductInfoAsync",
+      "function GetUserSubscriptionDetailsAsync",
+      "function GetUserSubscriptionPaymentHistoryAsync",
+      "function GetUserSubscriptionStatusAsync",
+      "function GetUsersPriceLevelsAsync",
+      "function PlayerOwnsAssetAsync",
+      "function PlayerOwnsBundle",
+      "function PlayerOwnsBundleAsync",
+      "function PromptRobuxTransferAsync",
+      "function RankProductsAsync",
+      "function RecommendTopProductsAsync"
+    ],
+    "MatchmakingService": [
+      "function GetServerAttribute",
+      "function InitializeServerAttributesForStudio",
+      "function SetServerAttribute"
+    ],
+    "MaterialImportData": [
+      "property IsPbr"
+    ],
+    "MaterialService": [
+      "function GetBaseMaterialOverride",
+      "function GetMaterialVariant",
+      "function SetBaseMaterialOverride"
+    ],
+    "MemoryStoreDistributedCounter": [
+      "function GetAsync",
+      "function IncrementAsync"
+    ],
+    "MemoryStoreHashMap": [
+      "function GetAsync",
+      "function ListItemsAsync",
+      "function RemoveAsync",
+      "function SetAsync",
+      "function UpdateAsync"
+    ],
+    "MemoryStoreQueue": [
+      "function AddAsync",
+      "function GetSizeAsync",
+      "function ReadAsync",
+      "function RemoveAsync"
+    ],
+    "MemoryStoreService": [
+      "function GetDistributedCounter",
+      "function GetHashMap",
+      "function GetQueue",
+      "function GetSortedMap"
+    ],
+    "MemoryStoreSortedMap": [
+      "function GetAsync",
+      "function GetRangeAsync",
+      "function GetSizeAsync",
+      "function RemoveAsync",
+      "function SetAsync",
+      "function UpdateAsync"
+    ],
+    "MeshImportData": [
+      "property CageManifold",
+      "property CageMeshNotIntersected",
+      "property CageNoOverlappingVertices",
+      "property CageUVMatched",
+      "property Dimensions",
+      "property MeshNoHoleDetected",
+      "property NoIrrelevantCageModified",
+      "property NoOuterCageFarExtendedFromMesh",
+      "property PolygonCount"
+    ],
+    "MeshPart": [
+      "function ApplyMesh",
+      "function GetSurfaceSlotsAsync"
+    ],
+    "MessagingService": [
+      "function PublishAsync",
+      "function SubscribeAsync"
+    ],
+    "MicroProfilerService": [
+      "function GetDataInRange",
+      "function GetDataSize",
+      "function ProcessCommand"
+    ],
+    "Model": [
+      "function AddPersistentPlayer",
+      "function GetPersistentPlayers",
+      "function RemovePersistentPlayer",
+      "function ResetOrientationToIdentity",
+      "function ScaleTo",
+      "function SetIdentityOrientation"
+    ],
+    "ModerationService": [
+      "function BindReviewableContentEventProcessor",
+      "function BindViolationProcessor",
+      "function CreateReviewableContentKey",
+      "function MockViolationCallbackAsync",
+      "function CreateReviewableContentAsync",
+      "function InternalRequestReviewableContentReviewAsync"
+    ],
+    "Motor": [
+      "function SetDesiredAngle"
+    ],
+    "Motor6D": [
+      "property ChildName",
+      "property ParentName"
+    ],
+    "NetworkReplicator": [
+      "function GetPlayer"
+    ],
+    "NetworkServer": [
+      "function EncryptStringForPlayerId"
+    ],
+    "OpenCloudApiV1": [
+      "function CreateModel",
+      "function CreateUserNotificationAsync"
+    ],
+    "OpenCloudService": [
+      "function GetApiV1",
+      "function InvokeAsync"
+    ],
+    "OrderedDataStore": [
+      "function GetSortedAsync"
+    ],
+    "PVInstance": [
+      "property Origin",
+      "property Pivot Offset"
+    ],
+    "PackageLink": [
+      "property Creator",
+      "property PackageAssetName",
+      "property PackageContent",
+      "property PackageId",
+      "property PermissionLevel"
+    ],
+    "Pages": [
+      "property IsFinished",
+      "function GetCurrentPage",
+      "function AdvanceToNextPageAsync"
+    ],
+    "PartOperation": [
+      "function SubstituteGeometry"
+    ],
+    "ParticipantHandle": [
+      "function Click",
+      "function InputText",
+      "function Launch",
+      "function Screenshot",
+      "function Scroll",
+      "function Shutdown"
+    ],
+    "ParticleEmitter2D": [
+      "property Acceleration",
+      "property Blend",
+      "property Brightness",
+      "property Color",
+      "property Drag",
+      "property EmissionAngle",
+      "property EmissionMode",
+      "property EmissionOffset",
+      "property EmissionSpread",
+      "property Enabled",
+      "property FlipbookBlendFrames",
+      "property FlipbookFramerate",
+      "property FlipbookLayout",
+      "property FlipbookMode",
+      "property FlipbookSizeX",
+      "property FlipbookSizeY",
+      "property FlipbookStartRandom",
+      "property Lifetime",
+      "property LightEmission",
+      "property LockedToParent",
+      "property Rate",
+      "property RotSpeed",
+      "property Rotation",
+      "property Size",
+      "property Speed",
+      "property SpreadAngle",
+      "property Squash",
+      "property TextureContent",
+      "property TimeScale",
+      "property Transparency",
+      "property ZIndex",
+      "function Clear",
+      "function Emit"
+    ],
+    "Path": [
+      "property Status",
+      "function GetPointCoordinates",
+      "function GetWaypoints",
+      "function CheckOcclusionAsync",
+      "function ComputeAsync"
+    ],
+    "Path2D": [
+      "function GetBoundingRect",
+      "function GetControlPoint",
+      "function GetControlPoints",
+      "function GetLength",
+      "function GetMaxControlPoints",
+      "function GetPositionOnCurve",
+      "function GetPositionOnCurveArcLength",
+      "function GetTangentOnCurve",
+      "function GetTangentOnCurveArcLength",
+      "function InsertControlPoint",
+      "function RemoveControlPoint",
+      "function SetControlPoints",
+      "function UpdateControlPoint"
+    ],
+    "PathfindingService": [
+      "function CreatePath",
+      "function ComputeRawPathAsync",
+      "function ComputeSmoothPathAsync",
+      "function FindPathAsync"
+    ],
+    "PhysicsActivitySensor": [
+      "property Active",
+      "property Position",
+      "property Size"
+    ],
+    "Player": [
+      "property AgeChecked",
+      "property DeviceTrustLevel",
+      "property FrustumStreaming",
+      "property User",
+      "function AddReplicationFocus",
+      "function ClearCachedAvatarAppearance",
+      "function GetCameraState",
+      "function GetData",
+      "function GetJoinData",
+      "function IsVerified",
+      "function LoadBoolean",
+      "function LoadCharacterAppearance",
+      "function LoadInstance",
+      "function LoadNumber",
+      "function LoadString",
+      "function PromptAgeCheck",
+      "function RemoveReplicationFocus",
+      "function SaveBoolean",
+      "function SaveInstance",
+      "function SaveNumber",
+      "function SaveString",
+      "function loadBoolean",
+      "function loadInstance",
+      "function loadNumber",
+      "function loadString",
+      "function saveBoolean",
+      "function saveInstance",
+      "function saveNumber",
+      "function saveString",
+      "function GetFriendsInServerAsync",
+      "function GetFriendsInUniverseAsync",
+      "function GetFriendsOnline",
+      "function GetFriendsOnlineAsync",
+      "function GetFriendsWhoPlayedAsync",
+      "function GetRankInGroupAsync",
+      "function GetRoleInGroupAsync",
+      "function IsBestFriendsWith",
+      "function IsFriendsWithAsync",
+      "function IsInGroupAsync",
+      "function LoadCharacterAsync",
+      "function LoadCharacterWithAvatarRulesAsync",
+      "function LoadCharacterWithHumanoidDescription",
+      "function LoadCharacterWithHumanoidDescriptionAsync",
+      "function RequestStreamAroundAsync",
+      "function WaitForDataReady",
+      "function waitForDataReady"
+    ],
+    "PlayerData": [
+      "function GetPlayer",
+      "function GetRecordAsync"
+    ],
+    "PlayerDataRecord": [
+      "property CreatedTime",
+      "property DefaultRecordName",
+      "property Dirty",
+      "property Error",
+      "property FlushedTime",
+      "property LoadedTime",
+      "property ModifiedTime",
+      "property NewRecord",
+      "property Readable",
+      "property RecordName",
+      "property Writable",
+      "function GetPlayer",
+      "function GetValue",
+      "function GetValueChangedSignal",
+      "function RemoveValue",
+      "function SetValue",
+      "function ReleaseAsync",
+      "function RequestFlushAsync"
+    ],
+    "PlayerDataRecordConfig": [
+      "property RecordName",
+      "function GetDefaultValue",
+      "function SetDefaultValue"
+    ],
+    "PlayerDataService": [
+      "function GetRecordConfig"
+    ],
+    "PlayerGui": [
+      "property CurrentScreenOrientation",
+      "function GetTopbarTransparency",
+      "function SetTopbarTransparency"
+    ],
+    "PlayerViewService": [
+      "function GetDeviceCameraCFrame"
+    ],
+    "Players": [
+      "property BubbleChat",
+      "property ClassicChat",
+      "property MaxPlayers",
+      "property PreferredPlayers",
+      "function BanAsync",
+      "function CreateHumanoidModelFromDescriptionAsync",
+      "function CreateHumanoidModelFromUserIdAsync",
+      "function GetBanHistoryAsync",
+      "function GetCharacterAppearanceAsync",
+      "function GetCharacterAppearanceInfoAsync",
+      "function GetFriendsAsync",
+      "function GetHumanoidDescriptionFromOutfitIdAsync",
+      "function GetHumanoidDescriptionFromUserIdAsync",
+      "function GetNameFromUserIdAsync",
+      "function GetProfileConfigurationFromUserIdAsync",
+      "function GetUserIdFromNameAsync",
+      "function GetUserThumbnailAsync",
+      "function UnbanAsync"
+    ],
+    "Plugin": [
+      "property CollisionEnabled",
+      "property GridSize"
+    ],
+    "PluginAction": [
+      "property ActionId",
+      "property AllowBinding",
+      "property StatusTip"
+    ],
+    "PluginDragEvent": [
+      "property Data",
+      "property MimeType",
+      "property Sender"
+    ],
+    "PluginGui": [
+      "function BindToClose"
+    ],
+    "PointsService": [
+      "function GetAwardablePoints",
+      "function AwardPoints",
+      "function GetGamePointBalance",
+      "function GetPointBalance"
+    ],
+    "PolicyService": [
+      "function CanViewBrandProjectAsync",
+      "function GetPolicyInfoForPlayerAsync"
+    ],
+    "Pose": [
+      "function AddSubPose",
+      "function GetSubPoses",
+      "function RemoveSubPose"
+    ],
+    "ProceduralModel": [
+      "property GenerationError",
+      "function ForceGeneration",
+      "function WaitForGenerationAsync"
+    ],
+    "ProximityPrompt": [
+      "function InputHoldBegin",
+      "function InputHoldEnd"
+    ],
+    "QueueService": [
+      "function GetStandardQueue"
+    ],
+    "RTAnimationTracker": [
+      "property Active",
+      "property EnableFallbackAudioInput",
+      "property SessionName",
+      "property TrackerMode",
+      "property TrackerType"
+    ],
+    "RealtimeMedia": [
+      "property AudioInputActive",
+      "property IsConnected",
+      "property IsConnectionWeak",
+      "function Disconnect",
+      "function GetConnectedWires",
+      "function GetInputPins",
+      "function GetOutputPins",
+      "function SendMessage",
+      "function ConnectAsync"
+    ],
+    "RecommendationService": [
+      "function LogActionEvent",
+      "function LogImpressionEvent",
+      "function LogPreferenceEvent",
+      "function GenerateItemListAsync",
+      "function GetRecommendationItemAsync",
+      "function RegisterItemAsync",
+      "function RemoveItemAsync",
+      "function UpdateItemAsync"
+    ],
+    "ReflectionService": [
+      "function GetClass",
+      "function GetClasses",
+      "function GetEventsOfClass",
+      "function GetMethodsOfClass",
+      "function GetPropertiesOfClass"
+    ],
+    "RemoteCommandService": [
+      "function GetExecutingPlayer",
+      "function GetReceivedUpdateSignal",
+      "function GetStoppingSignal",
+      "function SendUpdate"
+    ],
+    "RenderingTest": [
+      "function RenderdocTriggerCapture"
+    ],
+    "RocketPropulsion": [
+      "function Abort",
+      "function Fire",
+      "function fire"
+    ],
+    "RodConstraint": [
+      "property CurrentDistance"
+    ],
+    "RomarkService": [
+      "function EndRemoteRomarkTest"
+    ],
+    "RootImportData": [
+      "property FileDimensions",
+      "property PolygonCount"
+    ],
+    "RopeConstraint": [
+      "property CurrentDistance"
+    ],
+    "RotationCurve": [
+      "property Length",
+      "function GetKeyAtIndex",
+      "function GetKeyIndicesAtTime",
+      "function GetKeys",
+      "function GetValueAtTime",
+      "function InsertKey",
+      "function RemoveKeyAtIndex",
+      "function SetKeys"
+    ],
+    "RunService": [
+      "property FrameNumber",
+      "property RunState",
+      "function BindToAnimation",
+      "function BindToAnimationParallel",
+      "function BindToSimulation",
+      "function BindToSimulationParallel",
+      "function GetPredictionStatus",
+      "function IsResimulating",
+      "function SetPredictionMode"
+    ],
+    "SceneAnalysisService": [
+      "function GetAnimationMemoryAsync",
+      "function GetAudioMemoryAsync",
+      "function GetCollisionGeometryMemoryAsync",
+      "function GetInstanceCompositionAsync",
+      "function GetScriptMemoryAsync",
+      "function GetTriangleCompositionAsync",
+      "function GetUnparentedInstancesAsync"
+    ],
+    "ScriptContext": [
+      "function EnableCoverage",
+      "function GetCoverageStats"
+    ],
+    "ScriptDebugger": [
+      "property CurrentLine",
+      "property IsDebugging",
+      "property IsPaused",
+      "property Script",
+      "function AddWatch",
+      "function GetBreakpoints",
+      "function GetGlobals",
+      "function GetLocals",
+      "function GetStack",
+      "function GetUpvalues",
+      "function GetWatchValue",
+      "function GetWatches",
+      "function SetBreakpoint",
+      "function SetGlobal",
+      "function SetLocal",
+      "function SetUpvalue"
+    ],
+    "ScriptService": [
+      "function ResolveModulePath"
+    ],
+    "ScrollingFrame": [
+      "property AbsoluteCanvasSize",
+      "property AbsoluteWindowSize",
+      "function GetScrollVelocity",
+      "function ResetScrollVelocity"
+    ],
+    "Selection": [
+      "property SelectionThickness"
+    ],
+    "SensorBase": [
+      "function Sense"
+    ],
+    "SerializationService": [
+      "function DeserializeInstancesAsync",
+      "function SerializeInstancesAsync"
+    ],
+    "SkateboardController": [
+      "property Steer",
+      "property Throttle"
+    ],
+    "SkateboardPlatform": [
+      "property Controller",
+      "property ControllingHumanoid",
+      "function ApplySpecificImpulse"
+    ],
+    "SlidingBallConstraint": [
+      "property CurrentPosition"
+    ],
+    "SocialService": [
+      "function GetPlayersByPartyId",
+      "function HideSelfView",
+      "function PromptGameInvite",
+      "function PromptPhoneBook",
+      "function ShowSelfView",
+      "function CanSendCallInviteAsync",
+      "function CanSendGameInviteAsync",
+      "function GetEventRsvpStatusAsync",
+      "function GetExperienceEventAsync",
+      "function GetPartyAsync",
+      "function GetUpcomingExperienceEventsAsync",
+      "function PromptFeedbackSubmissionAsync",
+      "function PromptLinkSharing",
+      "function PromptLinkSharingAsync",
+      "function PromptRsvpToEventAsync"
+    ],
+    "Sound": [
+      "property MaxDistance",
+      "property PlaybackLoudness",
+      "property isPlaying"
+    ],
+    "SoundService": [
+      "function GetMixerTime",
+      "function SetInputDevice"
+    ],
+    "SpringConstraint": [
+      "property CurrentLength"
+    ],
+    "StandardQueue": [
+      "function BatchCommitAsync",
+      "function PublishAsync",
+      "function SubscribeAsync"
+    ],
+    "StarterGear": [
+      "property Loaded"
+    ],
+    "StarterPlayer": [
+      "property LoadCharacterLayeredClothing "
+    ],
+    "Stats": [
+      "property ContactsCount",
+      "property DataReceiveKbps",
+      "property DataSendKbps",
+      "property FrameTime",
+      "property HeartbeatTime",
+      "property HeartbeatTimeMs",
+      "property InstanceCount",
+      "property MemoryTrackingEnabled",
+      "property MovingPrimitivesCount",
+      "property PhysicsReceiveKbps",
+      "property PhysicsSendKbps",
+      "property PhysicsStepTime",
+      "property PhysicsStepTimeMs",
+      "property PrimitivesCount",
+      "property RenderCPUFrameTime",
+      "property RenderGPUFrameTime",
+      "property SceneDrawcallCount",
+      "property SceneTriangleCount",
+      "property ShadowsDrawcallCount",
+      "property ShadowsTriangleCount",
+      "property UI2DDrawcallCount",
+      "property UI2DTriangleCount",
+      "property UI3DDrawcallCount",
+      "property UI3DTriangleCount",
+      "function GetHarmonyQualityLevel",
+      "function GetMemoryCategoryNames",
+      "function GetMemoryUsageMbAllCategories",
+      "function GetMemoryUsageMbAllCategoriesFiltered",
+      "function GetMemoryUsageMbFiltered",
+      "function GetMemoryUsageMbForTag",
+      "function GetTotalMemoryUsageMb",
+      "function ResetHarmonyMemoryTarget",
+      "function SetHarmonyMemoryTarget"
+    ],
+    "Studio": [
+      "property LocalAssetsFolder"
+    ],
+    "StudioService": [
+      "property ActiveScript",
+      "property DraggerSolveConstraints",
+      "property DrawConstraintsOnTop",
+      "property GridSize",
+      "property RotateIncrement",
+      "property ShowConstraintDetails",
+      "property StudioLocaleId"
+    ],
+    "StudioTestService": [
+      "function AddPlayers",
+      "function CanLeaveTest",
+      "function EndTest",
+      "function LeaveTest"
+    ],
+    "StyleBase": [
+      "function GetStyleRules",
+      "function InsertStyleRule",
+      "function SetStyleRules"
+    ],
+    "StyleQuery": [
+      "property IsActive",
+      "function GetCondition",
+      "function GetConditions",
+      "function SetCondition",
+      "function SetConditions"
+    ],
+    "StyleRule": [
+      "property SelectorError",
+      "function GetDefaultPropertyTransition",
+      "function GetProperties",
+      "function GetProperty",
+      "function GetPropertyTransitions",
+      "function SetDefaultPropertyTransition",
+      "function SetProperties",
+      "function SetProperty",
+      "function SetPropertyTransition",
+      "function SetPropertyTransitions"
+    ],
+    "StyleSheet": [
+      "function GetDerives",
+      "function SetDerives"
+    ],
+    "SurfaceAppearance": [
+      "property SurfaceSlot"
+    ],
+    "TaskScheduler": [
+      "property SchedulerDutyCycle",
+      "property SchedulerRate",
+      "property ThreadPoolSize"
+    ],
+    "Teams": [
+      "function RebalanceTeams"
+    ],
+    "TeleportAsyncResult": [
+      "property PrivateServerId",
+      "property ReservedServerAccessCode"
+    ],
+    "TeleportOptions": [
+      "function GetTeleportData",
+      "function SetTeleportData"
+    ],
+    "TeleportService": [
+      "function GetArrivingTeleportGui",
+      "function GetLocalPlayerTeleportData",
+      "function GetTeleportSetting",
+      "function SetTeleportGui",
+      "function SetTeleportSetting",
+      "function TeleportToPlaceInstance",
+      "function TeleportToPrivateServer",
+      "function TeleportToSpawnByName",
+      "function GetPlayerPlaceInstanceAsync",
+      "function PromptExperienceDetailsAsync",
+      "function ReserveServer",
+      "function ReserveServerAsync",
+      "function TeleportPartyAsync"
+    ],
+    "Terrain": [
+      "function AutowedgeCell",
+      "function AutowedgeCells",
+      "function ClearVoxelsAsync_beta",
+      "function CountCells",
+      "function GetCell",
+      "function GetMaterialSlot",
+      "function GetWaterCell",
+      "function IterateVoxelsAsync_beta",
+      "function ModifyVoxelsAsync_beta",
+      "function ReadVoxelsAsync_beta",
+      "function ResetMaterialSlot",
+      "function SetCells",
+      "function SetMaterialSlot",
+      "function SetWaterCell",
+      "function WriteVoxelsAsync_beta"
+    ],
+    "TerrainIterateOperation": [
+      "function CommitBlock"
+    ],
+    "TerrainModifyOperation": [
+      "function CommitBlock"
+    ],
+    "TerrainWriteOperation": [
+      "function CommitBlock",
+      "function GetBlock"
+    ],
+    "TestCase": [
+      "property SuiteName",
+      "property TestId",
+      "property TestName",
+      "property TimeoutSec",
+      "function Assert",
+      "function AssertLegacy",
+      "function Check",
+      "function EndTest",
+      "function GetTestTags",
+      "function Message",
+      "function Require",
+      "function RequireLegacy"
+    ],
+    "TestCoordinatorService": [
+      "function Participant",
+      "function Signal",
+      "function AwaitAllAsync",
+      "function AwaitAnyAsync",
+      "function AwaitSignalAsync",
+      "function BarrierAsync"
+    ],
+    "TestExecutionContext": [
+      "function Skip"
+    ],
+    "TestFailure": [
+      "property Line",
+      "property Matcher",
+      "property Message",
+      "property StackTrace",
+      "function GetActual",
+      "function GetContext",
+      "function GetExpected",
+      "function GetSource"
+    ],
+    "TestResult": [
+      "property Duration",
+      "property FailedChecks",
+      "property PassedChecks",
+      "property SkipReason",
+      "property Status",
+      "property SuiteName",
+      "property TestId",
+      "property TestName",
+      "property UncaughtError",
+      "function GetFailures",
+      "function GetTestTags"
+    ],
+    "TestRunResult": [
+      "property Duration",
+      "property Failed",
+      "property Passed",
+      "property Skipped",
+      "property Status",
+      "property Summary",
+      "property Total",
+      "function GetTests"
+    ],
+    "TestService": [
+      "property ErrorCount",
+      "property TestCount",
+      "property WarnCount",
+      "function Check",
+      "function Checkpoint",
+      "function Done",
+      "function Error",
+      "function Fail",
+      "function GetTestControlSchema",
+      "function GetTestControls",
+      "function ListTests",
+      "function Message",
+      "function RegisterSuite",
+      "function RegisterTest",
+      "function RegisterTestLegacy",
+      "function Require",
+      "function ResetTestControl",
+      "function ResetTestRegistry",
+      "function ScopeTime",
+      "function SetTestControl",
+      "function SignalProfilingCapture",
+      "function SignalProfilingStart",
+      "function SignalProfilingStop",
+      "function StartTestSession",
+      "function StopTestSession",
+      "function TakeSnapshot",
+      "function Warn",
+      "function getTestSessionProviderStats",
+      "function isFeatureEnabled",
+      "function CaptureScreenshotAsync",
+      "function FetchTestControlsAsync",
+      "function RequestValidationAsync",
+      "function RunTestsAsync",
+      "function StartAudioCaptureAsync",
+      "function StartVideoCaptureAsync",
+      "function StopAudioCaptureAsync",
+      "function StopVideoCaptureAsync"
+    ],
+    "TestSuite": [
+      "property SuiteName",
+      "property TimeoutSec",
+      "function GetTestTags",
+      "function RegisterTest"
+    ],
+    "TextBox": [
+      "property ContentText",
+      "property CursorPosition",
+      "property OpenTypeFeaturesError",
+      "property SelectionStart",
+      "property TextFits",
+      "function CaptureFocus",
+      "function IsFocused",
+      "function ReleaseFocus"
+    ],
+    "TextButton": [
+      "property ContentText",
+      "property LocalizedText",
+      "property OpenTypeFeaturesError",
+      "property TextFits"
+    ],
+    "TextChannel": [
+      "property DirectChatRequester",
+      "function DisplaySystemMessage",
+      "function SetDirectChatRequester",
+      "function AddUserAsync",
+      "function SendAsync"
+    ],
+    "TextChatMessage": [
+      "property MessageId",
+      "property Metadata",
+      "property PrefixText",
+      "property Status",
+      "property Timestamp",
+      "property Translation"
+    ],
+    "TextChatMessageProperties": [
+      "property PrefixText",
+      "property Translation"
+    ],
+    "TextChatService": [
+      "property ChatTranslationEnabled",
+      "function DisplayBubble",
+      "function CanUserChatAsync",
+      "function CanUsersChatAsync",
+      "function CanUsersDirectChatAsync",
+      "function GetChatGroupsAsync"
+    ],
+    "TextFilterTranslatedResult": [
+      "property SourceLanguage",
+      "property SourceText",
+      "function GetTranslationForLocale",
+      "function GetTranslations"
+    ],
+    "TextGenerator": [
+      "function GenerateTextAsync"
+    ],
+    "TextLabel": [
+      "property ContentText",
+      "property LocalizedText",
+      "property OpenTypeFeaturesError",
+      "property TextFits"
+    ],
+    "TextService": [
+      "function GetTextSize",
+      "function FilterAndTranslateStringAsync",
+      "function GetFamilyInfoAsync",
+      "function GetTextBoundsAsync",
+      "function GetTextSizeOffsetAsync"
+    ],
+    "Tool": [
+      "property GripForward",
+      "property GripPos",
+      "property GripRight",
+      "property GripUp"
+    ],
+    "TorsionSpringConstraint": [
+      "property CurrentAngle"
+    ],
+    "Trail": [
+      "function Clear"
+    ],
+    "Translator": [
+      "property LocaleId",
+      "function FormatByKey"
+    ],
+    "TweenService": [
+      "function SmoothDamp"
+    ],
+    "UIBlur": [
+      "property Color",
+      "property Enabled",
+      "property Strength",
+      "property Transparency"
+    ],
+    "UIDragDetector": [
+      "property Selectable",
+      "function AddConstraintFunction",
+      "function GetReferencePosition",
+      "function GetReferenceRotation",
+      "function SetDragStyleFunction"
+    ],
+    "UIGridLayout": [
+      "property AbsoluteCellCount",
+      "property AbsoluteCellSize"
+    ],
+    "UIGridStyleLayout": [
+      "function ApplyLayout",
+      "function SetCustomSortFunction"
+    ],
+    "UIPageLayout": [
+      "property CurrentPage",
+      "function JumpTo",
+      "function JumpToIndex",
+      "function Next",
+      "function Previous"
+    ],
+    "UniqueIdLookupService": [
+      "function GetOrCreateUniqueIdRemoteCommand"
+    ],
+    "UserGameSettings": [
+      "property RotationType",
+      "function GetCameraYInvertValue",
+      "function GetOnboardingCompleted",
+      "function InFullScreen",
+      "function InStudioMode",
+      "function SetCameraYInvertVisible",
+      "function SetGamepadCameraSensitivityVisible",
+      "function SetOnboardingCompleted"
+    ],
+    "UserInputService": [
+      "property OnScreenKeyboardPosition",
+      "property OnScreenKeyboardSize",
+      "property UserHeadCFrame",
+      "function CreateVirtualInput",
+      "function GetDeviceAcceleration",
+      "function GetMouseButtonsPressed",
+      "function GetUserCFrame",
+      "function RecenterUserHeadCFrame",
+      "function SetNavigationGamepad"
+    ],
+    "UserService": [
+      "function GetUserFromGlobalUserIdAsync",
+      "function GetUserInfosByUserIdsAsync"
+    ],
+    "UserSettings": [
+      "function IsUserFeatureEnabled",
+      "function Reset"
+    ],
+    "VRService": [
+      "property GuiInputUserCFrame",
+      "function GetTouchpadMode",
+      "function SetTouchpadMode"
+    ],
+    "ValueCurve": [
+      "property Length",
+      "property ValueType",
+      "function GetKeyAtIndex",
+      "function GetKeyIndicesAtTime",
+      "function GetKeys",
+      "function GetValueAtTime",
+      "function InsertKey",
+      "function InsertKeyValue",
+      "function RemoveKeyAtIndex",
+      "function SetKeys"
+    ],
+    "Vector3Curve": [
+      "function GetValueAtTime",
+      "function X",
+      "function Y",
+      "function Z"
+    ],
+    "VehicleSeat": [
+      "property AreHingesDetected"
+    ],
+    "VideoCapture": [
+      "property TimeLength"
+    ],
+    "VideoCaptureService": [
+      "function ClearMockInput",
+      "function SetMockInputAsync"
+    ],
+    "VideoDeviceInput": [
+      "property IsReady"
+    ],
+    "VideoDisplay": [
+      "function GetConnectedWires",
+      "function GetInputPins",
+      "function GetOutputPins"
+    ],
+    "VideoFrame": [
+      "property IsLoaded",
+      "property Resolution",
+      "property TimeLength",
+      "function Pause",
+      "function Play"
+    ],
+    "VideoPlayer": [
+      "property AutoLoadInStudio",
+      "property AutoPlayInStudio",
+      "property IsLoaded",
+      "property IsPlaying",
+      "property Resolution",
+      "property TimeLength",
+      "function GetConnectedWires",
+      "function GetInputPins",
+      "function GetOutputPins",
+      "function Pause",
+      "function Play",
+      "function Unload",
+      "function LoadAsync"
+    ],
+    "VideoSampler": [
+      "property TimeLength",
+      "property VideoContent",
+      "function GetSamplesAtTimesAsync"
+    ],
+    "VideoService": [
+      "function CreateVideoSamplerAsync"
+    ],
+    "VirtualInput": [
+      "function SendKey",
+      "function SendMouseButton",
+      "function SendMouseDelta",
+      "function SendMousePosition",
+      "function SendPointerAction",
+      "function SendTextInput"
+    ],
+    "VoiceChatInternal": [
+      "property VoiceChatState",
+      "function GetAudioProcessingSettings",
+      "function GetMicDevices",
+      "function GetParticipants",
+      "function GetVoiceChatApiVersion",
+      "function GetVoiceChatAvailable",
+      "function IsPublishPaused",
+      "function IsSubscribePaused",
+      "function JoinByGroupId",
+      "function JoinByGroupIdToken",
+      "function Leave",
+      "function PublishPause",
+      "function SetMicDevice",
+      "function SubscribePause",
+      "function SubscribePauseAll",
+      "function IsVoiceEnabledForUserIdAsync"
+    ],
+    "VoiceChatService": [
+      "function GetChatGroupsAsync",
+      "function IsVoiceEnabledForUserIdAsync"
+    ],
+    "WebSocketClient": [
+      "property ConnectionState",
+      "function Close",
+      "function Send"
+    ],
+    "WebSocketService": [
+      "function CreateClient"
+    ],
+    "WebStreamClient": [
+      "property ConnectionState",
+      "function Close",
+      "function Send"
+    ],
+    "WeldConstraint": [
+      "property Active"
+    ],
+    "Wire": [
+      "property Connected"
+    ],
+    "WireframeHandleAdornment": [
+      "function AddLine",
+      "function AddLines",
+      "function AddPath",
+      "function AddText",
+      "function Clear"
+    ],
+    "Workspace": [
+      "property FilteringEnabled",
+      "property InsertPoint",
+      "property InterpolationThrottling",
+      "property ReplicationFrequency",
+      "property ReplicationThroughput",
+      "property SignalBehavior",
+      "function GetNumAwakeParts",
+      "function GetPhysicsThrottling",
+      "function JoinToOutsiders",
+      "function PGSIsEnabled",
+      "function UnjoinFromOutsiders"
+    ],
+    "WorldRoot": [
+      "function ArePartsTouchingOthers",
+      "function IsRegion3Empty",
+      "function IsRegion3EmptyWithIgnoreList"
+    ],
+    "WrapDeformer": [
+      "function SetCageMeshContent",
+      "function CreateEditableMeshAsync",
+      "function GetDeformedCFrameAsync"
+    ],
+    "WrapLayer": [
+      "property DebugMode",
+      "property ReferenceOriginWorld",
+      "property RotateScaleDeformationMap",
+      "property ScaleOnlyDeformationMap",
+      "property TargetShaping"
+    ],
+    "WrapTarget": [
+      "property DebugMode",
+      "function CreateTextureInCageSpaceAsync",
+      "function CreateTextureInTargetSpaceAsync"
+    ],
+    "WrapTextureTransfer": [
+      "function PrepareProjectionMeshDataAsync"
+    ]
+  },
+  "method": "every member of api-dump.json touched in pcall through the runtime on an instance of its class (functions indexed, not called); exists = no error (a generated stub with its typed default counts, src/api_stubs.rs); implemented (real behaviour) = exists and no gap telemetry (missing / default-only / stub), minus call-unimplemented and stub-call from the given real-run gap files"
+}

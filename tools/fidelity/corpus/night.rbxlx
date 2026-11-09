@@ -1,0 +1,653 @@
+<roblox version="4">
+  <Item class="Workspace" referent="0">
+    <Properties>
+      <string name="Name">Workspace</string>
+      <Ref name="CurrentCamera">1</Ref>
+    </Properties>
+    <Item class="Camera" referent="1">
+      <Properties>
+        <string name="Name">Camera</string>
+      </Properties>
+    </Item>
+    <Item class="Part" referent="2">
+      <Properties>
+        <string name="Name">Baseplate</string>
+        <bool name="Anchored">true</bool>
+        <CoordinateFrame name="CFrame">
+          <X>0</X>
+          <Y>-10</Y>
+          <Z>0</Z>
+          <R00>1</R00>
+          <R01>0</R01>
+          <R02>0</R02>
+          <R10>0</R10>
+          <R11>1</R11>
+          <R12>0</R12>
+          <R20>0</R20>
+          <R21>0</R21>
+          <R22>1</R22>
+        </CoordinateFrame>
+        <Color3uint8 name="Color3uint8">6512482</Color3uint8>
+        <bool name="Locked">true</bool>
+        <Vector3 name="size">
+          <X>512</X>
+          <Y>20</Y>
+          <Z>512</Z>
+        </Vector3>
+      </Properties>
+    </Item>
+    <Item class="SpawnLocation" referent="3">
+      <Properties>
+        <string name="Name">SpawnLocation</string>
+        <bool name="Anchored">true</bool>
+        <CoordinateFrame name="CFrame">
+          <X>0</X>
+          <Y>0.5</Y>
+          <Z>0</Z>
+          <R00>1</R00>
+          <R01>0</R01>
+          <R02>0</R02>
+          <R10>0</R10>
+          <R11>1</R11>
+          <R12>0</R12>
+          <R20>0</R20>
+          <R21>0</R21>
+          <R22>1</R22>
+        </CoordinateFrame>
+        <Color3uint8 name="Color3uint8">10724005</Color3uint8>
+        <int name="Duration">0</int>
+        <Vector3 name="size">
+          <X>12</X>
+          <Y>1</Y>
+          <Z>12</Z>
+        </Vector3>
+      </Properties>
+    </Item>
+    <Item class="Terrain" referent="4">
+      <Properties>
+        <string name="Name">Terrain</string>
+      </Properties>
+    </Item>
+    <Item class="Part" referent="5">
+      <Properties>
+        <string name="Name">WallL</string>
+        <bool name="Anchored">true</bool>
+        <CoordinateFrame name="CFrame">
+          <X>-17</X>
+          <Y>8</Y>
+          <Z>-24</Z>
+          <R00>1</R00>
+          <R01>0</R01>
+          <R02>0</R02>
+          <R10>0</R10>
+          <R11>1</R11>
+          <R12>0</R12>
+          <R20>0</R20>
+          <R21>0</R21>
+          <R22>1</R22>
+        </CoordinateFrame>
+        <Color3uint8 name="Color3uint8">9867660</Color3uint8>
+        <Vector3 name="size">
+          <X>2</X>
+          <Y>16</Y>
+          <Z>32</Z>
+        </Vector3>
+      </Properties>
+    </Item>
+    <Item class="Part" referent="6">
+      <Properties>
+        <string name="Name">WallR</string>
+        <bool name="Anchored">true</bool>
+        <CoordinateFrame name="CFrame">
+          <X>17</X>
+          <Y>8</Y>
+          <Z>-24</Z>
+          <R00>1</R00>
+          <R01>0</R01>
+          <R02>0</R02>
+          <R10>0</R10>
+          <R11>1</R11>
+          <R12>0</R12>
+          <R20>0</R20>
+          <R21>0</R21>
+          <R22>1</R22>
+        </CoordinateFrame>
+        <Color3uint8 name="Color3uint8">9867660</Color3uint8>
+        <Vector3 name="size">
+          <X>2</X>
+          <Y>16</Y>
+          <Z>32</Z>
+        </Vector3>
+      </Properties>
+    </Item>
+    <Item class="Part" referent="7">
+      <Properties>
+        <string name="Name">WallBack</string>
+        <bool name="Anchored">true</bool>
+        <CoordinateFrame name="CFrame">
+          <X>0</X>
+          <Y>8</Y>
+          <Z>-41</Z>
+          <R00>1</R00>
+          <R01>0</R01>
+          <R02>0</R02>
+          <R10>0</R10>
+          <R11>1</R11>
+          <R12>0</R12>
+          <R20>0</R20>
+          <R21>0</R21>
+          <R22>1</R22>
+        </CoordinateFrame>
+        <Color3uint8 name="Color3uint8">9867660</Color3uint8>
+        <Vector3 name="size">
+          <X>36</X>
+          <Y>16</Y>
+          <Z>2</Z>
+        </Vector3>
+      </Properties>
+    </Item>
+    <Item class="Part" referent="8">
+      <Properties>
+        <string name="Name">RoofFront</string>
+        <bool name="Anchored">true</bool>
+        <CoordinateFrame name="CFrame">
+          <X>0</X>
+          <Y>17</Y>
+          <Z>-13</Z>
+          <R00>1</R00>
+          <R01>0</R01>
+          <R02>0</R02>
+          <R10>0</R10>
+          <R11>1</R11>
+          <R12>0</R12>
+          <R20>0</R20>
+          <R21>0</R21>
+          <R22>1</R22>
+        </CoordinateFrame>
+        <Color3uint8 name="Color3uint8">9867660</Color3uint8>
+        <Vector3 name="size">
+          <X>36</X>
+          <Y>2</Y>
+          <Z>10</Z>
+        </Vector3>
+      </Properties>
+    </Item>
+    <Item class="Part" referent="9">
+      <Properties>
+        <string name="Name">RoofBack</string>
+        <bool name="Anchored">true</bool>
+        <CoordinateFrame name="CFrame">
+          <X>0</X>
+          <Y>17</Y>
+          <Z>-35</Z>
+          <R00>1</R00>
+          <R01>0</R01>
+          <R02>0</R02>
+          <R10>0</R10>
+          <R11>1</R11>
+          <R12>0</R12>
+          <R20>0</R20>
+          <R21>0</R21>
+          <R22>1</R22>
+        </CoordinateFrame>
+        <Color3uint8 name="Color3uint8">9867660</Color3uint8>
+        <Vector3 name="size">
+          <X>36</X>
+          <Y>2</Y>
+          <Z>10</Z>
+        </Vector3>
+      </Properties>
+    </Item>
+    <Item class="Part" referent="10">
+      <Properties>
+        <string name="Name">RoofL</string>
+        <bool name="Anchored">true</bool>
+        <CoordinateFrame name="CFrame">
+          <X>-11</X>
+          <Y>17</Y>
+          <Z>-24</Z>
+          <R00>1</R00>
+          <R01>0</R01>
+          <R02>0</R02>
+          <R10>0</R10>
+          <R11>1</R11>
+          <R12>0</R12>
+          <R20>0</R20>
+          <R21>0</R21>
+          <R22>1</R22>
+        </CoordinateFrame>
+        <Color3uint8 name="Color3uint8">9867660</Color3uint8>
+        <Vector3 name="size">
+          <X>14</X>
+          <Y>2</Y>
+          <Z>12</Z>
+        </Vector3>
+      </Properties>
+    </Item>
+    <Item class="Part" referent="11">
+      <Properties>
+        <string name="Name">RoofR</string>
+        <bool name="Anchored">true</bool>
+        <CoordinateFrame name="CFrame">
+          <X>11</X>
+          <Y>17</Y>
+          <Z>-24</Z>
+          <R00>1</R00>
+          <R01>0</R01>
+          <R02>0</R02>
+          <R10>0</R10>
+          <R11>1</R11>
+          <R12>0</R12>
+          <R20>0</R20>
+          <R21>0</R21>
+          <R22>1</R22>
+        </CoordinateFrame>
+        <Color3uint8 name="Color3uint8">9867660</Color3uint8>
+        <Vector3 name="size">
+          <X>14</X>
+          <Y>2</Y>
+          <Z>12</Z>
+        </Vector3>
+      </Properties>
+    </Item>
+    <Item class="Part" referent="12">
+      <Properties>
+        <string name="Name">Floor</string>
+        <bool name="Anchored">true</bool>
+        <CoordinateFrame name="CFrame">
+          <X>0</X>
+          <Y>0.1</Y>
+          <Z>-24</Z>
+          <R00>1</R00>
+          <R01>0</R01>
+          <R02>0</R02>
+          <R10>0</R10>
+          <R11>1</R11>
+          <R12>0</R12>
+          <R20>0</R20>
+          <R21>0</R21>
+          <R22>1</R22>
+        </CoordinateFrame>
+        <Color3uint8 name="Color3uint8">7232080</Color3uint8>
+        <Vector3 name="size">
+          <X>32</X>
+          <Y>0.2</Y>
+          <Z>32</Z>
+        </Vector3>
+      </Properties>
+    </Item>
+    <Item class="Part" referent="13">
+      <Properties>
+        <string name="Name">White</string>
+        <bool name="Anchored">true</bool>
+        <CoordinateFrame name="CFrame">
+          <X>-8</X>
+          <Y>2.2</Y>
+          <Z>-26</Z>
+          <R00>1</R00>
+          <R01>0</R01>
+          <R02>0</R02>
+          <R10>0</R10>
+          <R11>1</R11>
+          <R12>0</R12>
+          <R20>0</R20>
+          <R21>0</R21>
+          <R22>1</R22>
+        </CoordinateFrame>
+        <Color3uint8 name="Color3uint8">16777215</Color3uint8>
+        <Vector3 name="size">
+          <X>4</X>
+          <Y>4</Y>
+          <Z>4</Z>
+        </Vector3>
+      </Properties>
+    </Item>
+    <Item class="Part" referent="14">
+      <Properties>
+        <string name="Name">Grey</string>
+        <bool name="Anchored">true</bool>
+        <CoordinateFrame name="CFrame">
+          <X>0</X>
+          <Y>3.2</Y>
+          <Z>-32</Z>
+          <R00>1</R00>
+          <R01>0</R01>
+          <R02>0</R02>
+          <R10>0</R10>
+          <R11>1</R11>
+          <R12>0</R12>
+          <R20>0</R20>
+          <R21>0</R21>
+          <R22>1</R22>
+        </CoordinateFrame>
+        <Color3uint8 name="Color3uint8">8421504</Color3uint8>
+        <Vector3 name="size">
+          <X>4</X>
+          <Y>6</Y>
+          <Z>4</Z>
+        </Vector3>
+      </Properties>
+    </Item>
+    <Item class="Part" referent="15">
+      <Properties>
+        <string name="Name">Red</string>
+        <bool name="Anchored">true</bool>
+        <CoordinateFrame name="CFrame">
+          <X>8</X>
+          <Y>2.2</Y>
+          <Z>-26</Z>
+          <R00>1</R00>
+          <R01>0</R01>
+          <R02>0</R02>
+          <R10>0</R10>
+          <R11>1</R11>
+          <R12>0</R12>
+          <R20>0</R20>
+          <R21>0</R21>
+          <R22>1</R22>
+        </CoordinateFrame>
+        <Color3uint8 name="Color3uint8">13122610</Color3uint8>
+        <Vector3 name="size">
+          <X>4</X>
+          <Y>4</Y>
+          <Z>4</Z>
+        </Vector3>
+      </Properties>
+    </Item>
+    <Item class="Part" referent="16">
+      <Properties>
+        <string name="Name">Altar</string>
+        <bool name="Anchored">true</bool>
+        <CoordinateFrame name="CFrame">
+          <X>0</X>
+          <Y>1.7</Y>
+          <Z>-22</Z>
+          <R00>1</R00>
+          <R01>0</R01>
+          <R02>0</R02>
+          <R10>0</R10>
+          <R11>1</R11>
+          <R12>0</R12>
+          <R20>0</R20>
+          <R21>0</R21>
+          <R22>1</R22>
+        </CoordinateFrame>
+        <Color3uint8 name="Color3uint8">11169370</Color3uint8>
+        <Vector3 name="size">
+          <X>8</X>
+          <Y>3</Y>
+          <Z>3</Z>
+        </Vector3>
+      </Properties>
+    </Item>
+    <Item class="Part" referent="17">
+      <Properties>
+        <string name="Name">LampSpotA</string>
+        <bool name="Anchored">true</bool>
+        <CoordinateFrame name="CFrame">
+          <X>-8</X>
+          <Y>14</Y>
+          <Z>-26</Z>
+          <R00>1</R00>
+          <R01>0</R01>
+          <R02>0</R02>
+          <R10>0</R10>
+          <R11>1</R11>
+          <R12>0</R12>
+          <R20>0</R20>
+          <R21>0</R21>
+          <R22>1</R22>
+        </CoordinateFrame>
+        <Color3uint8 name="Color3uint8">16768170</Color3uint8>
+        <Vector3 name="size">
+          <X>0.5</X>
+          <Y>0.5</Y>
+          <Z>0.5</Z>
+        </Vector3>
+      </Properties>
+      <Item class="SpotLight" referent="18">
+        <Properties>
+          <string name="Name">SpotLight</string>
+          <float name="Angle">90</float>
+          <float name="Brightness">0.63</float>
+          <Color3 name="Color">
+            <R>1</R>
+            <G>0.78431374</G>
+            <B>0.54901963</B>
+          </Color3>
+          <token name="Face">4</token>
+          <float name="Range">22.08</float>
+        </Properties>
+      </Item>
+    </Item>
+    <Item class="Part" referent="19">
+      <Properties>
+        <string name="Name">LampSpotB</string>
+        <bool name="Anchored">true</bool>
+        <CoordinateFrame name="CFrame">
+          <X>8</X>
+          <Y>15.5</Y>
+          <Z>-30</Z>
+          <R00>1</R00>
+          <R01>0</R01>
+          <R02>0</R02>
+          <R10>0</R10>
+          <R11>1</R11>
+          <R12>0</R12>
+          <R20>0</R20>
+          <R21>0</R21>
+          <R22>1</R22>
+        </CoordinateFrame>
+        <Color3uint8 name="Color3uint8">16768170</Color3uint8>
+        <Vector3 name="size">
+          <X>0.5</X>
+          <Y>0.5</Y>
+          <Z>0.5</Z>
+        </Vector3>
+      </Properties>
+      <Item class="SpotLight" referent="20">
+        <Properties>
+          <string name="Name">SpotLight</string>
+          <float name="Angle">60</float>
+          <float name="Brightness">2</float>
+          <Color3 name="Color">
+            <R>0.78431374</R>
+            <G>0.8235294</G>
+            <B>1</B>
+          </Color3>
+          <token name="Face">4</token>
+          <float name="Range">32</float>
+        </Properties>
+      </Item>
+    </Item>
+    <Item class="Part" referent="21">
+      <Properties>
+        <string name="Name">LampPoint</string>
+        <bool name="Anchored">true</bool>
+        <CoordinateFrame name="CFrame">
+          <X>0</X>
+          <Y>6</Y>
+          <Z>-36</Z>
+          <R00>1</R00>
+          <R01>0</R01>
+          <R02>0</R02>
+          <R10>0</R10>
+          <R11>1</R11>
+          <R12>0</R12>
+          <R20>0</R20>
+          <R21>0</R21>
+          <R22>1</R22>
+        </CoordinateFrame>
+        <Color3uint8 name="Color3uint8">16768170</Color3uint8>
+        <Vector3 name="size">
+          <X>0.5</X>
+          <Y>0.5</Y>
+          <Z>0.5</Z>
+        </Vector3>
+      </Properties>
+      <Item class="PointLight" referent="22">
+        <Properties>
+          <string name="Name">PointLight</string>
+          <float name="Brightness">0.15</float>
+          <Color3 name="Color">
+            <R>1</R>
+            <G>0.78431374</G>
+            <B>0.54901963</B>
+          </Color3>
+          <float name="Range">16</float>
+        </Properties>
+      </Item>
+    </Item>
+    <Item class="Part" referent="23">
+      <Properties>
+        <string name="Name">LampLow</string>
+        <bool name="Anchored">true</bool>
+        <CoordinateFrame name="CFrame">
+          <X>12</X>
+          <Y>4</Y>
+          <Z>-18</Z>
+          <R00>1</R00>
+          <R01>0</R01>
+          <R02>0</R02>
+          <R10>0</R10>
+          <R11>0</R11>
+          <R12>1</R12>
+          <R20>0</R20>
+          <R21>-1</R21>
+          <R22>0</R22>
+        </CoordinateFrame>
+        <Color3uint8 name="Color3uint8">16768170</Color3uint8>
+        <Vector3 name="size">
+          <X>0.5</X>
+          <Y>0.5</Y>
+          <Z>0.5</Z>
+        </Vector3>
+      </Properties>
+      <Item class="PointLight" referent="24">
+        <Properties>
+          <string name="Name">PointLight</string>
+          <float name="Brightness">0.63</float>
+          <Color3 name="Color">
+            <R>1</R>
+            <G>0.78431374</G>
+            <B>0.54901963</B>
+          </Color3>
+          <float name="Range">9.6</float>
+        </Properties>
+      </Item>
+    </Item>
+  </Item>
+  <Item class="Players" referent="25">
+    <Properties>
+      <string name="Name">Players</string>
+    </Properties>
+  </Item>
+  <Item class="Lighting" referent="26">
+    <Properties>
+      <string name="Name">Lighting</string>
+      <Color3 name="Ambient">
+        <R>0.03137255</R>
+        <G>0.03529412</G>
+        <B>0.05490196</B>
+      </Color3>
+      <float name="Brightness">0.35</float>
+      <float name="ClockTime">7.75</float>
+      <Color3 name="ColorShift_Bottom">
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+      </Color3>
+      <Color3 name="ColorShift_Top">
+        <R>0.54901963</R>
+        <G>0.6862745</G>
+        <B>0.9019608</B>
+      </Color3>
+      <float name="EnvironmentDiffuseScale">0.08</float>
+      <float name="EnvironmentSpecularScale">0.3</float>
+      <float name="ExposureCompensation">0</float>
+      <Color3 name="FogColor">
+        <R>0.0627451</R>
+        <G>0.08627451</G>
+        <B>0.13333334</B>
+      </Color3>
+      <float name="FogEnd">400</float>
+      <float name="FogStart">40</float>
+      <float name="GeographicLatitude">42</float>
+      <bool name="GlobalShadows">false</bool>
+      <token name="LightingStyle">0</token>
+      <Color3 name="OutdoorAmbient">
+        <R>0.047058824</R>
+        <G>0.05882353</G>
+        <B>0.09411765</B>
+      </Color3>
+      <bool name="PrioritizeLightingQuality">true</bool>
+      <token name="Technology">1</token>
+      <string name="TimeOfDay">07:45:00</string>
+    </Properties>
+  </Item>
+  <Item class="ReplicatedFirst" referent="27">
+    <Properties>
+      <string name="Name">ReplicatedFirst</string>
+    </Properties>
+  </Item>
+  <Item class="ReplicatedStorage" referent="28">
+    <Properties>
+      <string name="Name">ReplicatedStorage</string>
+    </Properties>
+  </Item>
+  <Item class="ServerScriptService" referent="29">
+    <Properties>
+      <string name="Name">ServerScriptService</string>
+    </Properties>
+  </Item>
+  <Item class="ServerStorage" referent="30">
+    <Properties>
+      <string name="Name">ServerStorage</string>
+    </Properties>
+  </Item>
+  <Item class="StarterGui" referent="31">
+    <Properties>
+      <string name="Name">StarterGui</string>
+    </Properties>
+  </Item>
+  <Item class="StarterPack" referent="32">
+    <Properties>
+      <string name="Name">StarterPack</string>
+    </Properties>
+  </Item>
+  <Item class="StarterPlayer" referent="33">
+    <Properties>
+      <string name="Name">StarterPlayer</string>
+    </Properties>
+    <Item class="StarterPlayerScripts" referent="34">
+      <Properties>
+        <string name="Name">StarterPlayerScripts</string>
+      </Properties>
+    </Item>
+    <Item class="StarterCharacterScripts" referent="35">
+      <Properties>
+        <string name="Name">StarterCharacterScripts</string>
+      </Properties>
+    </Item>
+  </Item>
+  <Item class="Teams" referent="36">
+    <Properties>
+      <string name="Name">Teams</string>
+    </Properties>
+  </Item>
+  <Item class="SoundService" referent="37">
+    <Properties>
+      <string name="Name">SoundService</string>
+    </Properties>
+  </Item>
+  <Item class="TextChatService" referent="38">
+    <Properties>
+      <string name="Name">TextChatService</string>
+    </Properties>
+  </Item>
+  <Item class="MaterialService" referent="39">
+    <Properties>
+      <string name="Name">MaterialService</string>
+    </Properties>
+  </Item>
+</roblox>

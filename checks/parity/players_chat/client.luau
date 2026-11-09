@@ -1,0 +1,33 @@
+-- rustudio --luau client probe (checks/parity/players_chat.md)
+-- (--luau runs on the main thread: the probe runs in a task so it can yield.)
+task.spawn(function()
+local P = game:GetService("Players") local p = P.LocalPlayer
+local function t(n, f) local r = table.pack(pcall(f)) local s = {} for i = 1, r.n do s[#s+1] = tostring(r[i]) end print("C " .. n .. " = " .. table.concat(s, " | ")) end
+local T = game:GetService("TextChatService")
+T.MessageReceived:Connect(function(m) print("C EV TCS.MessageReceived", m.Text, m.Status, m.TextSource, m.TextChannel, m.PrefixText, m.Metadata, m.MessageId ~= "") end)
+T.SendingMessage:Connect(function(m) print("C EV TCS.SendingMessage", m.Text, m.Status, m.PrefixText) end)
+T.BubbleDisplayed:Connect(function(a, m) print("C EV TCS.BubbleDisplayed", a, m.Text) end)
+p.Chatted:Connect(function(m) print("C EV Chatted", m) end)
+local ch = T:WaitForChild("TextChannels"):WaitForChild("RBXGeneral")
+ch.MessageReceived:Connect(function(m) print("C EV General.MessageReceived", m.Text, m.Status) end)
+T.OnIncomingMessage = function(m) print("C CB OnIncoming", m.Text, m.Status) local pr = Instance.new("TextChatMessageProperties") pr.PrefixText = "[X] " .. m.PrefixText return pr end
+t("IsVerified", function() return p:IsVerified() end)
+t("LoadCharacter client", function() return p:LoadCharacter() end)
+t("BanAsync client", function() return P:BanAsync({}) end)
+t("CIB", function() local c = T.ChatInputBarConfiguration return c.AbsolutePosition, c.AbsoluteSize, c.IsFocused, c.TextBox, c.TargetTextChannel end)
+t("CWC", function() local c = T.ChatWindowConfiguration return c.AbsolutePosition, c.AbsoluteSize end)
+t("Derive", function() local d = T.ChatWindowConfiguration:DeriveNewMessageProperties() return d.ClassName, d.TextColor3, d.TextStrokeTransparency, d.PrefixTextProperties end)
+t("BMP", function() local d = Instance.new("BubbleChatMessageProperties") return d.BackgroundColor3, d.BackgroundTransparency, d.TailVisible, d.TextColor3 end)
+t("send", function() local m = ch:SendAsync("hello world", "meta1") return m.Status, m.TextChannel, typeof(m.Timestamp) end)
+task.wait(1)
+t("sys", function() return ch:DisplaySystemMessage("system says", "Sys.Meta").Status end)
+t("DisplayBubble", function() return T:DisplayBubble(p.Character.Head, "bubble!") end)
+t("DisplayBubble nil", function() return T:DisplayBubble(nil, "x") end)
+t("PVS", function() return game:GetService("PlayerViewService"):GetDeviceCameraCFrame(p) end)
+local cmd = Instance.new("TextChatCommand") cmd.PrimaryAlias = "/hey" cmd.Triggered:Connect(function(src, txt) print("C EV cmd.Triggered", src, txt) end) cmd.Parent = T
+t("cmdsend", function() return ch:SendAsync("/hey there").Status end)
+local nc = Instance.new("TextChannel") nc.Parent = workspace
+t("outside", function() return nc:SendAsync("x") end)
+task.wait(2)
+t("Kick other", function() return #P:GetPlayers() end)
+end)

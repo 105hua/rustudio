@@ -1,0 +1,614 @@
+Info: rustudio 0.1.0 ready. Reflection database has 931 classes.
+Info: Loaded the sample scene
+Info: Checking the Roblox session…
+Info: Signed in as @testuser1 (session from the login keyring)
+Info: Loading the avatar for Play…
+Info: Avatar of user 10000000001: R6 with 2 worn items
+Info: Not shown yet:  (MoodAnimation)
+Info: Avatar ready for Play (user 10000000001, R6): the next character uses it
+Info: Default player scripts from Studio: PlayerScriptsLoader, PlayerModule, RbxCharacterSounds
+Info: ▶ Play: a server and a client are running; WASD + Space to move, Shift+F5 to stop
+Info: [Server] Hello from rustudio  —  ServerScriptService.Main:1
+Info: Character: R15 (from the place setting)
+Info: Sky: 1024px faces, light from above 0.156 0.399 0.666
+Info: [Server] GLOBALS|server|inventory.env.require|true | function | function | rustudio.prelude | 160 |  | 1 | false | function: 0x00005597cf77e740  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.script|userdata | Instance | GlobalsProbe1  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|meta.env|table | table: 0x00005597cfa3d7e0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|metakey.env.__index|table | table: 0x00005597cf79a350  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|meta.env.index|table | table: 0x00005597ce6ddc10  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|metakey.env.index.__index|table | table: 0x00005597cdfda450  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.Axes|table | table | table: 0x00005597cf7c0300  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.BrickColor|table | table | table: 0x00005597cf7c1230  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.CFrame|table | table | table: 0x00005597cf797b90  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.CatalogSearchParams|table | table | table: 0x00005597cf7c01e0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.Color3|table | table | table: 0x00005597cf7c1350  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.ColorSequence|table | table | table: 0x00005597cf7c0720  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.ColorSequenceKeypoint|table | table | table: 0x00005597cf7c07b0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.Content|table | table | table: 0x00005597cdead190  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.DateTime|table | table | table: 0x00005597cf7c0510  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.Delay|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77bc00  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.ElapsedTime|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77bb80  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.Enum|userdata | Enums | Enum  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.Faces|table | table | table: 0x00005597cf7c0360  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.FloatCurveKey|table | table | table: 0x00005597cf7c0870  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.Font|table | table | table: 0x00005597cf79a260  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.Game|userdata | Instance | Game  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.Instance|table | table | table: 0x00005597cf7c0150  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.LoadLibrary|true | function | function | rustudio.library | 27 | LoadLibrary | 1 | false | function: 0x00005597cf766d00  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.NumberRange|table | table | table: 0x00005597cf7c0960  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.NumberSequence|table | table | table: 0x00005597cf7c0810  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.NumberSequenceKeypoint|table | table | table: 0x00005597cf7c0900  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.OverlapParams|table | table | table: 0x00005597cf7c0240  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.Path2DControlPoint|table | table | table: 0x00005597ce6c6be0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.PathWaypoint|table | table | table: 0x00005597ce6c6dc0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.PhysicalProperties|table | table | table: 0x00005597cf7c0660  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.Random|table | table | table: 0x00005597cf7c0570  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.Ray|table | table | table: 0x00005597cf7c0b40  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.RaycastParams|table | table | table: 0x00005597cf7c02a0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.Rect|table | table | table: 0x00005597cf7c06c0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.Region3|table | table | table: 0x00005597cf7c0ae0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.Region3int16|table | table | table: 0x00005597cf7c0a80  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.RotationCurveKey|table | table | table: 0x00005597ce6c90d0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.SharedTable|table | table | table: 0x00005597cdead250  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.Spawn|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77bc40  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.TweenInfo|table | table | table: 0x00005597cf7c05d0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.UDim|table | table | table: 0x00005597cf7c0ff0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.UDim2|table | table | table: 0x00005597cf7c0f90  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.User|table | table | table: 0x00005597cdeac830  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.UserSettings|true | function | function | rustudio.library | 186 | UserSettings | 0 | false | function: 0x00005597cf797320  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.ValueCurveKey|table | table | table: 0x00005597ce6c9040  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.Vector2|table | table | table: 0x00005597cf7989a0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.Vector2int16|table | table | table: 0x00005597cf7c09c0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.Vector3|table | table | table: 0x00005597cf79a170  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.Vector3int16|table | table | table: 0x00005597cf7c0a20  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.Workspace|userdata | Instance | Workspace  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index._G|table | table | table: 0x00005597cdfda450  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index._VERSION|string | string | Luau 0.745  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__ac_capture_begin|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f5fb0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__ac_capture_known|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f5f30  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__ac_capture_poll|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f4570  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__ac_capture_prompt|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f5ef0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__ac_content_begin|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f49b0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__ac_content_ids|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f48f0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__ac_content_poll|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f4970  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__ac_create_decal|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f4a30  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__ac_instance_composition|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f4a70  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__ac_is_server|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f5eb0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__ac_pages|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f62f0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__ac_scene_mem_begin|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f4b70  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__ac_scene_mem_restore|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f4b30  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__ac_script_memory|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f4ab0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__ac_unparented|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f4af0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__ac_web_begin|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f6370  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__ac_web_poll|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f6330  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__geo_nav|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6bb350  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__geo_ops|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6bb1d0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_anim_after|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6bb890  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_anim_asset|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6bb950  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_anim_drive|true | function | function | rustudio.library | 867 | __rs_anim_drive | 0 | false | function: 0x00005597cf77a8c0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_anim_joint_spec|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6bb8d0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_anim_joint_upgrade|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6bb910  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_anim_register|true | function | function | rustudio.library | 473 | __rs_anim_register | 2 | false | function: 0x00005597cf77af00  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_anim_registered|true | function | function | rustudio.library | 474 | __rs_anim_registered | 1 | false | function: 0x00005597cf796e10  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_anim_rotation_list|true | function | function | rustudio.anim | 253 | rc_list | 1 | false | function: 0x00005597ce6bb610  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_anim_rotation_value|true | function | function | rustudio.anim | 266 | rc_value | 2 | false | function: 0x00005597ce6bb5d0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_asset_begin|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f4930  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_asset_ready|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77b640  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_avatar_get|true | function | function | rustudio.avatar | 56 | get | 1 | false | function: 0x00005597cdea43c0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_avatar_load|true | function | function | rustudio.avatar.apply | 24 | fetch | 2 | false | function: 0x00005597cdea4040  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_avatar_prompt_answer|true | function | function | rustudio.avatar | 259 | __rs_avatar_prompt_answer | 2 | false | function: 0x00005597cf7f95f0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_cg|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77b540  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_gated_events|table | table | table: 0x00005597cf7bf910  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_get_callback|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77b500  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_has_peer|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f4870  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_input_event|true | function | function | rustudio.gui_input | 1760 |  | 9 | false | function: 0x00005597ce6ae3d0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_input_frame_end|true | function | function | rustudio.library | 1274 | __rs_input_frame_end | 0 | false | function: 0x00005597cdead3a0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_invoke_reply|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f47f0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_invoke_server|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f4830  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_kfs_parts|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77b680  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_lua_methods|table | table | table: 0x00005597cf79a770  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_make_input_object|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77e700  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_make_signal|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77e6c0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_member_check|true | function | function | rustudio.prelude | 166 | __rs_member_check | 3 | false | function: 0x00005597cf768360  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_new_input_object|true | function | function | rustudio.library | 1230 | new_input_object | 1 | false | function: 0x00005597cdea7280  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_new_signal|true | function | function | rustudio.prelude | 45 | __rs_new_signal | 2 | false | function: 0x00005597cf7bfa90  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_pages_list|true | function | function | rustudio.pages | 8 | __rs_pages_list | 3 | false | function: 0x00005597cdeac890  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_pages_new|true | function | function | rustudio.pages | 4 | __rs_pages_new | 2 | false | function: 0x00005597cdeac8c0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_particles|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77b580  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_pc_chat_input|true | function | function | rustudio.players_chat | 801 | __rs_pc_chat_input | 1 | false | function: 0x00005597ce6f6470  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_pc_chat_view|true | function | function | rustudio.players_chat | 782 | __rs_pc_chat_view | 0 | false | function: 0x00005597ce6f64b0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_pc_clear_view|true | function | function | rustudio.players_chat | 796 | __rs_pc_clear_view | 0 | false | function: 0x00005597ce6df7a0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_pc_client_receive|true | function | function | rustudio.players_chat | 619 | __rs_pc_client_receive | 5 | false | function: 0x00005597cf80b750  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_pc_get|true | function | function | rustudio.players_chat | 50 | __rs_pc_get | 2 | false | function: 0x00005597ce6dfb00  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_pc_outbox|table | table | table: 0x00005597ce6df590  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_pc_server_receive|true | function | function | rustudio.players_chat | 593 | __rs_pc_server_receive | 5 | false | function: 0x00005597cded25b0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_pc_set|true | function | function | rustudio.players_chat | 57 | __rs_pc_set | 3 | false | function: 0x00005597ce6dfad0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_pc_step|true | function | function | rustudio.players_chat | 771 | __rs_pc_step | 0 | false | function: 0x00005597cded2540  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_pc_translator|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f63b0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_product_info|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77b5c0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_profile|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77b600  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_require_for|true | function | function | rustudio.prelude | 160 | __rs_require_for | 1 | false | function: 0x00005597cf7bfa30  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_seat|true | function | function | rustudio.library | 1524 | __rs_seat | 3 | false | function: 0x00005597cf7bf7c0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_serve_client_invoke|true | function | function | rustudio.invoke | 26 | __rs_serve_client_invoke | 2 | true | function: 0x00005597ce6ecb40  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_serve_invoke|true | function | function | rustudio.invoke | 40 | __rs_serve_invoke | 3 | true | function: 0x00005597ce6ecb20  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_set_raw|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77b4c0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_track_get|true | function | function | rustudio.library | 907 | __rs_track_get | 2 | false | function: 0x00005597cf796d20  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_track_set|true | function | function | rustudio.library | 922 | __rs_track_set | 3 | false | function: 0x00005597cf796cf0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_tracks|table | table | table: 0x00005597cf7bf250  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_tween_get|true | function | function | rustudio.library | 272 | __rs_tween_get | 2 | false | function: 0x00005597cf7970e0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_unseat|true | function | function | rustudio.library | 1552 | __rs_unseat | 2 | false | function: 0x00005597cf7d5f60  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_user_game_settings|table | table | table: 0x00005597cdfd9e20  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__rs_window_focus|true | function | function | rustudio.library | 1279 | __rs_window_focus | 1 | false | function: 0x00005597cdea7240  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__ws_begin|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cdea6d80  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__ws_bundle_details|true | function | function | [string "web_social_http"] | 171 |  | 1 | false | function: 0x00005597cf7fcc20  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__ws_campaign_record|true | function | function | rustudio.web_social.ads | 69 | campaign_record | 3 | false | function: 0x00005597cdea5940  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__ws_filter|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cdea6c80  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__ws_filter_text|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cdea6cc0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__ws_info_type|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cdea6e00  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__ws_owned|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cdea6dc0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__ws_page_copy|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cdea6d00  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__ws_poll|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cdea6d40  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__ws_send|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cdea5dc0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.__ws_subscription_override|true | function | function | rustudio.web_social.cancel_subscription | 18 | cached | 3 | false | function: 0x00005597cf7cc430  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.assert|true | function | function | [C] | -1 | assert | 0 | true | function: 0x00005597cdfda330  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.bit32|table | table | table: 0x00005597cdfd8260  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.buffer|table | table | table: 0x00005597cdfd7ed0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.collectgarbage|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cdfd6520  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.coroutine|table | table | table: 0x00005597cdfd9010  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.debug|table | table | table: 0x00005597cdfd65b0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.delay|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77bc00  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.elapsedTime|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77bb80  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.error|true | function | function | [C] | -1 | error | 0 | true | function: 0x00005597cdfda300  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.game|userdata | Instance | Game  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.gcinfo|true | function | function | [C] | -1 | gcinfo | 0 | true | function: 0x00005597cdfda2d0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.getfenv|true | function | function | [C] | -1 | getfenv | 0 | true | function: 0x00005597cdfda2a0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.getmetatable|true | function | function | [C] | -1 | getmetatable | 0 | true | function: 0x00005597cdfda270  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.integer|table | table | table: 0x00005597cdfd7570  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.ipairs|true | function | function | [C] | -1 | ipairs | 0 | true | function: 0x00005597cf77e7c0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.loadstring|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cdfd64f0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.math|table | table | table: 0x00005597cdfd6d60  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.newproxy|true | function | function | [C] | -1 | newproxy | 0 | true | function: 0x00005597cdfda210  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.next|true | function | function | [C] | -1 | next | 0 | true | function: 0x00005597cdfda240  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.os|table | table | table: 0x00005597cdfd89b0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.pairs|true | function | function | [C] | -1 | pairs | 0 | true | function: 0x00005597cf77e780  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.pcall|true | function | function | [C] | -1 | pcall | 0 | true | function: 0x00005597cdfd9f40  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.print|true | function | function | rustudio.prelude | 66 | print | 0 | true | function: 0x00005597cf77b7c0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.printidentity|true | function | function | rustudio.library | 26 | printidentity | 1 | false | function: 0x00005597cf766d20  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.rawequal|true | function | function | [C] | -1 | rawequal | 0 | true | function: 0x00005597cdfda1b0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.rawget|true | function | function | [C] | -1 | rawget | 0 | true | function: 0x00005597cdfda180  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.rawlen|true | function | function | [C] | -1 | rawlen | 0 | true | function: 0x00005597cdfda120  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.rawset|true | function | function | [C] | -1 | rawset | 0 | true | function: 0x00005597cdfda150  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.require|true | function | function | rustudio.prelude | 159 | require | 1 | false | function: 0x00005597cf7bfa60  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.select|true | function | function | [C] | -1 | select | 0 | true | function: 0x00005597cdfda0f0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.setfenv|true | function | function | [C] | -1 | setfenv | 0 | true | function: 0x00005597cdfda0c0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.setmetatable|true | function | function | [C] | -1 | setmetatable | 0 | true | function: 0x00005597cdfda090  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.settings|true | function | function | rustudio.library | 173 | settings | 0 | false | function: 0x00005597cf797350  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.shared|table | table | table: 0x00005597cf7bff10  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.spawn|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77bc40  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.stats|true | function | function | rustudio.library | 187 | stats | 0 | false | function: 0x00005597cf7972c0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.string|table | table | table: 0x00005597cdfd8830  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.table|table | table | table: 0x00005597cdfd8dd0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.task|table | table | table: 0x00005597cf7c00f0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.tick|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77bb40  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.time|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77bbc0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.tonumber|true | function | function | [C] | -1 | tonumber | 0 | true | function: 0x00005597cdfda060  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.tostring|true | function | function | [C] | -1 | tostring | 0 | true | function: 0x00005597cdfda030  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.type|true | function | function | [C] | -1 | type | 0 | true | function: 0x00005597cdfda000  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.typeof|true | function | function | [C] | -1 | typeof | 0 | true | function: 0x00005597cdfd9fd0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.unpack|true | function | function | [C] | -1 | unpack | 0 | true | function: 0x00005597cdfd8a70  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.utf8|table | table | table: 0x00005597cdfd8410  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.vector|table | table | table: 0x00005597cdfd7930  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.version|true | function | function | rustudio.library | 25 | version | 0 | false | function: 0x00005597cf766d40  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.wait|true | function | function | rustudio.prelude | 53 | wait | 1 | false | function: 0x00005597cf7ce4d0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.warn|true | function | function | rustudio.prelude | 70 | warn | 0 | true | function: 0x00005597cf77b780  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.workspace|userdata | Instance | Workspace  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.xpcall|true | function | function | [C] | -1 | xpcall | 0 | true | function: 0x00005597cdfd9f10  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.env.index.index.ypcall|true | function | function | [C] | -1 | pcall | 0 | true | function: 0x00005597cdfd9f40  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|meta.env.index.index|nil | nil  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.Axes|table | table | table: 0x00005597cf7c0300  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.BrickColor|table | table | table: 0x00005597cf7c1230  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.CFrame|table | table | table: 0x00005597cf797b90  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.CatalogSearchParams|table | table | table: 0x00005597cf7c01e0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.Color3|table | table | table: 0x00005597cf7c1350  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.ColorSequence|table | table | table: 0x00005597cf7c0720  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.ColorSequenceKeypoint|table | table | table: 0x00005597cf7c07b0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.Content|table | table | table: 0x00005597cdead190  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.DateTime|table | table | table: 0x00005597cf7c0510  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.Delay|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77bc00  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.ElapsedTime|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77bb80  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.Enum|userdata | Enums | Enum  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.Faces|table | table | table: 0x00005597cf7c0360  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.FloatCurveKey|table | table | table: 0x00005597cf7c0870  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.Font|table | table | table: 0x00005597cf79a260  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.Game|userdata | Instance | Game  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.Instance|table | table | table: 0x00005597cf7c0150  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.LoadLibrary|true | function | function | rustudio.library | 27 | LoadLibrary | 1 | false | function: 0x00005597cf766d00  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.NumberRange|table | table | table: 0x00005597cf7c0960  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.NumberSequence|table | table | table: 0x00005597cf7c0810  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.NumberSequenceKeypoint|table | table | table: 0x00005597cf7c0900  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.OverlapParams|table | table | table: 0x00005597cf7c0240  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.Path2DControlPoint|table | table | table: 0x00005597ce6c6be0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.PathWaypoint|table | table | table: 0x00005597ce6c6dc0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.PhysicalProperties|table | table | table: 0x00005597cf7c0660  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.Random|table | table | table: 0x00005597cf7c0570  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.Ray|table | table | table: 0x00005597cf7c0b40  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.RaycastParams|table | table | table: 0x00005597cf7c02a0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.Rect|table | table | table: 0x00005597cf7c06c0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.Region3|table | table | table: 0x00005597cf7c0ae0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.Region3int16|table | table | table: 0x00005597cf7c0a80  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.RotationCurveKey|table | table | table: 0x00005597ce6c90d0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.SharedTable|table | table | table: 0x00005597cdead250  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.Spawn|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77bc40  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.TweenInfo|table | table | table: 0x00005597cf7c05d0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.UDim|table | table | table: 0x00005597cf7c0ff0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.UDim2|table | table | table: 0x00005597cf7c0f90  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.User|table | table | table: 0x00005597cdeac830  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.UserSettings|true | function | function | rustudio.library | 186 | UserSettings | 0 | false | function: 0x00005597cf797320  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.ValueCurveKey|table | table | table: 0x00005597ce6c9040  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.Vector2|table | table | table: 0x00005597cf7989a0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.Vector2int16|table | table | table: 0x00005597cf7c09c0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.Vector3|table | table | table: 0x00005597cf79a170  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.Vector3int16|table | table | table: 0x00005597cf7c0a20  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.Workspace|userdata | Instance | Workspace  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible._G|table | table | table: 0x00005597cdfda450  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible._VERSION|string | string | Luau 0.745  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__ac_capture_begin|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f5fb0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__ac_capture_known|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f5f30  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__ac_capture_poll|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f4570  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__ac_capture_prompt|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f5ef0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__ac_content_begin|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f49b0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__ac_content_ids|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f48f0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__ac_content_poll|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f4970  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__ac_create_decal|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f4a30  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__ac_instance_composition|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f4a70  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__ac_is_server|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f5eb0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__ac_pages|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f62f0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__ac_scene_mem_begin|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f4b70  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__ac_scene_mem_restore|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f4b30  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__ac_script_memory|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f4ab0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__ac_unparented|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f4af0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__ac_web_begin|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f6370  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__ac_web_poll|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f6330  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__geo_nav|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6bb350  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__geo_ops|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6bb1d0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_anim_after|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6bb890  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_anim_asset|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6bb950  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_anim_drive|true | function | function | rustudio.library | 867 | __rs_anim_drive | 0 | false | function: 0x00005597cf77a8c0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_anim_joint_spec|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6bb8d0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_anim_joint_upgrade|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6bb910  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_anim_register|true | function | function | rustudio.library | 473 | __rs_anim_register | 2 | false | function: 0x00005597cf77af00  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_anim_registered|true | function | function | rustudio.library | 474 | __rs_anim_registered | 1 | false | function: 0x00005597cf796e10  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_anim_rotation_list|true | function | function | rustudio.anim | 253 | rc_list | 1 | false | function: 0x00005597ce6bb610  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_anim_rotation_value|true | function | function | rustudio.anim | 266 | rc_value | 2 | false | function: 0x00005597ce6bb5d0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_asset_begin|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f4930  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_asset_ready|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77b640  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_avatar_get|true | function | function | rustudio.avatar | 56 | get | 1 | false | function: 0x00005597cdea43c0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_avatar_load|true | function | function | rustudio.avatar.apply | 24 | fetch | 2 | false | function: 0x00005597cdea4040  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_avatar_prompt_answer|true | function | function | rustudio.avatar | 259 | __rs_avatar_prompt_answer | 2 | false | function: 0x00005597cf7f95f0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_cg|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77b540  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_gated_events|table | table | table: 0x00005597cf7bf910  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_get_callback|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77b500  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_has_peer|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f4870  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_input_event|true | function | function | rustudio.gui_input | 1760 |  | 9 | false | function: 0x00005597ce6ae3d0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_input_frame_end|true | function | function | rustudio.library | 1274 | __rs_input_frame_end | 0 | false | function: 0x00005597cdead3a0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_invoke_reply|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f47f0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_invoke_server|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f4830  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_kfs_parts|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77b680  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_lua_methods|table | table | table: 0x00005597cf79a770  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_make_input_object|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77e700  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_make_signal|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77e6c0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_member_check|true | function | function | rustudio.prelude | 166 | __rs_member_check | 3 | false | function: 0x00005597cf768360  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_new_input_object|true | function | function | rustudio.library | 1230 | new_input_object | 1 | false | function: 0x00005597cdea7280  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_new_signal|true | function | function | rustudio.prelude | 45 | __rs_new_signal | 2 | false | function: 0x00005597cf7bfa90  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_pages_list|true | function | function | rustudio.pages | 8 | __rs_pages_list | 3 | false | function: 0x00005597cdeac890  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_pages_new|true | function | function | rustudio.pages | 4 | __rs_pages_new | 2 | false | function: 0x00005597cdeac8c0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_particles|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77b580  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_pc_chat_input|true | function | function | rustudio.players_chat | 801 | __rs_pc_chat_input | 1 | false | function: 0x00005597ce6f6470  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_pc_chat_view|true | function | function | rustudio.players_chat | 782 | __rs_pc_chat_view | 0 | false | function: 0x00005597ce6f64b0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_pc_clear_view|true | function | function | rustudio.players_chat | 796 | __rs_pc_clear_view | 0 | false | function: 0x00005597ce6df7a0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_pc_client_receive|true | function | function | rustudio.players_chat | 619 | __rs_pc_client_receive | 5 | false | function: 0x00005597cf80b750  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_pc_get|true | function | function | rustudio.players_chat | 50 | __rs_pc_get | 2 | false | function: 0x00005597ce6dfb00  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_pc_outbox|table | table | table: 0x00005597ce6df590  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_pc_server_receive|true | function | function | rustudio.players_chat | 593 | __rs_pc_server_receive | 5 | false | function: 0x00005597cded25b0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_pc_set|true | function | function | rustudio.players_chat | 57 | __rs_pc_set | 3 | false | function: 0x00005597ce6dfad0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_pc_step|true | function | function | rustudio.players_chat | 771 | __rs_pc_step | 0 | false | function: 0x00005597cded2540  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_pc_translator|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f63b0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_product_info|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77b5c0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_profile|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77b600  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_require_for|true | function | function | rustudio.prelude | 160 | __rs_require_for | 1 | false | function: 0x00005597cf7bfa30  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_seat|true | function | function | rustudio.library | 1524 | __rs_seat | 3 | false | function: 0x00005597cf7bf7c0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_serve_client_invoke|true | function | function | rustudio.invoke | 26 | __rs_serve_client_invoke | 2 | true | function: 0x00005597ce6ecb40  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_serve_invoke|true | function | function | rustudio.invoke | 40 | __rs_serve_invoke | 3 | true | function: 0x00005597ce6ecb20  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_set_raw|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77b4c0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_track_get|true | function | function | rustudio.library | 907 | __rs_track_get | 2 | false | function: 0x00005597cf796d20  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_track_set|true | function | function | rustudio.library | 922 | __rs_track_set | 3 | false | function: 0x00005597cf796cf0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_tracks|table | table | table: 0x00005597cf7bf250  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_tween_get|true | function | function | rustudio.library | 272 | __rs_tween_get | 2 | false | function: 0x00005597cf7970e0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_unseat|true | function | function | rustudio.library | 1552 | __rs_unseat | 2 | false | function: 0x00005597cf7d5f60  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_user_game_settings|table | table | table: 0x00005597cdfd9e20  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__rs_window_focus|true | function | function | rustudio.library | 1279 | __rs_window_focus | 1 | false | function: 0x00005597cdea7240  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__ws_begin|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cdea6d80  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__ws_bundle_details|true | function | function | [string "web_social_http"] | 171 |  | 1 | false | function: 0x00005597cf7fcc20  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__ws_campaign_record|true | function | function | rustudio.web_social.ads | 69 | campaign_record | 3 | false | function: 0x00005597cdea5940  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__ws_filter|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cdea6c80  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__ws_filter_text|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cdea6cc0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__ws_info_type|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cdea6e00  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__ws_owned|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cdea6dc0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__ws_page_copy|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cdea6d00  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__ws_poll|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cdea6d40  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__ws_send|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cdea5dc0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.__ws_subscription_override|true | function | function | rustudio.web_social.cancel_subscription | 18 | cached | 3 | false | function: 0x00005597cf7cc430  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.assert|true | function | function | [C] | -1 | assert | 0 | true | function: 0x00005597cdfda330  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.bit32|table | table | table: 0x00005597cdfd8260  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.buffer|table | table | table: 0x00005597cdfd7ed0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.collectgarbage|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cdfd6520  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.coroutine|table | table | table: 0x00005597cdfd9010  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.debug|table | table | table: 0x00005597cdfd65b0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.delay|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77bc00  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.elapsedTime|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77bb80  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.error|true | function | function | [C] | -1 | error | 0 | true | function: 0x00005597cdfda300  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.game|userdata | Instance | Game  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.gcinfo|true | function | function | [C] | -1 | gcinfo | 0 | true | function: 0x00005597cdfda2d0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.getfenv|true | function | function | [C] | -1 | getfenv | 0 | true | function: 0x00005597cdfda2a0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.getmetatable|true | function | function | [C] | -1 | getmetatable | 0 | true | function: 0x00005597cdfda270  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.integer|table | table | table: 0x00005597cdfd7570  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.ipairs|true | function | function | [C] | -1 | ipairs | 0 | true | function: 0x00005597cf77e7c0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.loadstring|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cdfd64f0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.math|table | table | table: 0x00005597cdfd6d60  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.newproxy|true | function | function | [C] | -1 | newproxy | 0 | true | function: 0x00005597cdfda210  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.next|true | function | function | [C] | -1 | next | 0 | true | function: 0x00005597cdfda240  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.os|table | table | table: 0x00005597cdfd89b0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.pairs|true | function | function | [C] | -1 | pairs | 0 | true | function: 0x00005597cf77e780  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.pcall|true | function | function | [C] | -1 | pcall | 0 | true | function: 0x00005597cdfd9f40  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.print|true | function | function | rustudio.prelude | 66 | print | 0 | true | function: 0x00005597cf77b7c0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.printidentity|true | function | function | rustudio.library | 26 | printidentity | 1 | false | function: 0x00005597cf766d20  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.rawequal|true | function | function | [C] | -1 | rawequal | 0 | true | function: 0x00005597cdfda1b0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.rawget|true | function | function | [C] | -1 | rawget | 0 | true | function: 0x00005597cdfda180  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.rawlen|true | function | function | [C] | -1 | rawlen | 0 | true | function: 0x00005597cdfda120  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.rawset|true | function | function | [C] | -1 | rawset | 0 | true | function: 0x00005597cdfda150  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.require|true | function | function | rustudio.prelude | 160 |  | 1 | false | function: 0x00005597cf77e740  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.script|userdata | Instance | GlobalsProbe1  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.select|true | function | function | [C] | -1 | select | 0 | true | function: 0x00005597cdfda0f0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.setfenv|true | function | function | [C] | -1 | setfenv | 0 | true | function: 0x00005597cdfda0c0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.setmetatable|true | function | function | [C] | -1 | setmetatable | 0 | true | function: 0x00005597cdfda090  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.settings|true | function | function | rustudio.library | 173 | settings | 0 | false | function: 0x00005597cf797350  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.shared|table | table | table: 0x00005597cf7bff10  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.spawn|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77bc40  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.stats|true | function | function | rustudio.library | 187 | stats | 0 | false | function: 0x00005597cf7972c0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.string|table | table | table: 0x00005597cdfd8830  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.table|table | table | table: 0x00005597cdfd8dd0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.task|table | table | table: 0x00005597cf7c00f0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.tick|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77bb40  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.time|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77bbc0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.tonumber|true | function | function | [C] | -1 | tonumber | 0 | true | function: 0x00005597cdfda060  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.tostring|true | function | function | [C] | -1 | tostring | 0 | true | function: 0x00005597cdfda030  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.type|true | function | function | [C] | -1 | type | 0 | true | function: 0x00005597cdfda000  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.typeof|true | function | function | [C] | -1 | typeof | 0 | true | function: 0x00005597cdfd9fd0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.unpack|true | function | function | [C] | -1 | unpack | 0 | true | function: 0x00005597cdfd8a70  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.utf8|table | table | table: 0x00005597cdfd8410  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.vector|table | table | table: 0x00005597cdfd7930  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.version|true | function | function | rustudio.library | 25 | version | 0 | false | function: 0x00005597cf766d40  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.wait|true | function | function | rustudio.prelude | 53 | wait | 1 | false | function: 0x00005597cf7ce4d0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.warn|true | function | function | rustudio.prelude | 70 | warn | 0 | true | function: 0x00005597cf77b780  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.workspace|userdata | Instance | Workspace  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.xpcall|true | function | function | [C] | -1 | xpcall | 0 | true | function: 0x00005597cdfd9f10  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.visible.ypcall|true | function | function | [C] | -1 | pcall | 0 | true | function: 0x00005597cdfd9f40  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|meta.visible|nil | nil  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.coroutine.close|true | function | function | [C] | -1 | close | 0 | true | function: 0x00005597cdfd8ec0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.coroutine.create|true | function | function | [C] | -1 | create | 0 | true | function: 0x00005597cdfd8fe0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.coroutine.isyieldable|true | function | function | [C] | -1 | isyieldable | 0 | true | function: 0x00005597cdfd8ef0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.coroutine.resume|true | function | function | [C] | -1 | resume | 0 | true | function: 0x00005597cdfd8e90  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.coroutine.running|true | function | function | [C] | -1 | running | 0 | true | function: 0x00005597cdfd8fb0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.coroutine.status|true | function | function | [C] | -1 | status | 0 | true | function: 0x00005597cdfd8f80  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.coroutine.wrap|true | function | function | [C] | -1 | wrap | 0 | true | function: 0x00005597cdfd8f50  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.coroutine.yield|true | function | function | [C] | -1 | yield | 0 | true | function: 0x00005597cdfd8f20  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|meta.coroutine|nil | nil  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.task.cancel|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77bc80  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.task.defer|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77bd00  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.task.delay|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77bcc0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.task.desynchronize|true | function | function | rustudio.library | 377 |  | 0 | false | function: 0x00005597cf7668e0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.task.spawn|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597cf77bd40  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.task.synchronize|true | function | function | rustudio.library | 376 |  | 0 | false | function: 0x00005597cf766900  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.task.wait|true | function | function | rustudio.prelude | 49 | wait | 1 | false | function: 0x00005597cf796380  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|meta.task|nil | nil  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.debug.info|true | function | function | [C] | -1 | info | 0 | true | function: 0x00005597cdfd6580  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.debug.profilebegin|true | function | function | rustudio.library | 11 |  | 0 | false | function: 0x00005597cf766ee0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.debug.profileend|true | function | function | rustudio.library | 12 |  | 0 | false | function: 0x00005597cf766ec0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.debug.traceback|true | function | function | [C] | -1 | traceback | 0 | true | function: 0x00005597cdfd6550  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|meta.debug|nil | nil  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.os.clock|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005597ce6f46b0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.os.date|true | function | function | [C] | -1 | date | 0 | true | function: 0x00005597cdfd8950  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.os.difftime|true | function | function | [C] | -1 | difftime | 0 | true | function: 0x00005597cdfd8920  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.os.time|true | function | function | [C] | -1 | time | 0 | true | function: 0x00005597cdfd88f0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|meta.os|nil | nil  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.abs|true | function | function | [C] | -1 | abs | 0 | true | function: 0x00005597cdfd6d30  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.acos|true | function | function | [C] | -1 | acos | 0 | true | function: 0x00005597cdfd6d00  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.asin|true | function | function | [C] | -1 | asin | 0 | true | function: 0x00005597cdfd6cd0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.atan|true | function | function | [C] | -1 | atan | 0 | true | function: 0x00005597cdfd6c70  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.atan2|true | function | function | [C] | -1 | atan2 | 0 | true | function: 0x00005597cdfd6ca0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.ceil|true | function | function | [C] | -1 | ceil | 0 | true | function: 0x00005597cdfd6c40  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.clamp|true | function | function | [C] | -1 | clamp | 0 | true | function: 0x00005597cdfd67c0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.cos|true | function | function | [C] | -1 | cos | 0 | true | function: 0x00005597cdfd6be0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.cosh|true | function | function | [C] | -1 | cosh | 0 | true | function: 0x00005597cdfd6c10  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.deg|true | function | function | [C] | -1 | deg | 0 | true | function: 0x00005597cdfd6bb0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.e|number | number | 2.718281828459045  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.exp|true | function | function | [C] | -1 | exp | 0 | true | function: 0x00005597cdfd6b80  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.floor|true | function | function | [C] | -1 | floor | 0 | true | function: 0x00005597cdfd6b50  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.fmod|true | function | function | [C] | -1 | fmod | 0 | true | function: 0x00005597cdfd6b20  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.frexp|true | function | function | [C] | -1 | frexp | 0 | true | function: 0x00005597cdfd6af0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.huge|number | number | inf  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.isfinite|true | function | function | [C] | -1 | isfinite | 0 | true | function: 0x00005597cdfd6670  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.isinf|true | function | function | [C] | -1 | isinf | 0 | true | function: 0x00005597cdfd66a0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.isnan|true | function | function | [C] | -1 | isnan | 0 | true | function: 0x00005597cdfd66d0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.ldexp|true | function | function | [C] | -1 | ldexp | 0 | true | function: 0x00005597cdfd6ac0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.lerp|true | function | function | [C] | -1 | lerp | 0 | true | function: 0x00005597cdfd6700  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.log|true | function | function | [C] | -1 | log | 0 | true | function: 0x00005597cdfd6a60  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.log10|true | function | function | [C] | -1 | log10 | 0 | true | function: 0x00005597cdfd6a90  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.map|true | function | function | [C] | -1 | map | 0 | true | function: 0x00005597cdfd6730  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.max|true | function | function | [C] | -1 | max | 0 | true | function: 0x00005597cdfd6a30  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.min|true | function | function | [C] | -1 | min | 0 | true | function: 0x00005597cdfd6a00  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.modf|true | function | function | [C] | -1 | modf | 0 | true | function: 0x00005597cdfd69d0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.nan|number | number | nan  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.noise|true | function | function | [C] | -1 | noise | 0 | true | function: 0x00005597cdfd67f0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.phi|number | number | 1.618033988749895  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.pi|number | number | 3.141592653589793  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.pow|true | function | function | [C] | -1 | pow | 0 | true | function: 0x00005597cdfd69a0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.rad|true | function | function | [C] | -1 | rad | 0 | true | function: 0x00005597cdfd6970  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.random|true | function | function | [C] | -1 | random | 0 | true | function: 0x00005597cdfd6940  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.randomseed|true | function | function | [C] | -1 | randomseed | 0 | true | function: 0x00005597cdfd6910  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.round|true | function | function | [C] | -1 | round | 0 | true | function: 0x00005597cdfd6760  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.sign|true | function | function | [C] | -1 | sign | 0 | true | function: 0x00005597cdfd6790  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.sin|true | function | function | [C] | -1 | sin | 0 | true | function: 0x00005597cdfd68b0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.sinh|true | function | function | [C] | -1 | sinh | 0 | true | function: 0x00005597cdfd68e0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.sqrt|true | function | function | [C] | -1 | sqrt | 0 | true | function: 0x00005597cdfd6880  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.sqrt2|number | number | 1.4142135623730951  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.tan|true | function | function | [C] | -1 | tan | 0 | true | function: 0x00005597cdfd6820  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.tanh|true | function | function | [C] | -1 | tanh | 0 | true | function: 0x00005597cdfd6850  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.math.tau|number | number | 6.283185307179586  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|meta.math|nil | nil  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.string.byte|true | function | function | [C] | -1 | byte | 0 | true | function: 0x00005597cdfd8800  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.string.char|true | function | function | [C] | -1 | char | 0 | true | function: 0x00005597cdfd87d0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.string.find|true | function | function | [C] | -1 | find | 0 | true | function: 0x00005597cdfd87a0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.string.format|true | function | function | [C] | -1 | format | 0 | true | function: 0x00005597cdfd8770  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.string.gmatch|true | function | function | [C] | -1 | gmatch | 0 | true | function: 0x00005597cdfd8740  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.string.gsub|true | function | function | [C] | -1 | gsub | 0 | true | function: 0x00005597cdfd8710  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.string.len|true | function | function | [C] | -1 | len | 0 | true | function: 0x00005597cdfd86e0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.string.lower|true | function | function | [C] | -1 | lower | 0 | true | function: 0x00005597cdfd86b0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.string.match|true | function | function | [C] | -1 | match | 0 | true | function: 0x00005597cdfd8680  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.string.pack|true | function | function | [C] | -1 | pack | 0 | true | function: 0x00005597cdfd8560  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.string.packsize|true | function | function | [C] | -1 | packsize | 0 | true | function: 0x00005597cdfd8530  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.string.rep|true | function | function | [C] | -1 | rep | 0 | true | function: 0x00005597cdfd8650  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.string.reverse|true | function | function | [C] | -1 | reverse | 0 | true | function: 0x00005597cdfd8620  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.string.split|true | function | function | [C] | -1 | split | 0 | true | function: 0x00005597cdfd8590  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.string.sub|true | function | function | [C] | -1 | sub | 0 | true | function: 0x00005597cdfd85f0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.string.unpack|true | function | function | [C] | -1 | unpack | 0 | true | function: 0x00005597cdfd8500  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.string.upper|true | function | function | [C] | -1 | upper | 0 | true | function: 0x00005597cdfd85c0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|meta.string|nil | nil  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.table.clear|true | function | function | [C] | -1 | clear | 0 | true | function: 0x00005597cdfd8b30  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.table.clone|true | function | function | [C] | -1 | clone | 0 | true | function: 0x00005597cdfd8aa0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.table.concat|true | function | function | [C] | -1 | concat | 0 | true | function: 0x00005597cdfd8da0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.table.create|true | function | function | [C] | -1 | create | 0 | true | function: 0x00005597cdfd8b90  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.table.find|true | function | function | [C] | -1 | find | 0 | true | function: 0x00005597cdfd8b60  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.table.foreach|true | function | function | [C] | -1 | foreach | 0 | true | function: 0x00005597cdfd8d70  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.table.foreachi|true | function | function | [C] | -1 | foreachi | 0 | true | function: 0x00005597cdfd8d40  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.table.freeze|true | function | function | [C] | -1 | freeze | 0 | true | function: 0x00005597cdfd8b00  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.table.getn|true | function | function | [C] | -1 | getn | 0 | true | function: 0x00005597cdfd8d10  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.table.insert|true | function | function | [C] | -1 | insert | 0 | true | function: 0x00005597cdfd8cb0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.table.isfrozen|true | function | function | [C] | -1 | isfrozen | 0 | true | function: 0x00005597cdfd8ad0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.table.maxn|true | function | function | [C] | -1 | maxn | 0 | true | function: 0x00005597cdfd8ce0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.table.move|true | function | function | [C] | -1 | move | 0 | true | function: 0x00005597cdfd8bc0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.table.pack|true | function | function | [C] | -1 | pack | 0 | true | function: 0x00005597cdfd8c20  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.table.remove|true | function | function | [C] | -1 | remove | 0 | true | function: 0x00005597cdfd8c80  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.table.sort|true | function | function | [C] | -1 | sort | 0 | true | function: 0x00005597cdfd8c50  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.table.unpack|true | function | function | [C] | -1 | unpack | 0 | true | function: 0x00005597cdfd8bf0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|meta.table|nil | nil  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.utf8.char|true | function | function | [C] | -1 | char | 0 | true | function: 0x00005597cdfd8380  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.utf8.charpattern|string | string | [\x00-\x7f\xc2-\xf4][\x80-\xbf]*  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.utf8.codepoint|true | function | function | [C] | -1 | codepoint | 0 | true | function: 0x00005597cdfd83b0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.utf8.codes|true | function | function | [C] | -1 | codes | 0 | true | function: 0x00005597cdfd8320  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.utf8.len|true | function | function | [C] | -1 | len | 0 | true | function: 0x00005597cdfd8350  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.utf8.offset|true | function | function | [C] | -1 | offset | 0 | true | function: 0x00005597cdfd83e0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|meta.utf8|nil | nil  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.buffer.copy|true | function | function | [C] | -1 | copy | 0 | true | function: 0x00005597cdfd7a80  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.buffer.create|true | function | function | [C] | -1 | create | 0 | true | function: 0x00005597cdfd7ea0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.buffer.fill|true | function | function | [C] | -1 | fill | 0 | true | function: 0x00005597cdfd7a50  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.buffer.fromstring|true | function | function | [C] | -1 | fromstring | 0 | true | function: 0x00005597cdfd7e70  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.buffer.len|true | function | function | [C] | -1 | len | 0 | true | function: 0x00005597cdfd7ab0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.buffer.readbits|true | function | function | [C] | -1 | readbits | 0 | true | function: 0x00005597cdfd7a20  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.buffer.readf32|true | function | function | [C] | -1 | readf32 | 0 | true | function: 0x00005597cdfd7cf0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.buffer.readf64|true | function | function | [C] | -1 | readf64 | 0 | true | function: 0x00005597cdfd7cc0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.buffer.readi16|true | function | function | [C] | -1 | readi16 | 0 | true | function: 0x00005597cdfd7db0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.buffer.readi32|true | function | function | [C] | -1 | readi32 | 0 | true | function: 0x00005597cdfd7d50  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.buffer.readi8|true | function | function | [C] | -1 | readi8 | 0 | true | function: 0x00005597cdfd7e10  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.buffer.readstring|true | function | function | [C] | -1 | readstring | 0 | true | function: 0x00005597cdfd7b10  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.buffer.readu16|true | function | function | [C] | -1 | readu16 | 0 | true | function: 0x00005597cdfd7d80  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.buffer.readu32|true | function | function | [C] | -1 | readu32 | 0 | true | function: 0x00005597cdfd7d20  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.buffer.readu8|true | function | function | [C] | -1 | readu8 | 0 | true | function: 0x00005597cdfd7de0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.buffer.tostring|true | function | function | [C] | -1 | tostring | 0 | true | function: 0x00005597cdfd7e40  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.buffer.writebits|true | function | function | [C] | -1 | writebits | 0 | true | function: 0x00005597cdfd79f0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.buffer.writef32|true | function | function | [C] | -1 | writef32 | 0 | true | function: 0x00005597cdfd7b70  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.buffer.writef64|true | function | function | [C] | -1 | writef64 | 0 | true | function: 0x00005597cdfd7b40  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.buffer.writei16|true | function | function | [C] | -1 | writei16 | 0 | true | function: 0x00005597cdfd7c30  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.buffer.writei32|true | function | function | [C] | -1 | writei32 | 0 | true | function: 0x00005597cdfd7bd0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.buffer.writei8|true | function | function | [C] | -1 | writei8 | 0 | true | function: 0x00005597cdfd7c90  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.buffer.writestring|true | function | function | [C] | -1 | writestring | 0 | true | function: 0x00005597cdfd7ae0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.buffer.writeu16|true | function | function | [C] | -1 | writeu16 | 0 | true | function: 0x00005597cdfd7c00  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.buffer.writeu32|true | function | function | [C] | -1 | writeu32 | 0 | true | function: 0x00005597cdfd7ba0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.buffer.writeu8|true | function | function | [C] | -1 | writeu8 | 0 | true | function: 0x00005597cdfd7c60  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|meta.buffer|nil | nil  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.bit32.arshift|true | function | function | [C] | -1 | arshift | 0 | true | function: 0x00005597cdfd8230  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.bit32.band|true | function | function | [C] | -1 | band | 0 | true | function: 0x00005597cdfd8200  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.bit32.bnot|true | function | function | [C] | -1 | bnot | 0 | true | function: 0x00005597cdfd81d0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.bit32.bor|true | function | function | [C] | -1 | bor | 0 | true | function: 0x00005597cdfd81a0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.bit32.btest|true | function | function | [C] | -1 | btest | 0 | true | function: 0x00005597cdfd8140  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.bit32.bxor|true | function | function | [C] | -1 | bxor | 0 | true | function: 0x00005597cdfd8170  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.bit32.byteswap|true | function | function | [C] | -1 | byteswap | 0 | true | function: 0x00005597cdfd7f90  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.bit32.countlz|true | function | function | [C] | -1 | countlz | 0 | true | function: 0x00005597cdfd7ff0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.bit32.countrz|true | function | function | [C] | -1 | countrz | 0 | true | function: 0x00005597cdfd7fc0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.bit32.extract|true | function | function | [C] | -1 | extract | 0 | true | function: 0x00005597cdfd8110  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.bit32.lrotate|true | function | function | [C] | -1 | lrotate | 0 | true | function: 0x00005597cdfd80e0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.bit32.lshift|true | function | function | [C] | -1 | lshift | 0 | true | function: 0x00005597cdfd80b0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.bit32.replace|true | function | function | [C] | -1 | replace | 0 | true | function: 0x00005597cdfd8080  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.bit32.rrotate|true | function | function | [C] | -1 | rrotate | 0 | true | function: 0x00005597cdfd8050  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|inventory.bit32.rshift|true | function | function | [C] | -1 | rshift | 0 | true | function: 0x00005597cdfd8020  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|meta.bit32|nil | nil  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|tostring.tab|table | table | table: 0x00005597cb848d80 | table: 0x00005597cb848d80 | true  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|tostring.buf|buffer | buffer | buffer: 0x00005597cde622e0 | buffer: 0x00005597cde622e0 | true  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|tostring.instance|userdata | Instance | Game | Game | true  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|tostring.proxy|userdata | userdata | userdata: 0x00005597cde62300 | userdata: 0x00005597cde62300 | true  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|tostring.func|function | function | function: 0x00005597cdb6b140 | function: 0x00005597cdb6b140 | true  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|tostring.thread|thread | thread | thread: 0x00005597cf7830d0 | thread: 0x00005597cf7830d0 | true  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|gc.count|true | 2189.1083984375  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|gc.collect|true  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|gc.stop|true  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|gc.restart|true  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|gc.step|true | false  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|gc.setpause|false | ServerScriptService.GlobalsProbe1:20: collectgarbage called with invalid option  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|gc.setstepmul|false | ServerScriptService.GlobalsProbe1:20: collectgarbage called with invalid option  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|gc.isrunning|true | true  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|gc.bad|false | ServerScriptService.GlobalsProbe1:20: collectgarbage called with invalid option  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|gc.default|true  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|gc.info|true | 1533 | 1533.6875 | false  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|error.level0|false | message  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|error.level1|false | ServerScriptService.GlobalsProbe1:23: message  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|error.level2|false | message  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|error.level10|false | message  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|error.level-1|false | message  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|error.value.number|false | ServerScriptService.GlobalsProbe1:24: 23  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|error.value.boolean|false | false  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|error.value.table|false | table: 0x00005597cf80ff90  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|error.value.userdata|false | userdata: 0x00005597cde622e0  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|assert.default|false | ServerScriptService.GlobalsProbe1:25: assertion failed!  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|assert.table|false | ServerScriptService.GlobalsProbe1:26: invalid argument #2 to 'assert' (string expected, got table)  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|assert.returns|true | true | a | 4  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|xpcall.handler|true | false | error in error handling  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|trace.default|true | ServerScriptService.GlobalsProbe1:29\nServerScriptService.GlobalsProbe1:6 function probe\nServerScriptService.GlobalsProbe1:29\n  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|trace.message|true | message\nServerScriptService.GlobalsProbe1:30\nServerScriptService.GlobalsProbe1:6 function probe\nServerScriptService.GlobalsProbe1:30\n  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|trace.coroutine|true | co\nServerScriptService.GlobalsProbe1:31\n  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|debug.level0|true | [C] | -1 | info | 0 | true  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|debug.level1|true | ServerScriptService.GlobalsProbe1 | 32 |  | 0 | false  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|debug.level2|true | [C] | -1 | pcall | 0 | true  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|debug.level50|true  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|debug.level-1|false | ServerScriptService.GlobalsProbe1:32: invalid argument #1 to 'info' (level can't be negative)  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|debug.thread|true | ServerScriptService.GlobalsProbe1 | 33 |  | 0 | false  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|getfenv.0|true | table | false | nil  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|getfenv.1|true | table | true | GlobalsProbe1  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|getfenv.2|true | table | false | nil  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|getfenv.50|false | ServerScriptService.GlobalsProbe1:34: invalid argument #1 to 'getfenv' (invalid level)  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|getfenv.-1|false | ServerScriptService.GlobalsProbe1:34: invalid argument #1 to 'getfenv' (level must be non-negative)  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] GLOBALS|server|getfenv.C|true | false | true  —  ServerScriptService.GlobalsProbe1:4
+Error: [Server] rustudio.prelude:67: attempt to index nil with 'info'
+Info: [Server] Stack Begin
+Info: [Server] Script 'ServerScriptService.GlobalsProbe1', Line 4 - function emit  —  ServerScriptService.GlobalsProbe1:4
+Info: [Server] Script 'ServerScriptService.GlobalsProbe1', Line 6 - function probe  —  ServerScriptService.GlobalsProbe1:6
+Info: [Server] Script 'ServerScriptService.GlobalsProbe1', Line 36  —  ServerScriptService.GlobalsProbe1:36
+Info: [Server] Stack End
+Error: [Server] rustudio.prelude:67: attempt to index nil with 'info'
+Info: [Server] Stack Begin
+Info: [Server] Script 'ServerScriptService.GlobalsProbe2', Line 4 - function emit  —  ServerScriptService.GlobalsProbe2:4
+Info: [Server] Script 'ServerScriptService.GlobalsProbe2', Line 6 - function probe  —  ServerScriptService.GlobalsProbe2:6
+Info: [Server] Script 'ServerScriptService.GlobalsProbe2', Line 10 - function inv  —  ServerScriptService.GlobalsProbe2:10
+Info: [Server] Script 'ServerScriptService.GlobalsProbe2', Line 13  —  ServerScriptService.GlobalsProbe2:13
+Info: [Server] Stack End
+[shot] /home/user/projects/rustudio/app/tools/parity_probe/globals/server.png
+[shot] /home/user/projects/rustudio/app/tools/parity_probe/globals/server.view.png

@@ -1,0 +1,457 @@
+{
+ "GuiService": {
+  "missing": [
+   "property CoreGuiNavigationEnabled",
+   "property PreferredTextSize",
+   "property PreferredTransparency",
+   "property ReducedMotionEnabled",
+   "property TopbarInset",
+   "property ViewportDisplaySize",
+   "function AddSelectionParent",
+   "function AddSelectionTuple",
+   "function CloseInspectMenu",
+   "function DismissNotification",
+   "function GetGameplayPausedNotificationEnabled",
+   "function GetInsetArea",
+   "function InspectPlayerFromHumanoidDescription",
+   "function InspectPlayerFromUserId",
+   "function RemoveSelectionGroup",
+   "function Select",
+   "function SendNotification",
+   "function SetEmotesMenuOpen",
+   "function SetGameplayPausedNotificationEnabled",
+   "function SetInspectMenuEnabled"
+  ],
+  "events_to_check": [
+   "MenuClosed",
+   "MenuOpened"
+  ]
+ },
+ "UserInputService": {
+  "missing": [
+   "property OnScreenKeyboardPosition",
+   "property OnScreenKeyboardSize",
+   "property UserHeadCFrame",
+   "function CreateVirtualInput",
+   "function GetDeviceAcceleration",
+   "function GetMouseButtonsPressed",
+   "function GetUserCFrame",
+   "function RecenterUserHeadCFrame",
+   "function SetNavigationGamepad"
+  ],
+  "events_to_check": [
+   "DeviceAccelerationChanged",
+   "DeviceGravityChanged",
+   "DeviceRotationChanged",
+   "GamepadConnected",
+   "GamepadDisconnected",
+   "InputBegan",
+   "InputChanged",
+   "InputEnded",
+   "JumpRequest",
+   "LastInputTypeChanged",
+   "PointerAction",
+   "TextBoxFocusReleased",
+   "TextBoxFocused",
+   "TouchDrag",
+   "TouchEnded",
+   "TouchLongPress",
+   "TouchMoved",
+   "TouchPan",
+   "TouchPinch",
+   "TouchRotate",
+   "TouchStarted",
+   "TouchSwipe",
+   "TouchTap",
+   "TouchTapInWorld",
+   "UserCFrameChanged",
+   "WindowFocusReleased",
+   "WindowFocused"
+  ]
+ },
+ "ContextActionService": {
+  "missing": [
+   "function BindActionToInputTypes",
+   "function GetCurrentLocalToolIcon"
+  ],
+  "events_to_check": [
+   "LocalToolEquipped",
+   "LocalToolUnequipped"
+  ]
+ },
+ "GuiObject": {
+  "missing": [
+   "property GuiState",
+   "property InputSink"
+  ],
+  "events_to_check": [
+   "DragBegin",
+   "DragStopped",
+   "InputBegan",
+   "InputChanged",
+   "InputEnded",
+   "MouseEnter",
+   "MouseLeave",
+   "MouseMoved",
+   "MouseWheelBackward",
+   "MouseWheelForward",
+   "SelectionGained",
+   "SelectionLost",
+   "TouchLongPress",
+   "TouchPan",
+   "TouchPinch",
+   "TouchRotate",
+   "TouchSwipe",
+   "TouchTap"
+  ]
+ },
+ "LayerCollector": {
+  "missing": [
+   "function GetGuiObjectsAtPosition",
+   "function GetLayoutNodeTree"
+  ],
+  "events_to_check": []
+ },
+ "BillboardGui": {
+  "missing": [
+   "property CurrentDistance"
+  ],
+  "events_to_check": []
+ },
+ "PlayerGui": {
+  "missing": [
+   "property CurrentScreenOrientation",
+   "function GetTopbarTransparency",
+   "function SetTopbarTransparency"
+  ],
+  "events_to_check": [
+   "TopbarTransparencyChangedSignal"
+  ]
+ },
+ "BasePlayerGui": {
+  "missing": [
+   "function GetGuiObjectsAtPosition"
+  ],
+  "events_to_check": []
+ },
+ "CoreGui": {
+  "missing": [
+   "property Version"
+  ],
+  "events_to_check": []
+ },
+ "TextBox": {
+  "missing": [
+   "property ContentText",
+   "property CursorPosition",
+   "property OpenTypeFeaturesError",
+   "property SelectionStart",
+   "property TextFits",
+   "function CaptureFocus",
+   "function IsFocused",
+   "function ReleaseFocus"
+  ],
+  "events_to_check": [
+   "FocusLost",
+   "Focused",
+   "ReturnPressedFromOnScreenKeyboard"
+  ]
+ },
+ "TextButton": {
+  "missing": [
+   "property ContentText",
+   "property LocalizedText",
+   "property OpenTypeFeaturesError",
+   "property TextFits"
+  ],
+  "events_to_check": []
+ },
+ "TextLabel": {
+  "missing": [
+   "property ContentText",
+   "property LocalizedText",
+   "property OpenTypeFeaturesError",
+   "property TextFits"
+  ],
+  "events_to_check": []
+ },
+ "ImageButton": {
+  "missing": [
+   "property IsLoaded"
+  ],
+  "events_to_check": []
+ },
+ "ImageLabel": {
+  "missing": [
+   "property IsLoaded"
+  ],
+  "events_to_check": []
+ },
+ "ScrollingFrame": {
+  "missing": [
+   "property AbsoluteCanvasSize",
+   "property AbsoluteWindowSize",
+   "function GetScrollVelocity",
+   "function ResetScrollVelocity"
+  ],
+  "events_to_check": []
+ },
+ "UIPageLayout": {
+  "missing": [
+   "property CurrentPage",
+   "function JumpTo",
+   "function JumpToIndex",
+   "function Next",
+   "function Previous"
+  ],
+  "events_to_check": [
+   "PageEnter",
+   "PageLeave",
+   "Stopped"
+  ]
+ },
+ "UIGridLayout": {
+  "missing": [
+   "property AbsoluteCellCount",
+   "property AbsoluteCellSize"
+  ],
+  "events_to_check": []
+ },
+ "UIGridStyleLayout": {
+  "missing": [
+   "function ApplyLayout",
+   "function SetCustomSortFunction"
+  ],
+  "events_to_check": []
+ },
+ "UIBlur": {
+  "missing": [
+   "property Color",
+   "property Enabled",
+   "property Strength",
+   "property Transparency"
+  ],
+  "events_to_check": []
+ },
+ "UIDragDetector": {
+  "missing": [
+   "property Selectable",
+   "function AddConstraintFunction",
+   "function GetReferencePosition",
+   "function GetReferenceRotation",
+   "function SetDragStyleFunction"
+  ],
+  "events_to_check": [
+   "DragContinue",
+   "DragEnd",
+   "DragStart"
+  ]
+ },
+ "StyleRule": {
+  "missing": [
+   "property SelectorError",
+   "function GetDefaultPropertyTransition",
+   "function GetProperties",
+   "function GetProperty",
+   "function GetPropertyTransitions",
+   "function SetDefaultPropertyTransition",
+   "function SetProperties",
+   "function SetProperty",
+   "function SetPropertyTransition",
+   "function SetPropertyTransitions"
+  ],
+  "events_to_check": []
+ },
+ "StyleSheet": {
+  "missing": [
+   "function GetDerives",
+   "function SetDerives"
+  ],
+  "events_to_check": []
+ },
+ "StyleQuery": {
+  "missing": [
+   "property IsActive",
+   "function GetCondition",
+   "function GetConditions",
+   "function SetCondition",
+   "function SetConditions"
+  ],
+  "events_to_check": []
+ },
+ "StyleBase": {
+  "missing": [
+   "function GetStyleRules",
+   "function InsertStyleRule",
+   "function SetStyleRules"
+  ],
+  "events_to_check": [
+   "StyleRulesChanged"
+  ]
+ },
+ "ParticleEmitter2D": {
+  "missing": [
+   "property Acceleration",
+   "property Blend",
+   "property Brightness",
+   "property Color",
+   "property Drag",
+   "property EmissionAngle",
+   "property EmissionMode",
+   "property EmissionOffset",
+   "property EmissionSpread",
+   "property Enabled",
+   "property FlipbookBlendFrames",
+   "property FlipbookFramerate",
+   "property FlipbookLayout",
+   "property FlipbookMode",
+   "property FlipbookSizeX",
+   "property FlipbookSizeY",
+   "property FlipbookStartRandom",
+   "property Lifetime",
+   "property LightEmission",
+   "property LockedToParent",
+   "property Rate",
+   "property RotSpeed",
+   "property Rotation",
+   "property Size",
+   "property Speed",
+   "property SpreadAngle",
+   "property Squash",
+   "property TextureContent",
+   "property TimeScale",
+   "property Transparency",
+   "property ZIndex",
+   "function Clear",
+   "function Emit"
+  ],
+  "events_to_check": []
+ },
+ "Path2D": {
+  "missing": [
+   "function GetBoundingRect",
+   "function GetControlPoint",
+   "function GetControlPoints",
+   "function GetLength",
+   "function GetMaxControlPoints",
+   "function GetPositionOnCurve",
+   "function GetPositionOnCurveArcLength",
+   "function GetTangentOnCurve",
+   "function GetTangentOnCurveArcLength",
+   "function InsertControlPoint",
+   "function RemoveControlPoint",
+   "function SetControlPoints",
+   "function UpdateControlPoint"
+  ],
+  "events_to_check": [
+   "ControlPointChanged"
+  ]
+ },
+ "InputAction": {
+  "missing": [
+   "property PreferredBinding",
+   "function Fire",
+   "function GetState"
+  ],
+  "events_to_check": [
+   "Pressed",
+   "Released",
+   "StateChanged"
+  ]
+ },
+ "InputBinding": {
+  "missing": [
+   "property Deadzone",
+   "function Fire"
+  ],
+  "events_to_check": []
+ },
+ "InputActionLabel": {
+  "missing": [
+   "property ResolvedImageContent",
+   "property ResolvedText"
+  ],
+  "events_to_check": []
+ },
+ "GamepadService": {
+  "missing": [
+   "function DisableGamepadCursor",
+   "function EnableGamepadCursor"
+  ],
+  "events_to_check": []
+ },
+ "HapticService": {
+  "missing": [
+   "function GetMotor",
+   "function IsMotorSupported",
+   "function IsVibrationSupported",
+   "function SetMotor"
+  ],
+  "events_to_check": []
+ },
+ "HapticEffect": {
+  "missing": [
+   "function Play",
+   "function SetWaveformKeys",
+   "function Stop"
+  ],
+  "events_to_check": [
+   "Ended"
+  ]
+ },
+ "VRService": {
+  "missing": [
+   "property GuiInputUserCFrame",
+   "function GetTouchpadMode",
+   "function SetTouchpadMode"
+  ],
+  "events_to_check": [
+   "NavigationRequested",
+   "TouchpadModeChanged",
+   "UserCFrameChanged",
+   "UserCFrameEnabled"
+  ]
+ },
+ "VirtualInput": {
+  "missing": [
+   "function SendKey",
+   "function SendMouseButton",
+   "function SendMouseDelta",
+   "function SendMousePosition",
+   "function SendPointerAction",
+   "function SendTextInput"
+  ],
+  "events_to_check": []
+ },
+ "ProximityPrompt": {
+  "missing": [
+   "function InputHoldBegin",
+   "function InputHoldEnd"
+  ],
+  "events_to_check": [
+   "IndicatorHidden",
+   "IndicatorShown",
+   "PromptButtonHoldBegan",
+   "PromptButtonHoldEnded",
+   "PromptHidden",
+   "PromptShown",
+   "TriggerEnded",
+   "Triggered"
+  ]
+ },
+ "Dialog": {
+  "missing": [
+   "property InUse",
+   "function GetCurrentPlayers"
+  ],
+  "events_to_check": [
+   "DialogChoiceSelected"
+  ]
+ },
+ "TextGenerator": {
+  "missing": [
+   "function GenerateTextAsync"
+  ],
+  "events_to_check": []
+ }
+}

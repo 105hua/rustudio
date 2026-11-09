@@ -1,0 +1,20 @@
+Info: rustudio 0.1.0 ready. Reflection database has 931 classes.
+Info: Loaded the sample scene
+Info: Checking the Roblox session…
+Info: Signed in as @testuser1 (session from the login keyring)
+Info: Loading the avatar for Play…
+Info: Avatar of user 10000000001: R6 with 2 worn items
+Info: Not shown yet:  (MoodAnimation)
+Info: Avatar ready for Play (user 10000000001, R6): the next character uses it
+Info: Default player scripts from Studio: PlayerScriptsLoader, PlayerModule, RbxCharacterSounds
+Info: ▶ Play: a server and a client are running; WASD + Space to move, Shift+F5 to stop
+Info: [Server] Hello from rustudio  —  ServerScriptService.Main:1
+Info: Character: R15 (from the place setting)
+Info: Sky: 1024px faces, light from above 0.156 0.399 0.666
+Info: [Client] MINIMAL [C] -1  0 true  —  Players.testuser1.PlayerScripts.LocalScript:1
+Error: [Client] bad argument #1 to `LVector3.__add`: runtime error: Vector3 expected, got nil
+Info: [Client] Stack Begin
+Info: [Client] Script 'Players.testuser1.PlayerScripts.LocalScript', Line 1  —  Players.testuser1.PlayerScripts.LocalScript:1
+Info: [Client] Stack End
+[shot] /home/user/projects/rustudio/app/tools/parity_probe/datatypes/minimal.png
+[shot] /home/user/projects/rustudio/app/tools/parity_probe/datatypes/minimal.view.png

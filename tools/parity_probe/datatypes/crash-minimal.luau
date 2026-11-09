@@ -1,0 +1,1 @@
+local s=Instance.new("LocalScript");s.Source=[====[local o=Vector3.new(); local f; xpcall(function() return o+1 end,function() f=debug.info(2,'f') end); print('MINIMAL',debug.info(f,'slna')); f()]====];s.Parent=game:GetService("Players").LocalPlayer.PlayerScripts;s.Disabled=true;s.Disabled=false

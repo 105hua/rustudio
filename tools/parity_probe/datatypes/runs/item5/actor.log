@@ -1,0 +1,23 @@
+Info: rustudio 0.1.0 ready. Reflection database has 931 classes.
+Info: Loaded the sample scene
+Info: Checking the Roblox session…
+Info: Signed in as user (@Owner1) (session from the login keyring)
+Info: Loading the avatar for Play…
+Info: Avatar of user 100000002: R6 with 6 worn items
+Info: Not shown yet:  (MoodAnimation)
+Info: Avatar ready for Play (user 100000002, R6): the next character uses it
+Info: Default player scripts from Studio: PlayerScriptsLoader, PlayerModule, RbxCharacterSounds
+Info: ▶ Play: a server and a client are running; WASD + Space to move, Shift+F5 to stop
+Info: [Server] Hello from rustudio  —  ServerScriptService.Main:1
+Info: Character: R15 (from the place setting)
+Info: Sky: 1024px faces, light from above 0.156 0.399 0.666
+Info: [Server] DT|server|signal.Actor.callback|42  —  Workspace.DatatypeActor.Script:2
+Info: [Server] DT|server|signal.Actor.result|true|1  —  Workspace.DatatypeActor.Script:3
+Error: [Server] Attempt to connect failed: Passed value is not a function
+Info: [Server] DT|server|signal.Actor.bad.number|true|Connection  —  Workspace.DatatypeActor.Script:4
+Error: [Server] Attempt to connect failed: Passed value is not a function
+Info: [Server] DT|server|signal.Actor.bad.table|true|Connection  —  Workspace.DatatypeActor.Script:4
+Error: [Server] Attempt to connect failed: Passed value is not a function
+Info: [Server] DT|server|signal.Actor.bad.boolean|true|Connection  —  Workspace.DatatypeActor.Script:4
+[shot] /home/user/projects/rustudio/app/tools/parity_probe/datatypes/runs/item5/actor.png
+[shot] /home/user/projects/rustudio/app/tools/parity_probe/datatypes/runs/item5/actor.view.png

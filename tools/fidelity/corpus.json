@@ -1,0 +1,1034 @@
+{
+  "place_a": {
+    "path": "~/.local/share/rustudio/places/place-a.rbxl",
+    "about": "Place A lobby, the person's own place (read where it lies, never copied into the project)",
+    "max_mae": 34.0,
+    "why_max_mae": "round 11: settled shots 32.4 (10/20/40 s) + 1.6; round 12 reads 32.4 with the menu camera's os.clock put in phase with Studio's; only ever lowered"
+  },
+  "demo": {
+    "path": "corpus/demo.rbxlx",
+    "about": "rustudio's sample scene on the default place",
+    "max_mae": 24.0,
+    "why_max_mae": "round 12: settled 21.7 at 10 s once the harness puts the character on the SpawnLocation's centre in both engines (Studio's spawn point is random) + 2.3; was 42 with the random spawn; only ever lowered"
+  },
+  "control": {
+    "path": "corpus/control.rbxlx",
+    "about": "deterministic geometry, lighting and materials; physics facts",
+    "max_mae": 25.0,
+    "why_max_mae": "round 12: settled 23.1 at 10 s with the aligned spawn + 1.9; only ever lowered"
+  },
+  "place_a_match": {
+    "path": "~/.local/share/rustudio/places/place-a.rbxl",
+    "about": "Place A during a match: place_a_match.luau readies the party through Place A's Party remote 3 s in, both engines load Map 4/Map 1, and the view follows the nearest enemy; shots and the capture fall after the character spawned with enemies in view",
+    "times": [
+      60,
+      70,
+      80
+    ],
+    "capture_at": 68,
+    "camera_at": 70,
+    "align": false,
+    "physics": false,
+    "scripts": [
+      [
+        "place_a_match.luau",
+        3
+      ]
+    ],
+    "look_follows_game": true,
+    "pixel_gate": false,
+    "why_pixel_gate": "round 23: the view follows the nearest enemy and Place A spawns them at random windows, so one shot's pixels aren't reproducible (render spread 21 over three runs, 25-47); the render score's drop check, errors and empty views still gate"
+  },
+  "place_c": {
+    "project": "~/games/place-c",
+    "about": "Place C (top-down space roguelite), the person's project folder: copied to /tmp; rustudio opens the folder, Studio a place argon builds from the same copy",
+    "studio_build": "argon",
+    "volatile_parts": {
+      "Workspace.Scenery.Part": [
+        "position",
+        "transparency"
+      ]
+    },
+    "why_volatile_parts": "round 23: Place C's World.luau sets each scenery ring part's Transparency from sin(os.clock() x 6 + 0.7 i) and its place from the wave radius every frame, so the two captures read them at different moments (materials 100 -> 96 in round 21 when the rings first matched)"
+  },
+  "place_b": {
+    "project": "~/games/place-b",
+    "place_file": "place-b/og.rbxl",
+    "about": "Place B, the person's project folder over its og.rbxl: copied to /tmp; rustudio opens the folder, Studio the place rustudio --build makes of it (argon can't put a project over a place)",
+    "studio_build": "rustudio",
+    "errors_as_studio": true,
+    "why_errors_as_studio": "its scripts error in Studio as well (DataStore in an unpublished place, JToH kit remotes never placed, a require of a private asset id): only errors Studio doesn't show fail the gate",
+    "pixel_gate": false,
+    "why_pixel_gate": "round 23: the reference Studio can't download most of the place's assets (Roblox wants a signed-in session; the offline mock serves none), while rustudio draws the ones in its cache (pumpkins, trees), and Studio's chat window opens at random; the asset audit, errors, empty views and the render score's drop check still gate",
+    "reference_limits": "round 27: the offline reference Studio can't download this place's custom Sky faces (not in an offline Studio's asset store) and draws its default sky; rustudio draws the real faces since 0a673f4, so the render score under-credits the sky. Not a rustudio regression; don't re-break the sky to match."
+  },
+  "bloom": {
+    "path": "corpus/bloom.rbxlx",
+    "calibration": true,
+    "about": "bloom calibration (round 19): Neon balls of 1, 2 and 4 studs at 30 studs, 2-stud balls at 15 and 60, a white ball and a Neon bar, over black at night, from a fixed scripted camera far from the spawn; not in the default pass",
+    "times": [
+      6,
+      10
+    ],
+    "capture_at": 8,
+    "align": false,
+    "physics": false,
+    "max_mae": 40.0
+  },
+  "lightcap-soft": {
+    "path": "corpus/lightcap-soft.rbxlx",
+    "calibration": true,
+    "about": "local light strength calibration (round 19), LightingStyle Soft (Technology Voxel): a dark grey floor (40, 40, 40) under single PointLights (Range 12) of Brightness 0.5–32, four overlapping Brightness 8 lights and one Brightness 8.2 Range 45 (Place B's), at night from a fixed camera overhead; not in the default pass",
+    "times": [
+      8
+    ],
+    "capture_at": 6,
+    "align": false,
+    "physics": false,
+    "max_mae": 40.0
+  },
+  "lightcap-real": {
+    "path": "corpus/lightcap-real.rbxlx",
+    "calibration": true,
+    "about": "local light strength calibration (round 19), LightingStyle Realistic (Technology Future): a dark grey floor (40, 40, 40) under single PointLights (Range 12) of Brightness 0.5–32, four overlapping Brightness 8 lights and one Brightness 8.2 Range 45 (Place B's), at night from a fixed camera overhead; not in the default pass",
+    "times": [
+      8
+    ],
+    "capture_at": 6,
+    "align": false,
+    "physics": false,
+    "max_mae": 40.0
+  },
+  "place-c-probe": {
+    "project": "~/games/place-c",
+    "about": "Place C with probe_states.luau (round 19): client humanoid states, PlatformStanding events and tracks; not in the default pass",
+    "studio_build": "argon",
+    "calibration": true,
+    "times": [
+      10
+    ],
+    "scripts": [
+      [
+        "probe_states.luau",
+        1
+      ]
+    ],
+    "physics": false
+  },
+  "terrain": {
+    "path": "corpus/terrain.rbxlx",
+    "terrain": true,
+    "about": "terrain set (round 21): a script builds the same voxels in both engines (21 material pads, a 4-material checker, 15-60 degree FillWedge slopes, a voxel staircase, a one-voxel wall, an overhang, a cave, single voxels at occupancy 1-0.1, a sand basin with water, a grass hill with Decoration), a client script holds a fixed camera per shot; MaterialColors overridden from 46 s",
+    "times": [
+      8,
+      12,
+      16,
+      20,
+      24,
+      28,
+      32,
+      36,
+      40,
+      44,
+      48,
+      52
+    ],
+    "capture_at": 6,
+    "align": false,
+    "physics": false,
+    "max_mae": 40.0,
+    "spots": {
+      "8": "T1 pads",
+      "12": "T2 pads grazing",
+      "16": "T3 checker",
+      "20": "T4 slopes/stairs/wall",
+      "24": "T5 cave",
+      "28": "T6 shore",
+      "32": "Place A underwater",
+      "36": "T8 grass near",
+      "40": "T8b grass far",
+      "44": "T9 far view",
+      "48": "T1 MaterialColors",
+      "52": "T10 partial voxels"
+    },
+    "rustudio_env": {
+      "RUSTUDIO_MATPACKS": "0"
+    },
+    "why_rustudio_env": "the offline Studio's Studio draws terrain without textures (it asks for each pack as a KTX2 transcode it can't get; docs/MECHANICS.md round 21), so rustudio is compared without packs too"
+  },
+  "terrain-probe": {
+    "path": "corpus/terrain.rbxlx",
+    "calibration": true,
+    "about": "terrain shape probe (round 21): terrain_probe.luau writes exact cells with WriteVoxels at x 5000+, raycasts down on a 0.5-stud grid and reads voxels back after odd FillBlock / FillBall; FIDTER output compared by terrain_probe.py",
+    "times": [
+      12
+    ],
+    "capture_at": 3,
+    "align": false,
+    "physics": false,
+    "scripts": [
+      [
+        "terrain_probe.luau",
+        5
+      ]
+    ],
+    "max_mae": 100.0,
+    "rustudio_env": {
+      "RUSTUDIO_MATPACKS": "0"
+    }
+  },
+  "lightgrid": {
+    "path": "corpus/lightgrid.rbxlx",
+    "calibration": true,
+    "terrain": true,
+    "about": "light grid probe (round 26, make_lightgrid_place.py): terrain stations lit by OutdoorAmbient alone (Ambient 0, Brightness 0, no environment light, ShadowMap), so each surface shows its skylight: a tall and a short wall from above, five pits, three floating roofs from the side, a tunnel, and a wall seen from 64 to 900 studs away and from 96 to 640 studs up (the grid's extent), and with Camera.Focus moved off the camera",
+    "times": [
+      8,
+      13,
+      18,
+      23,
+      28,
+      33,
+      38,
+      43,
+      48,
+      53,
+      58,
+      63,
+      68,
+      73,
+      78,
+      83,
+      88,
+      93,
+      98,
+      103,
+      108,
+      113,
+      118,
+      123,
+      128,
+      133,
+      138
+    ],
+    "capture_at": 6,
+    "align": false,
+    "physics": false,
+    "max_mae": 40.0,
+    "spots": {
+      "8": "L1 tall wall",
+      "13": "L2 short wall",
+      "18": "P1 pit 8/32",
+      "23": "P2 pit 16/32",
+      "28": "P3 pit 16/16",
+      "33": "P4 pit 16/64",
+      "38": "P5 pit 4/32",
+      "43": "R1 roof 16",
+      "48": "R2 roof 32",
+      "53": "R3 roof 64",
+      "58": "U1 tunnel",
+      "63": "D64",
+      "68": "D128",
+      "73": "D192",
+      "78": "D256",
+      "83": "D320",
+      "88": "D448",
+      "93": "D640",
+      "98": "D900",
+      "103": "H96",
+      "108": "H160",
+      "113": "H224",
+      "118": "H320",
+      "123": "H448",
+      "128": "H640",
+      "133": "focus far, camera near",
+      "138": "focus near, camera far"
+    },
+    "rustudio_env": {
+      "RUSTUDIO_MATPACKS": "0"
+    }
+  },
+  "lightgrid2": {
+    "path": "corpus/lightgrid2.rbxlx",
+    "calibration": true,
+    "terrain": true,
+    "about": "light grid probe, second set (round 26, make_lightgrid_place.py), lit as lightgrid: pit floors from above (16 wide, 8 to 64 deep; 8, 24, 32 wide), the ground under three floating roofs, a tunnel's floor 4 to 64 studs in, and the ground beside walls 4 to 48 high",
+    "times": [
+      8,
+      13,
+      18,
+      23,
+      28,
+      33,
+      38,
+      43,
+      48,
+      53,
+      58,
+      63,
+      68,
+      73,
+      78,
+      83,
+      88,
+      93,
+      98,
+      103,
+      108,
+      113,
+      118,
+      123
+    ],
+    "capture_at": 6,
+    "align": false,
+    "physics": false,
+    "max_mae": 40.0,
+    "spots": {
+      "8": "pit 16/8",
+      "13": "pit 16/24",
+      "18": "pit 16/40",
+      "23": "pit 16/48",
+      "28": "pit 16/56",
+      "33": "pit 8/8",
+      "38": "pit 8/16",
+      "43": "pit 24/32",
+      "48": "pit 32/32",
+      "53": "pit 16/16",
+      "58": "pit 16/32",
+      "63": "pit 16/64",
+      "68": "under roof 16",
+      "73": "under roof 32",
+      "78": "under roof 64",
+      "83": "tunnel 4",
+      "88": "tunnel 12",
+      "93": "tunnel 24",
+      "98": "tunnel 40",
+      "103": "tunnel 64",
+      "108": "wall 4",
+      "113": "wall 8",
+      "118": "wall 24",
+      "123": "wall 48"
+    },
+    "rustudio_env": {
+      "RUSTUDIO_MATPACKS": "0"
+    }
+  },
+  "skydown": {
+    "path": "corpus/skydown.rbxlx",
+    "calibration": true,
+    "about": "round 26 (make_skydown_place.py): an empty place, the camera looking 0 to 90 degrees down into the default skybox (and 55 down turned 45), for where Studio's bottom face begins",
+    "times": [
+      8,
+      12,
+      16,
+      20,
+      24,
+      28,
+      32,
+      36
+    ],
+    "capture_at": 6,
+    "align": false,
+    "physics": false,
+    "max_mae": 100.0
+  },
+  "terraincolor": {
+    "path": "corpus/terraincolor.rbxlx",
+    "calibration": true,
+    "terrain": true,
+    "about": "round 26 (make_terraincolor_place.py): flat slabs of Rock, Concrete, Slate, Basalt, Mud, Sand, Snow, Asphalt, Pavement and Ground from straight above, lit by Ambient 128 alone, OutdoorAmbient 128 alone, the sun alone, then all three (the terrain place's light), for the colour each material shows",
+    "times": [
+      8,
+      13,
+      18,
+      23
+    ],
+    "capture_at": 6,
+    "align": false,
+    "physics": false,
+    "max_mae": 40.0,
+    "spots": {
+      "8": "Ambient",
+      "13": "OutdoorAmbient",
+      "18": "sun",
+      "23": "all"
+    },
+    "rustudio_env": {
+      "RUSTUDIO_MATPACKS": "0"
+    }
+  },
+  "lightgrid-sun": {
+    "path": "corpus/lightgrid-sun.rbxlx",
+    "calibration": true,
+    "terrain": true,
+    "about": "lightgrid2's terrain and cameras under a low sun alone (round 26): Technology Voxel, Brightness 2, ClockTime 16.5, Ambient and OutdoorAmbient 0, so every shadow is the sun's (Voxel: the light grid's, not a shadow map)",
+    "times": [
+      8,
+      13,
+      18,
+      23,
+      28,
+      33,
+      38,
+      43,
+      48,
+      53,
+      58,
+      63,
+      68,
+      73,
+      78,
+      83,
+      88,
+      93,
+      98,
+      103,
+      108,
+      113,
+      118,
+      123
+    ],
+    "capture_at": 6,
+    "align": false,
+    "physics": false,
+    "max_mae": 40.0,
+    "rustudio_env": {
+      "RUSTUDIO_MATPACKS": "0"
+    }
+  },
+  "place-c-terrain": {
+    "project": "~/games/place-c",
+    "studio_build": "argon",
+    "terrain": true,
+    "about": "Place C's planet ground per biome (round 21's terrain set): place_c_terrain.luau builds the ground part of Surface.luau's generate() with the game's Biomes and terrain colours on the client, under the game's top-down camera, plus a patch border close up",
+    "times": [
+      10,
+      14,
+      18,
+      22,
+      26,
+      30
+    ],
+    "capture_at": 8,
+    "align": false,
+    "physics": false,
+    "scripts": [
+      [
+        "place_c_terrain.luau",
+        4
+      ]
+    ],
+    "rustudio_env": {
+      "RUSTUDIO_MATPACKS": "0"
+    },
+    "max_mae": 40.0,
+    "spots": {
+      "10": "N1 frost",
+      "14": "N2 magma",
+      "18": "N3 storm",
+      "22": "N4 swamp",
+      "26": "N5 void",
+      "30": "N6 swamp patch border"
+    },
+    "volatile_parts": {
+      "Workspace.Scenery.Part": [
+        "position",
+        "transparency"
+      ]
+    },
+    "why_volatile_parts": "as place_c (round 23): the same World.luau scenery rings, set from os.clock every frame",
+    "reference_limits": "round 27: the offline reference Studio can't download the R15 Animate animations; a failed load leaves its idle track listed after PlatformStand stops it, while rustudio (assets loaded) lists none: animation 0 is a reference artifact."
+  },
+  "place-b-terrain": {
+    "project": "~/games/place-b",
+    "place_file": "place-b/og.rbxl",
+    "studio_build": "rustudio",
+    "terrain": true,
+    "errors_as_studio": true,
+    "about": "Place B's terrain from fixed cameras (round 21's terrain set): place_b_terrain.luau holds the camera over the Cobblestone massif and lake, the mixed patch, the Brick area, under the lake and the overview",
+    "times": [
+      10,
+      14,
+      18,
+      22,
+      26
+    ],
+    "capture_at": 8,
+    "align": false,
+    "physics": false,
+    "scripts": [
+      [
+        "place_b_terrain.luau",
+        2
+      ]
+    ],
+    "rustudio_env": {
+      "RUSTUDIO_MATPACKS": "0"
+    },
+    "max_mae": 40.0,
+    "spots": {
+      "10": "F1 massif and lake",
+      "14": "F2 mixed",
+      "18": "F3 Brick",
+      "22": "F4 under the lake",
+      "26": "F5 overview"
+    },
+    "reference_limits": "round 27: the offline reference Studio can't download this place's custom Sky faces (not in an offline Studio's asset store) and draws its default sky; rustudio draws the real faces since 0a673f4, so the render score under-credits the sky. Not a rustudio regression; don't re-break the sky to match."
+  },
+  "movement-r15": {
+    "path": "corpus/movement-r15.rbxlx",
+    "movement": true,
+    "about": "movement set (round 22, R15): movement_course.luau builds 43 lanes (walk / sprint / turns, jumps, a ledge, 0.5-3 stud steps, 30-85 degree ramps, a wall, a corner, a thin wall, 1.6-3 stud gaps, low ceilings, a truss, Seat, VehicleSeat, a conveyor, a spinner, a tweened platform, slippery and grippy floors, terrain slopes and water, a block to push, FallingDown, PlatformStand, an edge); movement_probe.luau (StarterPlayerScripts) drives Humanoid:Move / Jump with the same program in both engines and records every frame; movement_compare.py scores the traces",
+    "times": [
+      175
+    ],
+    "capture_at": 4,
+    "align": false,
+    "physics": false,
+    "max_mae": 100.0
+  },
+  "movement-r6": {
+    "path": "corpus/movement-r6.rbxlx",
+    "movement": true,
+    "about": "movement set (round 22, R6): movement_course.luau builds 43 lanes (walk / sprint / turns, jumps, a ledge, 0.5-3 stud steps, 30-85 degree ramps, a wall, a corner, a thin wall, 1.6-3 stud gaps, low ceilings, a truss, Seat, VehicleSeat, a conveyor, a spinner, a tweened platform, slippery and grippy floors, terrain slopes and water, a block to push, FallingDown, PlatformStand, an edge); movement_probe.luau (StarterPlayerScripts) drives Humanoid:Move / Jump with the same program in both engines and records every frame; movement_compare.py scores the traces",
+    "times": [
+      175
+    ],
+    "capture_at": 4,
+    "align": false,
+    "physics": false,
+    "max_mae": 100.0
+  },
+  "movement-place_b": {
+    "project": "~/games/place-b",
+    "place_file": "place-b/og.rbxl",
+    "studio_build": "rustudio",
+    "errors_as_studio": true,
+    "movement": true,
+    "about": "Place B's own character (round 22): movement_launch_place-b.luau puts movement_probe.luau in PlayerScripts with 8 walking / turning / jumping segments from a flat spot on its spawn",
+    "times": [
+      45
+    ],
+    "capture_at": 4,
+    "align": false,
+    "physics": false,
+    "max_mae": 100.0,
+    "scripts": [
+      [
+        "movement_launch_place-b.luau",
+        6
+      ]
+    ]
+  },
+  "movement-place_c": {
+    "project": "~/games/place-c",
+    "movement": true,
+    "about": "Place C's own character, a ship (PlatformStand, LinearVelocity, AlignOrientation) (round 22): movement_launch_place-c.luau runs the probe in place, MoveDirection driving the game's own ship code; calibration: the ship reads keys itself, so Humanoid:Move leaves it still in both engines (movement 100 says nothing about walking)",
+    "times": [
+      30
+    ],
+    "capture_at": 4,
+    "align": false,
+    "physics": false,
+    "max_mae": 100.0,
+    "scripts": [
+      [
+        "movement_launch_place-c.luau",
+        6
+      ]
+    ],
+    "calibration": true
+  },
+  "movement-wall-r15": {
+    "path": "corpus/movement-wall-r15.rbxlx",
+    "movement": true,
+    "about": "round 23 (R15): the movement course's wall lanes alone (jump into a wall holding forward, the same at an angle, wall_slide, corner): the wall-float bug",
+    "times": [
+      20
+    ],
+    "capture_at": 4,
+    "align": false,
+    "physics": false,
+    "max_mae": 100.0
+  },
+  "movement-wall-r6": {
+    "path": "corpus/movement-wall-r6.rbxlx",
+    "movement": true,
+    "about": "round 23 (R6): the movement course's wall lanes alone (jump into a wall holding forward, the same at an angle, wall_slide, corner): the wall-float bug",
+    "times": [
+      20
+    ],
+    "capture_at": 4,
+    "align": false,
+    "physics": false,
+    "max_mae": 100.0
+  },
+  "gui-depth": {
+    "path": "corpus/gui-depth.rbxlx",
+    "about": "round 23: world GUIs against the world (make_gui_depth_place.py): a SurfaceGui sign half behind a pillar, a BillboardGui behind a wall, an AlwaysOnTop one behind it, SurfaceGuis with LightInfluence 1 and with 0 + Brightness 2; fixed camera",
+    "times": [
+      6,
+      12
+    ],
+    "capture_at": 4,
+    "align": false,
+    "physics": false,
+    "max_mae": 40.0,
+    "camera_at": 5
+  },
+  "place-b-water": {
+    "project": "~/games/place-b",
+    "place_file": "place-b/og.rbxl",
+    "studio_build": "rustudio",
+    "terrain": true,
+    "errors_as_studio": true,
+    "about": "Place B water and shadows from fixed cameras (place_b_water.luau): under the water at the Water Defender, its surface, the far lake, two trees' shadows",
+    "times": [
+      10,
+      14,
+      18,
+      22,
+      26
+    ],
+    "capture_at": 8,
+    "align": false,
+    "physics": false,
+    "scripts": [
+      [
+        "place_b_water.luau",
+        2
+      ]
+    ],
+    "max_mae": 40.0,
+    "spots": {
+      "10": "W1 under water",
+      "14": "W2 surface",
+      "18": "W3 distant lake",
+      "22": "S1 tree shadow",
+      "26": "S2 palm shadow"
+    },
+    "reference_limits": "round 27: the offline reference Studio can't download this place's custom Sky faces (not in an offline Studio's asset store) and draws its default sky; rustudio draws the real faces since 0a673f4, so the render score under-credits the sky. Not a rustudio regression; don't re-break the sky to match."
+  },
+  "effects": {
+    "path": "corpus/effects.rbxlx",
+    "about": "round 25: particles, beams and a trail (make_effects_place.py): still particles on attachments (Size 4, an arrow at Rotation 30, Squash 1, LightEmission 1 + Transparency 0.5, LightInfluence 1, Brightness 3), a flat textured beam, an S-curved FaceCamera beam with colour / width / transparency ramps, a trail on a swinging part, an untextured spray; fixed camera over a dark wall",
+    "times": [
+      6,
+      12
+    ],
+    "capture_at": 4,
+    "align": false,
+    "physics": false,
+    "max_mae": 40.0
+  },
+  "effects-lanes": {
+    "path": "corpus/effects-lanes.rbxlx",
+    "about": "round 26: what the effects place left to the docs (make_effects_place.py): two screens of still particles at Rate 1000 and 100 (the per-emitter particle limit), Cylinder and Disc shapes, flat beams in Stretch / Wrap / Static (TextureLength 4 over 15 studs), three trails moving at a steady 6 studs/s (colour, transparency, both); fixed camera over a dark wall",
+    "times": [
+      6,
+      12
+    ],
+    "capture_at": 4,
+    "align": false,
+    "physics": false,
+    "max_mae": 40.0,
+    "pixel_gate": false,
+    "why_pixel_gate": "the particle screens and shapes are random in both engines: the shots compare coverage and placement, not pixel for pixel"
+  },
+  "place-b-fx": {
+    "project": "~/games/place-b",
+    "place_file": "place-b/og.rbxl",
+    "studio_build": "rustudio",
+    "errors_as_studio": true,
+    "about": "round 25: Place B's particles, beams and trails from fixed cameras (place_b_fx.luau): the waterfall, the fire, the coffee steam, the rain / lightning clouds, the stage lights, the conveyor, the snowfall",
+    "times": [
+      10,
+      14,
+      18,
+      22,
+      26,
+      30,
+      34
+    ],
+    "capture_at": 8,
+    "align": false,
+    "physics": false,
+    "scripts": [
+      [
+        "place_b_fx.luau",
+        2
+      ]
+    ],
+    "max_mae": 40.0,
+    "pixel_gate": false,
+    "why_pixel_gate": "particles are random in both engines (spawn points, spread, rotation): the shots compare where effects are and how bright, not pixel for pixel",
+    "spots": {
+      "10": "F1 waterfall",
+      "14": "F2 fire",
+      "18": "F3 coffee steam",
+      "22": "F4 clouds",
+      "26": "F5 stage lights",
+      "30": "F6 conveyor",
+      "34": "F7 snowfall"
+    }
+  },
+  "place_d": {
+    "path": "~/rustudio/places/Place D.rbxl",
+    "about": "round 25: Place D, the person's place file (read where it lies; Studio gets a copy), from fixed cameras (place_d_cams.luau): the Carnival and the Mall, the lobby with its vote board from the spawn view and from the far end, the Hospital and the Lodge under the vote board; another admin script loads in it",
+    "times": [
+      6,
+      9,
+      12,
+      15,
+      18,
+      21
+    ],
+    "capture_at": 12,
+    "align": false,
+    "physics": false,
+    "errors_as_studio": true,
+    "why_errors_as_studio": "round 25: its scripts error in Studio as well (DataStore in an unpublished place, another admin script's publish warning)",
+    "scripts": [
+      [
+        "place_d_cams.luau",
+        2
+      ]
+    ],
+    "rustudio_env": {
+      "RUSTUDIO_MATPACKS": "0"
+    },
+    "why_rustudio_env": "as the terrain set: the offline Studio's Studio draws terrain without material textures",
+    "max_mae": 40.0,
+    "pixel_gate": false,
+    "why_pixel_gate": "round 25: the lobby's vote board offers three maps picked at random each run (its ViewportFrame cards cover the middle of every shot), and Studio's chat window opens at random; errors, empty views, assets and the render score's drop check still gate",
+    "spots": {
+      "6": "D1 Carnival",
+      "9": "D2 Mall",
+      "12": "D3 lobby UI (spawn view)",
+      "15": "D4 lobby far end",
+      "18": "D5 Hospital",
+      "21": "D6 Lodge"
+    },
+    "why_capture_at": "round 26: the offline Studio spawns the character late some runs (avatar from the mock backend); at 4 s it had none, so the state read waits for the lobby spot, where both engines always have one",
+    "reference_limits": "round 27: the offline reference Studio can't download this place's custom Sky faces (not in an offline Studio's asset store) and draws its default sky; rustudio draws the real faces since 0a673f4, so the render score under-credits the sky. Not a rustudio regression; don't re-break the sky to match."
+  },
+  "place-b-newer": {
+    "path": "~/rustudio/places/Place B Newer.rbxl",
+    "about": "round 25: Place B Newer, the person's newer Place B place file (read where it lies; Studio gets a copy), from fixed cameras (place_b_newer_cams.luau): the spawn, the Aquarius gate, the Dome, the Witches Conservatory, the hill houses",
+    "times": [
+      17,
+      33,
+      49,
+      65,
+      81
+    ],
+    "capture_at": 8,
+    "align": false,
+    "physics": false,
+    "errors_as_studio": true,
+    "why_errors_as_studio": "as place_b: DataStore in an unpublished place and the game's own script errors show in Studio too",
+    "scripts": [
+      [
+        "place_b_newer_cams.luau",
+        2
+      ]
+    ],
+    "rustudio_env": {
+      "RUSTUDIO_MATPACKS": "0"
+    },
+    "why_rustudio_env": "as the terrain set: the offline Studio's Studio draws terrain without material textures",
+    "max_mae": 48.0,
+    "why_max_mae": "round 25: worst shot 45.5 (N5, Studio draws an orange sky over the hill houses where rustudio draws the storm sky; N4 alike) + 2.5; only ever lowered",
+    "spots": {
+      "17": "N1 spawn",
+      "33": "N2 Aquarius gate",
+      "49": "N3 Dome",
+      "65": "N4 Witches Conservatory",
+      "81": "N5 hill houses"
+    },
+    "reference_limits": "round 27: the offline reference Studio can't download this place's custom Sky faces (not in an offline Studio's asset store) and draws its default sky; rustudio draws the real faces since 0a673f4, so the render score under-credits the sky. Not a rustudio regression; don't re-break the sky to match."
+  },
+  "atmos": {
+    "path": "corpus/atmos.rbxlx",
+    "calibration": true,
+    "about": "Atmosphere calibration (round 26, make_atmos_place.py): white walls at 25-1600 studs over a grey floor under Studio's default sky; atmos_cams.luau steps through Atmosphere Density / Offset / Haze / Color / Decay at Place D's night lighting and at 14:00, level and 50 degrees up; not in the default pass",
+    "times": [
+      6.5,
+      12.5,
+      18.5,
+      24.5,
+      30.5,
+      36.5,
+      42.5,
+      48.5,
+      54.5,
+      60.5,
+      66.5,
+      72.5,
+      78.5,
+      84.5,
+      90.5,
+      96.5,
+      102.5,
+      108.5,
+      114.5,
+      120.5,
+      126.5
+    ],
+    "capture_at": 1,
+    "align": false,
+    "physics": false,
+    "scripts": [
+      [
+        "atmos_cams.luau",
+        2
+      ]
+    ],
+    "max_mae": 40.0
+  },
+  "place-b-dome": {
+    "path": "~/rustudio/places/Place B Newer.rbxl",
+    "calibration": true,
+    "about": "round 26: Place B Newer's HallowsvilleSky dome (a 2048-stud sphere MeshPart with a SurfaceAppearance, which Studio draws plain Color: SurfaceAppearance.Color white or the SurfaceAppearance removed changed nothing) from the N5 spot (place_b_dome.luau): as saved, then shrunk to 300 studs 500 studs ahead, 1200, 2048; plain orange at every size: Studio can't fetch the SurfaceAppearance's TexturePack offline (docs/MECHANICS.md round 26); not in the default pass",
+    "times": [
+      17,
+      33,
+      49,
+      65,
+      81
+    ],
+    "capture_at": 8,
+    "align": false,
+    "physics": false,
+    "errors_as_studio": true,
+    "scripts": [
+      [
+        "place_b_dome.luau",
+        2
+      ]
+    ],
+    "rustudio_env": {
+      "RUSTUDIO_MATPACKS": "0"
+    },
+    "max_mae": 60.0
+  },
+  "place_d-lobby": {
+    "path": "~/rustudio/places/Place D.rbxl",
+    "calibration": true,
+    "about": "round 26: Place D's lobby held at the spawn view (D3) from the start (place_d_lobby.luau), 6-18 s: is the dark lobby of place_d's 10 s shot the lobby's look or lighting catching up with the camera jump? Not in the default pass",
+    "times": [
+      6,
+      8,
+      10,
+      12,
+      14,
+      18
+    ],
+    "capture_at": 4,
+    "align": false,
+    "physics": false,
+    "errors_as_studio": true,
+    "scripts": [
+      [
+        "place_d_lobby.luau",
+        2
+      ]
+    ],
+    "rustudio_env": {
+      "RUSTUDIO_MATPACKS": "0"
+    },
+    "max_mae": 60.0,
+    "pixel_gate": false
+  },
+  "sa-mesh": {
+    "path": "corpus/sa-mesh.rbxlx",
+    "calibration": true,
+    "about": "round 26 (make_sa_place.py): orange MeshParts with the Place B dome's SurfaceAppearance on a v1.00, a v2.00 and a v4.01 mesh, the v1.00 mesh with the image as TextureID, a DoubleSided v4.01 one; and two Skys in Lighting (the first empty, the second clouds); fixed camera; not in the default pass",
+    "times": [
+      8
+    ],
+    "capture_at": 4,
+    "align": false,
+    "physics": false,
+    "max_mae": 40.0
+  },
+  "sa-far": {
+    "path": "corpus/sa-far.rbxlx",
+    "calibration": true,
+    "about": "round 26 (make_sa_place.py): the Place B dome mesh with its SurfaceAppearance at 100-1200 studs, then from inside a 300-stud DoubleSided one (from 10 s); not in the default pass",
+    "times": [
+      8,
+      16
+    ],
+    "capture_at": 4,
+    "align": false,
+    "physics": false,
+    "max_mae": 40.0
+  },
+  "lightwall-soft": {
+    "path": "corpus/lightwall-soft.rbxlx",
+    "calibration": true,
+    "about": "round 26: local lights behind parts (closed rooms, walls of 0.2/1/4 studs, Shadows on/off, a SpotLight at a wall, a SurfaceLight room) and see-through cyan Neon (T 0, 0.5, 0.86, three stacked 0.86), at night with Ambient 100, LightingStyle Soft (Technology ShadowMap) (make_lightwall_place.py); not in the default pass",
+    "times": [
+      8
+    ],
+    "capture_at": 6,
+    "align": false,
+    "physics": false,
+    "max_mae": 40.0
+  },
+  "lightwall-real": {
+    "path": "corpus/lightwall-real.rbxlx",
+    "calibration": true,
+    "about": "round 26: local lights behind parts (closed rooms, walls of 0.2/1/4 studs, Shadows on/off, a SpotLight at a wall, a SurfaceLight room) and see-through cyan Neon (T 0, 0.5, 0.86, three stacked 0.86), at night with Ambient 100, LightingStyle Realistic (Technology Future) (make_lightwall_place.py); not in the default pass",
+    "times": [
+      8
+    ],
+    "capture_at": 6,
+    "align": false,
+    "physics": false,
+    "max_mae": 40.0
+  },
+  "place-b-newer-probe": {
+    "path": "~/rustudio/places/Place B Newer.rbxl",
+    "calibration": true,
+    "about": "round 26 probe: what Studio's client holds for the Dome (probe_dome.luau output in studio/output.log); not in the default pass",
+    "times": [
+      30
+    ],
+    "capture_at": 8,
+    "align": false,
+    "physics": false,
+    "errors_as_studio": true,
+    "scripts": [
+      [
+        "probe_dome.luau",
+        14
+      ]
+    ],
+    "rustudio_env": {
+      "RUSTUDIO_MATPACKS": "0"
+    },
+    "max_mae": 80.0
+  },
+  "lightfocus-soft": {
+    "path": "corpus/lightfocus-soft.rbxlx",
+    "calibration": true,
+    "about": "round 26: lightwall-soft with Camera.Focus at the scene until 8 s, 400 studs off until 14 s, 1500 off until 20 s, then left alone (make_lightwall_place.py): does Studio light only near the Focus? LightingStyle Soft (Technology ShadowMap); not in the default pass",
+    "times": [
+      7,
+      13,
+      19,
+      25
+    ],
+    "capture_at": 4,
+    "align": false,
+    "physics": false,
+    "max_mae": 40.0
+  },
+  "lightfocus-real": {
+    "path": "corpus/lightfocus-real.rbxlx",
+    "calibration": true,
+    "about": "round 26: lightwall-real with Camera.Focus at the scene until 8 s, 400 studs off until 14 s, 1500 off until 20 s, then left alone (make_lightwall_place.py): does Studio light only near the Focus? LightingStyle Realistic (Technology Future); not in the default pass",
+    "times": [
+      7,
+      13,
+      19,
+      25
+    ],
+    "capture_at": 4,
+    "align": false,
+    "physics": false,
+    "max_mae": 40.0
+  },
+  "lightreach-soft": {
+    "path": "corpus/lightreach-soft.rbxlx",
+    "calibration": true,
+    "about": "round 26: lightwall-soft with Camera.Focus 60, 120 and 200 studs off along +X, 6 s each (make_lightwall_place.py): how far from the Focus Studio lights reach LightingStyle Soft (Technology ShadowMap); not in the default pass",
+    "times": [
+      5,
+      11,
+      17
+    ],
+    "capture_at": 3,
+    "align": false,
+    "physics": false,
+    "max_mae": 40.0
+  },
+  "lightreach-real": {
+    "path": "corpus/lightreach-real.rbxlx",
+    "calibration": true,
+    "about": "round 26: lightwall-real with Camera.Focus 60, 120 and 200 studs off along +X, 6 s each (make_lightwall_place.py): how far from the Focus Studio lights reach LightingStyle Realistic (Technology Future); not in the default pass",
+    "times": [
+      5,
+      11,
+      17
+    ],
+    "capture_at": 3,
+    "align": false,
+    "physics": false,
+    "max_mae": 40.0
+  },
+  "place_d-probe": {
+    "path": "~/rustudio/places/Place D.rbxl",
+    "about": "round 26 probe: Place D from its fixed cameras with probe_focus.luau printing Camera.Focus every second and probe_hide_gui.luau listing the wide GUI objects, then hiding the ScreenGuis (the vote board covers the Hospital and the Lodge; studio/output.log); not in the default pass",
+    "times": [
+      16,
+      19
+    ],
+    "capture_at": 4,
+    "align": false,
+    "physics": false,
+    "errors_as_studio": true,
+    "why_errors_as_studio": "round 25: its scripts error in Studio as well (DataStore in an unpublished place, another admin script's publish warning)",
+    "scripts": [
+      [
+        "place_d_cams.luau",
+        2
+      ],
+      [
+        "probe_focus.luau",
+        3
+      ],
+      [
+        "probe_hide_gui.luau",
+        2
+      ]
+    ],
+    "rustudio_env": {
+      "RUSTUDIO_MATPACKS": "0"
+    },
+    "why_rustudio_env": "as the terrain set: the offline Studio's Studio draws terrain without material textures",
+    "max_mae": 40.0,
+    "pixel_gate": false,
+    "why_pixel_gate": "round 25: the lobby's vote board offers three maps picked at random each run (its ViewportFrame cards cover the middle of every shot), and Studio's chat window opens at random; errors, empty views, assets and the render score's drop check still gate",
+    "spots": {
+      "16": "D5 Hospital",
+      "19": "D6 Lodge"
+    },
+    "calibration": true
+  },
+  "materials2": {
+    "path": "~/rustudio/app/tools/fidelity/corpus/materials2.rbxlx",
+    "about": "Glass overlap and ForceField primitive/MeshPart texture calibration",
+    "times": [
+      5
+    ],
+    "capture_at": 3,
+    "align": false,
+    "physics": false,
+    "calibration": true,
+    "max_mae": 40.0
+  },
+  "materials3": {
+    "path": "~/rustudio/app/tools/fidelity/corpus/materials3.rbxlx",
+    "about": "Glass checker backdrop, overlap and foreground-depth rejection; built-in ForceField phase texture",
+    "times": [2, 5, 8],
+    "capture_at": 3,
+    "align": false,
+    "physics": false,
+    "calibration": true,
+    "reference_limits": "Only built-in materials and rbxasset content. Uses bundled avatar/heads/head.mesh. Studio 0.746 still reports missing cloud-backed Glass maps 7546645118/7547304948; do not disable rustudio assets to fit it. Timing is renderer-relative and captures are not phase-locked.",
+    "max_mae": 40.0
+  }
+}

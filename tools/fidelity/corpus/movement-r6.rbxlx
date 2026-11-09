@@ -1,0 +1,434 @@
+<roblox version="4">
+<Item class="Workspace" referent="1"><Properties><string name="Name">Workspace</string><float name="Gravity">196.2</float></Properties>
+<Item class="Terrain" referent="9"><Properties><string name="Name">Terrain</string></Properties></Item>
+<Item class="SpawnLocation" referent="10"><Properties><string name="Name">SpawnLocation</string><bool name="Anchored">true</bool>
+<CoordinateFrame name="CFrame"><X>0</X><Y>0.5</Y><Z>30</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<Vector3 name="size"><X>6</X><Y>1</Y><Z>6</Z></Vector3><int name="Duration">0</int></Properties></Item>
+</Item>
+<Item class="Lighting" referent="2"><Properties><string name="Name">Lighting</string>
+<float name="ClockTime">14</float><bool name="GlobalShadows">true</bool><token name="Technology">4</token>
+</Properties></Item>
+<Item class="ServerScriptService" referent="3"><Properties><string name="Name">ServerScriptService</string></Properties>
+<Item class="Script" referent="4"><Properties><string name="Name">BuildCourse</string><ProtectedString name="Source">-- Round 22's movement course, built on the server in both engines: one lane
+-- per probe segment (movement_probe.luau), 24 studs apart along X, each
+-- starting at z = 0 and running toward -Z on a baseplate whose top is y = 0.
+-- Sets workspace "CourseReady" when done.
+local Course = Instance.new("Folder")
+Course.Name = "Course"
+Course.Parent = workspace
+
+local LANE = 24
+local function lane(i)
+	return i * LANE
+end
+
+local function part(props)
+	local p = Instance.new(props.class or "Part")
+	p.Anchored = props.anchored ~= false
+	p.Size = props.size
+	p.CFrame = props.cf
+	p.TopSurface = Enum.SurfaceType.Smooth
+	p.BottomSurface = Enum.SurfaceType.Smooth
+	p.Color = props.color or Color3.fromRGB(150, 150, 150)
+	if props.name then
+		p.Name = props.name
+	end
+	if props.physical then
+		p.CustomPhysicalProperties = props.physical
+	end
+	if props.transparency then
+		p.Transparency = props.transparency
+	end
+	p.Parent = props.parent or Course
+	return p
+end
+
+-- Ground: one baseplate under every lane.
+part({ name = "Ground", size = Vector3.new(60 * LANE, 2, 240), cf = CFrame.new(30 * LANE - LANE, -1, -60), color = Color3.fromRGB(90, 140, 90) })
+
+-- The lanes, by name (movement_probe.luau's segment names).
+local L = {}
+local order = {
+	"walk_stop", "sprint", "turn90", "turn180", "jump_stand", "jump_run", "jump_power", "jump_low",
+	"ledge", "step_05", "step_10", "step_15", "step_20", "step_25", "step_30",
+	"ramp_30", "ramp_45", "ramp_60", "ramp_75", "ramp_85",
+	"wall_slide", "corner", "thin_wall", "gap_16", "gap_22", "gap_30", "ceiling_walk", "ceiling_jump",
+	"truss", "seat", "vehicle_seat", "conveyor", "spinner", "tween_platform", "slippery", "grippy",
+	"terrain_30", "terrain_55", "water", "push_block", "falling_down", "platform_stand", "edge_stand",
+	"friction_001", "friction_005", "friction_02", "friction_w1",
+	"wall_jump", "wall_jump_diag",
+}
+for i, name in order do
+	L[name] = lane(i)
+end
+Course:SetAttribute("Lanes", table.concat(order, ","))
+Course:SetAttribute("LaneWidth", LANE)
+
+local function at(name, x, y, z)
+	return CFrame.new(L[name] + x, y, z)
+end
+
+-- Ledge: start on a block 8 high whose edge is 4 studs ahead.
+part({ size = Vector3.new(16, 8, 16), cf = at("ledge", 0, 4, 4) })
+
+-- Steps across the lane from z = -6.
+for _, s in { { "step_05", 0.5 }, { "step_10", 1 }, { "step_15", 1.5 }, { "step_20", 2 }, { "step_25", 2.5 }, { "step_30", 3 } } do
+	part({ size = Vector3.new(16, s[2], 20), cf = at(s[1], 0, s[2] / 2, -16) })
+end
+
+-- Ramps rising toward -Z from z = -4 (slabs turned about X; top surface
+-- meets the ground at z = -4).
+for _, r in { { "ramp_30", 30 }, { "ramp_45", 45 }, { "ramp_60", 60 }, { "ramp_75", 75 }, { "ramp_85", 85 } } do
+	local a = math.rad(r[2])
+	local len = 40
+	local dir = Vector3.new(0, math.sin(a), -math.cos(a))
+	local nrm = Vector3.new(0, math.cos(a), math.sin(a))
+	local base = Vector3.new(L[r[1]], 0, -4)
+	local c = base + dir * (len / 2) - nrm * 0.5
+	part({ size = Vector3.new(16, 1, len), cf = CFrame.new(c) * CFrame.Angles(a, 0, 0), color = Color3.fromRGB(170, 120, 80) })
+end
+
+-- Wall along the lane 3 studs to the right (+X) for sliding.
+part({ size = Vector3.new(1, 10, 80), cf = at("wall_slide", 3.5, 5, -38) })
+-- Inside corner ahead-right.
+part({ size = Vector3.new(1, 10, 20), cf = at("corner", 4.5, 5, -10) })
+part({ size = Vector3.new(20, 10, 1), cf = at("corner", -5, 5, -10.5) })
+-- Thin wall across the lane.
+part({ size = Vector3.new(16, 10, 0.2), cf = at("thin_wall", 0, 5, -6) })
+-- Gaps of 1.6, 2.2 and 3 studs (two walls each side of the lane centre).
+for _, g in { { "gap_16", 1.6 }, { "gap_22", 2.2 }, { "gap_30", 3 } } do
+	for _, side in { -1, 1 } do
+		part({ size = Vector3.new(8, 10, 4), cf = at(g[1], side * (g[2] / 2 + 4), 5, -8) })
+	end
+end
+-- Low ceilings: 4.5 above the ground (walk under) and 8 (jump under).
+part({ size = Vector3.new(16, 1, 20), cf = at("ceiling_walk", 0, 4.5 + 0.5, -16) })
+part({ size = Vector3.new(16, 1, 20), cf = at("ceiling_jump", 0, 8 + 0.5, 0) })
+
+-- Truss ahead.
+part({ class = "TrussPart", size = Vector3.new(2, 40, 2), cf = at("truss", 0, 20, -5) })
+-- Seats.
+part({ class = "Seat", size = Vector3.new(2, 1, 2), cf = at("seat", 0, 0.5, -6), anchored = true })
+part({ class = "VehicleSeat", size = Vector3.new(2, 1, 2), cf = at("vehicle_seat", 0, 0.5, -6), anchored = true })
+
+-- Conveyor: anchored, its AssemblyLinearVelocity carries what stands on it.
+local conv = part({ size = Vector3.new(16, 1, 40), cf = at("conveyor", 0, 0.5, -10), color = Color3.fromRGB(60, 60, 60) })
+conv.AssemblyLinearVelocity = Vector3.new(0, 0, -10)
+-- Spinner: anchored disc turning at 1 rad/s.
+local spin = part({ class = "Part", size = Vector3.new(1, 24, 24), cf = at("spinner", 0, 0.5, 0) * CFrame.Angles(0, 0, math.rad(90)), color = Color3.fromRGB(200, 80, 80) })
+spin.Shape = Enum.PartType.Cylinder
+spin.AssemblyAngularVelocity = Vector3.new(0, 1, 0)
+-- Tweened anchored platform (the probe moves it 20 studs along −Z over 3 s,
+-- on the client).
+local tp = part({ name = "TweenPlatform", size = Vector3.new(10, 1, 10), cf = at("tween_platform", 0, 3, 0), color = Color3.fromRGB(80, 80, 200) })
+part({ size = Vector3.new(4, 3, 4), cf = at("tween_platform", 0, 1.5, 7) }) -- a step up onto it
+-- Friction floors.
+part({ size = Vector3.new(16, 1, 40), cf = at("slippery", 0, 0.5, -10), physical = PhysicalProperties.new(0.7, 0, 0.5, 100, 1), color = Color3.fromRGB(180, 220, 255) })
+part({ size = Vector3.new(16, 1, 40), cf = at("grippy", 0, 0.5, -10), physical = PhysicalProperties.new(0.7, 2, 0.5, 100, 1), color = Color3.fromRGB(120, 60, 40) })
+-- Friction steps for Studio's braking curve (weight 100: the floor's wins),
+-- and Friction 0 at weight 1 (mixed with the character's).
+for _, f in { { "friction_001", 0.01, 100 }, { "friction_005", 0.05, 100 }, { "friction_02", 0.2, 100 }, { "friction_w1", 0, 1 } } do
+	part({ size = Vector3.new(16, 1, 40), cf = at(f[1], 0, 0.5, -10), physical = PhysicalProperties.new(0.7, f[2], 0.5, f[3], 1), color = Color3.fromRGB(200, 230, 255) })
+end
+
+-- Terrain: wedges rising toward -Z, and a water pool.
+local T = workspace.Terrain
+for _, r in { { "terrain_30", 30 }, { "terrain_55", 55 } } do
+	local a = math.rad(r[2])
+	local run = 24
+	local h = run * math.tan(a)
+	-- FillWedge: the slope rises toward the wedge's −Z side (a WedgePart's
+	-- high edge; turned by π both engines drew a cliff).
+	T:FillWedge(CFrame.new(L[r[1]], h / 2, -4 - run / 2), Vector3.new(16, h, run), Enum.Material.Grass)
+end
+-- Water standing on the ground, 8 deep, from z = -6.
+T:FillBlock(CFrame.new(L.water, 4, -26), Vector3.new(16, 8, 40), Enum.Material.Water)
+
+-- An unanchored block to push.
+part({ name = "PushBlock", size = Vector3.new(2, 2, 2), cf = at("push_block", 0, 1, -5), anchored = false, color = Color3.fromRGB(230, 200, 60) })
+
+-- Round 23: tall walls across the lane 4 studs ahead, to jump into.
+part({ size = Vector3.new(16, 30, 1), cf = at("wall_jump", 0, 15, -4.5) })
+part({ size = Vector3.new(16, 30, 1), cf = at("wall_jump_diag", 0, 15, -4.5) })
+
+-- Edge: a block 4 high whose edge runs along the lane centre.
+part({ size = Vector3.new(16, 4, 16), cf = at("edge_stand", -8, 2, 0) })
+
+Course:SetAttribute("Ready", true)
+</ProtectedString></Properties></Item>
+</Item>
+<Item class="StarterPlayer" referent="5"><Properties><string name="Name">StarterPlayer</string><token name="GameSettingsAvatar">0</token></Properties>
+<Item class="StarterPlayerScripts" referent="6"><Properties><string name="Name">StarterPlayerScripts</string></Properties>
+<Item class="LocalScript" referent="7"><Properties><string name="Name">MovementProbe</string><ProtectedString name="Source">local FID_CFG = { skip = { "wall_jump", "wall_jump_diag" } }
+-- Round 22's movement probe, a LocalScript run the same way in both engines
+-- (it sits in StarterPlayerScripts of the movement place, or is put in
+-- PlayerScripts by movement_launch.luau in a game). For each segment it
+-- puts the character at the segment's start, lets it settle, then drives
+-- Humanoid:Move / Jump from a fixed program and records every frame after
+-- physics (Heartbeat): time, root position (from the lane origin), root
+-- velocity, facing, Humanoid state, FloorMaterial and MoveDirection, plus
+-- the state changes. Each segment prints FIDMOVE_&lt;name&gt;|i|n|&lt;json chunk&gt;;
+-- the end prints FIDMOVEDONE|&lt;json&gt;.
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local HttpService = game:GetService("HttpService")
+local TweenService = game:GetService("TweenService")
+
+local me = Players.LocalPlayer
+local char = me.Character or me.CharacterAdded:Wait()
+local hum = char:WaitForChild("Humanoid")
+local root = char:WaitForChild("HumanoidRootPart")
+
+-- The game's own controls would overwrite Humanoid:Move every frame.
+pcall(function()
+	require(me:WaitForChild("PlayerScripts"):WaitForChild("PlayerModule", 5)):GetControls():Disable()
+end)
+
+-- In a game (movement_launch_*.luau puts a `local FID_CFG = {...}` line
+-- before this source): `segments` = only these, `origin` = where every
+-- segment starts (a flat spot by its spawn), or `inplace` = no teleport,
+-- each segment measured from where the character is (Place C's ship);
+-- `skip` = all but these.
+local cfg = FID_CFG or {}
+local only = cfg.segments
+local skip = cfg.skip or {}
+local origin = cfg.origin
+local inplace = cfg.inplace
+
+local course = workspace:FindFirstChild("Course")
+if not origin and not inplace then
+	course = workspace:WaitForChild("Course", 30)
+	while course and not course:GetAttribute("Ready") do
+		task.wait(0.1)
+	end
+end
+local laneX = {}
+if course and course:GetAttribute("Lanes") then
+	local i = 0
+	for name in string.gmatch(course:GetAttribute("Lanes"), "[^,]+") do
+		i += 1
+		laneX[name] = i * course:GetAttribute("LaneWidth")
+	end
+end
+
+local FWD = Vector3.new(0, 0, -1)
+local RIGHT = Vector3.new(1, 0, 0)
+local STAND = 3.5 -- root height to drop from at a start
+
+local function hold(dir)
+	return function()
+		return dir, false
+	end
+end
+local function walkThen(dir, untilT)
+	return function(t)
+		return if t &lt; untilT then dir else Vector3.zero, false
+	end
+end
+local function jumpAt(tj, dir)
+	return function(t)
+		return dir or Vector3.zero, t &gt;= tj and t &lt; tj + 0.05
+	end
+end
+
+-- name, duration, program(t) -&gt; (move, jump), optional setup(origin), start offset (x, y, z)
+local segments = {
+	{ "walk_stop", 3, walkThen(FWD, 1.5) },
+	{ "sprint", 2.5, walkThen(FWD, 1.5), function() hum.WalkSpeed = 32 end },
+	{ "turn90", 2.2, function(t) return if t &lt; 1 then FWD else RIGHT, false end },
+	{ "turn180", 2.2, function(t) return if t &lt; 1 then FWD else -FWD, false end },
+	{ "jump_stand", 1.6, jumpAt(0.1) },
+	{ "jump_run", 2, jumpAt(0.6, FWD) },
+	{ "jump_power", 2, jumpAt(0.1), function() hum.UseJumpPower = true; hum.JumpPower = 80 end },
+	{ "jump_low", 1.4, jumpAt(0.1), function() hum.UseJumpPower = false; hum.JumpHeight = 3 end },
+	{ "ledge", 2.5, hold(FWD), nil, Vector3.new(0, 8, 0) },
+	{ "step_05", 2, hold(FWD) },
+	{ "step_10", 2, hold(FWD) },
+	{ "step_15", 2, hold(FWD) },
+	{ "step_20", 2, hold(FWD) },
+	{ "step_25", 2, hold(FWD) },
+	{ "step_30", 2, hold(FWD) },
+	{ "ramp_30", 3, hold(FWD) },
+	{ "ramp_45", 3, hold(FWD) },
+	{ "ramp_60", 3, hold(FWD) },
+	{ "ramp_75", 3, hold(FWD) },
+	{ "ramp_85", 3, hold(FWD) },
+	{ "wall_slide", 2, hold((FWD + RIGHT).Unit) },
+	{ "corner", 2, hold((FWD + RIGHT).Unit) },
+	{ "thin_wall", 2, hold(FWD) },
+	{ "gap_16", 2, hold(FWD) },
+	{ "gap_22", 2, hold(FWD) },
+	{ "gap_30", 2, hold(FWD) },
+	{ "ceiling_walk", 2.5, hold(FWD) },
+	{ "ceiling_jump", 1.6, jumpAt(0.1) },
+	{ "truss", 3.5, walkThen(FWD, 2.5) },
+	{ "seat", 3.5, function(t) return if t &lt; 1.5 then FWD else Vector3.zero, t &gt;= 2.5 and t &lt; 2.55 end },
+	{ "vehicle_seat", 3.5, function(t) return if t &lt; 1.5 then FWD else Vector3.zero, t &gt;= 2.5 and t &lt; 2.55 end },
+	{ "conveyor", 2.5, hold(Vector3.zero), nil, Vector3.new(0, 1, -2) },
+	{ "spinner", 3, hold(Vector3.zero), nil, Vector3.new(6, 1, 0) },
+	{ "tween_platform", 3.5, hold(Vector3.zero), function(o)
+		local p = course and course:FindFirstChild("TweenPlatform")
+		if p then
+			p.CFrame = CFrame.new(o + Vector3.new(0, 3, 0))
+			TweenService:Create(p, TweenInfo.new(3, Enum.EasingStyle.Linear), { CFrame = CFrame.new(o + Vector3.new(0, 3, -20)) }):Play()
+		end
+	end, Vector3.new(0, 3.5, 0) },
+	{ "slippery", 3, walkThen(FWD, 1), nil, Vector3.new(0, 1, 0) },
+	{ "friction_001", 3, walkThen(FWD, 1), nil, Vector3.new(0, 1, 0) },
+	{ "friction_005", 3, walkThen(FWD, 1), nil, Vector3.new(0, 1, 0) },
+	{ "friction_02", 3, walkThen(FWD, 1), nil, Vector3.new(0, 1, 0) },
+	{ "friction_w1", 3, walkThen(FWD, 1), nil, Vector3.new(0, 1, 0) },
+	-- Round 23: jump into a wall holding forward (it hung there in rustudio).
+	{ "wall_jump", 2.5, jumpAt(0.35, FWD) },
+	{ "wall_jump_diag", 2.5, jumpAt(0.35, (FWD + RIGHT * 0.5).Unit) },
+	{ "grippy", 3, walkThen(FWD, 1), nil, Vector3.new(0, 1, 0) },
+	{ "terrain_30", 3, hold(FWD) },
+	{ "terrain_55", 3, hold(FWD) },
+	{ "water", 4.5, function(t) return if t &lt; 3.5 then FWD else Vector3.zero, t &gt;= 3.5 and t &lt; 4.3 end },
+	{ "push_block", 2.5, hold(FWD) },
+	{ "falling_down", 4, function(t)
+		if t &gt;= 0.2 and t &lt; 0.25 then
+			hum:ChangeState(Enum.HumanoidStateType.FallingDown)
+		end
+		return Vector3.zero, false
+	end },
+	{ "platform_stand", 3, function(t)
+		hum.PlatformStand = t &lt; 1.5
+		return FWD, false
+	end },
+	{ "edge_stand", 2, hold(Vector3.zero), nil, Vector3.new(-0.3, 4, 0) },
+}
+
+local function r3(x)
+	return math.floor(x * 1000 + 0.5) / 1000
+end
+
+-- The character's own settings (Roblox's defaults on the course).
+local base = { hum.WalkSpeed, hum.UseJumpPower, hum.JumpHeight, hum.JumpPower, hum.AutoRotate }
+
+local function reset()
+	hum:Move(Vector3.zero, false)
+	hum.Jump = false
+	hum.WalkSpeed, hum.UseJumpPower, hum.JumpHeight, hum.JumpPower, hum.AutoRotate = table.unpack(base)
+	if inplace then
+		return -- (a ship: its PlatformStand and state are the game's)
+	end
+	hum.PlatformStand = false
+	if hum.Sit then
+		hum.Sit = false
+	end
+	local st = hum:GetState()
+	if st == Enum.HumanoidStateType.FallingDown or st == Enum.HumanoidStateType.Seated or st == Enum.HumanoidStateType.Swimming
+		or st == Enum.HumanoidStateType.Climbing or st == Enum.HumanoidStateType.PlatformStanding then
+		hum:ChangeState(Enum.HumanoidStateType.GettingUp)
+	end
+end
+
+local function emit(tag, data)
+	local text = HttpService:JSONEncode(data)
+	local size = 900 -- (the offline Studio MCP log cuts lines near 950)
+	local n = math.ceil(#text / size)
+	for i = 1, n do
+		print(string.format("%s|%d|%d|%s", tag, i, n, string.sub(text, (i - 1) * size + 1, i * size)))
+	end
+end
+
+local done = {}
+for _, seg in segments do
+	local name, dur, program, setup, offset = seg[1], seg[2], seg[3], seg[4], seg[5]
+	if (only and not table.find(only, name)) or table.find(skip, name) then
+		continue
+	end
+	local o
+	if inplace then
+		o = root.Position - Vector3.new(0, STAND, 0)
+	elseif origin then
+		o = origin
+	elseif laneX[name] then
+		o = Vector3.new(laneX[name], 0, 0)
+	else
+		continue
+	end
+	reset()
+	if not inplace then
+		local start = o + (offset or Vector3.zero) + Vector3.new(0, STAND, 0)
+		char:PivotTo(CFrame.new(start))
+		root.AssemblyLinearVelocity = Vector3.zero
+		root.AssemblyAngularVelocity = Vector3.zero
+	end
+	-- Settle a second (sitting / climbing states from the last lane end).
+	local t = os.clock()
+	while os.clock() - t &lt; 1 do
+		RunService.Heartbeat:Wait()
+		hum:Move(Vector3.zero, false)
+	end
+	if setup then
+		setup(o)
+	end
+	if inplace then
+		o = root.Position - Vector3.new(0, STAND, 0)
+	end
+	local frames, events = {}, {}
+	local t0 = os.clock()
+	local conn = hum.StateChanged:Connect(function(_, new)
+		table.insert(events, { r3(os.clock() - t0), new.Name })
+	end)
+	local stepConn = RunService.RenderStepped:Connect(function()
+		local mv, jump = program(os.clock() - t0)
+		hum:Move(mv, false)
+		if jump then
+			hum.Jump = true
+		end
+	end)
+	local block = course and course:FindFirstChild("PushBlock")
+	-- At most 60 samples a second (Studio's Heartbeat runs faster; its
+	-- Output log keeps only so many lines).
+	local lastT = -1
+	while true do
+		RunService.Heartbeat:Wait()
+		local tt = os.clock() - t0
+		if tt &gt; dur then
+			break
+		end
+		if tt - lastT &lt; 1 / 61 then
+			continue
+		end
+		lastT = tt
+		local p = root.Position - o
+		local v = root.AssemblyLinearVelocity
+		local look = root.CFrame.LookVector
+		local md = hum.MoveDirection
+		local f = { r3(tt), r3(p.X), r3(p.Y), r3(p.Z), r3(v.X), r3(v.Y), r3(v.Z), r3(math.atan2(-look.X, -look.Z)),
+			hum:GetState().Name, hum.FloorMaterial.Name, r3(md.X), r3(md.Z), r3(look.Y) }
+		if name == "push_block" and block then
+			table.insert(f, r3(block.Position.Z - o.Z))
+		end
+		table.insert(frames, f)
+	end
+	stepConn:Disconnect()
+	conn:Disconnect()
+	hum:Move(Vector3.zero, false)
+	emit("FIDMOVE_" .. name, { name = name, frames = frames, events = events })
+	table.insert(done, name)
+end
+local parts = {}
+for _, d in char:GetDescendants() do
+	if d:IsA("BasePart") then
+		local rel = root.CFrame:PointToObjectSpace(d.Position)
+		table.insert(parts, { d.Name, d.CanCollide, r3(d.Size.X), r3(d.Size.Y), r3(d.Size.Z), r3(rel.X), r3(rel.Y), r3(rel.Z), d.Massless, r3(d.Mass) })
+	end
+end
+emit("FIDMOVEDONE", {
+	parts = parts,
+	mass = r3(root.AssemblyMass),
+	segments = done,
+	rig = hum.RigType.Name,
+	hipHeight = hum.HipHeight,
+	rootSize = { root.Size.X, root.Size.Y, root.Size.Z },
+	maxSlope = hum.MaxSlopeAngle,
+	gravity = workspace.Gravity,
+})
+</ProtectedString></Properties></Item>
+</Item></Item>
+<Item class="Players" referent="8"><Properties><string name="Name">Players</string></Properties></Item>
+</roblox>

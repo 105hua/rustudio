@@ -1,0 +1,284 @@
+{
+ "Humanoid": {
+  "missing": [
+   "function AddCustomStatus",
+   "function AddStatus",
+   "function GetAppliedDescription",
+   "function GetRelativeVelocityAtFloor",
+   "function GetStatuses",
+   "function HasCustomStatus",
+   "function HasStatus",
+   "function RemoveCustomStatus",
+   "function RemoveStatus",
+   "function ReplaceBodyPartR15",
+   "function ApplyAvatarRulesAsync",
+   "function ApplyDescriptionAsync",
+   "function ApplyDescriptionReset",
+   "function ApplyDescriptionResetAsync",
+   "function PlayEmote",
+   "function PlayEmoteAsync"
+  ],
+  "events_to_check": [
+   "AnimationPlayed",
+   "ApplyDescriptionFinished",
+   "Climbing",
+   "CustomStatusAdded",
+   "CustomStatusRemoved",
+   "Died",
+   "FallingDown",
+   "FreeFalling",
+   "GettingUp",
+   "HealthChanged",
+   "Jumping",
+   "MoveToFinished",
+   "PlatformStanding",
+   "Ragdoll",
+   "Running",
+   "Seated",
+   "StateChanged",
+   "StateEnabledChanged",
+   "StatusAdded",
+   "StatusRemoved",
+   "Strafing",
+   "Swimming",
+   "Touched"
+  ]
+ },
+ "Animator": {
+  "missing": [
+   "property EvaluationThrottled",
+   "property RootMotion",
+   "property RootMotionWeight",
+   "function ApplyJointVelocities",
+   "function GetTrackByAnimationId",
+   "function RegisterEvaluationParallelCallback",
+   "function StepAnimations"
+  ],
+  "events_to_check": [
+   "AnimationPlayed"
+  ]
+ },
+ "AnimationTrack": {
+  "missing": [
+   "function GetParameter",
+   "function GetParameterDefaults",
+   "function GetTargetInstance",
+   "function GetTargetNames",
+   "function SetParameter",
+   "function SetTargetInstance"
+  ],
+  "events_to_check": [
+   "DidLoop",
+   "Ended",
+   "KeyframeReached",
+   "Stopped"
+  ]
+ },
+ "AnimationClipProvider": {
+  "missing": [
+   "function RegisterActiveAnimationClip",
+   "function RegisterAnimationClip",
+   "function GetAnimationClipAsync",
+   "function GetAnimations",
+   "function GetAnimationsAsync",
+   "function GetClipEvaluatorAsync"
+  ],
+  "events_to_check": []
+ },
+ "AnimationClip": {
+  "missing": [
+   "property Length"
+  ],
+  "events_to_check": []
+ },
+ "AnimationController": {
+  "missing": [
+   "function GetPlayingAnimationTracks"
+  ],
+  "events_to_check": [
+   "AnimationPlayed"
+  ]
+ },
+ "AnimationNodeDefinition": {
+  "missing": [
+   "function AddInputPin",
+   "function GetOrderedInputPinNames",
+   "function RemoveInputPin",
+   "function SetOrderedInputPinNames"
+  ],
+  "events_to_check": [
+   "InputPinsChanged"
+  ]
+ },
+ "AnimationRigData": {
+  "missing": [
+   "function LoadFromModel"
+  ],
+  "events_to_check": []
+ },
+ "AnimationStreamTrack": {
+  "missing": [
+   "property Animation",
+   "property FACSDataLod",
+   "property IsPlaying",
+   "property Priority",
+   "property WeightCurrent",
+   "property WeightTarget"
+  ],
+  "events_to_check": []
+ },
+ "RTAnimationTracker": {
+  "missing": [
+   "property Active",
+   "property EnableFallbackAudioInput",
+   "property SessionName",
+   "property TrackerMode",
+   "property TrackerType"
+  ],
+  "events_to_check": [
+   "TrackerError",
+   "TrackerPrompt"
+  ]
+ },
+ "Keyframe": {
+  "missing": [
+   "function AddMarker",
+   "function AddPose",
+   "function GetMarkers",
+   "function GetPoses",
+   "function RemoveMarker",
+   "function RemovePose"
+  ],
+  "events_to_check": []
+ },
+ "KeyframeSequence": {
+  "missing": [
+   "function AddKeyframe",
+   "function GetKeyframes",
+   "function RemoveKeyframe"
+  ],
+  "events_to_check": []
+ },
+ "KeyframeSequenceProvider": {
+  "missing": [
+   "function GetAnimations",
+   "function GetAnimationsAsync"
+  ],
+  "events_to_check": []
+ },
+ "Pose": {
+  "missing": [
+   "function AddSubPose",
+   "function GetSubPoses",
+   "function RemoveSubPose"
+  ],
+  "events_to_check": []
+ },
+ "FloatCurve": {
+  "missing": [
+   "property Length",
+   "function GetKeyAtIndex",
+   "function GetKeyIndicesAtTime",
+   "function GetKeys",
+   "function GetValueAtTime",
+   "function InsertKey",
+   "function RemoveKeyAtIndex",
+   "function SetKeys"
+  ],
+  "events_to_check": []
+ },
+ "RotationCurve": {
+  "missing": [
+   "property Length",
+   "function GetKeyAtIndex",
+   "function GetKeyIndicesAtTime",
+   "function GetKeys",
+   "function GetValueAtTime",
+   "function InsertKey",
+   "function RemoveKeyAtIndex",
+   "function SetKeys"
+  ],
+  "events_to_check": []
+ },
+ "ValueCurve": {
+  "missing": [
+   "property Length",
+   "property ValueType",
+   "function GetKeyAtIndex",
+   "function GetKeyIndicesAtTime",
+   "function GetKeys",
+   "function GetValueAtTime",
+   "function InsertKey",
+   "function InsertKeyValue",
+   "function RemoveKeyAtIndex",
+   "function SetKeys"
+  ],
+  "events_to_check": []
+ },
+ "EulerRotationCurve": {
+  "missing": [
+   "function GetAnglesAtTime",
+   "function GetRotationAtTime",
+   "function X",
+   "function Y",
+   "function Z"
+  ],
+  "events_to_check": []
+ },
+ "MarkerCurve": {
+  "missing": [
+   "property Length",
+   "function GetMarkerAtIndex",
+   "function GetMarkers",
+   "function InsertMarkerAtTime",
+   "function RemoveMarkerAtIndex"
+  ],
+  "events_to_check": []
+ },
+ "Vector3Curve": {
+  "missing": [
+   "function GetValueAtTime",
+   "function X",
+   "function Y",
+   "function Z"
+  ],
+  "events_to_check": []
+ },
+ "CompositeValueCurve": {
+  "missing": [
+   "function GetComponentCurves",
+   "function GetValueAtTime"
+  ],
+  "events_to_check": []
+ },
+ "IKControl": {
+  "missing": [
+   "function GetChainCount",
+   "function GetChainLength",
+   "function GetNodeLocalCFrame",
+   "function GetNodeWorldCFrame",
+   "function GetRawFinalTarget",
+   "function GetSmoothedFinalTarget"
+  ],
+  "events_to_check": []
+ },
+ "Motor": {
+  "missing": [
+   "function SetDesiredAngle"
+  ],
+  "events_to_check": []
+ },
+ "Motor6D": {
+  "missing": [
+   "property ChildName",
+   "property ParentName"
+  ],
+  "events_to_check": []
+ },
+ "JointInstance": {
+  "missing": [
+   "property Active"
+  ],
+  "events_to_check": []
+ }
+}

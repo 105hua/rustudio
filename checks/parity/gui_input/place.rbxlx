@@ -1,0 +1,5 @@
+<roblox version="4">
+<Item class="Workspace" referent="RBX1"><Properties><string name="Name">Workspace</string></Properties>
+<Item class="Part" referent="RBX2"><Properties><string name="Name">Baseplate</string><bool name="Anchored">true</bool><Vector3 name="size"><X>64</X><Y>1</Y><Z>64</Z></Vector3></Properties></Item>
+</Item>
+</roblox>

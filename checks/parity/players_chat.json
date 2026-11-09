@@ -1,0 +1,248 @@
+{
+ "Player": {
+  "missing": [
+   "property AgeChecked",
+   "property DeviceTrustLevel",
+   "property FrustumStreaming",
+   "property User",
+   "function AddReplicationFocus",
+   "function ClearCachedAvatarAppearance",
+   "function GetCameraState",
+   "function GetData",
+   "function GetJoinData",
+   "function IsVerified",
+   "function LoadBoolean",
+   "function LoadCharacterAppearance",
+   "function LoadInstance",
+   "function LoadNumber",
+   "function LoadString",
+   "function PromptAgeCheck",
+   "function RemoveReplicationFocus",
+   "function SaveBoolean",
+   "function SaveInstance",
+   "function SaveNumber",
+   "function SaveString",
+   "function loadBoolean",
+   "function loadInstance",
+   "function loadNumber",
+   "function loadString",
+   "function saveBoolean",
+   "function saveInstance",
+   "function saveNumber",
+   "function saveString",
+   "function GetFriendsInServerAsync",
+   "function GetFriendsInUniverseAsync",
+   "function GetFriendsOnline",
+   "function GetFriendsOnlineAsync",
+   "function GetFriendsWhoPlayedAsync",
+   "function GetRankInGroupAsync",
+   "function GetRoleInGroupAsync",
+   "function IsBestFriendsWith",
+   "function IsFriendsWithAsync",
+   "function IsInGroupAsync",
+   "function LoadCharacterAsync",
+   "function LoadCharacterWithAvatarRulesAsync",
+   "function LoadCharacterWithHumanoidDescription",
+   "function LoadCharacterWithHumanoidDescriptionAsync",
+   "function RequestStreamAroundAsync",
+   "function WaitForDataReady",
+   "function waitForDataReady"
+  ],
+  "events_to_check": [
+   "CharacterAdded",
+   "CharacterAppearanceLoaded",
+   "CharacterRemoving",
+   "Chatted",
+   "EmotesLoaded",
+   "Idled",
+   "OnTeleport"
+  ]
+ },
+ "Players": {
+  "missing": [
+   "property BubbleChat",
+   "property ClassicChat",
+   "property MaxPlayers",
+   "property PreferredPlayers",
+   "function BanAsync",
+   "function CreateHumanoidModelFromDescriptionAsync",
+   "function CreateHumanoidModelFromUserIdAsync",
+   "function GetBanHistoryAsync",
+   "function GetCharacterAppearanceAsync",
+   "function GetCharacterAppearanceInfoAsync",
+   "function GetFriendsAsync",
+   "function GetHumanoidDescriptionFromOutfitIdAsync",
+   "function GetHumanoidDescriptionFromUserIdAsync",
+   "function GetNameFromUserIdAsync",
+   "function GetProfileConfigurationFromUserIdAsync",
+   "function GetUserIdFromNameAsync",
+   "function GetUserThumbnailAsync",
+   "function UnbanAsync"
+  ],
+  "events_to_check": [
+   "PlayerAdded",
+   "PlayerMembershipChanged",
+   "PlayerRemoving",
+   "UserSubscriptionStatusChanged"
+  ]
+ },
+ "StarterPlayer": {
+  "missing": [
+   "property LoadCharacterLayeredClothing "
+  ],
+  "events_to_check": []
+ },
+ "Teams": {
+  "missing": [
+   "function RebalanceTeams"
+  ],
+  "events_to_check": []
+ },
+ "Chat": {
+  "missing": [
+   "function InvokeChatCallback",
+   "function RegisterChatCallback",
+   "function SetBubbleChatSettings",
+   "function CanUserChatAsync",
+   "function CanUsersChatAsync",
+   "function FilterStringAsync",
+   "function FilterStringForBroadcast",
+   "function FilterStringForPlayerAsync"
+  ],
+  "events_to_check": [
+   "Chatted"
+  ]
+ },
+ "TextChatService": {
+  "missing": [
+   "property ChatTranslationEnabled",
+   "function DisplayBubble",
+   "function CanUserChatAsync",
+   "function CanUsersChatAsync",
+   "function CanUsersDirectChatAsync",
+   "function GetChatGroupsAsync"
+  ],
+  "events_to_check": [
+   "BubbleDisplayed",
+   "MessageReceived",
+   "SendingMessage"
+  ]
+ },
+ "TextChannel": {
+  "missing": [
+   "property DirectChatRequester",
+   "function DisplaySystemMessage",
+   "function SetDirectChatRequester",
+   "function AddUserAsync",
+   "function SendAsync"
+  ],
+  "events_to_check": [
+   "MessageReceived"
+  ]
+ },
+ "TextChatMessage": {
+  "missing": [
+   "property MessageId",
+   "property Metadata",
+   "property PrefixText",
+   "property Status",
+   "property Timestamp",
+   "property Translation"
+  ],
+  "events_to_check": []
+ },
+ "TextChatMessageProperties": {
+  "missing": [
+   "property PrefixText",
+   "property Translation"
+  ],
+  "events_to_check": []
+ },
+ "BubbleChatMessageProperties": {
+  "missing": [
+   "property BackgroundColor3",
+   "property BackgroundTransparency",
+   "property TailVisible",
+   "property TextColor3"
+  ],
+  "events_to_check": []
+ },
+ "ChatWindowMessageProperties": {
+  "missing": [
+   "property PrefixTextProperties",
+   "property TextColor3",
+   "property TextStrokeColor3",
+   "property TextStrokeTransparency"
+  ],
+  "events_to_check": []
+ },
+ "ChatInputBarConfiguration": {
+  "missing": [
+   "property AbsolutePosition",
+   "property AbsoluteSize",
+   "property IsFocused",
+   "property TextBox"
+  ],
+  "events_to_check": []
+ },
+ "ChatWindowConfiguration": {
+  "missing": [
+   "property AbsolutePosition",
+   "property AbsoluteSize",
+   "function DeriveNewMessageProperties"
+  ],
+  "events_to_check": []
+ },
+ "ChannelTabsConfiguration": {
+  "missing": [
+   "property AbsolutePosition",
+   "property AbsoluteSize"
+  ],
+  "events_to_check": []
+ },
+ "LocalizationService": {
+  "missing": [
+   "property RobloxLocaleId",
+   "property SystemLocaleId",
+   "function GetCorescriptLocalizations",
+   "function GetTableEntries",
+   "function GetCountryRegionForPlayerAsync"
+  ],
+  "events_to_check": []
+ },
+ "LocalizationTable": {
+  "missing": [
+   "property Root",
+   "function GetContents",
+   "function GetEntries",
+   "function GetString",
+   "function GetTranslator",
+   "function RemoveEntry",
+   "function RemoveEntryValue",
+   "function RemoveKey",
+   "function RemoveTargetLocale",
+   "function SetContents",
+   "function SetEntries",
+   "function SetEntry",
+   "function SetEntryContext",
+   "function SetEntryExample",
+   "function SetEntryKey",
+   "function SetEntrySource",
+   "function SetEntryValue"
+  ],
+  "events_to_check": []
+ },
+ "Translator": {
+  "missing": [
+   "property LocaleId",
+   "function FormatByKey"
+  ],
+  "events_to_check": []
+ },
+ "PlayerViewService": {
+  "missing": [
+   "function GetDeviceCameraCFrame"
+  ],
+  "events_to_check": []
+ }
+}

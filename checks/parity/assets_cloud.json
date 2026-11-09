@@ -1,0 +1,309 @@
+{
+ "AssetService": {
+  "missing": [
+   "function ComposeDecalAsync",
+   "function CreateAssetAsync",
+   "function CreateAssetVersionAsync",
+   "function CreateDataModelContentAsync",
+   "function CreateDecalAsync",
+   "function CreatePlaceAsync",
+   "function CreatePlaceInPlayerInventoryAsync",
+   "function CreateTextureAsync",
+   "function GetAssetIdsForPackage",
+   "function GetAssetIdsForPackageAsync",
+   "function GetAudioMetadataAsync",
+   "function GetBundleDetailsAsync",
+   "function GetCreatorAssetID",
+   "function GetGamePlacesAsync",
+   "function GetLatestVersionUriAsync",
+   "function LoadAssetAsync",
+   "function PromptCreatePlatformContentAsync",
+   "function PromptImportAnimationClipFromVideoAsync",
+   "function SavePlaceAsync",
+   "function SearchAudio",
+   "function SearchAudioAsync"
+  ],
+  "events_to_check": []
+ },
+ "InsertService": {
+  "missing": [
+   "function ApproveAssetId",
+   "function ApproveAssetVersionId",
+   "function Insert",
+   "function GetBaseCategories",
+   "function GetBaseSets",
+   "function GetCollection",
+   "function GetFreeDecals",
+   "function GetFreeDecalsAsync",
+   "function GetFreeModels",
+   "function GetFreeModelsAsync",
+   "function GetLatestAssetVersionAsync",
+   "function GetUserCategories",
+   "function GetUserSets"
+  ],
+  "events_to_check": []
+ },
+ "ContentProvider": {
+  "missing": [
+   "property BaseUrl",
+   "property RequestQueueSize",
+   "function GetAssetFetchStatus",
+   "function GetAssetFetchStatusChangedSignal",
+   "function ListEncryptedAssets",
+   "function Preload",
+   "function RegisterDefaultEncryptionKey",
+   "function RegisterDefaultSessionKey",
+   "function RegisterEncryptedAsset",
+   "function RegisterSessionEncryptedAsset",
+   "function UnregisterDefaultEncryptionKey",
+   "function UnregisterEncryptedAsset"
+  ],
+  "events_to_check": [
+   "AssetFetchFailed"
+  ]
+ },
+ "CaptureService": {
+  "missing": [
+   "function CaptureScreenshot",
+   "function GetDeviceInfo",
+   "function PromptSaveCapturesToGallery",
+   "function PromptShareCapture",
+   "function StopVideoCapture",
+   "function TakeScreenshotCaptureAsync",
+   "function CheckUploadCaptureStatusAsync",
+   "function InternalCheckPlayabilityAsync",
+   "function InternalGetStartPlaceIdAsync",
+   "function PromptCaptureGalleryPermissionAsync",
+   "function ReadCapturesFromGalleryAsync",
+   "function StartUploadCaptureAsync",
+   "function StartVideoCaptureAsync",
+   "function UploadCaptureAsync"
+  ],
+  "events_to_check": [
+   "CaptureBegan",
+   "CaptureEnded",
+   "CaptureSaved",
+   "UserCaptureSaved"
+  ]
+ },
+ "Capture": {
+  "missing": [
+   "property CaptureTime",
+   "property CaptureType",
+   "property LocalId",
+   "property SourcePlaceId",
+   "property SourceUniverseId"
+  ],
+  "events_to_check": []
+ },
+ "VideoCapture": {
+  "missing": [
+   "property TimeLength"
+  ],
+  "events_to_check": []
+ },
+ "PackageLink": {
+  "missing": [
+   "property Creator",
+   "property PackageAssetName",
+   "property PackageContent",
+   "property PackageId",
+   "property PermissionLevel"
+  ],
+  "events_to_check": []
+ },
+ "MeshImportData": {
+  "missing": [
+   "property CageManifold",
+   "property CageMeshNotIntersected",
+   "property CageNoOverlappingVertices",
+   "property CageUVMatched",
+   "property Dimensions",
+   "property MeshNoHoleDetected",
+   "property NoIrrelevantCageModified",
+   "property NoOuterCageFarExtendedFromMesh",
+   "property PolygonCount"
+  ],
+  "events_to_check": []
+ },
+ "MaterialImportData": {
+  "missing": [
+   "property IsPbr"
+  ],
+  "events_to_check": []
+ },
+ "BaseImportData": {
+  "missing": [
+   "property Id"
+  ],
+  "events_to_check": [
+   "StatusRemoved",
+   "StatusReported"
+  ]
+ },
+ "RootImportData": {
+  "missing": [
+   "property FileDimensions",
+   "property PolygonCount"
+  ],
+  "events_to_check": []
+ },
+ "MaterialService": {
+  "missing": [
+   "function GetBaseMaterialOverride",
+   "function GetMaterialVariant",
+   "function SetBaseMaterialOverride"
+  ],
+  "events_to_check": []
+ },
+ "SurfaceAppearance": {
+  "missing": [
+   "property SurfaceSlot"
+  ],
+  "events_to_check": []
+ },
+ "GenerationService": {
+  "missing": [
+   "function ConnectAsync",
+   "function DisconnectAsync",
+   "function GenerateMeshAsync",
+   "function GenerateModelAsync",
+   "function GetVideoGenSessionAsync",
+   "function GetVideoGenTriggersAsync",
+   "function LoadGeneratedMeshAsync",
+   "function SegmentMeshAsync",
+   "function StartVideoGenSessionAsync",
+   "function UpdateVideoGenSessionPromptAsync",
+   "function UpdateVideoGenSessionTriggersAsync"
+  ],
+  "events_to_check": []
+ },
+ "MLService": {
+  "missing": [
+   "function IsPostProcessReady",
+   "function SetPostProcessEnabled",
+   "function CreateSessionAsync",
+   "function LoadPostProcessModelAsync"
+  ],
+  "events_to_check": []
+ },
+ "MLSession": {
+  "missing": [
+   "function ForwardAsync"
+  ],
+  "events_to_check": []
+ },
+ "FeatureMatchingService": {
+  "missing": [
+   "function CreateTable",
+   "function Load",
+   "function LoadAsync"
+  ],
+  "events_to_check": []
+ },
+ "FeatureMatchingSession": {
+  "missing": [
+   "function GetChannels",
+   "function GetDimensionCount",
+   "function GetFeatureRow",
+   "function GetFeatureRows",
+   "function GetMetadataRow",
+   "function GetRowCount",
+   "function GetSchemaName",
+   "function GetTagColumns",
+   "function StandardizeQuery"
+  ],
+  "events_to_check": []
+ },
+ "FeatureMatchingTable": {
+  "missing": [
+   "property SchemaName",
+   "function GetSchema"
+  ],
+  "events_to_check": []
+ },
+ "SceneAnalysisService": {
+  "missing": [
+   "function GetAnimationMemoryAsync",
+   "function GetAudioMemoryAsync",
+   "function GetCollisionGeometryMemoryAsync",
+   "function GetInstanceCompositionAsync",
+   "function GetScriptMemoryAsync",
+   "function GetTriangleCompositionAsync",
+   "function GetUnparentedInstancesAsync"
+  ],
+  "events_to_check": []
+ },
+ "RealtimeMedia": {
+  "missing": [
+   "property AudioInputActive",
+   "property IsConnected",
+   "property IsConnectionWeak",
+   "function Disconnect",
+   "function GetConnectedWires",
+   "function GetInputPins",
+   "function GetOutputPins",
+   "function SendMessage",
+   "function ConnectAsync"
+  ],
+  "events_to_check": [
+   "AudioInputRequested",
+   "Disconnected",
+   "OnMessage",
+   "WiringChanged"
+  ]
+ },
+ "ParticipantHandle": {
+  "missing": [
+   "function Click",
+   "function InputText",
+   "function Launch",
+   "function Screenshot",
+   "function Scroll",
+   "function Shutdown"
+  ],
+  "events_to_check": []
+ },
+ "OpenCloudService": {
+  "missing": [
+   "function GetApiV1",
+   "function InvokeAsync"
+  ],
+  "events_to_check": []
+ },
+ "OpenCloudApiV1": {
+  "missing": [
+   "function CreateModel",
+   "function CreateUserNotificationAsync"
+  ],
+  "events_to_check": []
+ },
+ "AppHandle": {
+  "missing": [
+   "function Call",
+   "function Close",
+   "function ExecuteLuau",
+   "function RunTest"
+  ],
+  "events_to_check": []
+ },
+ "RemoteCommandService": {
+  "missing": [
+   "function GetExecutingPlayer",
+   "function GetReceivedUpdateSignal",
+   "function GetStoppingSignal",
+   "function SendUpdate"
+  ],
+  "events_to_check": []
+ },
+ "ExecutedRemoteCommand": {
+  "missing": [
+   "function RunMoreCode",
+   "function SendUpdate",
+   "function Stop"
+  ],
+  "events_to_check": [
+   "ReceivedUpdate"
+  ]
+ }
+}

@@ -1,0 +1,362 @@
+Info: rustudio 0.1.0 ready. Reflection database has 931 classes.
+Info: Loaded the sample scene
+Info: Checking the Roblox session…
+Info: Signed in as @testuser1 (session from the login keyring)
+Info: Loading the avatar for Play…
+Info: Avatar of user 10000000001: R6 with 2 worn items
+Info: Not shown yet:  (MoodAnimation)
+Info: Avatar ready for Play (user 10000000001, R6): the next character uses it
+Info: Default player scripts from Studio: PlayerScriptsLoader, PlayerModule, RbxCharacterSounds
+Info: ▶ Play: a server and a client are running; WASD + Space to move, Shift+F5 to stop
+Info: [Server] Hello from rustudio  —  ServerScriptService.Main:1
+Info: Character: R15 (from the place setting)
+Info: Sky: 1024px faces, light from above 0.156 0.399 0.666
+Info: [Client] SECIDENT|client  —  Players.testuser1.PlayerGui.SecurityProbe:4
+Info: [Client] Current identity is 2  —  rustudio.library:26
+Info: [Client] SEC|client|global:settings|false|Players.testuser1.PlayerGui.SecurityProbe:6: The current thread cannot call 'settings' (lacking capability Plugin)  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|global:stats|true|table: 0x0000555a3e8053b0  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|global:UserSettings|true|table: 0x0000555a3e82a620  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|global:PluginManager|false|Players.testuser1.PlayerGui.SecurityProbe:6: attempt to call a nil value  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] Current identity is 2  —  rustudio.library:26
+Info: [Client] SEC|client|global:printidentity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|global:loadstring|true|function  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|global:getfenv|true|table: 0x0000555a3e575d40  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|global:setfenv|false|Players.testuser1.PlayerGui.SecurityProbe:6: missing argument #2 to 'setfenv' (table expected)  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|global:newproxy|true|userdata: 0x0000555a3f5935a0  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|global:collectgarbage|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SECIDENT|client|spawn  —  Players.testuser1.PlayerGui.SecurityProbe:8
+Info: [Client] Current identity is 2  —  rustudio.library:26
+Info: [Client] SEC|client|inherit:spawn|false|The current thread cannot call 'settings' (lacking capability Plugin)  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SECIDENT|client|coroutine.create  —  Players.testuser1.PlayerGui.SecurityProbe:8
+Info: [Client] Current identity is 2  —  rustudio.library:26
+Info: [Client] SEC|client|inherit:coroutine.create|false|The current thread cannot call 'settings' (lacking capability Plugin)  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SECIDENT|client|coroutine.wrap  —  Players.testuser1.PlayerGui.SecurityProbe:8
+Info: [Client] Current identity is 2  —  rustudio.library:26
+Info: [Client] SEC|client|inherit:coroutine.wrap|false|The current thread cannot call 'settings' (lacking capability Plugin)  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SECIDENT|client|xpcall  —  Players.testuser1.PlayerGui.SecurityProbe:8
+Info: [Client] Current identity is 2  —  rustudio.library:26
+Info: [Client] SEC|client|inherit:xpcall|false|The current thread cannot call 'settings' (lacking capability Plugin)  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SECIDENT|client|metamethod  —  Players.testuser1.PlayerGui.SecurityProbe:8
+Info: [Client] Current identity is 2  —  rustudio.library:26
+Info: [Client] SEC|client|inherit:metamethod|false|The current thread cannot call 'settings' (lacking capability Plugin)  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SECIDENT|client|BindableEvent  —  Players.testuser1.PlayerGui.SecurityProbe:8
+Info: [Client] Current identity is 2  —  rustudio.library:26
+Info: [Client] SEC|client|inherit:BindableEvent|false|The current thread cannot call 'settings' (lacking capability Plugin)  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|IsStudio|true|true  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Instance.DataCost:read:LocalUserSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Instance.DataCost:write:LocalUserSecurity|false|Unable to assign property DataCost. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Instance.RobloxLocked:read:PluginSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Instance.RobloxLocked:write:PluginSecurity|true|written  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Instance.SourceAssetId:read:RobloxScriptSecurity|true|-1  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Instance.SourceAssetId:write:RobloxScriptSecurity|false|Unable to assign property SourceAssetId. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Instance.UniqueId:read:RobloxScriptSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Instance.UniqueId:write:RobloxSecurity|false|Unable to assign property UniqueId. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Instance.GetDebugId:call:PluginSecurity|false|GetDebugId is not a valid member of Folder "Folder"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|CoreGui.SelectionImageObject:read:RobloxScriptSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|CoreGui.SelectionImageObject:write:RobloxScriptSecurity|false|Unable to assign property SelectionImageObject. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|CoreGui.SetUserGuiRendering:call:RobloxScriptSecurity|false|SetUserGuiRendering is not a valid member of CoreGui "CoreGui"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|CoreGui.TakeScreenshot:call:RobloxScriptSecurity|false|TakeScreenshot is not a valid member of CoreGui "CoreGui"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|CoreGui.ToggleRecording:call:RobloxScriptSecurity|false|ToggleRecording is not a valid member of CoreGui "CoreGui"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|CoreGui.UserGuiRenderingChanged:connect:RobloxScriptSecurity|false|UserGuiRenderingChanged is not a valid member of CoreGui "CoreGui"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|CoreGui.UserGuiRenderingChanged:wait:RobloxScriptSecurity|false|UserGuiRenderingChanged is not a valid member of CoreGui "CoreGui"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|StarterGui.ProcessUserInput:read:PluginSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|StarterGui.ProcessUserInput:write:PluginSecurity|true|written  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|StarterGui.StudioDefaultStyleSheet:read:RobloxScriptSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|StarterGui.StudioDefaultStyleSheet:write:RobloxScriptSecurity|false|Unable to assign property StudioDefaultStyleSheet. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|StarterGui.StudioInsertWidgetLayerCollectorAutoLinkStyleSheet:read:RobloxScriptSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|StarterGui.StudioInsertWidgetLayerCollectorAutoLinkStyleSheet:write:RobloxScriptSecurity|false|Unable to assign property StudioInsertWidgetLayerCollectorAutoLinkStyleSheet. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|StarterGui.RegisterGetCore:call:RobloxScriptSecurity|false|RegisterGetCore is not a valid member of StarterGui "StarterGui"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|StarterGui.RegisterSetCore:call:RobloxScriptSecurity|false|RegisterSetCore is not a valid member of StarterGui "StarterGui"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|StarterGui.CoreGuiChangedSignal:connect:RobloxScriptSecurity|false|CoreGuiChangedSignal is not a valid member of StarterGui "StarterGui"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|StarterGui.CoreGuiChangedSignal:wait:RobloxScriptSecurity|false|CoreGuiChangedSignal is not a valid member of StarterGui "StarterGui"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|HttpService.HttpEnabled:read:None|true|false  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|HttpService.HttpEnabled:write:LocalUserSecurity|false|Unable to assign property HttpEnabled. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|HttpService.CreateWebStreamClientInternal:call:RobloxScriptSecurity|false|CreateWebStreamClientInternal is not a valid member of HttpService "HttpService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|HttpService.GetHttpEnabled:call:RobloxScriptSecurity|false|GetHttpEnabled is not a valid member of HttpService "HttpService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|HttpService.GetUserAgent:call:RobloxScriptSecurity|false|GetUserAgent is not a valid member of HttpService "HttpService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|HttpService.RequestInternal:call:RobloxScriptSecurity|false|RequestInternal is not a valid member of HttpService "HttpService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|HttpService.SetHttpEnabled:call:RobloxScriptSecurity|false|SetHttpEnabled is not a valid member of HttpService "HttpService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|HttpService.JSONDecodeAsync:call:RobloxScriptSecurity|false|JSONDecodeAsync is not a valid member of HttpService "HttpService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|HttpService.JSONEncodeAsync:call:RobloxScriptSecurity|false|JSONEncodeAsync is not a valid member of HttpService "HttpService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|HttpService.RequestAccessTokenScopesAsync:call:LocalUserSecurity|false|RequestAccessTokenScopesAsync is not a valid member of HttpService "HttpService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|LogService.ExecuteScript:call:RobloxScriptSecurity|false|ExecuteScript is not a valid member of LogService "LogService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|LogService.GetHttpResultHistory:call:RobloxScriptSecurity|false|GetHttpResultHistory is not a valid member of LogService "LogService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|LogService.RequestHttpResultApproved:call:RobloxScriptSecurity|false|RequestHttpResultApproved is not a valid member of LogService "LogService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|LogService.RequestServerHttpResult:call:RobloxScriptSecurity|false|RequestServerHttpResult is not a valid member of LogService "LogService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|LogService.RequestServerOutput:call:RobloxScriptSecurity|false|RequestServerOutput is not a valid member of LogService "LogService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|LogService.HttpResultOut:connect:RobloxScriptSecurity|false|HttpResultOut is not a valid member of LogService "LogService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|LogService.HttpResultOut:wait:RobloxScriptSecurity|false|HttpResultOut is not a valid member of LogService "LogService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|LogService.OnHttpResultApproved:connect:RobloxScriptSecurity|false|OnHttpResultApproved is not a valid member of LogService "LogService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|LogService.OnHttpResultApproved:wait:RobloxScriptSecurity|false|OnHttpResultApproved is not a valid member of LogService "LogService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|LogService.ServerContextOut:connect:RobloxScriptSecurity|false|ServerContextOut is not a valid member of LogService "LogService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|LogService.ServerContextOut:wait:RobloxScriptSecurity|false|ServerContextOut is not a valid member of LogService "LogService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|LogService.ServerHttpResultOut:connect:RobloxScriptSecurity|false|ServerHttpResultOut is not a valid member of LogService "LogService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|LogService.ServerHttpResultOut:wait:RobloxScriptSecurity|false|ServerHttpResultOut is not a valid member of LogService "LogService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|LogService.ServerMessageOut:connect:RobloxScriptSecurity|false|ServerMessageOut is not a valid member of LogService "LogService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|LogService.ServerMessageOut:wait:RobloxScriptSecurity|false|ServerMessageOut is not a valid member of LogService "LogService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Workspace.AuthorityMode:read:RobloxScriptSecurity|true|Enum.AuthorityMode.Automatic  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Workspace.AuthorityMode:write:RobloxScriptSecurity|false|Unable to assign property AuthorityMode. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Workspace.FilteringEnabled:read:None|true|true  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Workspace.FilteringEnabled:write:PluginSecurity|false|The current thread cannot write 'FilteringEnabled' (lacking capability Plugin)  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Workspace.InterpolationThrottling:read:None|true|Enum.InterpolationThrottlingMode.Default  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Workspace.InterpolationThrottling:write:PluginSecurity|false|The current thread cannot write 'InterpolationThrottling' (lacking capability Plugin)  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Workspace.NextGenerationReplicationAlias:read:RobloxSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Workspace.NextGenerationReplicationAlias:write:RobloxSecurity|false|Unable to assign property NextGenerationReplicationAlias. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Workspace.PlayerScriptsUseInputActionSystem:read:RobloxScriptSecurity|true|Enum.RolloutState.Default  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Workspace.PlayerScriptsUseInputActionSystem:write:RobloxScriptSecurity|false|Unable to assign property PlayerScriptsUseInputActionSystem. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Workspace.PlayerScriptsUseInputActionSystemAlias:read:RobloxSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Workspace.PlayerScriptsUseInputActionSystemAlias:write:RobloxSecurity|false|Unable to assign property PlayerScriptsUseInputActionSystemAlias. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Workspace.SignalBehaviorAlias:read:RobloxSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Workspace.SignalBehaviorAlias:write:RobloxSecurity|false|Unable to assign property SignalBehaviorAlias. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Workspace.StreamingEnabledAlias:read:RobloxSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Workspace.StreamingEnabledAlias:write:RobloxSecurity|false|Unable to assign property StreamingEnabledAlias. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Workspace.UseFixedSimulationAlias:read:RobloxSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Workspace.UseFixedSimulationAlias:write:RobloxSecurity|false|Unable to assign property UseFixedSimulationAlias. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Workspace.ApplyRecommendedStreamingSettings:call:PluginSecurity|false|ApplyRecommendedStreamingSettings is not a valid member of Workspace "Workspace"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Workspace.BreakJoints:call:PluginSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Workspace.CalculateJumpDistance:call:RobloxScriptSecurity|false|CalculateJumpDistance is not a valid member of Workspace "Workspace"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Workspace.CalculateJumpHeight:call:RobloxScriptSecurity|false|CalculateJumpHeight is not a valid member of Workspace "Workspace"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Workspace.CalculateJumpPower:call:RobloxScriptSecurity|false|CalculateJumpPower is not a valid member of Workspace "Workspace"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Workspace.ExperimentalSolverIsEnabled:call:LocalUserSecurity|false|ExperimentalSolverIsEnabled is not a valid member of Workspace "Workspace"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Workspace.MakeJoints:call:PluginSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Workspace.SetAvatarUnificationMode:call:RobloxScriptSecurity|false|SetAvatarUnificationMode is not a valid member of Workspace "Workspace"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Workspace.SetMeshPartHeadsAndAccessories:call:RobloxScriptSecurity|false|SetMeshPartHeadsAndAccessories is not a valid member of Workspace "Workspace"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Workspace.SetPhysicsThrottleEnabled:call:LocalUserSecurity|false|SetPhysicsThrottleEnabled is not a valid member of Workspace "Workspace"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Workspace.ZoomToExtents:call:PluginSecurity|false|ZoomToExtents is not a valid member of Workspace "Workspace"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.AgeChecked:read:None|true|Enum.AgeCheckStatus.Unchecked  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.AgeChecked:write:RobloxSecurity|false|Unable to assign property AgeChecked. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.AppearanceDidLoad:read:RobloxScriptSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.AppearanceDidLoad:write:RobloxScriptSecurity|false|Unable to assign property AppearanceDidLoad. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.ChatAvailabilityStatus:read:RobloxScriptSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.ChatAvailabilityStatus:write:RobloxScriptSecurity|false|Unable to assign property ChatAvailabilityStatus. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.ChatMode:read:RobloxScriptSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.ChatMode:write:RobloxScriptSecurity|false|Unable to assign property ChatMode. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.DataComplexityLimit:read:LocalUserSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.DataComplexityLimit:write:LocalUserSecurity|false|Unable to assign property DataComplexityLimit. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.GameplayPaused:read:None|true|false  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.GameplayPaused:write:NotAccessibleSecurity|false|Unable to assign property GameplayPaused. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.Guest:read:RobloxScriptSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.Guest:write:RobloxScriptSecurity|false|Unable to assign property Guest. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.HasRobloxSubscription:read:None|true|false  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.HasRobloxSubscription:write:RobloxSecurity|false|Unable to assign property HasRobloxSubscription. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.InputLatency:read:RobloxSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.InputLatency:write:RobloxSecurity|false|Unable to assign property InputLatency. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.MaximumSimulationRadius:read:LocalUserSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.MaximumSimulationRadius:write:LocalUserSecurity|false|Unable to assign property MaximumSimulationRadius. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.OsPlatform:read:RobloxScriptSecurity|false|The current thread cannot read 'OsPlatform' (lacking capability RobloxScript)  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.OsPlatform:write:RobloxScriptSecurity|false|Unable to assign property OsPlatform. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.PartyId:read:None|true|  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.PartyId:write:RobloxSecurity|false|Unable to assign property PartyId. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.PlatformName:read:RobloxScriptSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.PlatformName:write:RobloxScriptSecurity|false|Unable to assign property PlatformName. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.SimulationRadius:read:LocalUserSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.SimulationRadius:write:LocalUserSecurity|false|Unable to assign property SimulationRadius. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.Teleported:read:RobloxScriptSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.Teleported:write:RobloxScriptSecurity|false|Unable to assign property Teleported. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.TeleportedIn:read:RobloxScriptSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.TeleportedIn:write:RobloxScriptSecurity|false|Unable to assign property TeleportedIn. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.ThirdPartyTextChatRestrictionStatus:read:RobloxScriptSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.ThirdPartyTextChatRestrictionStatus:write:RobloxScriptSecurity|false|Unable to assign property ThirdPartyTextChatRestrictionStatus. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.UnfilteredChat:read:RobloxScriptSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.UnfilteredChat:write:RobloxScriptSecurity|false|Unable to assign property UnfilteredChat. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.User:read:None|true|U1.AQAAAAAAAAAAAAAAAAAAAAA  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.User:write:RobloxSecurity|false|Unable to assign property User. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.VRDevice:read:RobloxScriptSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.VRDevice:write:RobloxScriptSecurity|false|Unable to assign property VRDevice. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.VREnabled:read:RobloxScriptSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.VREnabled:write:RobloxScriptSecurity|false|Unable to assign property VREnabled. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.VoiceChatVolume:read:RobloxScriptSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.VoiceChatVolume:write:RobloxScriptSecurity|false|Unable to assign property VoiceChatVolume. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.AddReplicationFocusPosition:call:RobloxSecurity|false|AddReplicationFocusPosition is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.AddToBlockList:call:RobloxScriptSecurity|false|AddToBlockList is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.GetBlockListInitialized:call:RobloxScriptSecurity|false|GetBlockListInitialized is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.GetFriendStatus:call:RobloxScriptSecurity|false|GetFriendStatus is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.GetGameSessionID:call:RobloxSecurity|false|GetGameSessionID is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.GetGlobalUserId:call:RobloxScriptSecurity|false|GetGlobalUserId is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.GetSeatRequested:call:RobloxScriptSecurity|false|GetSeatRequested is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.GetToolRequested:call:RobloxScriptSecurity|false|GetToolRequested is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.GetUnder13:call:RobloxScriptSecurity|false|GetUnder13 is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.HasBlockedPlayer:call:RobloxScriptSecurity|false|HasBlockedPlayer is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.LoadData:call:LocalUserSecurity|false|LoadData is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.NotifyAgeCheckPassed:call:RobloxScriptSecurity|false|NotifyAgeCheckPassed is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.OverrideStreamingRadii:call:RobloxSecurity|false|OverrideStreamingRadii is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.PinStreamingForInstance:call:RobloxScriptSecurity|false|PinStreamingForInstance is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.PinStreamingForInstanceByUniqueId:call:RobloxScriptSecurity|false|PinStreamingForInstanceByUniqueId is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.RemoveCharacter:call:LocalUserSecurity|false|RemoveCharacter is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.RemoveReplicationFocusPosition:call:RobloxSecurity|false|RemoveReplicationFocusPosition is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.RequestFriendship:call:RobloxScriptSecurity|false|RequestFriendship is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.RequestSeat:call:RobloxScriptSecurity|false|RequestSeat is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.RequestTool:call:RobloxScriptSecurity|false|RequestTool is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.RevokeFriendship:call:RobloxScriptSecurity|false|RevokeFriendship is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.SaveData:call:LocalUserSecurity|false|SaveData is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.SetAccountAge:call:PluginSecurity|false|SetAccountAge is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.SetBlockListInitialized:call:RobloxScriptSecurity|false|SetBlockListInitialized is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.SetCharacterAppearanceJson:call:RobloxScriptSecurity|false|SetCharacterAppearanceJson is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.SetChatTranslationSettingsLocaleId:call:RobloxScriptSecurity|false|SetChatTranslationSettingsLocaleId is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.SetExperienceSettingsLocaleId:call:RobloxScriptSecurity|false|SetExperienceSettingsLocaleId is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.SetHasRobloxSubscription:call:RobloxScriptSecurity|false|SetHasRobloxSubscription is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.SetMembershipType:call:RobloxScriptSecurity|false|SetMembershipType is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.SetModerationAccessKey:call:RobloxScriptSecurity|false|SetModerationAccessKey is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.SetSuperSafeChat:call:PluginSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.SetUnder13:call:RobloxSecurity|false|SetUnder13 is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.UnpinStreamingForInstance:call:RobloxScriptSecurity|false|UnpinStreamingForInstance is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.UpdatePlayerBlocked:call:RobloxScriptSecurity|false|UpdatePlayerBlocked is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.GetCanManageAsync:call:RobloxScriptSecurity|false|GetCanManageAsync is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.LoadCharacterBlocking:call:LocalUserSecurity|false|LoadCharacter can only be called by the backend server  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.PromptSecurityChallengeAsync:call:RobloxSecurity|false|PromptSecurityChallengeAsync is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.BlockListChanged:connect:RobloxScriptSecurity|false|BlockListChanged is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.BlockListChanged:wait:RobloxScriptSecurity|false|BlockListChanged is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.CloudEditSelectionChanged:connect:RobloxScriptSecurity|false|CloudEditSelectionChanged is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.CloudEditSelectionChanged:wait:RobloxScriptSecurity|false|CloudEditSelectionChanged is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.FriendStatusChanged:connect:RobloxScriptSecurity|false|FriendStatusChanged is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.FriendStatusChanged:wait:RobloxScriptSecurity|false|FriendStatusChanged is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.InstancePinned:connect:RobloxScriptSecurity|false|InstancePinned is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.InstancePinned:wait:RobloxScriptSecurity|false|InstancePinned is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.InstanceUnpinned:connect:RobloxScriptSecurity|false|InstanceUnpinned is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.InstanceUnpinned:wait:RobloxScriptSecurity|false|InstanceUnpinned is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.SimulationRadiusChanged:connect:LocalUserSecurity|false|SimulationRadiusChanged is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.SimulationRadiusChanged:wait:LocalUserSecurity|false|SimulationRadiusChanged is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.StreamingPinComplete:connect:RobloxScriptSecurity|false|StreamingPinComplete is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Player.StreamingPinComplete:wait:RobloxScriptSecurity|false|StreamingPinComplete is not a valid member of Player "Players.testuser1"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Players.MaxPlayersInternal:read:LocalUserSecurity|false|The current thread cannot read 'MaxPlayersInternal' (lacking capability LocalUser)  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Players.MaxPlayersInternal:write:LocalUserSecurity|false|Unable to assign property MaxPlayersInternal. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Players.PreferredPlayersInternal:read:LocalUserSecurity|false|The current thread cannot read 'PreferredPlayersInternal' (lacking capability LocalUser)  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Players.PreferredPlayersInternal:write:LocalUserSecurity|false|Unable to assign property PreferredPlayersInternal. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Players.Chat:call:PluginSecurity|false|Chat is not a valid member of Players "Players"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Players.CreateLocalPlayer:call:LocalUserSecurity|false|CreateLocalPlayer is not a valid member of Players "Players"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Players.CreateThumbnailPlayer:call:RobloxScriptSecurity|false|CreateThumbnailPlayer is not a valid member of Players "Players"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Players.ReportAbuse:call:LocalUserSecurity|false|ReportAbuse is not a valid member of Players "Players"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Players.ReportAbuseV3:call:RobloxScriptSecurity|false|ReportAbuseV3 is not a valid member of Players "Players"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Players.ReportAvatarAbuse:call:RobloxScriptSecurity|false|ReportAvatarAbuse is not a valid member of Players "Players"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Players.ReportChatAbuse:call:RobloxScriptSecurity|false|ReportChatAbuse is not a valid member of Players "Players"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Players.ResetLocalPlayer:call:LocalUserSecurity|false|ResetLocalPlayer is not a valid member of Players "Players"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Players.SetChatStyle:call:PluginSecurity|false|SetChatStyle is not a valid member of Players "Players"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Players.SetLocalPlayerInfo:call:RobloxScriptSecurity|false|SetLocalPlayerInfo is not a valid member of Players "Players"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Players.TeamChat:call:PluginSecurity|false|TeamChat is not a valid member of Players "Players"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Players.WhisperChat:call:LocalUserSecurity|false|WhisperChat is not a valid member of Players "Players"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Players.FriendRequestEvent:connect:RobloxScriptSecurity|false|FriendRequestEvent is not a valid member of Players "Players"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Players.FriendRequestEvent:wait:RobloxScriptSecurity|false|FriendRequestEvent is not a valid member of Players "Players"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Players.PlayerChatted:connect:LocalUserSecurity|false|PlayerChatted is not a valid member of Players "Players"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Players.PlayerChatted:wait:LocalUserSecurity|false|PlayerChatted is not a valid member of Players "Players"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Players.PlayerConnecting:connect:LocalUserSecurity|false|PlayerConnecting is not a valid member of Players "Players"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Players.PlayerConnecting:wait:LocalUserSecurity|false|PlayerConnecting is not a valid member of Players "Players"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Players.PlayerDisconnecting:connect:LocalUserSecurity|false|PlayerDisconnecting is not a valid member of Players "Players"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Players.PlayerDisconnecting:wait:LocalUserSecurity|false|PlayerDisconnecting is not a valid member of Players "Players"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Players.PlayerRejoining:connect:LocalUserSecurity|false|PlayerRejoining is not a valid member of Players "Players"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Players.PlayerRejoining:wait:LocalUserSecurity|false|PlayerRejoining is not a valid member of Players "Players"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Players.PromptAgeCheckRequested:connect:RobloxScriptSecurity|false|PromptAgeCheckRequested is not a valid member of Players "Players"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|Players.PromptAgeCheckRequested:wait:RobloxScriptSecurity|false|PromptAgeCheckRequested is not a valid member of Players "Players"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|RunService.ClientGitHash:read:RobloxScriptSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|RunService.ClientGitHash:write:RobloxScriptSecurity|false|Unable to assign property ClientGitHash. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|RunService.RunState:read:None|false|The current thread cannot read 'RunState' (lacking capability PluginOrOpenCloud)  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|RunService.RunState:write:PluginSecurity|false|Unable to assign property RunState. EnumItem expected, got nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|RunService.GetControlAndVariantRolloutFlags:call:RobloxScriptSecurity|false|GetControlAndVariantRolloutFlags is not a valid member of RunService "RunService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|RunService.GetCoreScriptVersion:call:RobloxScriptSecurity|false|GetCoreScriptVersion is not a valid member of RunService "RunService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|RunService.GetPhysicsStepId:call:RobloxScriptSecurity|false|GetPhysicsStepId is not a valid member of RunService "RunService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|RunService.GetRobloxClientChannel:call:RobloxScriptSecurity|false|GetRobloxClientChannel is not a valid member of RunService "RunService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|RunService.GetRobloxClientIxpEnrolledExperiments:call:RobloxScriptSecurity|false|GetRobloxClientIxpEnrolledExperiments is not a valid member of RunService "RunService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|RunService.GetRobloxGuiFocused:call:RobloxScriptSecurity|false|GetRobloxGuiFocused is not a valid member of RunService "RunService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|RunService.GetRobloxVersion:call:RobloxScriptSecurity|false|GetRobloxVersion is not a valid member of RunService "RunService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|RunService.GetTotalScriptPlusExecutionTime:call:RobloxScriptSecurity|false|GetTotalScriptPlusExecutionTime is not a valid member of RunService "RunService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|RunService.IsTeamCreateViewer:call:RobloxScriptSecurity|false|IsTeamCreateViewer is not a valid member of RunService "RunService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|RunService.IsTeamTest:call:RobloxScriptSecurity|false|IsTeamTest is not a valid member of RunService "RunService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|RunService.Pause:call:PluginSecurity|false|Pause is not a valid member of RunService "RunService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|RunService.Reset:call:PluginSecurity|false|Reset is not a valid member of RunService "RunService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|RunService.Run:call:PluginSecurity|false|Run is not a valid member of RunService "RunService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|RunService.Set3dRenderingEnabled:call:RobloxScriptSecurity|false|Set3dRenderingEnabled is not a valid member of RunService "RunService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|RunService.SetRobloxGuiFocused:call:RobloxScriptSecurity|false|SetRobloxGuiFocused is not a valid member of RunService "RunService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|RunService.Stop:call:PluginSecurity|false|Stop is not a valid member of RunService "RunService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|RunService.getThrottleFramerateEnabled:call:RobloxScriptSecurity|false|getThrottleFramerateEnabled is not a valid member of RunService "RunService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|RunService.setThrottleFramerateEnabled:call:RobloxScriptSecurity|false|setThrottleFramerateEnabled is not a valid member of RunService "RunService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|RunService.RobloxGuiFocusedChanged:connect:RobloxScriptSecurity|false|RobloxGuiFocusedChanged is not a valid member of RunService "RunService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|RunService.RobloxGuiFocusedChanged:wait:RobloxScriptSecurity|false|RobloxGuiFocusedChanged is not a valid member of RunService "RunService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|ScriptContext.ScriptsDisabled:read:LocalUserSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|ScriptContext.ScriptsDisabled:write:LocalUserSecurity|false|Unable to assign property ScriptsDisabled. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|ScriptContext.AddCoreScriptLocal:call:RobloxScriptSecurity|false|AddCoreScriptLocal is not a valid member of ScriptContext "ScriptContext"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|ScriptContext.CompressLuaApp:call:RobloxScriptSecurity|false|CompressLuaApp is not a valid member of ScriptContext "ScriptContext"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|ScriptContext.GetLuauHeapInstanceReferenceReport:call:RobloxScriptSecurity|false|GetLuauHeapInstanceReferenceReport is not a valid member of ScriptContext "ScriptContext"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|ScriptContext.GetLuauHeapMemoryReport:call:RobloxScriptSecurity|false|GetLuauHeapMemoryReport is not a valid member of ScriptContext "ScriptContext"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|ScriptContext.ReportLuaRequireCount:call:RobloxScriptSecurity|false|ReportLuaRequireCount is not a valid member of ScriptContext "ScriptContext"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|ScriptContext.SetTimeout:call:PluginSecurity|false|SetTimeout is not a valid member of ScriptContext "ScriptContext"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|ScriptContext.ErrorDetailed:connect:RobloxScriptSecurity|false|ErrorDetailed is not a valid member of ScriptContext "ScriptContext"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|ScriptContext.ErrorDetailed:wait:RobloxScriptSecurity|false|ErrorDetailed is not a valid member of ScriptContext "ScriptContext"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.Environment:read:RobloxScriptSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.Environment:write:RobloxScriptSecurity|false|Unable to assign property Environment. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.IsPioneerBuild:read:RobloxScriptSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.IsPioneerBuild:write:RobloxScriptSecurity|false|Unable to assign property IsPioneerBuild. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.IsSFFlagsLoaded:read:RobloxScriptSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.IsSFFlagsLoaded:write:RobloxScriptSecurity|false|Unable to assign property IsSFFlagsLoaded. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.PioneerSource:read:RobloxScriptSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.PioneerSource:write:RobloxScriptSecurity|false|Unable to assign property PioneerSource. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.getGameTime:call:RobloxScriptSecurity|false|getGameTime is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.DefineFastFlag:call:RobloxScriptSecurity|false|DefineFastFlag is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.DefineFastInt:call:RobloxScriptSecurity|false|DefineFastInt is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.DefineFastString:call:RobloxScriptSecurity|false|DefineFastString is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.GetEngineFeature:call:LocalUserSecurity|false|GetEngineFeature is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.GetFastFlag:call:LocalUserSecurity|false|GetFastFlag is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.GetFastInt:call:LocalUserSecurity|false|GetFastInt is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.GetFastString:call:LocalUserSecurity|false|GetFastString is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.GetJobsInfo:call:PluginSecurity|false|GetJobsInfo is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.GetPioneerRootPlaceId:call:RobloxScriptSecurity|false|GetPioneerRootPlaceId is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.GetPioneerSource:call:RobloxScriptSecurity|false|GetPioneerSource is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.GetPlaySessionId:call:RobloxScriptSecurity|false|GetPlaySessionId is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.IsContentLoaded:call:RobloxScriptSecurity|false|IsContentLoaded is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.IsPioneerApp:call:RobloxScriptSecurity|false|IsPioneerApp is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.IsUniverseMetadataLoaded:call:RobloxScriptSecurity|false|IsUniverseMetadataLoaded is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.Load:call:LocalUserSecurity|false|Load is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.OpenLogsFolder:call:RobloxScriptSecurity|false|OpenLogsFolder is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.OpenScreenshotsFolder:call:RobloxScriptSecurity|false|OpenScreenshotsFolder is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.OpenVideosFolder:call:RobloxScriptSecurity|false|OpenVideosFolder is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.SetFlagVersion:call:RobloxScriptSecurity|false|SetFlagVersion is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.SetIsLoaded:call:RobloxScriptSecurity|false|SetIsLoaded is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.Shutdown:call:LocalUserSecurity|false|Shutdown is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.SetFastFlagForTesting:call:RobloxScriptSecurity|false|SetFastFlagForTesting is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.SetFastIntForTesting:call:RobloxScriptSecurity|false|SetFastIntForTesting is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.SetFastStringForTesting:call:RobloxScriptSecurity|false|SetFastStringForTesting is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.GetObjects:call:PluginSecurity|false|GetObjects is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.GetObjectsAllOrNone:call:RobloxScriptSecurity|false|GetObjectsAllOrNone is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.GetObjectsList:call:RobloxScriptSecurity|false|GetObjectsList is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.SetPlaceId:call:PluginSecurity|false|SetPlaceId is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.SetUniverseId:call:PluginSecurity|false|SetUniverseId is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.HttpGetAsync:call:RobloxScriptSecurity|false|HttpGetAsync is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.HttpPostAsync:call:RobloxScriptSecurity|false|HttpPostAsync is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.GetObjectsAsync:call:RobloxScriptSecurity|false|GetObjectsAsync is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.InsertObjectsAndJoinIfLegacyAsync:call:RobloxScriptSecurity|false|InsertObjectsAndJoinIfLegacyAsync is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.ScreenshotReady:connect:RobloxScriptSecurity|false|ScreenshotReady is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.ScreenshotReady:wait:RobloxScriptSecurity|false|ScreenshotReady is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.ScreenshotSavedToAlbum:connect:RobloxScriptSecurity|false|ScreenshotSavedToAlbum is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.ScreenshotSavedToAlbum:wait:RobloxScriptSecurity|false|ScreenshotSavedToAlbum is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.UniverseMetadataLoaded:connect:RobloxScriptSecurity|false|UniverseMetadataLoaded is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|DataModel.UniverseMetadataLoaded:wait:RobloxScriptSecurity|false|UniverseMetadataLoaded is not a valid member of DataModel ""  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|UserInputService.BottomBarSize:read:RobloxScriptSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|UserInputService.BottomBarSize:write:RobloxScriptSecurity|false|Unable to assign property BottomBarSize. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|UserInputService.LegacyInputEventsEnabled:read:RobloxScriptSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|UserInputService.LegacyInputEventsEnabled:write:RobloxScriptSecurity|false|Unable to assign property LegacyInputEventsEnabled. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|UserInputService.NavBarSize:read:RobloxScriptSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|UserInputService.NavBarSize:write:RobloxScriptSecurity|false|Unable to assign property NavBarSize. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|UserInputService.OnScreenKeyboardAnimationDuration:read:RobloxScriptSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|UserInputService.OnScreenKeyboardAnimationDuration:write:RobloxScriptSecurity|false|Unable to assign property OnScreenKeyboardAnimationDuration. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|UserInputService.OverrideMouseIconBehavior:read:RobloxScriptSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|UserInputService.OverrideMouseIconBehavior:write:RobloxScriptSecurity|false|Unable to assign property OverrideMouseIconBehavior. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|UserInputService.RightBarSize:read:RobloxScriptSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|UserInputService.RightBarSize:write:RobloxScriptSecurity|false|Unable to assign property RightBarSize. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|UserInputService.StatusBarSize:read:RobloxScriptSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|UserInputService.StatusBarSize:write:RobloxScriptSecurity|false|Unable to assign property StatusBarSize. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|UserInputService.TouchScreenEnabled:read:RobloxScriptSecurity|true|nil  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|UserInputService.TouchScreenEnabled:write:RobloxScriptSecurity|false|Unable to assign property TouchScreenEnabled. Property is read only  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|UserInputService.GetDeviceLevel:call:RobloxScriptSecurity|false|GetDeviceLevel is not a valid member of UserInputService "UserInputService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|UserInputService.GetDeviceType:call:RobloxScriptSecurity|false|GetDeviceType is not a valid member of UserInputService "UserInputService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|UserInputService.GetPasteText:call:RobloxScriptSecurity|false|GetPasteText is not a valid member of UserInputService "UserInputService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|UserInputService.GetPlatform:call:RobloxScriptSecurity|false|GetPlatform is not a valid member of UserInputService "UserInputService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|UserInputService.SendAppUISizes:call:RobloxScriptSecurity|false|SendAppUISizes is not a valid member of UserInputService "UserInputService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|UserInputService.StatusBarTapped:connect:RobloxScriptSecurity|false|StatusBarTapped is not a valid member of UserInputService "UserInputService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SEC|client|UserInputService.StatusBarTapped:wait:RobloxScriptSecurity|false|StatusBarTapped is not a valid member of UserInputService "UserInputService"  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SECIDENT|client|defer  —  Players.testuser1.PlayerGui.SecurityProbe:8
+Info: [Client] Current identity is 2  —  rustudio.library:26
+Info: [Client] SEC|client|inherit:defer|false|The current thread cannot call 'settings' (lacking capability Plugin)  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SECIDENT|client|delay  —  Players.testuser1.PlayerGui.SecurityProbe:8
+Info: [Client] Current identity is 2  —  rustudio.library:26
+Info: [Client] SEC|client|inherit:delay|false|The current thread cannot call 'settings' (lacking capability Plugin)  —  Players.testuser1.PlayerGui.SecurityProbe:2
+Info: [Client] SECEND|client  —  Players.testuser1.PlayerGui.SecurityProbe:334
+[shot] /home/user/projects/rustudio/app/tools/parity_probe/security/client.png
+[shot] /home/user/projects/rustudio/app/tools/parity_probe/security/client.view.png

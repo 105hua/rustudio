@@ -1,0 +1,246 @@
+{
+ "DataStoreService": {
+  "missing": [
+   "function GetRequestBudgetForRequestType",
+   "function SetRateLimitForRequestType",
+   "function ListDataStoresAsync"
+  ],
+  "events_to_check": []
+ },
+ "GlobalDataStore": {
+  "missing": [
+   "function OnUpdate",
+   "function BatchGetAsync",
+   "function GetAsync",
+   "function IncrementAsync",
+   "function RemoveAsync",
+   "function SetAsync",
+   "function UpdateAsync"
+  ],
+  "events_to_check": []
+ },
+ "DataStore": {
+  "missing": [
+   "function GetVersionAsync",
+   "function GetVersionAtTimeAsync",
+   "function ListKeysAsync",
+   "function ListVersionsAsync",
+   "function RemoveVersionAsync"
+  ],
+  "events_to_check": []
+ },
+ "OrderedDataStore": {
+  "missing": [
+   "function GetSortedAsync"
+  ],
+  "events_to_check": []
+ },
+ "DataStoreInfo": {
+  "missing": [
+   "property CreatedTime",
+   "property DataStoreName",
+   "property UpdatedTime"
+  ],
+  "events_to_check": []
+ },
+ "DataStoreKey": {
+  "missing": [
+   "property KeyName"
+  ],
+  "events_to_check": []
+ },
+ "DataStoreKeyInfo": {
+  "missing": [
+   "property CreatedTime",
+   "property UpdatedTime",
+   "property Version",
+   "function GetMetadata",
+   "function GetUserIds"
+  ],
+  "events_to_check": []
+ },
+ "DataStoreKeyPages": {
+  "missing": [
+   "property Cursor"
+  ],
+  "events_to_check": []
+ },
+ "DataStoreListingPages": {
+  "missing": [
+   "property Cursor"
+  ],
+  "events_to_check": []
+ },
+ "DataStoreObjectVersionInfo": {
+  "missing": [
+   "property CreatedTime",
+   "property IsDeleted",
+   "property Version"
+  ],
+  "events_to_check": []
+ },
+ "DataStoreOptions": {
+  "missing": [
+   "function SetExperimentalFeatures"
+  ],
+  "events_to_check": []
+ },
+ "DataStoreSetOptions": {
+  "missing": [
+   "function GetMetadata",
+   "function SetMetadata"
+  ],
+  "events_to_check": []
+ },
+ "DataStoreIncrementOptions": {
+  "missing": [
+   "function GetMetadata",
+   "function SetMetadata"
+  ],
+  "events_to_check": []
+ },
+ "Pages": {
+  "missing": [
+   "property IsFinished",
+   "function GetCurrentPage",
+   "function AdvanceToNextPageAsync"
+  ],
+  "events_to_check": []
+ },
+ "MemoryStoreService": {
+  "missing": [
+   "function GetDistributedCounter",
+   "function GetHashMap",
+   "function GetQueue",
+   "function GetSortedMap"
+  ],
+  "events_to_check": []
+ },
+ "MemoryStoreQueue": {
+  "missing": [
+   "function AddAsync",
+   "function GetSizeAsync",
+   "function ReadAsync",
+   "function RemoveAsync"
+  ],
+  "events_to_check": []
+ },
+ "MemoryStoreSortedMap": {
+  "missing": [
+   "function GetAsync",
+   "function GetRangeAsync",
+   "function GetSizeAsync",
+   "function RemoveAsync",
+   "function SetAsync",
+   "function UpdateAsync"
+  ],
+  "events_to_check": []
+ },
+ "MemoryStoreHashMap": {
+  "missing": [
+   "function GetAsync",
+   "function ListItemsAsync",
+   "function RemoveAsync",
+   "function SetAsync",
+   "function UpdateAsync"
+  ],
+  "events_to_check": []
+ },
+ "MemoryStoreDistributedCounter": {
+  "missing": [
+   "function GetAsync",
+   "function IncrementAsync"
+  ],
+  "events_to_check": []
+ },
+ "MessagingService": {
+  "missing": [
+   "function PublishAsync",
+   "function SubscribeAsync"
+  ],
+  "events_to_check": []
+ },
+ "PlayerDataService": {
+  "missing": [
+   "function GetRecordConfig"
+  ],
+  "events_to_check": []
+ },
+ "PlayerData": {
+  "missing": [
+   "function GetPlayer",
+   "function GetRecordAsync"
+  ],
+  "events_to_check": []
+ },
+ "PlayerDataRecord": {
+  "missing": [
+   "property CreatedTime",
+   "property DefaultRecordName",
+   "property Dirty",
+   "property Error",
+   "property FlushedTime",
+   "property LoadedTime",
+   "property ModifiedTime",
+   "property NewRecord",
+   "property Readable",
+   "property RecordName",
+   "property Writable",
+   "function GetPlayer",
+   "function GetValue",
+   "function GetValueChangedSignal",
+   "function RemoveValue",
+   "function SetValue",
+   "function ReleaseAsync",
+   "function RequestFlushAsync"
+  ],
+  "events_to_check": [
+   "Changed",
+   "Flushed",
+   "Loaded"
+  ]
+ },
+ "PlayerDataRecordConfig": {
+  "missing": [
+   "property RecordName",
+   "function GetDefaultValue",
+   "function SetDefaultValue"
+  ],
+  "events_to_check": []
+ },
+ "ConfigService": {
+  "missing": [
+   "function ClearTestingValue",
+   "function SetTestingValue",
+   "function GetConfigAsync",
+   "function GetConfigForPlayerAsync"
+  ],
+  "events_to_check": []
+ },
+ "ConfigSnapshot": {
+  "missing": [
+   "property Error",
+   "property Outdated",
+   "function GetValue",
+   "function GetValueChangedSignal",
+   "function Refresh"
+  ],
+  "events_to_check": [
+   "UpdateAvailable"
+  ]
+ },
+ "QueueService": {
+  "missing": [
+   "function GetStandardQueue"
+  ],
+  "events_to_check": []
+ },
+ "StandardQueue": {
+  "missing": [
+   "function BatchCommitAsync",
+   "function PublishAsync",
+   "function SubscribeAsync"
+  ],
+  "events_to_check": []
+ }
+}

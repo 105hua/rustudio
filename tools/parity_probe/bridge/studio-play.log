@@ -1,0 +1,552 @@
+BRIDGE|server|connection.meta|true|The metatable is locked|RBXScriptConnection|userdata|Connection
+BRIDGE|server|connection.namecall|true|function|[C]|-1||0|true|function: 0xb6018a757942a434
+BRIDGE|server|connection.namecall.empty|false|ServerScriptService.BridgeProbe:16: missing argument #1 (RBXScriptConnection expected)
+BRIDGE|server|connection.namecall.self|false|ServerScriptService.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|server|connection.namecall.table|false|ServerScriptService.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|server|connection.namecall.nil|false|ServerScriptService.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|server|connection.index|true|function|[C]|-1||0|true|function: 0xb6018a757942a434
+BRIDGE|server|connection.index.empty|false|ServerScriptService.BridgeProbe:16: missing argument #1 (RBXScriptConnection expected)
+BRIDGE|server|connection.index.self|false|ServerScriptService.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|server|connection.index.table|false|ServerScriptService.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|server|connection.index.nil|false|ServerScriptService.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|server|connection.newindex|true|function|[C]|-1||0|true|function: 0xf2fe45c0d0d4bf61
+BRIDGE|server|connection.newindex.empty|false|ServerScriptService.BridgeProbe:16: missing argument #2 (string expected)
+BRIDGE|server|connection.newindex.self|false|ServerScriptService.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|server|connection.newindex.table|false|ServerScriptService.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|server|connection.newindex.nil|false|ServerScriptService.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|server|connection.index.nil|false|ServerScriptService.BridgeProbe:21: invalid argument #2 (string expected, got nil)
+BRIDGE|server|connection.index.number|false|1 is not a valid member of RBXScriptConnection
+BRIDGE|server|connection.write.nil|false|ServerScriptService.BridgeProbe:23: invalid argument #2 (string expected, got nil)
+BRIDGE|server|connection.unknown|false|____________ is not a valid member of RBXScriptConnection
+BRIDGE|server|player.meta|true|The metatable is locked|Instance|userdata|Player
+BRIDGE|server|player.namecall|true|function|[C]|-1||0|true|function: 0x886ec6a92e946370
+BRIDGE|server|player.namecall.empty|false|ServerScriptService.BridgeProbe:16: missing argument #1 (Instance expected)
+BRIDGE|server|player.namecall.self|false|____________ is not a valid member of Player "Players.Player"
+BRIDGE|server|player.namecall.table|false|____________ is not a valid member of Player "Players.Player"
+BRIDGE|server|player.namecall.nil|false|____________ is not a valid member of Player "Players.Player"
+BRIDGE|server|player.index|true|function|[C]|-1||0|true|function: 0xb8a3c57fcf6cc5a4
+BRIDGE|server|player.index.empty|false|ServerScriptService.BridgeProbe:16: missing argument #1 (Instance expected)
+BRIDGE|server|player.index.self|false|ServerScriptService.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|server|player.index.table|false|ServerScriptService.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|server|player.index.nil|false|ServerScriptService.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|server|player.newindex|true|function|[C]|-1||0|true|function: 0x9e621647d94585a4
+BRIDGE|server|player.newindex.empty|false|ServerScriptService.BridgeProbe:16: missing argument #1 (Instance expected)
+BRIDGE|server|player.newindex.self|false|ServerScriptService.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|server|player.newindex.table|false|ServerScriptService.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|server|player.newindex.nil|false|ServerScriptService.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|server|player.index.nil|false|ServerScriptService.BridgeProbe:21: invalid argument #2 (string expected, got nil)
+BRIDGE|server|player.index.number|false|1 is not a valid member of Player "Players.Player"
+BRIDGE|server|player.write.nil|false|ServerScriptService.BridgeProbe:23: invalid argument #2 (string expected, got nil)
+BRIDGE|server|player.unknown|false|____________ is not a valid member of Player "Players.Player"
+BRIDGE|server|item.meta|true|The metatable is locked|EnumItem|userdata|Enum.Material.Plastic
+BRIDGE|server|item.namecall|true|function|[C]|-1||0|true|function: 0x563ec8a20fd77f1d
+BRIDGE|server|item.namecall.empty|false|ServerScriptService.BridgeProbe:16: missing argument #1 (EnumItem expected)
+BRIDGE|server|item.namecall.self|false|ServerScriptService.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|server|item.namecall.table|false|ServerScriptService.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|server|item.namecall.nil|false|ServerScriptService.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|server|item.index|true|function|[C]|-1||0|true|function: 0x563ec8a20fd77f1d
+BRIDGE|server|item.index.empty|false|ServerScriptService.BridgeProbe:16: missing argument #1 (EnumItem expected)
+BRIDGE|server|item.index.self|false|ServerScriptService.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|server|item.index.table|false|ServerScriptService.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|server|item.index.nil|false|ServerScriptService.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|server|item.newindex|true|function|[C]|-1||0|true|function: 0x36102dea54a23f67
+BRIDGE|server|item.newindex.empty|false|ServerScriptService.BridgeProbe:16: missing argument #2 (string expected)
+BRIDGE|server|item.newindex.self|false|ServerScriptService.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|server|item.newindex.table|false|ServerScriptService.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|server|item.newindex.nil|false|ServerScriptService.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|server|item.index.nil|false|ServerScriptService.BridgeProbe:21: invalid argument #2 (string expected, got nil)
+BRIDGE|server|item.index.number|false|1 is not a valid member of "Enum.Material.Plastic"
+BRIDGE|server|item.write.nil|false|ServerScriptService.BridgeProbe:23: invalid argument #2 (string expected, got nil)
+BRIDGE|server|item.unknown|false|____________ is not a valid member of "Enum.Material.Plastic"
+BRIDGE|server|enums.meta|true|The metatable is locked|Enums|userdata|Enums
+BRIDGE|server|enums.namecall|true|function|[C]|-1||0|true|function: 0x2964ba36f76c7935
+BRIDGE|server|enums.namecall.empty|false|ServerScriptService.BridgeProbe:16: missing argument #2 (string expected)
+BRIDGE|server|enums.namecall.self|false|ServerScriptService.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|server|enums.namecall.table|false|ServerScriptService.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|server|enums.namecall.nil|false|ServerScriptService.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|server|enums.index|true|function|[C]|-1||0|true|function: 0x2964ba36f76c7935
+BRIDGE|server|enums.index.empty|false|ServerScriptService.BridgeProbe:16: missing argument #2 (string expected)
+BRIDGE|server|enums.index.self|false|ServerScriptService.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|server|enums.index.table|false|ServerScriptService.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|server|enums.index.nil|false|ServerScriptService.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|server|enums.newindex|true|function|[C]|-1||0|true|function: 0x5c7c24351b2ae131
+BRIDGE|server|enums.newindex.empty|false|ServerScriptService.BridgeProbe:16: missing argument #2 (string expected)
+BRIDGE|server|enums.newindex.self|false|ServerScriptService.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|server|enums.newindex.table|false|ServerScriptService.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|server|enums.newindex.nil|false|ServerScriptService.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|server|enums.index.nil|false|ServerScriptService.BridgeProbe:21: invalid argument #2 (string expected, got nil)
+BRIDGE|server|enums.index.number|false|1 is not a valid member of "Enum"
+BRIDGE|server|enums.write.nil|false|ServerScriptService.BridgeProbe:23: invalid argument #2 (string expected, got nil)
+BRIDGE|server|enums.unknown|false|____________ is not a valid member of "Enum"
+BRIDGE|server|part.meta|true|The metatable is locked|Instance|userdata|Part
+BRIDGE|server|part.namecall|true|function|[C]|-1||0|true|function: 0x886ec6a92e946370
+BRIDGE|server|part.namecall.empty|false|ServerScriptService.BridgeProbe:16: missing argument #1 (Instance expected)
+BRIDGE|server|part.namecall.self|false|____________ is not a valid member of Part "Part"
+BRIDGE|server|part.namecall.table|false|____________ is not a valid member of Part "Part"
+BRIDGE|server|part.namecall.nil|false|____________ is not a valid member of Part "Part"
+BRIDGE|server|part.index|true|function|[C]|-1||0|true|function: 0xb8a3c57fcf6cc5a4
+BRIDGE|server|part.index.empty|false|ServerScriptService.BridgeProbe:16: missing argument #1 (Instance expected)
+BRIDGE|server|part.index.self|false|ServerScriptService.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|server|part.index.table|false|ServerScriptService.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|server|part.index.nil|false|ServerScriptService.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|server|part.newindex|true|function|[C]|-1||0|true|function: 0x9e621647d94585a4
+BRIDGE|server|part.newindex.empty|false|ServerScriptService.BridgeProbe:16: missing argument #1 (Instance expected)
+BRIDGE|server|part.newindex.self|false|ServerScriptService.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|server|part.newindex.table|false|ServerScriptService.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|server|part.newindex.nil|false|ServerScriptService.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|server|part.index.nil|false|ServerScriptService.BridgeProbe:21: invalid argument #2 (string expected, got nil)
+BRIDGE|server|part.index.number|false|1 is not a valid member of Part "Part"
+BRIDGE|server|part.write.nil|false|ServerScriptService.BridgeProbe:23: invalid argument #2 (string expected, got nil)
+BRIDGE|server|part.unknown|false|____________ is not a valid member of Part "Part"
+BRIDGE|server|game.meta|true|The metatable is locked|Instance|userdata|Game
+BRIDGE|server|game.namecall|true|function|[C]|-1||0|true|function: 0x886ec6a92e946370
+BRIDGE|server|game.namecall.empty|false|ServerScriptService.BridgeProbe:16: missing argument #1 (Instance expected)
+BRIDGE|server|game.namecall.self|false|____________ is not a valid member of DataModel "Game"
+BRIDGE|server|game.namecall.table|false|____________ is not a valid member of DataModel "Game"
+BRIDGE|server|game.namecall.nil|false|____________ is not a valid member of DataModel "Game"
+BRIDGE|server|game.index|true|function|[C]|-1||0|true|function: 0xb8a3c57fcf6cc5a4
+BRIDGE|server|game.index.empty|false|ServerScriptService.BridgeProbe:16: missing argument #1 (Instance expected)
+BRIDGE|server|game.index.self|false|ServerScriptService.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|server|game.index.table|false|ServerScriptService.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|server|game.index.nil|false|ServerScriptService.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|server|game.newindex|true|function|[C]|-1||0|true|function: 0x9e621647d94585a4
+BRIDGE|server|game.newindex.empty|false|ServerScriptService.BridgeProbe:16: missing argument #1 (Instance expected)
+BRIDGE|server|game.newindex.self|false|ServerScriptService.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|server|game.newindex.table|false|ServerScriptService.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|server|game.newindex.nil|false|ServerScriptService.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|server|game.index.nil|false|ServerScriptService.BridgeProbe:21: invalid argument #2 (string expected, got nil)
+BRIDGE|server|game.index.number|false|1 is not a valid member of DataModel "Game"
+BRIDGE|server|game.write.nil|false|ServerScriptService.BridgeProbe:23: invalid argument #2 (string expected, got nil)
+BRIDGE|server|game.unknown|false|____________ is not a valid member of DataModel "Game"
+BRIDGE|server|enum.meta|true|The metatable is locked|Enum|userdata|Material
+BRIDGE|server|enum.namecall|true|function|[C]|-1||0|true|function: 0xebd9c96d22158289
+BRIDGE|server|enum.namecall.empty|false|ServerScriptService.BridgeProbe:16: missing argument #1 (Enum expected)
+BRIDGE|server|enum.namecall.self|false|ServerScriptService.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|server|enum.namecall.table|false|ServerScriptService.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|server|enum.namecall.nil|false|ServerScriptService.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|server|enum.index|true|function|[C]|-1||0|true|function: 0xebd9c96d22158289
+BRIDGE|server|enum.index.empty|false|ServerScriptService.BridgeProbe:16: missing argument #1 (Enum expected)
+BRIDGE|server|enum.index.self|false|ServerScriptService.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|server|enum.index.table|false|ServerScriptService.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|server|enum.index.nil|false|ServerScriptService.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|server|enum.newindex|true|function|[C]|-1||0|true|function: 0xa09f0df4b9bdb33f
+BRIDGE|server|enum.newindex.empty|false|ServerScriptService.BridgeProbe:16: missing argument #2 (string expected)
+BRIDGE|server|enum.newindex.self|false|ServerScriptService.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|server|enum.newindex.table|false|ServerScriptService.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|server|enum.newindex.nil|false|ServerScriptService.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|server|enum.index.nil|false|ServerScriptService.BridgeProbe:21: invalid argument #2 (string expected, got nil)
+BRIDGE|server|enum.index.number|false|1 is not a valid member of "Enum.Material"
+BRIDGE|server|enum.write.nil|false|ServerScriptService.BridgeProbe:23: invalid argument #2 (string expected, got nil)
+BRIDGE|server|enum.unknown|false|____________ is not a valid member of "Enum.Material"
+BRIDGE|server|signal.meta|true|The metatable is locked|RBXScriptSignal|userdata|Signal Changed
+BRIDGE|server|signal.namecall|true|function|[C]|-1||0|true|function: 0x985bf5997ae31e02
+BRIDGE|server|signal.namecall.empty|false|ServerScriptService.BridgeProbe:16: missing argument #2 (string expected)
+BRIDGE|server|signal.namecall.self|false|ServerScriptService.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|server|signal.namecall.table|false|ServerScriptService.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|server|signal.namecall.nil|false|ServerScriptService.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|server|signal.index|true|function|[C]|-1||0|true|function: 0x985bf5997ae31e02
+BRIDGE|server|signal.index.empty|false|ServerScriptService.BridgeProbe:16: missing argument #2 (string expected)
+BRIDGE|server|signal.index.self|false|ServerScriptService.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|server|signal.index.table|false|ServerScriptService.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|server|signal.index.nil|false|ServerScriptService.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|server|signal.newindex|true|function|[C]|-1||0|true|function: 0xf1c6b6fca5ba0f43
+BRIDGE|server|signal.newindex.empty|false|ServerScriptService.BridgeProbe:16: missing argument #2 (string expected)
+BRIDGE|server|signal.newindex.self|false|ServerScriptService.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|server|signal.newindex.table|false|ServerScriptService.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|server|signal.newindex.nil|false|ServerScriptService.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|server|signal.index.nil|false|ServerScriptService.BridgeProbe:21: invalid argument #2 (string expected, got nil)
+BRIDGE|server|signal.index.number|false|1 is not a valid member of RBXScriptSignal
+BRIDGE|server|signal.write.nil|false|ServerScriptService.BridgeProbe:23: invalid argument #2 (string expected, got nil)
+BRIDGE|server|signal.unknown|false|____________ is not a valid member of RBXScriptSignal
+BRIDGE|server|index.identity|true|true
+BRIDGE|server|unknown|false|XYZ is not a valid member of DataModel "Game"
+BRIDGE|server|wrongcase|false|getservice is not a valid member of DataModel "Game"
+BRIDGE|server|propertycall|false|Name is not a valid member of Workspace "Workspace"
+BRIDGE|server|eventcall|false|Changed is not a valid member of Part "Part"
+BRIDGE|server|readonly|false|Unable to assign property ClassName. Property is read only
+BRIDGE|server|wrongtype|true
+BRIDGE|server|name.table|false|Unable to assign property Name. string expected, got table
+BRIDGE|server|parent.number|false|ServerScriptService.BridgeProbe:30: invalid argument #3 (Instance expected, got number)
+BRIDGE|server|GetService.info|true|function|[C]|-1|GetService|0|true|function: 0x93c98d160ff3039e
+BRIDGE|server|GetService.identity|true
+BRIDGE|server|GetService.inspect|true|true
+BRIDGE|server|GetService.noself|false|Expected ':' not '.' calling member function GetService
+BRIDGE|server|GetService.wrongself|false|Expected ':' not '.' calling member function GetService
+BRIDGE|server|GetService.wrongclass|false|Expected ':' not '.' calling member function GetService
+BRIDGE|server|Destroy.info|true|function|[C]|-1|Destroy|0|true|function: 0xa816952d61363905
+BRIDGE|server|Destroy.identity|true
+BRIDGE|server|Destroy.inspect|true|true
+BRIDGE|server|Destroy.noself|false|Expected ':' not '.' calling member function Destroy
+BRIDGE|server|Destroy.wrongself|false|Expected ':' not '.' calling member function Destroy
+BRIDGE|server|Destroy.wrongclass|false|The Parent property of Workspace is locked
+BRIDGE|server|WaitForChild.info|true|function|[C]|-1|WaitForChild|0|true|function: 0x0f7163645573cc2c
+BRIDGE|server|WaitForChild.identity|true
+BRIDGE|server|WaitForChild.inspect|true|true
+BRIDGE|server|WaitForChild.noself|false|Expected ':' not '.' calling member function WaitForChild
+BRIDGE|server|WaitForChild.wrongself|false|Expected ':' not '.' calling member function WaitForChild
+BRIDGE|server|WaitForChild.wrongclass|false|Argument 1 missing or nil
+BRIDGE|server|Invoke.info|true|function|[C]|-1|Invoke|0|true|function: 0xa754851b1842ca0b
+BRIDGE|server|Invoke.identity|true
+BRIDGE|server|Invoke.inspect|true|true
+BRIDGE|server|Invoke.noself|false|Expected ':' not '.' calling member function Invoke
+BRIDGE|server|Invoke.wrongself|false|Expected ':' not '.' calling member function Invoke
+BRIDGE|server|Invoke.wrongclass|false|Expected ':' not '.' calling member function Invoke
+BRIDGE|server|InvokeServer.info|true|function|[C]|-1|InvokeServer|0|true|function: 0xcd18e99079a93687
+BRIDGE|server|InvokeServer.identity|true
+BRIDGE|server|InvokeServer.inspect|true|true
+BRIDGE|server|InvokeServer.noself|false|Expected ':' not '.' calling member function InvokeServer
+BRIDGE|server|InvokeServer.wrongself|false|Expected ':' not '.' calling member function InvokeServer
+BRIDGE|server|InvokeServer.wrongclass|false|Expected ':' not '.' calling member function InvokeServer
+BRIDGE|server|InvokeClient.info|true|function|[C]|-1|InvokeClient|0|true|function: 0xed5bb947b9f104d1
+BRIDGE|server|InvokeClient.identity|true
+BRIDGE|server|InvokeClient.inspect|true|true
+BRIDGE|server|InvokeClient.noself|false|Expected ':' not '.' calling member function InvokeClient
+BRIDGE|server|InvokeClient.wrongself|false|Expected ':' not '.' calling member function InvokeClient
+BRIDGE|server|InvokeClient.wrongclass|false|Expected ':' not '.' calling member function InvokeClient
+BRIDGE|server|GetEnums.info|true|function|[C]|-1|GetEnums|0|true|function: 0x05b5f15298829b73
+BRIDGE|server|GetEnums.identity|false
+BRIDGE|server|GetEnums.inspect|true|true
+BRIDGE|server|GetEnums.noself|false|ServerScriptService.BridgeProbe:32: missing argument #1 to 'GetEnums' (Enums expected)
+BRIDGE|server|GetEnums.wrongself|false|ServerScriptService.BridgeProbe:32: invalid argument #1 to 'GetEnums' (Enums expected, got table)
+BRIDGE|server|GetEnums.wrongclass|false|ServerScriptService.BridgeProbe:32: invalid argument #1 to 'GetEnums' (Enums expected, got Instance)
+BRIDGE|server|GetEnumItems.info|true|function|[C]|-1|GetEnumItems|0|true|function: 0x994613815cc90f7b
+BRIDGE|server|GetEnumItems.identity|false
+BRIDGE|server|GetEnumItems.inspect|true|true
+BRIDGE|server|GetEnumItems.noself|false|ServerScriptService.BridgeProbe:32: missing argument #1 to 'GetEnumItems' (Enum expected)
+BRIDGE|server|GetEnumItems.wrongself|false|ServerScriptService.BridgeProbe:32: invalid argument #1 to 'GetEnumItems' (Enum expected, got table)
+BRIDGE|server|GetEnumItems.wrongclass|false|ServerScriptService.BridgeProbe:32: invalid argument #1 to 'GetEnumItems' (Enum expected, got Instance)
+BRIDGE|server|FromName.info|true|function|[C]|-1|FromName|0|true|function: 0x8080de2b56eb7f5e
+BRIDGE|server|FromName.identity|false
+BRIDGE|server|FromName.inspect|true|true
+BRIDGE|server|FromName.noself|false|ServerScriptService.BridgeProbe:32: missing argument #1 to 'FromName' (Enum expected)
+BRIDGE|server|FromName.wrongself|false|ServerScriptService.BridgeProbe:32: invalid argument #1 to 'FromName' (Enum expected, got table)
+BRIDGE|server|FromName.wrongclass|false|ServerScriptService.BridgeProbe:32: invalid argument #1 to 'FromName' (Enum expected, got Instance)
+BRIDGE|server|FromValue.info|true|function|[C]|-1|FromValue|0|true|function: 0x80af0a6af874f360
+BRIDGE|server|FromValue.identity|false
+BRIDGE|server|FromValue.inspect|true|true
+BRIDGE|server|FromValue.noself|false|ServerScriptService.BridgeProbe:32: missing argument #1 to 'FromValue' (Enum expected)
+BRIDGE|server|FromValue.wrongself|false|ServerScriptService.BridgeProbe:32: invalid argument #1 to 'FromValue' (Enum expected, got table)
+BRIDGE|server|FromValue.wrongclass|false|ServerScriptService.BridgeProbe:32: invalid argument #1 to 'FromValue' (Enum expected, got Instance)
+BRIDGE|server|IsA.info|true|function|[C]|-1|IsA|0|true|function: 0x986da228a940bc76
+BRIDGE|server|IsA.identity|false
+BRIDGE|server|IsA.inspect|true|true
+BRIDGE|server|IsA.noself|false|ServerScriptService.BridgeProbe:32: missing argument #1 to 'IsA' (EnumItem expected)
+BRIDGE|server|IsA.wrongself|false|ServerScriptService.BridgeProbe:32: invalid argument #1 to 'IsA' (EnumItem expected, got table)
+BRIDGE|server|IsA.wrongclass|false|ServerScriptService.BridgeProbe:32: invalid argument #1 to 'IsA' (EnumItem expected, got Instance)
+BRIDGE|server|Connect.info|true|function|[C]|-1|Connect|0|true|function: 0xffd2313ae3464b4b
+BRIDGE|server|Connect.identity|false
+BRIDGE|server|Connect.inspect|true|true
+BRIDGE|server|Connect.noself|false|ServerScriptService.BridgeProbe:32: missing argument #1 to 'Connect' (RBXScriptSignal expected)
+BRIDGE|server|Connect.wrongself|false|ServerScriptService.BridgeProbe:32: invalid argument #1 to 'Connect' (RBXScriptSignal expected, got table)
+BRIDGE|server|Connect.wrongclass|false|ServerScriptService.BridgeProbe:32: invalid argument #1 to 'Connect' (RBXScriptSignal expected, got Instance)
+BRIDGE|server|Disconnect.info|true|function|[C]|-1|Disconnect|0|true|function: 0xb529511d1a176dd4
+BRIDGE|server|Disconnect.identity|false
+BRIDGE|server|Disconnect.inspect|true|true
+BRIDGE|server|Disconnect.noself|false|ServerScriptService.BridgeProbe:32: missing argument #1 to 'Disconnect' (RBXScriptConnection expected)
+BRIDGE|server|Disconnect.wrongself|false|ServerScriptService.BridgeProbe:32: invalid argument #1 to 'Disconnect' (RBXScriptConnection expected, got table)
+BRIDGE|server|Disconnect.wrongclass|false|ServerScriptService.BridgeProbe:32: invalid argument #1 to 'Disconnect' (RBXScriptConnection expected, got Instance)
+BRIDGE|server|AddItem.info|true|function|[C]|-1|AddItem|0|true|function: 0x80df929279db7473
+BRIDGE|server|AddItem.identity|true
+BRIDGE|server|AddItem.inspect|true|true
+BRIDGE|server|AddItem.noself|false|Expected ':' not '.' calling member function AddItem
+BRIDGE|server|AddItem.wrongself|false|Expected ':' not '.' calling member function AddItem
+BRIDGE|server|AddItem.wrongclass|false|Expected ':' not '.' calling member function AddItem
+BRIDGE|server|GetMaxCollisionGroups.info|true|function|[C]|-1|GetMaxCollisionGroups|0|true|function: 0x7f40408ec8151506
+BRIDGE|server|GetMaxCollisionGroups.identity|true
+BRIDGE|server|GetMaxCollisionGroups.inspect|true|true
+BRIDGE|server|GetMaxCollisionGroups.noself|false|Expected ':' not '.' calling member function GetMaxCollisionGroups
+BRIDGE|server|GetMaxCollisionGroups.wrongself|false|Expected ':' not '.' calling member function GetMaxCollisionGroups
+BRIDGE|server|GetMaxCollisionGroups.wrongclass|false|Expected ':' not '.' calling member function GetMaxCollisionGroups
+BRIDGE|server|GetService.arg.table|false|'{}' is not a valid Service name
+BRIDGE|server|GetService.arg.boolean|false|'true' is not a valid Service name
+BRIDGE|server|GetService.arg.number|false|'3' is not a valid Service name
+BRIDGE|server|GetService.missing|false|Argument 1 missing or nil
+BRIDGE|server|GetService.crossidentity|false|GetService is not a valid member of Workspace "Workspace"
+BRIDGE|server|item.Name|true|Plastic
+BRIDGE|server|item.write.Name|false|Name is not a valid member of EnumItem
+BRIDGE|server|item.Value|true|256
+BRIDGE|server|item.write.Value|false|Value is not a valid member of EnumItem
+BRIDGE|server|item.EnumType|true|Material
+BRIDGE|server|item.write.EnumType|false|EnumType is not a valid member of EnumItem
+BRIDGE|server|item.XYZ|false|XYZ is not a valid member of "Enum.Material.Plastic"
+BRIDGE|server|item.write.XYZ|false|XYZ is not a valid member of EnumItem
+BRIDGE|server|enum.fromname|true|Enum.Material.Plastic
+BRIDGE|server|enum.fromvalue|true|Enum.Material.Plastic
+BRIDGE|server|enum.compare|false|ServerScriptService.BridgeProbe:39: attempt to compare EnumItem < EnumItem
+BRIDGE|server|DONE|
+BRIDGE|client|connection.meta|true|The metatable is locked|RBXScriptConnection|userdata|Connection
+BRIDGE|client|connection.namecall|true|function|[C]|-1||0|true|function: 0x9523889d8ee8e34d
+BRIDGE|client|connection.namecall.empty|false|Players.Player.PlayerScripts.BridgeProbe:16: missing argument #1 (RBXScriptConnection expected)
+BRIDGE|client|connection.namecall.self|false|Players.Player.PlayerScripts.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|client|connection.namecall.table|false|Players.Player.PlayerScripts.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|client|connection.namecall.nil|false|Players.Player.PlayerScripts.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|client|connection.index|true|function|[C]|-1||0|true|function: 0x9523889d8ee8e34d
+BRIDGE|client|connection.index.empty|false|Players.Player.PlayerScripts.BridgeProbe:16: missing argument #1 (RBXScriptConnection expected)
+BRIDGE|client|connection.index.self|false|Players.Player.PlayerScripts.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|client|connection.index.table|false|Players.Player.PlayerScripts.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|client|connection.index.nil|false|Players.Player.PlayerScripts.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|client|connection.newindex|true|function|[C]|-1||0|true|function: 0xd9165c4156a850e6
+BRIDGE|client|connection.newindex.empty|false|Players.Player.PlayerScripts.BridgeProbe:16: missing argument #2 (string expected)
+BRIDGE|client|connection.newindex.self|false|Players.Player.PlayerScripts.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|client|connection.newindex.table|false|Players.Player.PlayerScripts.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|client|connection.newindex.nil|false|Players.Player.PlayerScripts.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|client|connection.index.nil|false|Players.Player.PlayerScripts.BridgeProbe:21: invalid argument #2 (string expected, got nil)
+BRIDGE|client|connection.index.number|false|1 is not a valid member of RBXScriptConnection
+BRIDGE|client|connection.write.nil|false|Players.Player.PlayerScripts.BridgeProbe:23: invalid argument #2 (string expected, got nil)
+BRIDGE|client|connection.unknown|false|____________ is not a valid member of RBXScriptConnection
+BRIDGE|client|player.meta|true|The metatable is locked|Instance|userdata|Player
+BRIDGE|client|player.namecall|true|function|[C]|-1||0|true|function: 0xfaa8d920d82ac1ad
+BRIDGE|client|player.namecall.empty|false|Players.Player.PlayerScripts.BridgeProbe:16: missing argument #1 (Instance expected)
+BRIDGE|client|player.namecall.self|false|____________ is not a valid member of Player "Players.Player"
+BRIDGE|client|player.namecall.table|false|____________ is not a valid member of Player "Players.Player"
+BRIDGE|client|player.namecall.nil|false|____________ is not a valid member of Player "Players.Player"
+BRIDGE|client|player.index|true|function|[C]|-1||0|true|function: 0x77d565151243da48
+BRIDGE|client|player.index.empty|false|Players.Player.PlayerScripts.BridgeProbe:16: missing argument #1 (Instance expected)
+BRIDGE|client|player.index.self|false|Players.Player.PlayerScripts.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|client|player.index.table|false|Players.Player.PlayerScripts.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|client|player.index.nil|false|Players.Player.PlayerScripts.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|client|player.newindex|true|function|[C]|-1||0|true|function: 0x333f356aed0807e8
+BRIDGE|client|player.newindex.empty|false|Players.Player.PlayerScripts.BridgeProbe:16: missing argument #1 (Instance expected)
+BRIDGE|client|player.newindex.self|false|Players.Player.PlayerScripts.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|client|player.newindex.table|false|Players.Player.PlayerScripts.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|client|player.newindex.nil|false|Players.Player.PlayerScripts.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|client|player.index.nil|false|Players.Player.PlayerScripts.BridgeProbe:21: invalid argument #2 (string expected, got nil)
+BRIDGE|client|player.index.number|false|1 is not a valid member of Player "Players.Player"
+BRIDGE|client|player.write.nil|false|Players.Player.PlayerScripts.BridgeProbe:23: invalid argument #2 (string expected, got nil)
+BRIDGE|client|player.unknown|false|____________ is not a valid member of Player "Players.Player"
+BRIDGE|client|item.meta|true|The metatable is locked|EnumItem|userdata|Enum.Material.Plastic
+BRIDGE|client|item.namecall|true|function|[C]|-1||0|true|function: 0x4515f30b61e24850
+BRIDGE|client|item.namecall.empty|false|Players.Player.PlayerScripts.BridgeProbe:16: missing argument #1 (EnumItem expected)
+BRIDGE|client|item.namecall.self|false|Players.Player.PlayerScripts.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|client|item.namecall.table|false|Players.Player.PlayerScripts.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|client|item.namecall.nil|false|Players.Player.PlayerScripts.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|client|item.index|true|function|[C]|-1||0|true|function: 0x4515f30b61e24850
+BRIDGE|client|item.index.empty|false|Players.Player.PlayerScripts.BridgeProbe:16: missing argument #1 (EnumItem expected)
+BRIDGE|client|item.index.self|false|Players.Player.PlayerScripts.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|client|item.index.table|false|Players.Player.PlayerScripts.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|client|item.index.nil|false|Players.Player.PlayerScripts.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|client|item.newindex|true|function|[C]|-1||0|true|function: 0xf268a3437555448c
+BRIDGE|client|item.newindex.empty|false|Players.Player.PlayerScripts.BridgeProbe:16: missing argument #2 (string expected)
+BRIDGE|client|item.newindex.self|false|Players.Player.PlayerScripts.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|client|item.newindex.table|false|Players.Player.PlayerScripts.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|client|item.newindex.nil|false|Players.Player.PlayerScripts.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|client|item.index.nil|false|Players.Player.PlayerScripts.BridgeProbe:21: invalid argument #2 (string expected, got nil)
+BRIDGE|client|item.index.number|false|1 is not a valid member of "Enum.Material.Plastic"
+BRIDGE|client|item.write.nil|false|Players.Player.PlayerScripts.BridgeProbe:23: invalid argument #2 (string expected, got nil)
+BRIDGE|client|item.unknown|false|____________ is not a valid member of "Enum.Material.Plastic"
+BRIDGE|client|enums.meta|true|The metatable is locked|Enums|userdata|Enums
+BRIDGE|client|enums.namecall|true|function|[C]|-1||0|true|function: 0x53545e856312dd64
+BRIDGE|client|enums.namecall.empty|false|Players.Player.PlayerScripts.BridgeProbe:16: missing argument #2 (string expected)
+BRIDGE|client|enums.namecall.self|false|Players.Player.PlayerScripts.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|client|enums.namecall.table|false|Players.Player.PlayerScripts.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|client|enums.namecall.nil|false|Players.Player.PlayerScripts.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|client|enums.index|true|function|[C]|-1||0|true|function: 0x53545e856312dd64
+BRIDGE|client|enums.index.empty|false|Players.Player.PlayerScripts.BridgeProbe:16: missing argument #2 (string expected)
+BRIDGE|client|enums.index.self|false|Players.Player.PlayerScripts.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|client|enums.index.table|false|Players.Player.PlayerScripts.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|client|enums.index.nil|false|Players.Player.PlayerScripts.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|client|enums.newindex|true|function|[C]|-1||0|true|function: 0x51484b75f55be110
+BRIDGE|client|enums.newindex.empty|false|Players.Player.PlayerScripts.BridgeProbe:16: missing argument #2 (string expected)
+BRIDGE|client|enums.newindex.self|false|Players.Player.PlayerScripts.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|client|enums.newindex.table|false|Players.Player.PlayerScripts.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|client|enums.newindex.nil|false|Players.Player.PlayerScripts.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|client|enums.index.nil|false|Players.Player.PlayerScripts.BridgeProbe:21: invalid argument #2 (string expected, got nil)
+BRIDGE|client|enums.index.number|false|1 is not a valid member of "Enum"
+BRIDGE|client|enums.write.nil|false|Players.Player.PlayerScripts.BridgeProbe:23: invalid argument #2 (string expected, got nil)
+BRIDGE|client|enums.unknown|false|____________ is not a valid member of "Enum"
+BRIDGE|client|part.meta|true|The metatable is locked|Instance|userdata|Part
+BRIDGE|client|part.namecall|true|function|[C]|-1||0|true|function: 0xfaa8d920d82ac1ad
+BRIDGE|client|part.namecall.empty|false|Players.Player.PlayerScripts.BridgeProbe:16: missing argument #1 (Instance expected)
+BRIDGE|client|part.namecall.self|false|____________ is not a valid member of Part "Part"
+BRIDGE|client|part.namecall.table|false|____________ is not a valid member of Part "Part"
+BRIDGE|client|part.namecall.nil|false|____________ is not a valid member of Part "Part"
+BRIDGE|client|part.index|true|function|[C]|-1||0|true|function: 0x77d565151243da48
+BRIDGE|client|part.index.empty|false|Players.Player.PlayerScripts.BridgeProbe:16: missing argument #1 (Instance expected)
+BRIDGE|client|part.index.self|false|Players.Player.PlayerScripts.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|client|part.index.table|false|Players.Player.PlayerScripts.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|client|part.index.nil|false|Players.Player.PlayerScripts.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|client|part.newindex|true|function|[C]|-1||0|true|function: 0x333f356aed0807e8
+BRIDGE|client|part.newindex.empty|false|Players.Player.PlayerScripts.BridgeProbe:16: missing argument #1 (Instance expected)
+BRIDGE|client|part.newindex.self|false|Players.Player.PlayerScripts.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|client|part.newindex.table|false|Players.Player.PlayerScripts.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|client|part.newindex.nil|false|Players.Player.PlayerScripts.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|client|part.index.nil|false|Players.Player.PlayerScripts.BridgeProbe:21: invalid argument #2 (string expected, got nil)
+BRIDGE|client|part.index.number|false|1 is not a valid member of Part "Part"
+BRIDGE|client|part.write.nil|false|Players.Player.PlayerScripts.BridgeProbe:23: invalid argument #2 (string expected, got nil)
+BRIDGE|client|part.unknown|false|____________ is not a valid member of Part "Part"
+BRIDGE|client|game.meta|true|The metatable is locked|Instance|userdata|Game
+BRIDGE|client|game.namecall|true|function|[C]|-1||0|true|function: 0xfaa8d920d82ac1ad
+BRIDGE|client|game.namecall.empty|false|Players.Player.PlayerScripts.BridgeProbe:16: missing argument #1 (Instance expected)
+BRIDGE|client|game.namecall.self|false|____________ is not a valid member of DataModel "Game"
+BRIDGE|client|game.namecall.table|false|____________ is not a valid member of DataModel "Game"
+BRIDGE|client|game.namecall.nil|false|____________ is not a valid member of DataModel "Game"
+BRIDGE|client|game.index|true|function|[C]|-1||0|true|function: 0x77d565151243da48
+BRIDGE|client|game.index.empty|false|Players.Player.PlayerScripts.BridgeProbe:16: missing argument #1 (Instance expected)
+BRIDGE|client|game.index.self|false|Players.Player.PlayerScripts.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|client|game.index.table|false|Players.Player.PlayerScripts.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|client|game.index.nil|false|Players.Player.PlayerScripts.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|client|game.newindex|true|function|[C]|-1||0|true|function: 0x333f356aed0807e8
+BRIDGE|client|game.newindex.empty|false|Players.Player.PlayerScripts.BridgeProbe:16: missing argument #1 (Instance expected)
+BRIDGE|client|game.newindex.self|false|Players.Player.PlayerScripts.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|client|game.newindex.table|false|Players.Player.PlayerScripts.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|client|game.newindex.nil|false|Players.Player.PlayerScripts.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|client|game.index.nil|false|Players.Player.PlayerScripts.BridgeProbe:21: invalid argument #2 (string expected, got nil)
+BRIDGE|client|game.index.number|false|1 is not a valid member of DataModel "Game"
+BRIDGE|client|game.write.nil|false|Players.Player.PlayerScripts.BridgeProbe:23: invalid argument #2 (string expected, got nil)
+BRIDGE|client|game.unknown|false|____________ is not a valid member of DataModel "Game"
+BRIDGE|client|enum.meta|true|The metatable is locked|Enum|userdata|Material
+BRIDGE|client|enum.namecall|true|function|[C]|-1||0|true|function: 0x602795932c7cc53b
+BRIDGE|client|enum.namecall.empty|false|Players.Player.PlayerScripts.BridgeProbe:16: missing argument #1 (Enum expected)
+BRIDGE|client|enum.namecall.self|false|Players.Player.PlayerScripts.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|client|enum.namecall.table|false|Players.Player.PlayerScripts.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|client|enum.namecall.nil|false|Players.Player.PlayerScripts.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|client|enum.index|true|function|[C]|-1||0|true|function: 0x602795932c7cc53b
+BRIDGE|client|enum.index.empty|false|Players.Player.PlayerScripts.BridgeProbe:16: missing argument #1 (Enum expected)
+BRIDGE|client|enum.index.self|false|Players.Player.PlayerScripts.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|client|enum.index.table|false|Players.Player.PlayerScripts.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|client|enum.index.nil|false|Players.Player.PlayerScripts.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|client|enum.newindex|true|function|[C]|-1||0|true|function: 0xe9e6c9932b0b5dc8
+BRIDGE|client|enum.newindex.empty|false|Players.Player.PlayerScripts.BridgeProbe:16: missing argument #2 (string expected)
+BRIDGE|client|enum.newindex.self|false|Players.Player.PlayerScripts.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|client|enum.newindex.table|false|Players.Player.PlayerScripts.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|client|enum.newindex.nil|false|Players.Player.PlayerScripts.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|client|enum.index.nil|false|Players.Player.PlayerScripts.BridgeProbe:21: invalid argument #2 (string expected, got nil)
+BRIDGE|client|enum.index.number|false|1 is not a valid member of "Enum.Material"
+BRIDGE|client|enum.write.nil|false|Players.Player.PlayerScripts.BridgeProbe:23: invalid argument #2 (string expected, got nil)
+BRIDGE|client|enum.unknown|false|____________ is not a valid member of "Enum.Material"
+BRIDGE|client|signal.meta|true|The metatable is locked|RBXScriptSignal|userdata|Signal Changed
+BRIDGE|client|signal.namecall|true|function|[C]|-1||0|true|function: 0xa2f9c9f651e373fb
+BRIDGE|client|signal.namecall.empty|false|Players.Player.PlayerScripts.BridgeProbe:16: missing argument #2 (string expected)
+BRIDGE|client|signal.namecall.self|false|Players.Player.PlayerScripts.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|client|signal.namecall.table|false|Players.Player.PlayerScripts.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|client|signal.namecall.nil|false|Players.Player.PlayerScripts.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|client|signal.index|true|function|[C]|-1||0|true|function: 0xa2f9c9f651e373fb
+BRIDGE|client|signal.index.empty|false|Players.Player.PlayerScripts.BridgeProbe:16: missing argument #2 (string expected)
+BRIDGE|client|signal.index.self|false|Players.Player.PlayerScripts.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|client|signal.index.table|false|Players.Player.PlayerScripts.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|client|signal.index.nil|false|Players.Player.PlayerScripts.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|client|signal.newindex|true|function|[C]|-1||0|true|function: 0x7b96b88d006296ba
+BRIDGE|client|signal.newindex.empty|false|Players.Player.PlayerScripts.BridgeProbe:16: missing argument #2 (string expected)
+BRIDGE|client|signal.newindex.self|false|Players.Player.PlayerScripts.BridgeProbe:17: missing argument #2 (string expected)
+BRIDGE|client|signal.newindex.table|false|Players.Player.PlayerScripts.BridgeProbe:18: invalid argument #2 (string expected, got table)
+BRIDGE|client|signal.newindex.nil|false|Players.Player.PlayerScripts.BridgeProbe:19: invalid argument #2 (string expected, got nil)
+BRIDGE|client|signal.index.nil|false|Players.Player.PlayerScripts.BridgeProbe:21: invalid argument #2 (string expected, got nil)
+BRIDGE|client|signal.index.number|false|1 is not a valid member of RBXScriptSignal
+BRIDGE|client|signal.write.nil|false|Players.Player.PlayerScripts.BridgeProbe:23: invalid argument #2 (string expected, got nil)
+BRIDGE|client|signal.unknown|false|____________ is not a valid member of RBXScriptSignal
+BRIDGE|client|index.identity|true|true
+BRIDGE|client|unknown|false|XYZ is not a valid member of DataModel "Game"
+BRIDGE|client|wrongcase|false|getservice is not a valid member of DataModel "Game"
+BRIDGE|client|propertycall|false|Name is not a valid member of Workspace "Workspace"
+BRIDGE|client|eventcall|false|Changed is not a valid member of Part "Part"
+BRIDGE|client|readonly|false|Unable to assign property ClassName. Property is read only
+BRIDGE|client|wrongtype|true
+BRIDGE|client|name.table|false|Unable to assign property Name. string expected, got table
+BRIDGE|client|parent.number|false|Players.Player.PlayerScripts.BridgeProbe:30: invalid argument #3 (Instance expected, got number)
+BRIDGE|client|GetService.info|true|function|[C]|-1|GetService|0|true|function: 0xf32f8ff90c45cab5
+BRIDGE|client|GetService.identity|true
+BRIDGE|client|GetService.inspect|true|true
+BRIDGE|client|GetService.noself|false|Expected ':' not '.' calling member function GetService
+BRIDGE|client|GetService.wrongself|false|Expected ':' not '.' calling member function GetService
+BRIDGE|client|GetService.wrongclass|false|Expected ':' not '.' calling member function GetService
+BRIDGE|client|Destroy.info|true|function|[C]|-1|Destroy|0|true|function: 0xe71ff02b5b155dbc
+BRIDGE|client|Destroy.identity|true
+BRIDGE|client|Destroy.inspect|true|true
+BRIDGE|client|Destroy.noself|false|Expected ':' not '.' calling member function Destroy
+BRIDGE|client|Destroy.wrongself|false|Expected ':' not '.' calling member function Destroy
+BRIDGE|client|Destroy.wrongclass|false|The Parent property of Workspace is locked
+BRIDGE|client|WaitForChild.info|true|function|[C]|-1|WaitForChild|0|true|function: 0x3ae1f93940818eda
+BRIDGE|client|WaitForChild.identity|true
+BRIDGE|client|WaitForChild.inspect|true|true
+BRIDGE|client|WaitForChild.noself|false|Expected ':' not '.' calling member function WaitForChild
+BRIDGE|client|WaitForChild.wrongself|false|Expected ':' not '.' calling member function WaitForChild
+BRIDGE|client|WaitForChild.wrongclass|false|Argument 1 missing or nil
+BRIDGE|client|Invoke.info|true|function|[C]|-1|Invoke|0|true|function: 0x4d7ca3957a56a663
+BRIDGE|client|Invoke.identity|true
+BRIDGE|client|Invoke.inspect|true|true
+BRIDGE|client|Invoke.noself|false|Expected ':' not '.' calling member function Invoke
+BRIDGE|client|Invoke.wrongself|false|Expected ':' not '.' calling member function Invoke
+BRIDGE|client|Invoke.wrongclass|false|Expected ':' not '.' calling member function Invoke
+BRIDGE|client|InvokeServer.info|true|function|[C]|-1|InvokeServer|0|true|function: 0xaf173db4ccebd1f6
+BRIDGE|client|InvokeServer.identity|true
+BRIDGE|client|InvokeServer.inspect|true|true
+BRIDGE|client|InvokeServer.noself|false|Expected ':' not '.' calling member function InvokeServer
+BRIDGE|client|InvokeServer.wrongself|false|Expected ':' not '.' calling member function InvokeServer
+BRIDGE|client|InvokeServer.wrongclass|false|Expected ':' not '.' calling member function InvokeServer
+BRIDGE|client|InvokeClient.info|true|function|[C]|-1|InvokeClient|0|true|function: 0x57a0e9ca66a60eea
+BRIDGE|client|InvokeClient.identity|true
+BRIDGE|client|InvokeClient.inspect|true|true
+BRIDGE|client|InvokeClient.noself|false|Expected ':' not '.' calling member function InvokeClient
+BRIDGE|client|InvokeClient.wrongself|false|Expected ':' not '.' calling member function InvokeClient
+BRIDGE|client|InvokeClient.wrongclass|false|Expected ':' not '.' calling member function InvokeClient
+BRIDGE|client|GetEnums.info|true|function|[C]|-1|GetEnums|0|true|function: 0xe26c36a7dacb2c94
+BRIDGE|client|GetEnums.identity|false
+BRIDGE|client|GetEnums.inspect|true|true
+BRIDGE|client|GetEnums.noself|false|Players.Player.PlayerScripts.BridgeProbe:32: missing argument #1 to 'GetEnums' (Enums expected)
+BRIDGE|client|GetEnums.wrongself|false|Players.Player.PlayerScripts.BridgeProbe:32: invalid argument #1 to 'GetEnums' (Enums expected, got table)
+BRIDGE|client|GetEnums.wrongclass|false|Players.Player.PlayerScripts.BridgeProbe:32: invalid argument #1 to 'GetEnums' (Enums expected, got Instance)
+BRIDGE|client|GetEnumItems.info|true|function|[C]|-1|GetEnumItems|0|true|function: 0xcaa1963c68686b76
+BRIDGE|client|GetEnumItems.identity|false
+BRIDGE|client|GetEnumItems.inspect|true|true
+BRIDGE|client|GetEnumItems.noself|false|Players.Player.PlayerScripts.BridgeProbe:32: missing argument #1 to 'GetEnumItems' (Enum expected)
+BRIDGE|client|GetEnumItems.wrongself|false|Players.Player.PlayerScripts.BridgeProbe:32: invalid argument #1 to 'GetEnumItems' (Enum expected, got table)
+BRIDGE|client|GetEnumItems.wrongclass|false|Players.Player.PlayerScripts.BridgeProbe:32: invalid argument #1 to 'GetEnumItems' (Enum expected, got Instance)
+BRIDGE|client|FromName.info|true|function|[C]|-1|FromName|0|true|function: 0x2e30461852419f60
+BRIDGE|client|FromName.identity|false
+BRIDGE|client|FromName.inspect|true|true
+BRIDGE|client|FromName.noself|false|Players.Player.PlayerScripts.BridgeProbe:32: missing argument #1 to 'FromName' (Enum expected)
+BRIDGE|client|FromName.wrongself|false|Players.Player.PlayerScripts.BridgeProbe:32: invalid argument #1 to 'FromName' (Enum expected, got table)
+BRIDGE|client|FromName.wrongclass|false|Players.Player.PlayerScripts.BridgeProbe:32: invalid argument #1 to 'FromName' (Enum expected, got Instance)
+BRIDGE|client|FromValue.info|true|function|[C]|-1|FromValue|0|true|function: 0xcd706d71f8f6b8da
+BRIDGE|client|FromValue.identity|false
+BRIDGE|client|FromValue.inspect|true|true
+BRIDGE|client|FromValue.noself|false|Players.Player.PlayerScripts.BridgeProbe:32: missing argument #1 to 'FromValue' (Enum expected)
+BRIDGE|client|FromValue.wrongself|false|Players.Player.PlayerScripts.BridgeProbe:32: invalid argument #1 to 'FromValue' (Enum expected, got table)
+BRIDGE|client|FromValue.wrongclass|false|Players.Player.PlayerScripts.BridgeProbe:32: invalid argument #1 to 'FromValue' (Enum expected, got Instance)
+BRIDGE|client|IsA.info|true|function|[C]|-1|IsA|0|true|function: 0xe7bf0e8923131a2f
+BRIDGE|client|IsA.identity|false
+BRIDGE|client|IsA.inspect|true|true
+BRIDGE|client|IsA.noself|false|Players.Player.PlayerScripts.BridgeProbe:32: missing argument #1 to 'IsA' (EnumItem expected)
+BRIDGE|client|IsA.wrongself|false|Players.Player.PlayerScripts.BridgeProbe:32: invalid argument #1 to 'IsA' (EnumItem expected, got table)
+BRIDGE|client|IsA.wrongclass|false|Players.Player.PlayerScripts.BridgeProbe:32: invalid argument #1 to 'IsA' (EnumItem expected, got Instance)
+BRIDGE|client|Connect.info|true|function|[C]|-1|Connect|0|true|function: 0x07c384449b70dbe5
+BRIDGE|client|Connect.identity|false
+BRIDGE|client|Connect.inspect|true|true
+BRIDGE|client|Connect.noself|false|Players.Player.PlayerScripts.BridgeProbe:32: missing argument #1 to 'Connect' (RBXScriptSignal expected)
+BRIDGE|client|Connect.wrongself|false|Players.Player.PlayerScripts.BridgeProbe:32: invalid argument #1 to 'Connect' (RBXScriptSignal expected, got table)
+BRIDGE|client|Connect.wrongclass|false|Players.Player.PlayerScripts.BridgeProbe:32: invalid argument #1 to 'Connect' (RBXScriptSignal expected, got Instance)
+BRIDGE|client|Disconnect.info|true|function|[C]|-1|Disconnect|0|true|function: 0xc82c841e0dd9f3ce
+BRIDGE|client|Disconnect.identity|false
+BRIDGE|client|Disconnect.inspect|true|true
+BRIDGE|client|Disconnect.noself|false|Players.Player.PlayerScripts.BridgeProbe:32: missing argument #1 to 'Disconnect' (RBXScriptConnection expected)
+BRIDGE|client|Disconnect.wrongself|false|Players.Player.PlayerScripts.BridgeProbe:32: invalid argument #1 to 'Disconnect' (RBXScriptConnection expected, got table)
+BRIDGE|client|Disconnect.wrongclass|false|Players.Player.PlayerScripts.BridgeProbe:32: invalid argument #1 to 'Disconnect' (RBXScriptConnection expected, got Instance)
+BRIDGE|client|AddItem.info|true|function|[C]|-1|AddItem|0|true|function: 0xa5c3474c4f6ba859
+BRIDGE|client|AddItem.identity|true
+BRIDGE|client|AddItem.inspect|true|true
+BRIDGE|client|AddItem.noself|false|Expected ':' not '.' calling member function AddItem
+BRIDGE|client|AddItem.wrongself|false|Expected ':' not '.' calling member function AddItem
+BRIDGE|client|AddItem.wrongclass|false|Expected ':' not '.' calling member function AddItem
+BRIDGE|client|GetMaxCollisionGroups.info|true|function|[C]|-1|GetMaxCollisionGroups|0|true|function: 0x79178002647f8927
+BRIDGE|client|GetMaxCollisionGroups.identity|true
+BRIDGE|client|GetMaxCollisionGroups.inspect|true|true
+BRIDGE|client|GetMaxCollisionGroups.noself|false|Expected ':' not '.' calling member function GetMaxCollisionGroups
+BRIDGE|client|GetMaxCollisionGroups.wrongself|false|Expected ':' not '.' calling member function GetMaxCollisionGroups
+BRIDGE|client|GetMaxCollisionGroups.wrongclass|false|Expected ':' not '.' calling member function GetMaxCollisionGroups
+BRIDGE|client|GetService.arg.table|false|'{}' is not a valid Service name
+BRIDGE|client|GetService.arg.boolean|false|'true' is not a valid Service name
+BRIDGE|client|GetService.arg.number|false|'3' is not a valid Service name
+BRIDGE|client|GetService.missing|false|Argument 1 missing or nil
+BRIDGE|client|GetService.crossidentity|false|GetService is not a valid member of Workspace "Workspace"
+BRIDGE|client|item.Name|true|Plastic
+BRIDGE|client|item.write.Name|false|Name is not a valid member of EnumItem
+BRIDGE|client|item.Value|true|256
+BRIDGE|client|item.write.Value|false|Value is not a valid member of EnumItem
+BRIDGE|client|item.EnumType|true|Material
+BRIDGE|client|item.write.EnumType|false|EnumType is not a valid member of EnumItem
+BRIDGE|client|item.XYZ|false|XYZ is not a valid member of "Enum.Material.Plastic"
+BRIDGE|client|item.write.XYZ|false|XYZ is not a valid member of EnumItem
+BRIDGE|client|enum.fromname|true|Enum.Material.Plastic
+BRIDGE|client|enum.fromvalue|true|Enum.Material.Plastic
+BRIDGE|client|enum.compare|false|Players.Player.PlayerScripts.BridgeProbe:39: attempt to compare EnumItem < EnumItem
+BRIDGE|client|DONE|

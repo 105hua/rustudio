@@ -1,0 +1,190 @@
+Info: rustudio 0.1.0 ready. Reflection database has 931 classes.
+Info: Loaded the sample scene
+Info: Checking the Roblox session…
+Info: Signed in as @testuser1 (session from the login keyring)
+Info: Loading the avatar for Play…
+Info: Avatar of user 10000000001: R6 with 2 worn items
+Info: Not shown yet:  (MoodAnimation)
+Info: Avatar ready for Play (user 10000000001, R6): the next character uses it
+Info: Default player scripts from Studio: PlayerScriptsLoader, PlayerModule, RbxCharacterSounds
+Info: ▶ Play: a server and a client are running; WASD + Space to move, Shift+F5 to stop
+Info: [Server] Hello from rustudio  —  ServerScriptService.Main:1
+Info: Character: R15 (from the place setting)
+Info: Sky: 1024px faces, light from above 0.156 0.399 0.666
+Info: [Client] DT|client|Vector3.writeKnown|false|string|Players.testuser1.PlayerScripts.DatatypeExtras:49: attempt to index Vector3 with 'X'  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Vector3.index.namecall.same|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Vector3.constructor.shape|true|table|table|nil|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Vector3.constructor.FromNormalId.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Vector3.constructor.FromAxis.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Vector3.constructor.new.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Vector2.writeKnown|false|string|Players.testuser1.PlayerScripts.DatatypeExtras:49: attempt to index Vector2 with 'X'  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Vector2.index.namecall.same|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Vector2.constructor.shape|true|table|table|nil|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Vector2.constructor.new.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Vector3int16.writeKnown|false|string|Players.testuser1.PlayerScripts.DatatypeExtras:49: attempt to index Vector3int16 with 'X'  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Vector3int16.index.namecall.same|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Vector3int16.constructor.shape|true|table|table|nil|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Vector3int16.constructor.new.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Vector2int16.writeKnown|false|string|Players.testuser1.PlayerScripts.DatatypeExtras:49: attempt to index Vector2int16 with 'X'  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Vector2int16.index.namecall.same|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Vector2int16.constructor.shape|true|table|table|nil|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Vector2int16.constructor.new.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|CFrame.writeKnown|false|string|Players.testuser1.PlayerScripts.DatatypeExtras:49: attempt to index CFrame with 'X'  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|CFrame.index.namecall.same|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|CFrame.constructor.shape|true|table|table|nil|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|CFrame.constructor.Angles.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|CFrame.constructor.fromEulerAnglesYXZ.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|CFrame.constructor.lookAlong.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|CFrame.constructor.fromEulerAnglesXYZ.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|CFrame.constructor.fromOrientation.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|CFrame.constructor.fromMatrix.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|CFrame.constructor.fromEulerAngles.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|CFrame.constructor.lookAt.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|CFrame.constructor.fromAxisAngle.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|CFrame.constructor.new.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Color3.writeKnown|false|string|Players.testuser1.PlayerScripts.DatatypeExtras:49: attempt to index Color3 with 'R'  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Color3.index.namecall.same|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Color3.constructor.shape|true|table|table|nil|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Color3.constructor.fromHex.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Color3.constructor.toHSV.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Color3.constructor.fromHSV.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Color3.constructor.fromRGB.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Color3.constructor.new.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|BrickColor.writeKnown|false|string|Players.testuser1.PlayerScripts.DatatypeExtras:49: attempt to index BrickColor with 'Name'  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|BrickColor.index.namecall.same|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|BrickColor.constructor.shape|true|table|table|nil|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|BrickColor.constructor.Blue.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|BrickColor.constructor.Gray.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|BrickColor.constructor.Yellow.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|BrickColor.constructor.Red.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|BrickColor.constructor.palette.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|BrickColor.constructor.random.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|BrickColor.constructor.Black.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|BrickColor.constructor.Green.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|BrickColor.constructor.White.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|BrickColor.constructor.DarkGray.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|BrickColor.constructor.Random.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|BrickColor.constructor.new.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|UDim.writeKnown|false|string|Players.testuser1.PlayerScripts.DatatypeExtras:49: attempt to index UDim with 'Scale'  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|UDim.index.namecall.same|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|UDim.constructor.shape|true|table|table|nil|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|UDim.constructor.new.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|UDim2.writeKnown|false|string|Players.testuser1.PlayerScripts.DatatypeExtras:49: attempt to index UDim2 with 'X'  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|UDim2.index.namecall.same|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|UDim2.constructor.shape|true|table|table|nil|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|UDim2.constructor.fromScale.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|UDim2.constructor.fromOffset.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|UDim2.constructor.new.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Rect.writeKnown|false|string|Players.testuser1.PlayerScripts.DatatypeExtras:49: attempt to index Rect with 'Min'  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Rect.index.namecall.same|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Rect.constructor.shape|true|table|table|nil|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Rect.constructor.new.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Ray.writeKnown|false|string|Players.testuser1.PlayerScripts.DatatypeExtras:49: attempt to index Ray with 'Origin'  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Ray.index.namecall.same|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Ray.constructor.shape|true|table|table|nil|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Ray.constructor.new.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Region3.writeKnown|false|string|Players.testuser1.PlayerScripts.DatatypeExtras:49: attempt to index Region3 with 'Size'  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Region3.index.namecall.same|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Region3.constructor.shape|true|table|table|nil|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Region3.constructor.new.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Region3int16.writeKnown|false|string|Players.testuser1.PlayerScripts.DatatypeExtras:49: attempt to index Region3int16 with 'Min'  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Region3int16.index.namecall.same|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Region3int16.constructor.shape|true|table|table|nil|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Region3int16.constructor.new.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|NumberRange.writeKnown|false|string|Players.testuser1.PlayerScripts.DatatypeExtras:49: attempt to index NumberRange with 'Min'  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|NumberRange.index.namecall.same|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|NumberRange.constructor.shape|true|table|table|nil|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|NumberRange.constructor.new.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|NumberSequence.writeKnown|false|string|Players.testuser1.PlayerScripts.DatatypeExtras:49: attempt to index NumberSequence with 'Keypoints'  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|NumberSequence.index.namecall.same|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|NumberSequence.constructor.shape|true|table|table|nil|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|NumberSequence.constructor.new.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|NumberSequenceKeypoint.writeKnown|false|string|Players.testuser1.PlayerScripts.DatatypeExtras:49: attempt to index NumberSequenceKeypoint with 'Time'  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|NumberSequenceKeypoint.index.namecall.same|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|NumberSequenceKeypoint.constructor.shape|true|table|table|nil|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|NumberSequenceKeypoint.constructor.new.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|ColorSequence.writeKnown|false|string|Players.testuser1.PlayerScripts.DatatypeExtras:49: attempt to index ColorSequence with 'Keypoints'  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|ColorSequence.index.namecall.same|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|ColorSequence.constructor.shape|true|table|table|nil|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|ColorSequence.constructor.new.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|ColorSequenceKeypoint.writeKnown|false|string|Players.testuser1.PlayerScripts.DatatypeExtras:49: attempt to index ColorSequenceKeypoint with 'Time'  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|ColorSequenceKeypoint.index.namecall.same|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|ColorSequenceKeypoint.constructor.shape|true|table|table|nil|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|ColorSequenceKeypoint.constructor.new.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|TweenInfo.writeKnown|false|string|Players.testuser1.PlayerScripts.DatatypeExtras:49: attempt to index TweenInfo with 'Time'  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|TweenInfo.index.namecall.same|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|TweenInfo.constructor.shape|true|table|table|nil|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|TweenInfo.constructor.new.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|PhysicalProperties.writeKnown|false|string|Players.testuser1.PlayerScripts.DatatypeExtras:49: attempt to index PhysicalProperties with 'Density'  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|PhysicalProperties.index.namecall.same|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|PhysicalProperties.constructor.shape|true|table|table|nil|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|PhysicalProperties.constructor.new.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Faces.writeKnown|false|string|Players.testuser1.PlayerScripts.DatatypeExtras:49: attempt to index Faces with 'Top'  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Faces.index.namecall.same|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Faces.constructor.shape|true|table|table|nil|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Faces.constructor.new.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Axes.writeKnown|false|string|Players.testuser1.PlayerScripts.DatatypeExtras:49: attempt to index Axes with 'X'  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Axes.index.namecall.same|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Axes.constructor.shape|true|table|table|nil|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Axes.constructor.new.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Font.writeKnown|false|string|Players.testuser1.PlayerScripts.DatatypeExtras:49: attempt to index Font with 'Family'  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Font.index.namecall.same|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Font.constructor.shape|true|table|table|nil|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Font.constructor.fromId.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Font.constructor.fromName.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Font.constructor.fromEnum.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Font.constructor.new.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|DateTime.writeKnown|false|string|Players.testuser1.PlayerScripts.DatatypeExtras:49: attempt to index DateTime with 'UnixTimestamp'  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|DateTime.index.namecall.same|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|DateTime.constructor.shape|true|table|table|nil|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|DateTime.constructor.fromUnixTimestamp.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|DateTime.constructor.now.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|DateTime.constructor.fromIsoDate.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|DateTime.constructor.fromUnixTimestampMillis.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|DateTime.constructor.fromLocalTime.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|DateTime.constructor.fromUniversalTime.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Random.index.namecall.same|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Random.constructor.shape|true|table|table|nil|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Random.constructor.new.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|OverlapParams.writeKnown|true|0  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|OverlapParams.index.namecall.same|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|OverlapParams.constructor.shape|true|table|table|nil|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|OverlapParams.constructor.new.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|RaycastParams.writeKnown|true|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|RaycastParams.index.namecall.same|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|RaycastParams.constructor.shape|true|table|table|nil|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|RaycastParams.constructor.new.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|RaycastResult.writeKnown|true|9.399999618530273  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|RaycastResult.index.namecall.same|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|CatalogSearchParams.writeKnown|true|  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|CatalogSearchParams.index.namecall.same|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|CatalogSearchParams.constructor.shape|true|table|table|nil|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|CatalogSearchParams.constructor.new.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|PathWaypoint.writeKnown|false|userdata|runtime error: Position member of PathWaypoint is read-only and cannot be assigned to\nstack traceback:\n	[C]: in ?\n	Players.testuser1.PlayerScripts.DatatypeExtras:49: in function <Players.testuser1.PlayerScripts.DatatypeExtras:49>\n	[C]: in function 'pcall'\n	Players.testuser1.PlayerScripts.DatatypeExtras:3: in function 'test'\n	Players.testuser1.PlayerScripts.DatatypeExtras:49: in function <Players.testuser1.PlayerScripts.DatatypeExtras:1>\n  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|PathWaypoint.index.namecall.same|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|PathWaypoint.constructor.shape|true|table|table|nil|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|PathWaypoint.constructor.new.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|SharedTable.index.namecall.same|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|SharedTable.constructor.shape|true|table|table|nil|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|SharedTable.constructor.cloneAndFreeze.info|true|rustudio.library|1467|cloneAndFreeze|2|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|SharedTable.constructor.size.info|true|rustudio.library|1469|size|1|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|SharedTable.constructor.clone.info|true|rustudio.library|1466|clone|2|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|SharedTable.constructor.isFrozen.info|true|rustudio.library|1468|isFrozen|1|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|SharedTable.constructor.clear.info|true|rustudio.library|1470|clear|1|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|SharedTable.constructor.increment.info|true|rustudio.library|1471|increment|3|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|SharedTable.constructor.update.info|true|rustudio.library|1472|update|3|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|SharedTable.constructor.new.info|true|rustudio.library|1461|new|1|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Content.writeKnown|false|string|Players.testuser1.PlayerScripts.DatatypeExtras:49: attempt to index Content with 'Uri'  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Content.index.namecall.same|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Content.constructor.shape|true|table|table|nil|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Content.constructor.fromUri.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Content.constructor.fromObject.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|Content.constructor.fromAssetId.info|true|[C]|-1||0|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|RBXScriptSignal.index.namecall.same|true  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|RBXScriptConnection.writeKnown|false|string|Players.testuser1.PlayerScripts.DatatypeExtras:49: attempt to index RBXScriptConnection with 'Connected'  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|RBXScriptConnection.index.namecall.same|false  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|signal.Connect.missing|false|string|Players.testuser1.PlayerScripts.DatatypeExtras:60: Attempt to connect failed: Passed value is not a function  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|signal.Once.missing|false|userdata|bad argument #3: error converting Lua nil to function\nstack traceback:\n	[C]: in ?\n	rustudio.prelude:36: in function 'Once'\n	Players.testuser1.PlayerScripts.DatatypeExtras:60: in function <Players.testuser1.PlayerScripts.DatatypeExtras:60>\n	[C]: in function 'pcall'\n	Players.testuser1.PlayerScripts.DatatypeExtras:3: in function 'test'\n	Players.testuser1.PlayerScripts.DatatypeExtras:60: in function <Players.testuser1.PlayerScripts.DatatypeExtras:1>\n  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+Info: [Client] DT|client|EXTRA_DONE|  —  Players.testuser1.PlayerScripts.DatatypeExtras:2
+[shot] /home/user/projects/rustudio/app/tools/parity_probe/datatypes/extras.png
+[shot] /home/user/projects/rustudio/app/tools/parity_probe/datatypes/extras.view.png

@@ -1,0 +1,2000 @@
+GLOBALS|client|debug.level-1|false | Players.Player.PlayerScripts.GlobalsProbe2:30: invalid argument #1 to 'info' (level can't be negative)
+GLOBALS|client|debug.thread|true | Players.Player.PlayerScripts.GlobalsProbe2 | 31 |  | 0 | false
+GLOBALS|client|getfenv.0|true | table | true | GlobalsProbe1
+GLOBALS|client|getfenv.1|true | table | true | GlobalsProbe1
+GLOBALS|client|getfenv.2|true | table | true | GlobalsProbe1
+GLOBALS|client|getfenv.50|false | Players.Player.PlayerScripts.GlobalsProbe2:32: invalid argument #1 to 'getfenv' (invalid level)
+GLOBALS|client|getfenv.-1|false | Players.Player.PlayerScripts.GlobalsProbe2:32: invalid argument #1 to 'getfenv' (level must be non-negative)
+GLOBALS|client|getfenv.C|true | true | true
+GLOBALS|client|setfenv.C|false | Players.Player.PlayerScripts.GlobalsProbe2:34: 'setfenv' cannot change environment of given object
+GLOBALS|client|setfenv.lua|true | 42
+GLOBALS|client|setfenv.-1|false | Players.Player.PlayerScripts.GlobalsProbe2:36: invalid argument #1 to 'setfenv' (level must be non-negative)
+GLOBALS|client|setfenv.50|false | Players.Player.PlayerScripts.GlobalsProbe2:36: invalid argument #1 to 'setfenv' (invalid level)
+GLOBALS|client|loadstring|false | loadstring() is not available
+GLOBALS|client|loadstring.syntax|false | loadstring() is not available
+GLOBALS|client|loadstring.named|false | loadstring() is not available
+GLOBALS|client|require.boolean.false|false | require(assetId) cannot be called from a client.  assetId = 0
+GLOBALS|client|require.table.table: 0x44b20d4c67619b1f|false | Attempted to call require with invalid argument(s).
+GLOBALS|client|require.userdata.Game|false | Attempted to call require with invalid argument(s).
+GLOBALS|client|require.userdata.GlobalsProbe1|false | Attempted to call require with invalid argument(s).
+GLOBALS|client|require.string.bad|false | error requiring "bad": require path must start with a valid prefix: ./, ../, or @
+GLOBALS|client|require.number.0|false | require(assetId) cannot be called from a client.  assetId = 0
+GLOBALS|client|require.number.-1|false | require(assetId) cannot be called from a client.  assetId = -1
+GLOBALS|client|coroutine.running|thread: 0x0fa2eabba38ca470 | running | true
+GLOBALS|client|coroutine.pcall|true | true | true
+GLOBALS|client|coroutine.metamethod|true | false
+GLOBALS|client|task.spawn|true | thread: 0x0dcfb9628e20e85b
+GLOBALS|client|task.defer|true | thread: 0x0aacffd117d55ddd
+GLOBALS|client|task.delay|true | thread: 0xbceb85e3d6c7fed4
+GLOBALS|client|spawn|true
+GLOBALS|client|delay|true
+GLOBALS|client|task.cancel.running|false | Players.Player.PlayerScripts.GlobalsProbe2:49: cannot cancel thread
+GLOBALS|client|coroutine.close.running|false | Players.Player.PlayerScripts.GlobalsProbe2:50: cannot close running coroutine
+GLOBALS|client|coroutine.close.suspended|true | true
+GLOBALS|client|misc.Version|true | string | string | 0.744.0.7441077
+GLOBALS|client|misc.version|true | string | string | 0.744.0.7441077
+GLOBALS|client|misc.elapsedTime|true | number | number | 120.58667317199826
+GLOBALS|client|misc.time|true | number | number | 0.1000000056810677
+GLOBALS|client|misc.tick|true | number | number | 1794155346.4499865
+GLOBALS|client|misc.DebuggerManager|false | The current thread cannot call 'DebuggerManager' (lacking capability Plugin)
+GLOBALS|client|misc.PluginManager|false | The current thread cannot call 'PluginManager' (lacking capability Plugin)
+GLOBALS|client|misc.settings|false | The current thread cannot call 'settings' (lacking capability Plugin)
+GLOBALS|client|misc.stats|true | userdata | Instance | Stats
+GLOBALS|client|misc.UserSettings|true | userdata | Instance | GlobalBasicSettings
+GLOBALS|client|string.metatable|true | string | The metatable is locked | false
+GLOBALS|client|string.setmetatable|false | Players.Player.PlayerScripts.GlobalsProbe2:54: invalid argument #1 to 'setmetatable' (table expected, got string)
+GLOBALS|client|rawlen.userdata|false | Players.Player.PlayerScripts.GlobalsProbe2:55: invalid argument #1 to 'rawlen' (table or string expected)
+GLOBALS|client|rawequal.userdata|true | false
+GLOBALS|client|newproxy.bad|false | Players.Player.PlayerScripts.GlobalsProbe2:57: invalid argument #1 to 'newproxy' (nil or boolean expected, got number)
+GLOBALS|client|freeze|true | true | false | Players.Player.PlayerScripts.GlobalsProbe2:58: attempt to modify a readonly table
+GLOBALS|client|os|true | 1794184146 | 119.7324824999996 | 2026-11-09 | 7
+GLOBALS|client|os.date.table|true | 1970 | 1 | 1 | 0 | 0 | 0 | 5 | 1 | false
+GLOBALS|client|random.seed|true | 0.5576342002772471 | 1 | 0.24915606029512696 | true | true | true
+GLOBALS|client|shared.G|true | false | true | true
+GLOBALS|client|script.callback|true | true
+GLOBALS|client|task.wait.0|true | 0.023848799999996118 | nil | 0.023852599999372615
+GLOBALS|client|task.wait.0|true | 0.007253599999998528 | nil | 0.007256500000949018
+GLOBALS|server|wait|true | 0.09571560000000545 | 0.5044600204564631
+GLOBALS|server|DONE|
+GLOBALS|client|task.wait.0.001|true | 0.00423849999999959 | nil | 0.004241799999363138
+GLOBALS|client|task.wait.0.001|true | 0.006159300000007306 | nil | 0.00616230000014184
+GLOBALS|client|task.wait.0.02|true | 0.10447990000000118 | nil | 0.10448369999903662
+GLOBALS|client|task.wait.0.02|true | 0.10818360000000382 | nil | 0.108188499998505
+GLOBALS|server|wait|true | 0.21403500000000975 | 0.5810075686313212
+GLOBALS|server|DONE|
+GLOBALS|client|wait|true | 0.5105188999999939 | 0.6481391778215766
+GLOBALS|client|DONE|
+GLOBALS|client|wait|true | 0.5578998000000013 | 1.1634354582056403
+GLOBALS|client|DONE|
+GLOBALS|server|inventory.env._G|table | table | table: 0x3e781098e8c3000f
+GLOBALS|server|inventory.env.script|userdata | Instance | GlobalsProbe1
+GLOBALS|server|inventory.env.shared|table | table | table: 0x63b1f9952d21418b
+GLOBALS|server|meta.env|string | The metatable is locked
+GLOBALS|server|inventory.visible.Axes|table | table | table: 0x7f47c1411f23a0ae
+GLOBALS|server|inventory.visible.BrickColor|table | table | table: 0x54f599c4d7911c00
+GLOBALS|server|inventory.visible.CFrame|table | table | table: 0x5507ea233bad6fba
+GLOBALS|server|inventory.visible.CatalogSearchParams|table | table | table: 0xf8fdcb33773666ba
+GLOBALS|server|inventory.visible.Color3|table | table | table: 0x76ed068680ba8eba
+GLOBALS|server|inventory.visible.ColorSequence|table | table | table: 0xd999ad61e58a80c9
+GLOBALS|server|inventory.visible.ColorSequenceKeypoint|table | table | table: 0x47bd20a6dd75d95f
+GLOBALS|server|inventory.visible.Content|table | table | table: 0x74347aeaba658b29
+GLOBALS|server|inventory.visible.DateTime|table | table | table: 0x35981908a8b510db
+GLOBALS|server|inventory.visible.DebuggerManager|true | function | function | [C] | -1 | DebuggerManager | 0 | true | function: 0xf9b7694af5f30b07
+GLOBALS|server|inventory.visible.Delay|true | function | function | [C] | -1 | Delay | 0 | true | function: 0xa11cac0b1a86a4e7
+GLOBALS|server|inventory.visible.ElapsedTime|true | function | function | [C] | -1 | ElapsedTime | 0 | true | function: 0x8dae191d4bf98adc
+GLOBALS|server|inventory.visible.Enum|userdata | Enums | Enums
+GLOBALS|server|inventory.visible.Faces|table | table | table: 0x7fe08024892f1704
+GLOBALS|server|inventory.visible.FloatCurveKey|table | table | table: 0x89b2171909ecef22
+GLOBALS|server|inventory.visible.Font|table | table | table: 0x7411a34931b415ab
+GLOBALS|server|inventory.visible.Game|userdata | Instance | Game
+GLOBALS|server|inventory.visible.Instance|table | table | table: 0xc3e58ff10cb70222
+GLOBALS|server|inventory.visible.NumberRange|table | table | table: 0xb856cae1ccf8d5ac
+GLOBALS|server|inventory.visible.NumberSequence|table | table | table: 0xe0f8411a2134ee2c
+GLOBALS|server|inventory.visible.NumberSequenceKeypoint|table | table | table: 0x23b5db90b99d70e5
+GLOBALS|server|inventory.visible.OverlapParams|table | table | table: 0x458a21539d47fa0d
+GLOBALS|server|inventory.visible.Path2DControlPoint|table | table | table: 0x4fc124d6bdbf4fef
+GLOBALS|server|inventory.visible.PathWaypoint|table | table | table: 0x7c9d384969f232e5
+GLOBALS|server|inventory.visible.PhysicalProperties|table | table | table: 0x1836291b53461c18
+GLOBALS|server|inventory.visible.PluginManager|true | function | function | [C] | -1 | PluginManager | 0 | true | function: 0xfee5e14867ff06e4
+GLOBALS|server|inventory.visible.Random|table | table | table: 0x7bd81298041499a8
+GLOBALS|server|inventory.visible.Ray|table | table | table: 0xf102ca3610699ae9
+GLOBALS|server|inventory.visible.RaycastParams|table | table | table: 0xd0785d2763004553
+GLOBALS|server|inventory.visible.Rect|table | table | table: 0xeb98719cecb5553f
+GLOBALS|server|inventory.visible.Region3|table | table | table: 0xc63f4bf097bedfef
+GLOBALS|server|inventory.visible.Region3int16|table | table | table: 0x39ffe5104a57e028
+GLOBALS|server|inventory.visible.RotationCurveKey|table | table | table: 0xf60fcf25ab7c0d61
+GLOBALS|server|inventory.visible.SharedTable|table | table | table: 0x8b70de78bbc7ad4e
+GLOBALS|server|inventory.visible.Spawn|true | function | function | [C] | -1 | Spawn | 0 | true | function: 0xfe9712273507750c
+GLOBALS|server|inventory.visible.TweenInfo|table | table | table: 0xa9fc3e78cfeb1656
+GLOBALS|server|inventory.visible.UDim|table | table | table: 0xabd117a504526d1c
+GLOBALS|server|inventory.visible.UDim2|table | table | table: 0x0f6e4cba4637656d
+GLOBALS|server|inventory.visible.User|table | table | table: 0x738f8cee4d680856
+GLOBALS|server|inventory.visible.UserSettings|true | function | function | [C] | -1 | UserSettings | 0 | true | function: 0x81bbc838e9af6897
+GLOBALS|server|inventory.visible.ValueCurveKey|table | table | table: 0xb764ef94d15ed083
+GLOBALS|server|inventory.visible.Vector2|table | table | table: 0x6b7b9aa29e66dbd6
+GLOBALS|server|inventory.visible.Vector2int16|table | table | table: 0x8f992e0c3131ad13
+GLOBALS|server|inventory.visible.Vector3|table | table | table: 0x5d5fbf6983e3bf6c
+GLOBALS|server|inventory.visible.Vector3int16|table | table | table: 0x9961b9b3272351bc
+GLOBALS|server|inventory.visible.Version|true | function | function | [C] | -1 | Version | 0 | true | function: 0x394c91746e568128
+GLOBALS|server|inventory.visible.Workspace|userdata | Instance | Workspace
+GLOBALS|server|inventory.visible._G|table | table | table: 0x3e781098e8c3000f
+GLOBALS|server|inventory.visible._VERSION|string | string | Luau
+GLOBALS|server|inventory.visible.assert|true | function | function | [C] | -1 | assert | 0 | true | function: 0x477c875df7307ccc
+GLOBALS|server|inventory.visible.bit32|table | table | table: 0x3fd024a06cad4976
+GLOBALS|server|inventory.visible.buffer|table | table | table: 0x8256ca6a351ff297
+GLOBALS|server|inventory.visible.collectgarbage|true | function | function | [C] | -1 | collectgarbage | 0 | true | function: 0xd5d8c61ab3b808a2
+GLOBALS|server|inventory.visible.coroutine|table | table | table: 0x39de83b81278a385
+GLOBALS|server|inventory.visible.debug|table | table | table: 0x91f2818e9b099091
+GLOBALS|server|inventory.visible.delay|true | function | function | [C] | -1 | delay | 0 | true | function: 0xc82a8547a9e32195
+GLOBALS|server|inventory.visible.elapsedTime|true | function | function | [C] | -1 | elapsedTime | 0 | true | function: 0xa6e63ec6a372878c
+GLOBALS|server|inventory.visible.error|true | function | function | [C] | -1 | error | 0 | true | function: 0x79c7b77d70b37957
+GLOBALS|server|inventory.visible.game|userdata | Instance | Game
+GLOBALS|server|inventory.visible.gcinfo|true | function | function | [C] | -1 | gcinfo | 0 | true | function: 0xb7017ce5f87ab9a7
+GLOBALS|server|inventory.visible.getfenv|true | function | function | [C] | -1 | getfenv | 0 | true | function: 0x65f55904db4f8714
+GLOBALS|server|inventory.visible.getmetatable|true | function | function | [C] | -1 | getmetatable | 0 | true | function: 0x41157ed6a8ea0c3f
+GLOBALS|server|inventory.visible.ipairs|true | function | function | [C] | -1 | ipairs | 0 | true | function: 0xa164f52d5ed34201
+GLOBALS|server|inventory.visible.loadstring|true | function | function | [C] | -1 | loadstring | 0 | true | function: 0x1e4ac512bed2793a
+GLOBALS|server|inventory.visible.math|table | table | table: 0x862368ae0db123ad
+GLOBALS|server|inventory.visible.newproxy|true | function | function | [C] | -1 | newproxy | 0 | true | function: 0xea3db990374665e0
+GLOBALS|server|inventory.visible.next|true | function | function | [C] | -1 | next | 0 | true | function: 0x2c99ab6dbd9a5ff1
+GLOBALS|server|inventory.visible.os|table | table | table: 0x9847c93c40dd5214
+GLOBALS|server|inventory.visible.pairs|true | function | function | [C] | -1 | pairs | 0 | true | function: 0xc291dbf0358aa8a0
+GLOBALS|server|inventory.visible.pcall|true | function | function | [C] | -1 | pcall | 0 | true | function: 0x6c04064b52981e13
+GLOBALS|server|inventory.visible.print|true | function | function | [C] | -1 | print | 0 | true | function: 0x979cafda8c4f6a3d
+GLOBALS|server|inventory.visible.printidentity|true | function | function | [C] | -1 | printidentity | 0 | true | function: 0x0296b369048d2e15
+GLOBALS|server|inventory.visible.rawequal|true | function | function | [C] | -1 | rawequal | 0 | true | function: 0xdcfce3585540b2b9
+GLOBALS|server|inventory.visible.rawget|true | function | function | [C] | -1 | rawget | 0 | true | function: 0x74b48682b46e989b
+GLOBALS|server|inventory.visible.rawlen|true | function | function | [C] | -1 | rawlen | 0 | true | function: 0x32a10eb6002ceb46
+GLOBALS|server|inventory.visible.rawset|true | function | function | [C] | -1 | rawset | 0 | true | function: 0xc3a378a099241d3e
+GLOBALS|server|inventory.visible.require|true | function | function | [C] | -1 | require | 0 | true | function: 0xa1f30bab227bd90f
+GLOBALS|server|inventory.visible.script|userdata | Instance | GlobalsProbe1
+GLOBALS|server|inventory.visible.select|true | function | function | [C] | -1 | select | 0 | true | function: 0x3acadbf08296bbcb
+GLOBALS|server|inventory.visible.setfenv|true | function | function | [C] | -1 | setfenv | 0 | true | function: 0x1d5bc91915f02f6f
+GLOBALS|server|inventory.visible.setmetatable|true | function | function | [C] | -1 | setmetatable | 0 | true | function: 0x609b0fc37954f37e
+GLOBALS|server|inventory.visible.settings|true | function | function | [C] | -1 | settings | 0 | true | function: 0xab07fcabad45e5d0
+GLOBALS|server|inventory.visible.shared|table | table | table: 0x63b1f9952d21418b
+GLOBALS|server|inventory.visible.spawn|true | function | function | [C] | -1 | spawn | 0 | true | function: 0x5832dba1aa37adab
+GLOBALS|server|inventory.visible.stats|true | function | function | [C] | -1 | stats | 0 | true | function: 0x52b494390c63cf94
+GLOBALS|server|inventory.visible.string|table | table | table: 0xcf6b4d1de39e4c1e
+GLOBALS|server|inventory.visible.table|table | table | table: 0xacede060c9a452e6
+GLOBALS|server|inventory.visible.task|table | table | table: 0x13812495ec598c46
+GLOBALS|server|inventory.visible.tick|true | function | function | [C] | -1 | tick | 0 | true | function: 0x4b9539a9e56fce8c
+GLOBALS|server|inventory.visible.time|true | function | function | [C] | -1 | time | 0 | true | function: 0x6fcdc006a0e02dcd
+GLOBALS|server|inventory.visible.tonumber|true | function | function | [C] | -1 | tonumber | 0 | true | function: 0x705e018f80381342
+GLOBALS|server|inventory.visible.tostring|true | function | function | [C] | -1 | tostring | 0 | true | function: 0xa4cd8c560cdd7fa9
+GLOBALS|server|inventory.visible.type|true | function | function | [C] | -1 | type | 0 | true | function: 0x75674a69ea8654e6
+GLOBALS|server|inventory.visible.typeof|true | function | function | [C] | -1 | typeof | 0 | true | function: 0xa0f655af4b4e1f25
+GLOBALS|server|inventory.visible.unpack|true | function | function | [C] | -1 | unpack | 0 | true | function: 0x1d0661c27f811348
+GLOBALS|server|inventory.visible.utf8|table | table | table: 0xa004f38755b361a0
+GLOBALS|server|inventory.visible.vector|table | table | table: 0x1d94ec363170b8ce
+GLOBALS|server|inventory.visible.version|true | function | function | [C] | -1 | version | 0 | true | function: 0x82776ccf3aa134d6
+GLOBALS|server|inventory.visible.wait|true | function | function | [C] | -1 | wait | 0 | true | function: 0x4c7f0171d16d4beb
+GLOBALS|server|inventory.visible.warn|true | function | function | [C] | -1 | warn | 0 | true | function: 0x070f7959af2ea626
+GLOBALS|server|inventory.visible.workspace|userdata | Instance | Workspace
+GLOBALS|server|inventory.visible.xpcall|true | function | function | [C] | -1 | xpcall | 0 | true | function: 0xb60a6b07e657fd2c
+GLOBALS|server|inventory.visible.ypcall|true | function | function | [C] | -1 | pcall | 0 | true | function: 0x6c04064b52981e13
+GLOBALS|server|meta.visible|nil | nil
+GLOBALS|server|inventory.coroutine.close|true | function | function | [C] | -1 | close | 0 | true | function: 0xb9f077a82bd01faa
+GLOBALS|server|inventory.coroutine.create|true | function | function | [C] | -1 | create | 0 | true | function: 0xaece491b78b2f028
+GLOBALS|server|inventory.coroutine.isyieldable|true | function | function | [C] | -1 | isyieldable | 0 | true | function: 0x1e8e536923e58d86
+GLOBALS|server|inventory.coroutine.resume|true | function | function | [C] | -1 | resume | 0 | true | function: 0xa4825f93d55ffd78
+GLOBALS|server|inventory.coroutine.running|true | function | function | [C] | -1 | running | 0 | true | function: 0x03f8084ddab68cb4
+GLOBALS|server|inventory.coroutine.status|true | function | function | [C] | -1 | status | 0 | true | function: 0xa7acf96d9ebd4ebb
+GLOBALS|server|inventory.coroutine.wrap|true | function | function | [C] | -1 | wrap | 0 | true | function: 0x98f9b22dd954b885
+GLOBALS|server|inventory.coroutine.yield|true | function | function | [C] | -1 | yield | 0 | true | function: 0x157efd75a54241e1
+GLOBALS|server|meta.coroutine|nil | nil
+GLOBALS|server|inventory.task.cancel|true | function | function | [C] | -1 | cancel | 0 | true | function: 0xd20bf85f7019122c
+GLOBALS|server|inventory.task.defer|true | function | function | [C] | -1 | defer | 0 | true | function: 0x69cf4ba3904e71f2
+GLOBALS|server|inventory.task.delay|true | function | function | [C] | -1 | delay | 0 | true | function: 0xe254278e3116edb9
+GLOBALS|server|inventory.task.desynchronize|true | function | function | [C] | -1 | desynchronize | 0 | true | function: 0x6cdd941ecfdc538b
+GLOBALS|server|inventory.task.spawn|true | function | function | [C] | -1 | spawn | 0 | true | function: 0x5f7c3f894c3d3015
+GLOBALS|server|inventory.task.synchronize|true | function | function | [C] | -1 | synchronize | 0 | true | function: 0xef982d48f3d6ca1e
+GLOBALS|server|inventory.task.wait|true | function | function | [C] | -1 | wait | 0 | true | function: 0xc1648cf208773832
+GLOBALS|server|meta.task|nil | nil
+GLOBALS|server|inventory.debug.dumpcodesize|true | function | function | [C] | -1 | dumpcodesize | 0 | true | function: 0xd876f137791028d2
+GLOBALS|server|inventory.debug.dumpheap|true | function | function | [C] | -1 | dumpheap | 0 | true | function: 0xe2d73bd0aed6bbaa
+GLOBALS|server|inventory.debug.dumprefs|true | function | function | [C] | -1 | dumprefs | 0 | true | function: 0x9c7f52e0008bc6bf
+GLOBALS|server|inventory.debug.getmemorycategory|true | function | function | [C] | -1 | getmemorycategory | 0 | true | function: 0x63d37e165f726cac
+GLOBALS|server|inventory.debug.info|true | function | function | [C] | -1 | info | 0 | true | function: 0x46773d523a7415a2
+GLOBALS|server|inventory.debug.loadmodule|true | function | function | [C] | -1 | loadmodule | 0 | true | function: 0xadb82e7b821bc6c1
+GLOBALS|server|inventory.debug.profilebegin|true | function | function | [C] | -1 | profilebegin | 0 | true | function: 0x2483f97817b14dac
+GLOBALS|server|inventory.debug.profileend|true | function | function | [C] | -1 | profileend | 0 | true | function: 0xb8f232f89db99291
+GLOBALS|server|inventory.debug.resetmemorycategory|true | function | function | [C] | -1 | resetmemorycategory | 0 | true | function: 0xa166a3d10693d49a
+GLOBALS|server|inventory.debug.setmemorycategory|true | function | function | [C] | -1 | setmemorycategory | 0 | true | function: 0x56a48fd321fc2faf
+GLOBALS|server|inventory.debug.traceback|true | function | function | [C] | -1 | traceback | 0 | true | function: 0xfb80cf5d147abfec
+GLOBALS|server|inventory.debug.tracerefs|true | function | function | [C] | -1 | tracerefs | 0 | true | function: 0x509d7d154561d4c0
+GLOBALS|server|meta.debug|nil | nil
+GLOBALS|server|inventory.os.clock|true | function | function | [C] | -1 | clock | 0 | true | function: 0x034d61af929c29cd
+GLOBALS|server|inventory.os.date|true | function | function | [C] | -1 | date | 0 | true | function: 0xa0047fd31a303a4c
+GLOBALS|server|inventory.os.difftime|true | function | function | [C] | -1 | difftime | 0 | true | function: 0x696e38811ea93029
+GLOBALS|server|inventory.os.time|true | function | function | [C] | -1 | time | 0 | true | function: 0x79a1e018d0cf7de7
+GLOBALS|server|meta.os|nil | nil
+GLOBALS|server|inventory.math.abs|true | function | function | [C] | -1 | abs | 0 | true | function: 0xc4d8b4e6c857656d
+GLOBALS|server|inventory.math.acos|true | function | function | [C] | -1 | acos | 0 | true | function: 0x5860ddd4be8d75af
+GLOBALS|server|inventory.math.asin|true | function | function | [C] | -1 | asin | 0 | true | function: 0xd592bb9a5f991c6f
+GLOBALS|server|inventory.math.atan|true | function | function | [C] | -1 | atan | 0 | true | function: 0xca5f5f960b60eb9c
+GLOBALS|server|inventory.math.atan2|true | function | function | [C] | -1 | atan2 | 0 | true | function: 0xd1925d98391e43bf
+GLOBALS|server|inventory.math.ceil|true | function | function | [C] | -1 | ceil | 0 | true | function: 0x6f69df2c0116efee
+GLOBALS|server|inventory.math.clamp|true | function | function | [C] | -1 | clamp | 0 | true | function: 0x4fd01ec9dd116757
+GLOBALS|server|inventory.math.cos|true | function | function | [C] | -1 | cos | 0 | true | function: 0xd5044bebb517e552
+GLOBALS|server|inventory.math.cosh|true | function | function | [C] | -1 | cosh | 0 | true | function: 0xdb5e1534e133add4
+GLOBALS|server|inventory.math.deg|true | function | function | [C] | -1 | deg | 0 | true | function: 0xcbf1e31b772e6f10
+GLOBALS|server|inventory.math.e|number | number | 2.718281828459045
+GLOBALS|server|inventory.math.exp|true | function | function | [C] | -1 | exp | 0 | true | function: 0x535877f483029340
+GLOBALS|server|inventory.math.floor|true | function | function | [C] | -1 | floor | 0 | true | function: 0xfb76044d57996a88
+GLOBALS|server|inventory.math.fmod|true | function | function | [C] | -1 | fmod | 0 | true | function: 0xdc394b6c6ec7bb18
+GLOBALS|server|inventory.math.frexp|true | function | function | [C] | -1 | frexp | 0 | true | function: 0xaf53ea624aefca96
+GLOBALS|server|inventory.math.huge|number | number | inf
+GLOBALS|server|inventory.math.isfinite|true | function | function | [C] | -1 | isfinite | 0 | true | function: 0xb090a8fec748f9cd
+GLOBALS|server|inventory.math.isinf|true | function | function | [C] | -1 | isinf | 0 | true | function: 0x36a17f03437a5233
+GLOBALS|server|inventory.math.isnan|true | function | function | [C] | -1 | isnan | 0 | true | function: 0x61d5210f08d0c59a
+GLOBALS|server|inventory.math.ldexp|true | function | function | [C] | -1 | ldexp | 0 | true | function: 0x5131f360074773a8
+GLOBALS|server|inventory.math.lerp|true | function | function | [C] | -1 | lerp | 0 | true | function: 0x64e66c2461d87b55
+GLOBALS|server|inventory.math.log|true | function | function | [C] | -1 | log | 0 | true | function: 0x0f30648db9030cba
+GLOBALS|server|inventory.math.log10|true | function | function | [C] | -1 | log10 | 0 | true | function: 0xe8d2a0f32a9947e9
+GLOBALS|server|inventory.math.map|true | function | function | [C] | -1 | map | 0 | true | function: 0x656633c7d3832626
+GLOBALS|server|inventory.math.max|true | function | function | [C] | -1 | max | 0 | true | function: 0x99659eecc4b6321b
+GLOBALS|server|inventory.math.min|true | function | function | [C] | -1 | min | 0 | true | function: 0x39183a1e0043c7f0
+GLOBALS|server|inventory.math.modf|true | function | function | [C] | -1 | modf | 0 | true | function: 0x924057fa972de57b
+GLOBALS|server|inventory.math.nan|number | number | nan
+GLOBALS|server|inventory.math.noise|true | function | function | [C] | -1 | noise | 0 | true | function: 0xf899f7d920507f61
+GLOBALS|server|inventory.math.phi|number | number | 1.618033988749895
+GLOBALS|server|inventory.math.pi|number | number | 3.141592653589793
+GLOBALS|server|inventory.math.pow|true | function | function | [C] | -1 | pow | 0 | true | function: 0x16425bff035519b9
+GLOBALS|server|inventory.math.rad|true | function | function | [C] | -1 | rad | 0 | true | function: 0x0b9ffc19c93caca0
+GLOBALS|server|inventory.math.random|true | function | function | [C] | -1 | random | 0 | true | function: 0x442dfae97bcc9af0
+GLOBALS|server|inventory.math.randomseed|true | function | function | [C] | -1 | randomseed | 0 | true | function: 0xdd367a0c36b16446
+GLOBALS|server|inventory.math.round|true | function | function | [C] | -1 | round | 0 | true | function: 0xe2b5be8a49544686
+GLOBALS|server|inventory.math.sign|true | function | function | [C] | -1 | sign | 0 | true | function: 0x14717c402102a1bc
+GLOBALS|server|inventory.math.sin|true | function | function | [C] | -1 | sin | 0 | true | function: 0xd259857f0ccaa6c0
+GLOBALS|server|inventory.math.sinh|true | function | function | [C] | -1 | sinh | 0 | true | function: 0x9607e47653aac693
+GLOBALS|server|inventory.math.sqrt|true | function | function | [C] | -1 | sqrt | 0 | true | function: 0xbd91bb944d5564c5
+GLOBALS|server|inventory.math.sqrt2|number | number | 1.4142135623730951
+GLOBALS|server|inventory.math.tan|true | function | function | [C] | -1 | tan | 0 | true | function: 0x460be42cd0ce907f
+GLOBALS|server|inventory.math.tanh|true | function | function | [C] | -1 | tanh | 0 | true | function: 0xe9997f54210437f4
+GLOBALS|server|inventory.math.tau|number | number | 6.283185307179586
+GLOBALS|server|meta.math|nil | nil
+GLOBALS|server|inventory.string.byte|true | function | function | [C] | -1 | byte | 0 | true | function: 0x4cbf7d8c97253baa
+GLOBALS|server|inventory.string.char|true | function | function | [C] | -1 | char | 0 | true | function: 0x32de56f7b7775db4
+GLOBALS|server|inventory.string.find|true | function | function | [C] | -1 | find | 0 | true | function: 0xb55c66079d1f018b
+GLOBALS|server|inventory.string.format|true | function | function | [C] | -1 | format | 0 | true | function: 0xa8316bde84466ccc
+GLOBALS|server|inventory.string.gmatch|true | function | function | [C] | -1 | gmatch | 0 | true | function: 0x3cba7035f4a445d8
+GLOBALS|server|inventory.string.gsub|true | function | function | [C] | -1 | gsub | 0 | true | function: 0x94ec80fe1234f550
+GLOBALS|server|inventory.string.len|true | function | function | [C] | -1 | len | 0 | true | function: 0x5f993ef901b0129b
+GLOBALS|server|inventory.string.lower|true | function | function | [C] | -1 | lower | 0 | true | function: 0xc56c186d3c1dfc99
+GLOBALS|server|inventory.string.match|true | function | function | [C] | -1 | match | 0 | true | function: 0xd736541b1e912d15
+GLOBALS|server|inventory.string.pack|true | function | function | [C] | -1 | pack | 0 | true | function: 0xd2cf66281e80f932
+GLOBALS|server|inventory.string.packsize|true | function | function | [C] | -1 | packsize | 0 | true | function: 0x2e9946a4eb644c3e
+GLOBALS|server|inventory.string.rep|true | function | function | [C] | -1 | rep | 0 | true | function: 0xcb3254dde91480c1
+GLOBALS|server|inventory.string.reverse|true | function | function | [C] | -1 | reverse | 0 | true | function: 0xbd6769bd2d813ab6
+GLOBALS|server|inventory.string.split|true | function | function | [C] | -1 | split | 0 | true | function: 0xdc25f5cf7f194462
+GLOBALS|server|inventory.string.sub|true | function | function | [C] | -1 | sub | 0 | true | function: 0x6f77cd486e6bd728
+GLOBALS|server|inventory.string.unpack|true | function | function | [C] | -1 | unpack | 0 | true | function: 0x593c24819155b2f0
+GLOBALS|server|inventory.string.upper|true | function | function | [C] | -1 | upper | 0 | true | function: 0x80055f2e3c1c1a2f
+GLOBALS|server|meta.string|nil | nil
+GLOBALS|server|inventory.table.clear|true | function | function | [C] | -1 | clear | 0 | true | function: 0x1959ea814775aa10
+GLOBALS|server|inventory.table.clone|true | function | function | [C] | -1 | clone | 0 | true | function: 0x5d0515d9d54fb039
+GLOBALS|server|inventory.table.concat|true | function | function | [C] | -1 | concat | 0 | true | function: 0xe70afa10340eda77
+GLOBALS|server|inventory.table.create|true | function | function | [C] | -1 | create | 0 | true | function: 0x064da25aeabff1a7
+GLOBALS|server|inventory.table.find|true | function | function | [C] | -1 | find | 0 | true | function: 0xb82b5271cd0624c0
+GLOBALS|server|inventory.table.foreach|true | function | function | [C] | -1 | foreach | 0 | true | function: 0x6fb0e3e6a1479a2f
+GLOBALS|server|inventory.table.foreachi|true | function | function | [C] | -1 | foreachi | 0 | true | function: 0x6cdc0fbceb021a13
+GLOBALS|server|inventory.table.freeze|true | function | function | [C] | -1 | freeze | 0 | true | function: 0xdd0f3078e161647a
+GLOBALS|server|inventory.table.getn|true | function | function | [C] | -1 | getn | 0 | true | function: 0xdb87a1ad485f0831
+GLOBALS|server|inventory.table.insert|true | function | function | [C] | -1 | insert | 0 | true | function: 0x57117962a1809a75
+GLOBALS|server|inventory.table.isfrozen|true | function | function | [C] | -1 | isfrozen | 0 | true | function: 0x39be6ea565e33973
+GLOBALS|server|inventory.table.maxn|true | function | function | [C] | -1 | maxn | 0 | true | function: 0x91bc78d0b2df93ae
+GLOBALS|server|inventory.table.move|true | function | function | [C] | -1 | move | 0 | true | function: 0x4e44fd52a8fc8831
+GLOBALS|server|inventory.table.pack|true | function | function | [C] | -1 | pack | 0 | true | function: 0x51607c8e0bd7cdfa
+GLOBALS|server|inventory.table.remove|true | function | function | [C] | -1 | remove | 0 | true | function: 0x04e94b6902826db7
+GLOBALS|server|inventory.table.sort|true | function | function | [C] | -1 | sort | 0 | true | function: 0x437b8ec316bc289c
+GLOBALS|server|inventory.table.unpack|true | function | function | [C] | -1 | unpack | 0 | true | function: 0x369a8000a5bc9986
+GLOBALS|server|meta.table|nil | nil
+GLOBALS|server|inventory.utf8.char|true | function | function | [C] | -1 | char | 0 | true | function: 0x9fcc747f690df6c6
+GLOBALS|server|inventory.utf8.charpattern|string | string | [\x00-\x7f\xc2-\xf4][\x80-\xbf]*
+GLOBALS|server|inventory.utf8.codepoint|true | function | function | [C] | -1 | codepoint | 0 | true | function: 0x2760672510f43da0
+GLOBALS|server|inventory.utf8.codes|true | function | function | [C] | -1 | codes | 0 | true | function: 0x282820fec1a19183
+GLOBALS|server|inventory.utf8.graphemes|true | function | function | [C] | -1 | graphemes | 0 | true | function: 0xe1e0d602fa71d3cd
+GLOBALS|server|inventory.utf8.len|true | function | function | [C] | -1 | len | 0 | true | function: 0x2e6aac3cea6197d3
+GLOBALS|server|inventory.utf8.nfcnormalize|true | function | function | [C] | -1 | nfcnormalize | 0 | true | function: 0x4d465afba0b127fe
+GLOBALS|server|inventory.utf8.nfdnormalize|true | function | function | [C] | -1 | nfdnormalize | 0 | true | function: 0x716fcec6c624f60b
+GLOBALS|server|inventory.utf8.offset|true | function | function | [C] | -1 | offset | 0 | true | function: 0x50c432772d448217
+GLOBALS|server|meta.utf8|nil | nil
+GLOBALS|server|inventory.buffer.copy|true | function | function | [C] | -1 | copy | 0 | true | function: 0x2226dde7c10aa91d
+GLOBALS|server|inventory.buffer.create|true | function | function | [C] | -1 | create | 0 | true | function: 0x779425f6321c7c12
+GLOBALS|server|inventory.buffer.fill|true | function | function | [C] | -1 | fill | 0 | true | function: 0xa13a3c4074934c6b
+GLOBALS|server|inventory.buffer.fromstring|true | function | function | [C] | -1 | fromstring | 0 | true | function: 0xf095fc5d1f20ab5a
+GLOBALS|server|inventory.buffer.len|true | function | function | [C] | -1 | len | 0 | true | function: 0x6610388f4f5decfc
+GLOBALS|server|inventory.buffer.readbits|true | function | function | [C] | -1 | readbits | 0 | true | function: 0x8a7d164d10c92a7f
+GLOBALS|server|inventory.buffer.readf32|true | function | function | [C] | -1 | readf32 | 0 | true | function: 0x5049463f0e1d2fc5
+GLOBALS|server|inventory.buffer.readf64|true | function | function | [C] | -1 | readf64 | 0 | true | function: 0x7808874ea74613b5
+GLOBALS|server|inventory.buffer.readi16|true | function | function | [C] | -1 | readi16 | 0 | true | function: 0x1d656de7b4fa9daa
+GLOBALS|server|inventory.buffer.readi32|true | function | function | [C] | -1 | readi32 | 0 | true | function: 0xad70c89a187ab834
+GLOBALS|server|inventory.buffer.readi8|true | function | function | [C] | -1 | readi8 | 0 | true | function: 0x85fd75f7bfa511f0
+GLOBALS|server|inventory.buffer.readstring|true | function | function | [C] | -1 | readstring | 0 | true | function: 0x818ec511ff120021
+GLOBALS|server|inventory.buffer.readu16|true | function | function | [C] | -1 | readu16 | 0 | true | function: 0xe41a933d715dc1db
+GLOBALS|server|inventory.buffer.readu32|true | function | function | [C] | -1 | readu32 | 0 | true | function: 0x7684478e5e0f4dbc
+GLOBALS|server|inventory.buffer.readu8|true | function | function | [C] | -1 | readu8 | 0 | true | function: 0x337cf7ee112a717c
+GLOBALS|server|inventory.buffer.tostring|true | function | function | [C] | -1 | tostring | 0 | true | function: 0x8043087e439fe30e
+GLOBALS|server|inventory.buffer.writebits|true | function | function | [C] | -1 | writebits | 0 | true | function: 0x104880e0545b44af
+GLOBALS|server|inventory.buffer.writef32|true | function | function | [C] | -1 | writef32 | 0 | true | function: 0x0752467d1d6def40
+GLOBALS|server|inventory.buffer.writef64|true | function | function | [C] | -1 | writef64 | 0 | true | function: 0x7e1c49d23d955f3d
+GLOBALS|server|inventory.buffer.writei16|true | function | function | [C] | -1 | writei16 | 0 | true | function: 0x87f2648f72106b15
+GLOBALS|server|inventory.buffer.writei32|true | function | function | [C] | -1 | writei32 | 0 | true | function: 0x4933f6c1cb6930f6
+GLOBALS|server|inventory.buffer.writei8|true | function | function | [C] | -1 | writei8 | 0 | true | function: 0x3d18e48c0e5853d3
+GLOBALS|server|inventory.buffer.writestring|true | function | function | [C] | -1 | writestring | 0 | true | function: 0xa696d21e9ba5f770
+GLOBALS|server|inventory.buffer.writeu16|true | function | function | [C] | -1 | writeu16 | 0 | true | function: 0x7c6429e32bb5883c
+GLOBALS|server|inventory.buffer.writeu32|true | function | function | [C] | -1 | writeu32 | 0 | true | function: 0xc6cbe1b92abfad2c
+GLOBALS|server|inventory.buffer.writeu8|true | function | function | [C] | -1 | writeu8 | 0 | true | function: 0x6e622ec5ac6a90bc
+GLOBALS|server|meta.buffer|nil | nil
+GLOBALS|server|inventory.bit32.arshift|true | function | function | [C] | -1 | arshift | 0 | true | function: 0x3b82fcfae41f9d41
+GLOBALS|server|inventory.bit32.band|true | function | function | [C] | -1 | band | 0 | true | function: 0x21360361bc80de35
+GLOBALS|server|inventory.bit32.bnot|true | function | function | [C] | -1 | bnot | 0 | true | function: 0xc9ff9e2a93d040d6
+GLOBALS|server|inventory.bit32.bor|true | function | function | [C] | -1 | bor | 0 | true | function: 0x296512e4f77b6a41
+GLOBALS|server|inventory.bit32.btest|true | function | function | [C] | -1 | btest | 0 | true | function: 0x9acaceed9e9480df
+GLOBALS|server|inventory.bit32.bxor|true | function | function | [C] | -1 | bxor | 0 | true | function: 0x0b208857ee57ee06
+GLOBALS|server|inventory.bit32.byteswap|true | function | function | [C] | -1 | byteswap | 0 | true | function: 0x99aa2c13eb669fce
+GLOBALS|server|inventory.bit32.countlz|true | function | function | [C] | -1 | countlz | 0 | true | function: 0x27b3e25839c04bcd
+GLOBALS|server|inventory.bit32.countrz|true | function | function | [C] | -1 | countrz | 0 | true | function: 0x0d01a84441b64541
+GLOBALS|server|inventory.bit32.extract|true | function | function | [C] | -1 | extract | 0 | true | function: 0x352b07856854c8d7
+GLOBALS|server|inventory.bit32.lrotate|true | function | function | [C] | -1 | lrotate | 0 | true | function: 0xb0371df08cb1e5d8
+GLOBALS|server|inventory.bit32.lshift|true | function | function | [C] | -1 | lshift | 0 | true | function: 0xb3e068606b7b113f
+GLOBALS|server|inventory.bit32.replace|true | function | function | [C] | -1 | replace | 0 | true | function: 0x337ca569c61f2713
+GLOBALS|server|inventory.bit32.rrotate|true | function | function | [C] | -1 | rrotate | 0 | true | function: 0x57c4c1ba6ad03668
+GLOBALS|server|inventory.bit32.rshift|true | function | function | [C] | -1 | rshift | 0 | true | function: 0xb901c97b5501d597
+GLOBALS|server|meta.bit32|nil | nil
+GLOBALS|server|tostring.tab|table | table | table: 0x7348d664722aa12f | table: 0x7348d664722aa12f | true
+GLOBALS|server|tostring.buf|buffer | buffer | buffer: 0x4770f70be7aef882 | buffer: 0x4770f70be7aef882 | true
+GLOBALS|server|tostring.instance|userdata | Instance | Game | Game | true
+GLOBALS|server|tostring.proxy|userdata | userdata | userdata: 0xa3389e68f7347ab1 | userdata: 0xa3389e68f7347ab1 | true
+GLOBALS|server|tostring.func|function | function | function: 0xa689931c8684433f | function: 0xa689931c8684433f | true
+GLOBALS|server|tostring.thread|thread | thread | thread: 0x7f2a7c11fcb480da | thread: 0x7f2a7c11fcb480da | true
+GLOBALS|server|gc.count|true | 233
+GLOBALS|server|gc.collect|false | ServerScriptService.GlobalsProbe1:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|server|gc.stop|false | ServerScriptService.GlobalsProbe1:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|server|gc.restart|false | ServerScriptService.GlobalsProbe1:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|server|gc.step|false | ServerScriptService.GlobalsProbe1:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|server|gc.setpause|false | ServerScriptService.GlobalsProbe1:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|server|gc.setstepmul|false | ServerScriptService.GlobalsProbe1:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|server|gc.isrunning|false | ServerScriptService.GlobalsProbe1:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|server|gc.bad|false | ServerScriptService.GlobalsProbe1:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|server|gc.default|false | ServerScriptService.GlobalsProbe1:21: missing argument #1 to 'collectgarbage' (string expected)
+GLOBALS|server|gc.info|true | 238 | 238 | true
+GLOBALS|server|error.level0|false | message
+GLOBALS|server|error.level1|false | ServerScriptService.GlobalsProbe1:23: message
+GLOBALS|server|error.level2|false | message
+GLOBALS|server|error.level10|false | message
+GLOBALS|server|error.level-1|false | message
+GLOBALS|server|error.value.number|false | ServerScriptService.GlobalsProbe1:24: 23
+GLOBALS|server|error.value.boolean|false | false
+GLOBALS|server|error.value.table|false | table: 0xa6a0e1fc987e5a67
+GLOBALS|server|error.value.userdata|false | userdata: 0x1affa336ed734f5d
+GLOBALS|server|assert.default|false | ServerScriptService.GlobalsProbe1:25: assertion failed!
+GLOBALS|server|assert.table|false | ServerScriptService.GlobalsProbe1:26: invalid argument #2 to 'assert' (string expected, got table)
+GLOBALS|server|assert.returns|true | true | a | 4
+GLOBALS|server|xpcall.handler|true | false | error in error handling
+GLOBALS|server|trace.default|true | ServerScriptService.GlobalsProbe1:29\nServerScriptService.GlobalsProbe1:6 function probe\nServerScriptService.GlobalsProbe1:29\n
+GLOBALS|server|trace.message|true | message\nServerScriptService.GlobalsProbe1:30\nServerScriptService.GlobalsProbe1:6 function probe\nServerScriptService.GlobalsProbe1:30\n
+GLOBALS|server|trace.coroutine|true | co\nServerScriptService.GlobalsProbe1:31\n
+GLOBALS|server|debug.level0|true | [C] | -1 | info | 0 | true
+GLOBALS|server|debug.level1|true | ServerScriptService.GlobalsProbe1 | 32 |  | 0 | false
+GLOBALS|server|debug.level2|true | [C] | -1 | pcall | 0 | true
+GLOBALS|server|debug.level50|true
+GLOBALS|server|debug.level-1|false | ServerScriptService.GlobalsProbe1:32: invalid argument #1 to 'info' (level can't be negative)
+GLOBALS|server|debug.thread|true | ServerScriptService.GlobalsProbe1 | 33 |  | 0 | false
+GLOBALS|server|getfenv.0|true | table | true | GlobalsProbe1
+GLOBALS|server|getfenv.1|true | table | true | GlobalsProbe1
+GLOBALS|server|getfenv.2|true | table | true | GlobalsProbe1
+GLOBALS|server|getfenv.50|false | ServerScriptService.GlobalsProbe1:34: invalid argument #1 to 'getfenv' (invalid level)
+GLOBALS|server|getfenv.-1|false | ServerScriptService.GlobalsProbe1:34: invalid argument #1 to 'getfenv' (level must be non-negative)
+GLOBALS|server|getfenv.C|true | true | true
+GLOBALS|server|setfenv.C|false | ServerScriptService.GlobalsProbe1:36: 'setfenv' cannot change environment of given object
+GLOBALS|server|setfenv.lua|true | 42
+GLOBALS|server|setfenv.-1|false | ServerScriptService.GlobalsProbe1:38: invalid argument #1 to 'setfenv' (level must be non-negative)
+GLOBALS|server|setfenv.50|false | ServerScriptService.GlobalsProbe1:38: invalid argument #1 to 'setfenv' (invalid level)
+GLOBALS|server|loadstring|false | loadstring() is not available
+GLOBALS|server|loadstring.syntax|false | loadstring() is not available
+GLOBALS|server|loadstring.named|false | loadstring() is not available
+GLOBALS|server|require.table.table: 0x4c99f4eb8549498a|false | Attempted to call require with invalid argument(s).
+GLOBALS|server|require.userdata.Game|false | Attempted to call require with invalid argument(s).
+GLOBALS|server|require.userdata.GlobalsProbe1|false | Attempted to call require with invalid argument(s).
+GLOBALS|server|require.string.bad|false | error requiring "bad": require path must start with a valid prefix: ./, ../, or @
+GLOBALS|server|coroutine.running|thread: 0xb64772a29482b1e2 | running | true
+GLOBALS|server|coroutine.pcall|true | true | true
+GLOBALS|server|coroutine.metamethod|true | false
+GLOBALS|server|task.spawn|true | thread: 0x5e8de06557eb1a26
+GLOBALS|server|task.defer|true | thread: 0x8073c2fa7702250f
+GLOBALS|server|task.delay|true | thread: 0x0309983b9b25f58a
+GLOBALS|server|spawn|true
+GLOBALS|server|delay|true
+GLOBALS|server|task.cancel.running|false | ServerScriptService.GlobalsProbe1:51: cannot cancel thread
+GLOBALS|server|coroutine.close.running|false | ServerScriptService.GlobalsProbe1:52: cannot close running coroutine
+GLOBALS|server|coroutine.close.suspended|true | true
+GLOBALS|server|misc.Version|true | string | string | 0.744.0.7441077
+GLOBALS|server|misc.version|true | string | string | 0.744.0.7441077
+GLOBALS|server|misc.elapsedTime|true | number | number | 132.92272036599886
+GLOBALS|server|misc.time|true | number | number | 0
+GLOBALS|server|misc.tick|true | number | number | 1794155358.7849827
+GLOBALS|server|misc.DebuggerManager|false | The current thread cannot call 'DebuggerManager' (lacking capability Plugin)
+GLOBALS|server|misc.PluginManager|false | The current thread cannot call 'PluginManager' (lacking capability Plugin)
+GLOBALS|server|misc.settings|false | The current thread cannot call 'settings' (lacking capability Plugin)
+GLOBALS|server|misc.stats|true | userdata | Instance | Stats
+GLOBALS|server|misc.UserSettings|true | userdata | Instance | GlobalBasicSettings
+GLOBALS|server|string.metatable|true | string | The metatable is locked | false
+GLOBALS|server|string.setmetatable|false | ServerScriptService.GlobalsProbe1:56: invalid argument #1 to 'setmetatable' (table expected, got string)
+GLOBALS|server|rawlen.userdata|false | ServerScriptService.GlobalsProbe1:57: invalid argument #1 to 'rawlen' (table or string expected)
+GLOBALS|server|rawequal.userdata|true | false
+GLOBALS|server|newproxy.bad|false | ServerScriptService.GlobalsProbe1:59: invalid argument #1 to 'newproxy' (nil or boolean expected, got number)
+GLOBALS|server|freeze|true | true | false | ServerScriptService.GlobalsProbe1:60: attempt to modify a readonly table
+GLOBALS|server|os|true | 1794184159 | 132.0689270999992 | 2026-11-09 | 7
+GLOBALS|server|os.date.table|true | 1970 | 1 | 1 | 0 | 0 | 0 | 5 | 1 | false
+GLOBALS|server|random.seed|true | 0.5576342002772471 | 1 | 0.24915606029512696 | true | true | true
+GLOBALS|server|shared.G|true | false | true | true
+GLOBALS|server|script.callback|true | true
+GLOBALS|server|inventory.env._G|table | table | table: 0x3e781098e8c3000f
+GLOBALS|server|inventory.env.script|userdata | Instance | GlobalsProbe2
+GLOBALS|server|inventory.env.shared|table | table | table: 0x63b1f9952d21418b
+GLOBALS|server|meta.env|string | The metatable is locked
+GLOBALS|server|inventory.visible.Axes|table | table | table: 0x7f47c1411f23a0ae
+GLOBALS|server|inventory.visible.BrickColor|table | table | table: 0x54f599c4d7911c00
+GLOBALS|server|inventory.visible.CFrame|table | table | table: 0x5507ea233bad6fba
+GLOBALS|server|inventory.visible.CatalogSearchParams|table | table | table: 0xf8fdcb33773666ba
+GLOBALS|server|inventory.visible.Color3|table | table | table: 0x76ed068680ba8eba
+GLOBALS|server|inventory.visible.ColorSequence|table | table | table: 0xd999ad61e58a80c9
+GLOBALS|server|inventory.visible.ColorSequenceKeypoint|table | table | table: 0x47bd20a6dd75d95f
+GLOBALS|server|inventory.visible.Content|table | table | table: 0x74347aeaba658b29
+GLOBALS|server|inventory.visible.DateTime|table | table | table: 0x35981908a8b510db
+GLOBALS|server|inventory.visible.DebuggerManager|true | function | function | [C] | -1 | DebuggerManager | 0 | true | function: 0xf9b7694af5f30b07
+GLOBALS|server|inventory.visible.Delay|true | function | function | [C] | -1 | Delay | 0 | true | function: 0xa11cac0b1a86a4e7
+GLOBALS|server|inventory.visible.ElapsedTime|true | function | function | [C] | -1 | ElapsedTime | 0 | true | function: 0x8dae191d4bf98adc
+GLOBALS|server|inventory.visible.Enum|userdata | Enums | Enums
+GLOBALS|server|inventory.visible.Faces|table | table | table: 0x7fe08024892f1704
+GLOBALS|server|inventory.visible.FloatCurveKey|table | table | table: 0x89b2171909ecef22
+GLOBALS|server|inventory.visible.Font|table | table | table: 0x7411a34931b415ab
+GLOBALS|server|inventory.visible.Game|userdata | Instance | Game
+GLOBALS|server|inventory.visible.Instance|table | table | table: 0xc3e58ff10cb70222
+GLOBALS|server|inventory.visible.NumberRange|table | table | table: 0xb856cae1ccf8d5ac
+GLOBALS|server|inventory.visible.NumberSequence|table | table | table: 0xe0f8411a2134ee2c
+GLOBALS|server|inventory.visible.NumberSequenceKeypoint|table | table | table: 0x23b5db90b99d70e5
+GLOBALS|server|inventory.visible.OverlapParams|table | table | table: 0x458a21539d47fa0d
+GLOBALS|server|inventory.visible.Path2DControlPoint|table | table | table: 0x4fc124d6bdbf4fef
+GLOBALS|server|inventory.visible.PathWaypoint|table | table | table: 0x7c9d384969f232e5
+GLOBALS|server|inventory.visible.PhysicalProperties|table | table | table: 0x1836291b53461c18
+GLOBALS|server|inventory.visible.PluginManager|true | function | function | [C] | -1 | PluginManager | 0 | true | function: 0xfee5e14867ff06e4
+GLOBALS|server|inventory.visible.Random|table | table | table: 0x7bd81298041499a8
+GLOBALS|server|inventory.visible.Ray|table | table | table: 0xf102ca3610699ae9
+GLOBALS|server|inventory.visible.RaycastParams|table | table | table: 0xd0785d2763004553
+GLOBALS|server|inventory.visible.Rect|table | table | table: 0xeb98719cecb5553f
+GLOBALS|server|inventory.visible.Region3|table | table | table: 0xc63f4bf097bedfef
+GLOBALS|server|inventory.visible.Region3int16|table | table | table: 0x39ffe5104a57e028
+GLOBALS|server|inventory.visible.RotationCurveKey|table | table | table: 0xf60fcf25ab7c0d61
+GLOBALS|server|inventory.visible.SharedTable|table | table | table: 0x8b70de78bbc7ad4e
+GLOBALS|server|inventory.visible.Spawn|true | function | function | [C] | -1 | Spawn | 0 | true | function: 0xfe9712273507750c
+GLOBALS|server|inventory.visible.TweenInfo|table | table | table: 0xa9fc3e78cfeb1656
+GLOBALS|server|inventory.visible.UDim|table | table | table: 0xabd117a504526d1c
+GLOBALS|server|inventory.visible.UDim2|table | table | table: 0x0f6e4cba4637656d
+GLOBALS|server|inventory.visible.User|table | table | table: 0x738f8cee4d680856
+GLOBALS|server|inventory.visible.UserSettings|true | function | function | [C] | -1 | UserSettings | 0 | true | function: 0x81bbc838e9af6897
+GLOBALS|server|inventory.visible.ValueCurveKey|table | table | table: 0xb764ef94d15ed083
+GLOBALS|server|inventory.visible.Vector2|table | table | table: 0x6b7b9aa29e66dbd6
+GLOBALS|server|inventory.visible.Vector2int16|table | table | table: 0x8f992e0c3131ad13
+GLOBALS|server|inventory.visible.Vector3|table | table | table: 0x5d5fbf6983e3bf6c
+GLOBALS|server|inventory.visible.Vector3int16|table | table | table: 0x9961b9b3272351bc
+GLOBALS|server|inventory.visible.Version|true | function | function | [C] | -1 | Version | 0 | true | function: 0x394c91746e568128
+GLOBALS|server|inventory.visible.Workspace|userdata | Instance | Workspace
+GLOBALS|server|inventory.visible._G|table | table | table: 0x3e781098e8c3000f
+GLOBALS|server|inventory.visible._VERSION|string | string | Luau
+GLOBALS|server|inventory.visible.assert|true | function | function | [C] | -1 | assert | 0 | true | function: 0x477c875df7307ccc
+GLOBALS|server|inventory.visible.bit32|table | table | table: 0x3fd024a06cad4976
+GLOBALS|server|inventory.visible.buffer|table | table | table: 0x8256ca6a351ff297
+GLOBALS|server|inventory.visible.collectgarbage|true | function | function | [C] | -1 | collectgarbage | 0 | true | function: 0xd5d8c61ab3b808a2
+GLOBALS|server|inventory.visible.coroutine|table | table | table: 0x39de83b81278a385
+GLOBALS|server|inventory.visible.debug|table | table | table: 0x91f2818e9b099091
+GLOBALS|server|inventory.visible.delay|true | function | function | [C] | -1 | delay | 0 | true | function: 0xc82a8547a9e32195
+GLOBALS|server|inventory.visible.elapsedTime|true | function | function | [C] | -1 | elapsedTime | 0 | true | function: 0xa6e63ec6a372878c
+GLOBALS|server|inventory.visible.error|true | function | function | [C] | -1 | error | 0 | true | function: 0x79c7b77d70b37957
+GLOBALS|server|inventory.visible.game|userdata | Instance | Game
+GLOBALS|server|inventory.visible.gcinfo|true | function | function | [C] | -1 | gcinfo | 0 | true | function: 0xb7017ce5f87ab9a7
+GLOBALS|server|inventory.visible.getfenv|true | function | function | [C] | -1 | getfenv | 0 | true | function: 0x65f55904db4f8714
+GLOBALS|server|inventory.visible.getmetatable|true | function | function | [C] | -1 | getmetatable | 0 | true | function: 0x41157ed6a8ea0c3f
+GLOBALS|server|inventory.visible.ipairs|true | function | function | [C] | -1 | ipairs | 0 | true | function: 0xa164f52d5ed34201
+GLOBALS|server|inventory.visible.loadstring|true | function | function | [C] | -1 | loadstring | 0 | true | function: 0x1e4ac512bed2793a
+GLOBALS|server|inventory.visible.math|table | table | table: 0x862368ae0db123ad
+GLOBALS|server|inventory.visible.newproxy|true | function | function | [C] | -1 | newproxy | 0 | true | function: 0xea3db990374665e0
+GLOBALS|server|inventory.visible.next|true | function | function | [C] | -1 | next | 0 | true | function: 0x2c99ab6dbd9a5ff1
+GLOBALS|server|inventory.visible.os|table | table | table: 0x9847c93c40dd5214
+GLOBALS|server|inventory.visible.pairs|true | function | function | [C] | -1 | pairs | 0 | true | function: 0xc291dbf0358aa8a0
+GLOBALS|server|inventory.visible.pcall|true | function | function | [C] | -1 | pcall | 0 | true | function: 0x6c04064b52981e13
+GLOBALS|server|inventory.visible.print|true | function | function | [C] | -1 | print | 0 | true | function: 0x979cafda8c4f6a3d
+GLOBALS|server|inventory.visible.printidentity|true | function | function | [C] | -1 | printidentity | 0 | true | function: 0x0296b369048d2e15
+GLOBALS|server|inventory.visible.rawequal|true | function | function | [C] | -1 | rawequal | 0 | true | function: 0xdcfce3585540b2b9
+GLOBALS|server|inventory.visible.rawget|true | function | function | [C] | -1 | rawget | 0 | true | function: 0x74b48682b46e989b
+GLOBALS|server|inventory.visible.rawlen|true | function | function | [C] | -1 | rawlen | 0 | true | function: 0x32a10eb6002ceb46
+GLOBALS|server|inventory.visible.rawset|true | function | function | [C] | -1 | rawset | 0 | true | function: 0xc3a378a099241d3e
+GLOBALS|server|inventory.visible.require|true | function | function | [C] | -1 | require | 0 | true | function: 0xa1f30bab227bd90f
+GLOBALS|server|inventory.visible.script|userdata | Instance | GlobalsProbe2
+GLOBALS|server|inventory.visible.select|true | function | function | [C] | -1 | select | 0 | true | function: 0x3acadbf08296bbcb
+GLOBALS|server|inventory.visible.setfenv|true | function | function | [C] | -1 | setfenv | 0 | true | function: 0x1d5bc91915f02f6f
+GLOBALS|server|inventory.visible.setmetatable|true | function | function | [C] | -1 | setmetatable | 0 | true | function: 0x609b0fc37954f37e
+GLOBALS|server|inventory.visible.settings|true | function | function | [C] | -1 | settings | 0 | true | function: 0xab07fcabad45e5d0
+GLOBALS|server|inventory.visible.shared|table | table | table: 0x63b1f9952d21418b
+GLOBALS|server|inventory.visible.spawn|true | function | function | [C] | -1 | spawn | 0 | true | function: 0x5832dba1aa37adab
+GLOBALS|server|inventory.visible.stats|true | function | function | [C] | -1 | stats | 0 | true | function: 0x52b494390c63cf94
+GLOBALS|server|inventory.visible.string|table | table | table: 0xcf6b4d1de39e4c1e
+GLOBALS|server|inventory.visible.table|table | table | table: 0xacede060c9a452e6
+GLOBALS|server|inventory.visible.task|table | table | table: 0x13812495ec598c46
+GLOBALS|server|inventory.visible.tick|true | function | function | [C] | -1 | tick | 0 | true | function: 0x4b9539a9e56fce8c
+GLOBALS|server|inventory.visible.time|true | function | function | [C] | -1 | time | 0 | true | function: 0x6fcdc006a0e02dcd
+GLOBALS|server|inventory.visible.tonumber|true | function | function | [C] | -1 | tonumber | 0 | true | function: 0x705e018f80381342
+GLOBALS|server|inventory.visible.tostring|true | function | function | [C] | -1 | tostring | 0 | true | function: 0xa4cd8c560cdd7fa9
+GLOBALS|server|inventory.visible.type|true | function | function | [C] | -1 | type | 0 | true | function: 0x75674a69ea8654e6
+GLOBALS|server|inventory.visible.typeof|true | function | function | [C] | -1 | typeof | 0 | true | function: 0xa0f655af4b4e1f25
+GLOBALS|server|inventory.visible.unpack|true | function | function | [C] | -1 | unpack | 0 | true | function: 0x1d0661c27f811348
+GLOBALS|server|inventory.visible.utf8|table | table | table: 0xa004f38755b361a0
+GLOBALS|server|inventory.visible.vector|table | table | table: 0x1d94ec363170b8ce
+GLOBALS|server|inventory.visible.version|true | function | function | [C] | -1 | version | 0 | true | function: 0x82776ccf3aa134d6
+GLOBALS|server|inventory.visible.wait|true | function | function | [C] | -1 | wait | 0 | true | function: 0x4c7f0171d16d4beb
+GLOBALS|server|inventory.visible.warn|true | function | function | [C] | -1 | warn | 0 | true | function: 0x070f7959af2ea626
+GLOBALS|server|inventory.visible.workspace|userdata | Instance | Workspace
+GLOBALS|server|inventory.visible.xpcall|true | function | function | [C] | -1 | xpcall | 0 | true | function: 0xb60a6b07e657fd2c
+GLOBALS|server|inventory.visible.ypcall|true | function | function | [C] | -1 | pcall | 0 | true | function: 0x6c04064b52981e13
+GLOBALS|server|meta.visible|nil | nil
+GLOBALS|server|inventory.coroutine.close|true | function | function | [C] | -1 | close | 0 | true | function: 0xb9f077a82bd01faa
+GLOBALS|server|inventory.coroutine.create|true | function | function | [C] | -1 | create | 0 | true | function: 0xaece491b78b2f028
+GLOBALS|server|inventory.coroutine.isyieldable|true | function | function | [C] | -1 | isyieldable | 0 | true | function: 0x1e8e536923e58d86
+GLOBALS|server|inventory.coroutine.resume|true | function | function | [C] | -1 | resume | 0 | true | function: 0xa4825f93d55ffd78
+GLOBALS|server|inventory.coroutine.running|true | function | function | [C] | -1 | running | 0 | true | function: 0x03f8084ddab68cb4
+GLOBALS|server|inventory.coroutine.status|true | function | function | [C] | -1 | status | 0 | true | function: 0xa7acf96d9ebd4ebb
+GLOBALS|server|inventory.coroutine.wrap|true | function | function | [C] | -1 | wrap | 0 | true | function: 0x98f9b22dd954b885
+GLOBALS|server|inventory.coroutine.yield|true | function | function | [C] | -1 | yield | 0 | true | function: 0x157efd75a54241e1
+GLOBALS|server|meta.coroutine|nil | nil
+GLOBALS|server|inventory.task.cancel|true | function | function | [C] | -1 | cancel | 0 | true | function: 0xd20bf85f7019122c
+GLOBALS|server|inventory.task.defer|true | function | function | [C] | -1 | defer | 0 | true | function: 0x69cf4ba3904e71f2
+GLOBALS|server|inventory.task.delay|true | function | function | [C] | -1 | delay | 0 | true | function: 0xe254278e3116edb9
+GLOBALS|server|inventory.task.desynchronize|true | function | function | [C] | -1 | desynchronize | 0 | true | function: 0x6cdd941ecfdc538b
+GLOBALS|server|inventory.task.spawn|true | function | function | [C] | -1 | spawn | 0 | true | function: 0x5f7c3f894c3d3015
+GLOBALS|server|inventory.task.synchronize|true | function | function | [C] | -1 | synchronize | 0 | true | function: 0xef982d48f3d6ca1e
+GLOBALS|server|inventory.task.wait|true | function | function | [C] | -1 | wait | 0 | true | function: 0xc1648cf208773832
+GLOBALS|server|meta.task|nil | nil
+GLOBALS|server|inventory.debug.dumpcodesize|true | function | function | [C] | -1 | dumpcodesize | 0 | true | function: 0xd876f137791028d2
+GLOBALS|server|inventory.debug.dumpheap|true | function | function | [C] | -1 | dumpheap | 0 | true | function: 0xe2d73bd0aed6bbaa
+GLOBALS|server|inventory.debug.dumprefs|true | function | function | [C] | -1 | dumprefs | 0 | true | function: 0x9c7f52e0008bc6bf
+GLOBALS|server|inventory.debug.getmemorycategory|true | function | function | [C] | -1 | getmemorycategory | 0 | true | function: 0x63d37e165f726cac
+GLOBALS|server|inventory.debug.info|true | function | function | [C] | -1 | info | 0 | true | function: 0x46773d523a7415a2
+GLOBALS|server|inventory.debug.loadmodule|true | function | function | [C] | -1 | loadmodule | 0 | true | function: 0xadb82e7b821bc6c1
+GLOBALS|server|inventory.debug.profilebegin|true | function | function | [C] | -1 | profilebegin | 0 | true | function: 0x2483f97817b14dac
+GLOBALS|server|inventory.debug.profileend|true | function | function | [C] | -1 | profileend | 0 | true | function: 0xb8f232f89db99291
+GLOBALS|server|inventory.debug.resetmemorycategory|true | function | function | [C] | -1 | resetmemorycategory | 0 | true | function: 0xa166a3d10693d49a
+GLOBALS|server|inventory.debug.setmemorycategory|true | function | function | [C] | -1 | setmemorycategory | 0 | true | function: 0x56a48fd321fc2faf
+GLOBALS|server|inventory.debug.traceback|true | function | function | [C] | -1 | traceback | 0 | true | function: 0xfb80cf5d147abfec
+GLOBALS|server|inventory.debug.tracerefs|true | function | function | [C] | -1 | tracerefs | 0 | true | function: 0x509d7d154561d4c0
+GLOBALS|server|meta.debug|nil | nil
+GLOBALS|server|inventory.os.clock|true | function | function | [C] | -1 | clock | 0 | true | function: 0x034d61af929c29cd
+GLOBALS|server|inventory.os.date|true | function | function | [C] | -1 | date | 0 | true | function: 0xa0047fd31a303a4c
+GLOBALS|server|inventory.os.difftime|true | function | function | [C] | -1 | difftime | 0 | true | function: 0x696e38811ea93029
+GLOBALS|server|inventory.os.time|true | function | function | [C] | -1 | time | 0 | true | function: 0x79a1e018d0cf7de7
+GLOBALS|server|meta.os|nil | nil
+GLOBALS|server|inventory.math.abs|true | function | function | [C] | -1 | abs | 0 | true | function: 0xc4d8b4e6c857656d
+GLOBALS|server|inventory.math.acos|true | function | function | [C] | -1 | acos | 0 | true | function: 0x5860ddd4be8d75af
+GLOBALS|server|inventory.math.asin|true | function | function | [C] | -1 | asin | 0 | true | function: 0xd592bb9a5f991c6f
+GLOBALS|server|inventory.math.atan|true | function | function | [C] | -1 | atan | 0 | true | function: 0xca5f5f960b60eb9c
+GLOBALS|server|inventory.math.atan2|true | function | function | [C] | -1 | atan2 | 0 | true | function: 0xd1925d98391e43bf
+GLOBALS|server|inventory.math.ceil|true | function | function | [C] | -1 | ceil | 0 | true | function: 0x6f69df2c0116efee
+GLOBALS|server|inventory.math.clamp|true | function | function | [C] | -1 | clamp | 0 | true | function: 0x4fd01ec9dd116757
+GLOBALS|server|inventory.math.cos|true | function | function | [C] | -1 | cos | 0 | true | function: 0xd5044bebb517e552
+GLOBALS|server|inventory.math.cosh|true | function | function | [C] | -1 | cosh | 0 | true | function: 0xdb5e1534e133add4
+GLOBALS|server|inventory.math.deg|true | function | function | [C] | -1 | deg | 0 | true | function: 0xcbf1e31b772e6f10
+GLOBALS|server|inventory.math.e|number | number | 2.718281828459045
+GLOBALS|server|inventory.math.exp|true | function | function | [C] | -1 | exp | 0 | true | function: 0x535877f483029340
+GLOBALS|server|inventory.math.floor|true | function | function | [C] | -1 | floor | 0 | true | function: 0xfb76044d57996a88
+GLOBALS|server|inventory.math.fmod|true | function | function | [C] | -1 | fmod | 0 | true | function: 0xdc394b6c6ec7bb18
+GLOBALS|server|inventory.math.frexp|true | function | function | [C] | -1 | frexp | 0 | true | function: 0xaf53ea624aefca96
+GLOBALS|server|inventory.math.huge|number | number | inf
+GLOBALS|server|inventory.math.isfinite|true | function | function | [C] | -1 | isfinite | 0 | true | function: 0xb090a8fec748f9cd
+GLOBALS|server|inventory.math.isinf|true | function | function | [C] | -1 | isinf | 0 | true | function: 0x36a17f03437a5233
+GLOBALS|server|inventory.math.isnan|true | function | function | [C] | -1 | isnan | 0 | true | function: 0x61d5210f08d0c59a
+GLOBALS|server|inventory.math.ldexp|true | function | function | [C] | -1 | ldexp | 0 | true | function: 0x5131f360074773a8
+GLOBALS|server|inventory.math.lerp|true | function | function | [C] | -1 | lerp | 0 | true | function: 0x64e66c2461d87b55
+GLOBALS|server|inventory.math.log|true | function | function | [C] | -1 | log | 0 | true | function: 0x0f30648db9030cba
+GLOBALS|server|inventory.math.log10|true | function | function | [C] | -1 | log10 | 0 | true | function: 0xe8d2a0f32a9947e9
+GLOBALS|server|inventory.math.map|true | function | function | [C] | -1 | map | 0 | true | function: 0x656633c7d3832626
+GLOBALS|server|inventory.math.max|true | function | function | [C] | -1 | max | 0 | true | function: 0x99659eecc4b6321b
+GLOBALS|server|inventory.math.min|true | function | function | [C] | -1 | min | 0 | true | function: 0x39183a1e0043c7f0
+GLOBALS|server|inventory.math.modf|true | function | function | [C] | -1 | modf | 0 | true | function: 0x924057fa972de57b
+GLOBALS|server|inventory.math.nan|number | number | nan
+GLOBALS|server|inventory.math.noise|true | function | function | [C] | -1 | noise | 0 | true | function: 0xf899f7d920507f61
+GLOBALS|server|inventory.math.phi|number | number | 1.618033988749895
+GLOBALS|server|inventory.math.pi|number | number | 3.141592653589793
+GLOBALS|server|inventory.math.pow|true | function | function | [C] | -1 | pow | 0 | true | function: 0x16425bff035519b9
+GLOBALS|server|inventory.math.rad|true | function | function | [C] | -1 | rad | 0 | true | function: 0x0b9ffc19c93caca0
+GLOBALS|server|inventory.math.random|true | function | function | [C] | -1 | random | 0 | true | function: 0x442dfae97bcc9af0
+GLOBALS|server|inventory.math.randomseed|true | function | function | [C] | -1 | randomseed | 0 | true | function: 0xdd367a0c36b16446
+GLOBALS|server|inventory.math.round|true | function | function | [C] | -1 | round | 0 | true | function: 0xe2b5be8a49544686
+GLOBALS|server|inventory.math.sign|true | function | function | [C] | -1 | sign | 0 | true | function: 0x14717c402102a1bc
+GLOBALS|server|inventory.math.sin|true | function | function | [C] | -1 | sin | 0 | true | function: 0xd259857f0ccaa6c0
+GLOBALS|server|inventory.math.sinh|true | function | function | [C] | -1 | sinh | 0 | true | function: 0x9607e47653aac693
+GLOBALS|server|inventory.math.sqrt|true | function | function | [C] | -1 | sqrt | 0 | true | function: 0xbd91bb944d5564c5
+GLOBALS|server|inventory.math.sqrt2|number | number | 1.4142135623730951
+GLOBALS|server|inventory.math.tan|true | function | function | [C] | -1 | tan | 0 | true | function: 0x460be42cd0ce907f
+GLOBALS|server|inventory.math.tanh|true | function | function | [C] | -1 | tanh | 0 | true | function: 0xe9997f54210437f4
+GLOBALS|server|inventory.math.tau|number | number | 6.283185307179586
+GLOBALS|server|meta.math|nil | nil
+GLOBALS|server|inventory.string.byte|true | function | function | [C] | -1 | byte | 0 | true | function: 0x4cbf7d8c97253baa
+GLOBALS|server|inventory.string.char|true | function | function | [C] | -1 | char | 0 | true | function: 0x32de56f7b7775db4
+GLOBALS|server|inventory.string.find|true | function | function | [C] | -1 | find | 0 | true | function: 0xb55c66079d1f018b
+GLOBALS|server|inventory.string.format|true | function | function | [C] | -1 | format | 0 | true | function: 0xa8316bde84466ccc
+GLOBALS|server|inventory.string.gmatch|true | function | function | [C] | -1 | gmatch | 0 | true | function: 0x3cba7035f4a445d8
+GLOBALS|server|inventory.string.gsub|true | function | function | [C] | -1 | gsub | 0 | true | function: 0x94ec80fe1234f550
+GLOBALS|server|inventory.string.len|true | function | function | [C] | -1 | len | 0 | true | function: 0x5f993ef901b0129b
+GLOBALS|server|inventory.string.lower|true | function | function | [C] | -1 | lower | 0 | true | function: 0xc56c186d3c1dfc99
+GLOBALS|server|inventory.string.match|true | function | function | [C] | -1 | match | 0 | true | function: 0xd736541b1e912d15
+GLOBALS|server|inventory.string.pack|true | function | function | [C] | -1 | pack | 0 | true | function: 0xd2cf66281e80f932
+GLOBALS|server|inventory.string.packsize|true | function | function | [C] | -1 | packsize | 0 | true | function: 0x2e9946a4eb644c3e
+GLOBALS|server|inventory.string.rep|true | function | function | [C] | -1 | rep | 0 | true | function: 0xcb3254dde91480c1
+GLOBALS|server|inventory.string.reverse|true | function | function | [C] | -1 | reverse | 0 | true | function: 0xbd6769bd2d813ab6
+GLOBALS|server|inventory.string.split|true | function | function | [C] | -1 | split | 0 | true | function: 0xdc25f5cf7f194462
+GLOBALS|server|inventory.string.sub|true | function | function | [C] | -1 | sub | 0 | true | function: 0x6f77cd486e6bd728
+GLOBALS|server|inventory.string.unpack|true | function | function | [C] | -1 | unpack | 0 | true | function: 0x593c24819155b2f0
+GLOBALS|server|inventory.string.upper|true | function | function | [C] | -1 | upper | 0 | true | function: 0x80055f2e3c1c1a2f
+GLOBALS|server|meta.string|nil | nil
+GLOBALS|server|inventory.table.clear|true | function | function | [C] | -1 | clear | 0 | true | function: 0x1959ea814775aa10
+GLOBALS|server|inventory.table.clone|true | function | function | [C] | -1 | clone | 0 | true | function: 0x5d0515d9d54fb039
+GLOBALS|server|inventory.table.concat|true | function | function | [C] | -1 | concat | 0 | true | function: 0xe70afa10340eda77
+GLOBALS|server|inventory.table.create|true | function | function | [C] | -1 | create | 0 | true | function: 0x064da25aeabff1a7
+GLOBALS|server|inventory.table.find|true | function | function | [C] | -1 | find | 0 | true | function: 0xb82b5271cd0624c0
+GLOBALS|server|inventory.table.foreach|true | function | function | [C] | -1 | foreach | 0 | true | function: 0x6fb0e3e6a1479a2f
+GLOBALS|server|inventory.table.foreachi|true | function | function | [C] | -1 | foreachi | 0 | true | function: 0x6cdc0fbceb021a13
+GLOBALS|server|inventory.table.freeze|true | function | function | [C] | -1 | freeze | 0 | true | function: 0xdd0f3078e161647a
+GLOBALS|server|inventory.table.getn|true | function | function | [C] | -1 | getn | 0 | true | function: 0xdb87a1ad485f0831
+GLOBALS|server|inventory.table.insert|true | function | function | [C] | -1 | insert | 0 | true | function: 0x57117962a1809a75
+GLOBALS|server|inventory.table.isfrozen|true | function | function | [C] | -1 | isfrozen | 0 | true | function: 0x39be6ea565e33973
+GLOBALS|server|inventory.table.maxn|true | function | function | [C] | -1 | maxn | 0 | true | function: 0x91bc78d0b2df93ae
+GLOBALS|server|inventory.table.move|true | function | function | [C] | -1 | move | 0 | true | function: 0x4e44fd52a8fc8831
+GLOBALS|server|inventory.table.pack|true | function | function | [C] | -1 | pack | 0 | true | function: 0x51607c8e0bd7cdfa
+GLOBALS|server|inventory.table.remove|true | function | function | [C] | -1 | remove | 0 | true | function: 0x04e94b6902826db7
+GLOBALS|server|inventory.table.sort|true | function | function | [C] | -1 | sort | 0 | true | function: 0x437b8ec316bc289c
+GLOBALS|server|inventory.table.unpack|true | function | function | [C] | -1 | unpack | 0 | true | function: 0x369a8000a5bc9986
+GLOBALS|server|meta.table|nil | nil
+GLOBALS|server|inventory.utf8.char|true | function | function | [C] | -1 | char | 0 | true | function: 0x9fcc747f690df6c6
+GLOBALS|server|inventory.utf8.charpattern|string | string | [\x00-\x7f\xc2-\xf4][\x80-\xbf]*
+GLOBALS|server|inventory.utf8.codepoint|true | function | function | [C] | -1 | codepoint | 0 | true | function: 0x2760672510f43da0
+GLOBALS|server|inventory.utf8.codes|true | function | function | [C] | -1 | codes | 0 | true | function: 0x282820fec1a19183
+GLOBALS|server|inventory.utf8.graphemes|true | function | function | [C] | -1 | graphemes | 0 | true | function: 0xe1e0d602fa71d3cd
+GLOBALS|server|inventory.utf8.len|true | function | function | [C] | -1 | len | 0 | true | function: 0x2e6aac3cea6197d3
+GLOBALS|server|inventory.utf8.nfcnormalize|true | function | function | [C] | -1 | nfcnormalize | 0 | true | function: 0x4d465afba0b127fe
+GLOBALS|server|inventory.utf8.nfdnormalize|true | function | function | [C] | -1 | nfdnormalize | 0 | true | function: 0x716fcec6c624f60b
+GLOBALS|server|inventory.utf8.offset|true | function | function | [C] | -1 | offset | 0 | true | function: 0x50c432772d448217
+GLOBALS|server|meta.utf8|nil | nil
+GLOBALS|server|inventory.buffer.copy|true | function | function | [C] | -1 | copy | 0 | true | function: 0x2226dde7c10aa91d
+GLOBALS|server|inventory.buffer.create|true | function | function | [C] | -1 | create | 0 | true | function: 0x779425f6321c7c12
+GLOBALS|server|inventory.buffer.fill|true | function | function | [C] | -1 | fill | 0 | true | function: 0xa13a3c4074934c6b
+GLOBALS|server|inventory.buffer.fromstring|true | function | function | [C] | -1 | fromstring | 0 | true | function: 0xf095fc5d1f20ab5a
+GLOBALS|server|inventory.buffer.len|true | function | function | [C] | -1 | len | 0 | true | function: 0x6610388f4f5decfc
+GLOBALS|server|inventory.buffer.readbits|true | function | function | [C] | -1 | readbits | 0 | true | function: 0x8a7d164d10c92a7f
+GLOBALS|server|inventory.buffer.readf32|true | function | function | [C] | -1 | readf32 | 0 | true | function: 0x5049463f0e1d2fc5
+GLOBALS|server|inventory.buffer.readf64|true | function | function | [C] | -1 | readf64 | 0 | true | function: 0x7808874ea74613b5
+GLOBALS|server|inventory.buffer.readi16|true | function | function | [C] | -1 | readi16 | 0 | true | function: 0x1d656de7b4fa9daa
+GLOBALS|server|inventory.buffer.readi32|true | function | function | [C] | -1 | readi32 | 0 | true | function: 0xad70c89a187ab834
+GLOBALS|server|inventory.buffer.readi8|true | function | function | [C] | -1 | readi8 | 0 | true | function: 0x85fd75f7bfa511f0
+GLOBALS|server|inventory.buffer.readstring|true | function | function | [C] | -1 | readstring | 0 | true | function: 0x818ec511ff120021
+GLOBALS|server|inventory.buffer.readu16|true | function | function | [C] | -1 | readu16 | 0 | true | function: 0xe41a933d715dc1db
+GLOBALS|server|inventory.buffer.readu32|true | function | function | [C] | -1 | readu32 | 0 | true | function: 0x7684478e5e0f4dbc
+GLOBALS|server|inventory.buffer.readu8|true | function | function | [C] | -1 | readu8 | 0 | true | function: 0x337cf7ee112a717c
+GLOBALS|server|inventory.buffer.tostring|true | function | function | [C] | -1 | tostring | 0 | true | function: 0x8043087e439fe30e
+GLOBALS|server|inventory.buffer.writebits|true | function | function | [C] | -1 | writebits | 0 | true | function: 0x104880e0545b44af
+GLOBALS|server|inventory.buffer.writef32|true | function | function | [C] | -1 | writef32 | 0 | true | function: 0x0752467d1d6def40
+GLOBALS|server|inventory.buffer.writef64|true | function | function | [C] | -1 | writef64 | 0 | true | function: 0x7e1c49d23d955f3d
+GLOBALS|server|inventory.buffer.writei16|true | function | function | [C] | -1 | writei16 | 0 | true | function: 0x87f2648f72106b15
+GLOBALS|server|inventory.buffer.writei32|true | function | function | [C] | -1 | writei32 | 0 | true | function: 0x4933f6c1cb6930f6
+GLOBALS|server|inventory.buffer.writei8|true | function | function | [C] | -1 | writei8 | 0 | true | function: 0x3d18e48c0e5853d3
+GLOBALS|server|inventory.buffer.writestring|true | function | function | [C] | -1 | writestring | 0 | true | function: 0xa696d21e9ba5f770
+GLOBALS|server|inventory.buffer.writeu16|true | function | function | [C] | -1 | writeu16 | 0 | true | function: 0x7c6429e32bb5883c
+GLOBALS|server|inventory.buffer.writeu32|true | function | function | [C] | -1 | writeu32 | 0 | true | function: 0xc6cbe1b92abfad2c
+GLOBALS|server|inventory.buffer.writeu8|true | function | function | [C] | -1 | writeu8 | 0 | true | function: 0x6e622ec5ac6a90bc
+GLOBALS|server|meta.buffer|nil | nil
+GLOBALS|server|inventory.bit32.arshift|true | function | function | [C] | -1 | arshift | 0 | true | function: 0x3b82fcfae41f9d41
+GLOBALS|server|inventory.bit32.band|true | function | function | [C] | -1 | band | 0 | true | function: 0x21360361bc80de35
+GLOBALS|server|inventory.bit32.bnot|true | function | function | [C] | -1 | bnot | 0 | true | function: 0xc9ff9e2a93d040d6
+GLOBALS|server|inventory.bit32.bor|true | function | function | [C] | -1 | bor | 0 | true | function: 0x296512e4f77b6a41
+GLOBALS|server|inventory.bit32.btest|true | function | function | [C] | -1 | btest | 0 | true | function: 0x9acaceed9e9480df
+GLOBALS|server|inventory.bit32.bxor|true | function | function | [C] | -1 | bxor | 0 | true | function: 0x0b208857ee57ee06
+GLOBALS|server|inventory.bit32.byteswap|true | function | function | [C] | -1 | byteswap | 0 | true | function: 0x99aa2c13eb669fce
+GLOBALS|server|inventory.bit32.countlz|true | function | function | [C] | -1 | countlz | 0 | true | function: 0x27b3e25839c04bcd
+GLOBALS|server|inventory.bit32.countrz|true | function | function | [C] | -1 | countrz | 0 | true | function: 0x0d01a84441b64541
+GLOBALS|server|inventory.bit32.extract|true | function | function | [C] | -1 | extract | 0 | true | function: 0x352b07856854c8d7
+GLOBALS|server|inventory.bit32.lrotate|true | function | function | [C] | -1 | lrotate | 0 | true | function: 0xb0371df08cb1e5d8
+GLOBALS|server|inventory.bit32.lshift|true | function | function | [C] | -1 | lshift | 0 | true | function: 0xb3e068606b7b113f
+GLOBALS|server|inventory.bit32.replace|true | function | function | [C] | -1 | replace | 0 | true | function: 0x337ca569c61f2713
+GLOBALS|server|inventory.bit32.rrotate|true | function | function | [C] | -1 | rrotate | 0 | true | function: 0x57c4c1ba6ad03668
+GLOBALS|server|inventory.bit32.rshift|true | function | function | [C] | -1 | rshift | 0 | true | function: 0xb901c97b5501d597
+GLOBALS|server|meta.bit32|nil | nil
+GLOBALS|server|identity.Axes|true
+GLOBALS|server|identity.BrickColor|true
+GLOBALS|server|identity.CFrame|true
+GLOBALS|server|identity.CatalogSearchParams|true
+GLOBALS|server|identity.Color3|true
+GLOBALS|server|identity.ColorSequence|true
+GLOBALS|server|identity.ColorSequenceKeypoint|true
+GLOBALS|server|identity.Content|true
+GLOBALS|server|identity.DateTime|true
+GLOBALS|server|identity.DebuggerManager|true
+GLOBALS|server|identity.Delay|true
+GLOBALS|server|identity.ElapsedTime|true
+GLOBALS|server|identity.Enum|true
+GLOBALS|server|identity.Faces|true
+GLOBALS|server|identity.FloatCurveKey|true
+GLOBALS|server|identity.Font|true
+GLOBALS|server|identity.Game|true
+GLOBALS|server|identity.Instance|true
+GLOBALS|server|identity.LoadLibrary|true
+GLOBALS|server|identity.NumberRange|true
+GLOBALS|server|identity.NumberSequence|true
+GLOBALS|server|identity.NumberSequenceKeypoint|true
+GLOBALS|server|identity.OverlapParams|true
+GLOBALS|server|identity.Path2DControlPoint|true
+GLOBALS|server|identity.PathWaypoint|true
+GLOBALS|server|identity.PhysicalProperties|true
+GLOBALS|server|identity.PluginManager|true
+GLOBALS|server|identity.Random|true
+GLOBALS|server|identity.Ray|true
+GLOBALS|server|identity.RaycastParams|true
+GLOBALS|server|identity.Rect|true
+GLOBALS|server|identity.Region3|true
+GLOBALS|server|identity.Region3int16|true
+GLOBALS|server|identity.RotationCurveKey|true
+GLOBALS|server|identity.SharedTable|true
+GLOBALS|server|identity.Spawn|true
+GLOBALS|server|identity.TweenInfo|true
+GLOBALS|server|identity.UDim|true
+GLOBALS|server|identity.UDim2|true
+GLOBALS|server|identity.User|true
+GLOBALS|server|identity.UserSettings|true
+GLOBALS|server|identity.ValueCurveKey|true
+GLOBALS|server|identity.Vector2|true
+GLOBALS|server|identity.Vector2int16|true
+GLOBALS|server|identity.Vector3|true
+GLOBALS|server|identity.Vector3int16|true
+GLOBALS|server|identity.Version|true
+GLOBALS|server|identity.Workspace|true
+GLOBALS|server|identity._G|true
+GLOBALS|server|identity._VERSION|true
+GLOBALS|server|identity.__ac_capture_begin|true
+GLOBALS|server|identity.__ac_capture_known|true
+GLOBALS|server|identity.__ac_capture_poll|true
+GLOBALS|server|identity.__ac_capture_prompt|true
+GLOBALS|server|identity.__ac_content_begin|true
+GLOBALS|server|identity.__ac_content_ids|true
+GLOBALS|server|identity.__ac_content_poll|true
+GLOBALS|server|identity.__ac_create_decal|true
+GLOBALS|server|identity.__ac_instance_composition|true
+GLOBALS|server|identity.__ac_is_server|true
+GLOBALS|server|identity.__ac_pages|true
+GLOBALS|server|identity.__ac_scene_mem_begin|true
+GLOBALS|server|identity.__ac_scene_mem_restore|true
+GLOBALS|server|identity.__ac_script_memory|true
+GLOBALS|server|identity.__ac_unparented|true
+GLOBALS|server|identity.__ac_web_begin|true
+GLOBALS|server|identity.__ac_web_poll|true
+GLOBALS|server|identity.__geo_nav|true
+GLOBALS|server|identity.__geo_ops|true
+GLOBALS|server|identity.__rs_anim_after|true
+GLOBALS|server|identity.__rs_anim_asset|true
+GLOBALS|server|identity.__rs_anim_drive|true
+GLOBALS|server|identity.__rs_anim_joint_spec|true
+GLOBALS|server|identity.__rs_anim_joint_upgrade|true
+GLOBALS|server|identity.__rs_anim_register|true
+GLOBALS|server|identity.__rs_anim_registered|true
+GLOBALS|server|identity.__rs_anim_rotation_list|true
+GLOBALS|server|identity.__rs_anim_rotation_value|true
+GLOBALS|server|identity.__rs_asset_begin|true
+GLOBALS|server|identity.__rs_asset_ready|true
+GLOBALS|server|identity.__rs_avatar_get|true
+GLOBALS|server|identity.__rs_avatar_load|true
+GLOBALS|server|identity.__rs_avatar_prompt_answer|true
+GLOBALS|server|identity.__rs_cg|true
+GLOBALS|server|identity.__rs_gated_events|true
+GLOBALS|server|identity.__rs_get_callback|true
+GLOBALS|server|identity.__rs_has_peer|true
+GLOBALS|server|identity.__rs_input_event|true
+GLOBALS|server|identity.__rs_input_frame_end|true
+GLOBALS|server|identity.__rs_invoke_reply|true
+GLOBALS|server|identity.__rs_invoke_server|true
+GLOBALS|server|identity.__rs_kfs_parts|true
+GLOBALS|server|identity.__rs_lua_methods|true
+GLOBALS|server|identity.__rs_make_input_object|true
+GLOBALS|server|identity.__rs_make_signal|true
+GLOBALS|server|identity.__rs_member_check|true
+GLOBALS|server|identity.__rs_new_input_object|true
+GLOBALS|server|identity.__rs_new_signal|true
+GLOBALS|server|identity.__rs_pages_list|true
+GLOBALS|server|identity.__rs_pages_new|true
+GLOBALS|server|identity.__rs_particles|true
+GLOBALS|server|identity.__rs_pc_chat_input|true
+GLOBALS|server|identity.__rs_pc_chat_view|true
+GLOBALS|server|identity.__rs_pc_clear_view|true
+GLOBALS|server|identity.__rs_pc_client_receive|true
+GLOBALS|server|identity.__rs_pc_get|true
+GLOBALS|server|identity.__rs_pc_outbox|true
+GLOBALS|server|identity.__rs_pc_server_receive|true
+GLOBALS|server|identity.__rs_pc_set|true
+GLOBALS|server|identity.__rs_pc_step|true
+GLOBALS|server|identity.__rs_pc_translator|true
+GLOBALS|server|identity.__rs_product_info|true
+GLOBALS|server|identity.__rs_profile|true
+GLOBALS|server|identity.__rs_require_for|true
+GLOBALS|server|identity.__rs_seat|true
+GLOBALS|server|identity.__rs_serve_client_invoke|true
+GLOBALS|server|identity.__rs_serve_invoke|true
+GLOBALS|server|identity.__rs_set_raw|true
+GLOBALS|server|identity.__rs_track_get|true
+GLOBALS|server|identity.__rs_track_set|true
+GLOBALS|server|identity.__rs_tracks|true
+GLOBALS|server|identity.__rs_tween_get|true
+GLOBALS|server|identity.__rs_unseat|true
+GLOBALS|server|identity.__rs_user_game_settings|true
+GLOBALS|server|identity.__rs_window_focus|true
+GLOBALS|server|identity.__ws_begin|true
+GLOBALS|server|identity.__ws_bundle_details|true
+GLOBALS|server|identity.__ws_campaign_record|true
+GLOBALS|server|identity.__ws_filter|true
+GLOBALS|server|identity.__ws_filter_text|true
+GLOBALS|server|identity.__ws_info_type|true
+GLOBALS|server|identity.__ws_owned|true
+GLOBALS|server|identity.__ws_page_copy|true
+GLOBALS|server|identity.__ws_poll|true
+GLOBALS|server|identity.__ws_send|true
+GLOBALS|server|identity.__ws_subscription_override|true
+GLOBALS|server|identity.addDialog|true
+GLOBALS|server|identity.assert|true
+GLOBALS|server|identity.bit32|true
+GLOBALS|server|identity.buffer|true
+GLOBALS|server|identity.checkForLeaveArea|true
+GLOBALS|server|identity.collectgarbage|true
+GLOBALS|server|identity.coroutine|true
+GLOBALS|server|identity.createChatNotificationGui|true
+GLOBALS|server|identity.createMessageDialog|true
+GLOBALS|server|identity.currentTone|true
+GLOBALS|server|identity.debug|true
+GLOBALS|server|identity.delay|true
+GLOBALS|server|identity.dialogIsValid|true
+GLOBALS|server|identity.doDialog|true
+GLOBALS|server|identity.elapsedTime|true
+GLOBALS|server|identity.endDialog|true
+GLOBALS|server|identity.error|true
+GLOBALS|server|identity.game|true
+GLOBALS|server|identity.gcinfo|true
+GLOBALS|server|identity.getChatColor|true
+GLOBALS|server|identity.getLocalHumanoidRootPart|true
+GLOBALS|server|identity.getfenv|true
+GLOBALS|server|identity.getmetatable|true
+GLOBALS|server|identity.initialize|true
+GLOBALS|server|identity.integer|true
+GLOBALS|server|identity.ipairs|true
+GLOBALS|server|identity.loadstring|true
+GLOBALS|server|identity.math|true
+GLOBALS|server|identity.newChoice|true
+GLOBALS|server|identity.newproxy|true
+GLOBALS|server|identity.next|true
+GLOBALS|server|identity.normalEndDialog|true
+GLOBALS|server|identity.onLoad|true
+GLOBALS|server|identity.os|true
+GLOBALS|server|identity.pairs|true
+GLOBALS|server|identity.pcall|true
+GLOBALS|server|identity.presentDialogChoices|true
+GLOBALS|server|identity.print|true
+GLOBALS|server|identity.printidentity|true
+GLOBALS|server|identity.rawequal|true
+GLOBALS|server|identity.rawget|true
+GLOBALS|server|identity.rawlen|true
+GLOBALS|server|identity.rawset|true
+GLOBALS|server|identity.removeDialog|true
+GLOBALS|server|identity.renewKillswitch|true
+GLOBALS|server|identity.require|true
+GLOBALS|server|identity.resetColor|true
+GLOBALS|server|identity.sanitizeMessage|true
+GLOBALS|server|identity.script|false
+GLOBALS|server|identity.select|true
+GLOBALS|server|identity.selectChoice|true
+GLOBALS|server|identity.setChatNotificationTone|true
+GLOBALS|server|identity.setUsingGamepad|true
+GLOBALS|server|identity.setfenv|true
+GLOBALS|server|identity.setmetatable|true
+GLOBALS|server|identity.settings|true
+GLOBALS|server|identity.shared|true
+GLOBALS|server|identity.showMessage|true
+GLOBALS|server|identity.spawn|true
+GLOBALS|server|identity.startDialog|true
+GLOBALS|server|identity.stats|true
+GLOBALS|server|identity.string|true
+GLOBALS|server|identity.styleChoices|true
+GLOBALS|server|identity.styleMainFrame|true
+GLOBALS|server|identity.table|true
+GLOBALS|server|identity.task|true
+GLOBALS|server|identity.tick|true
+GLOBALS|server|identity.time|true
+GLOBALS|server|identity.timeoutDialog|true
+GLOBALS|server|identity.tonumber|true
+GLOBALS|server|identity.tostring|true
+GLOBALS|server|identity.type|true
+GLOBALS|server|identity.typeof|true
+GLOBALS|server|identity.unpack|true
+GLOBALS|server|identity.utf8|true
+GLOBALS|server|identity.variableDelay|true
+GLOBALS|server|identity.vector|true
+GLOBALS|server|identity.version|true
+GLOBALS|server|identity.wait|true
+GLOBALS|server|identity.wanderDialog|true
+GLOBALS|server|identity.warn|true
+GLOBALS|server|identity.workspace|true
+GLOBALS|server|identity.xpcall|true
+GLOBALS|server|identity.ypcall|true
+GLOBALS|server|tostring.tab|table | table | table: 0x4baf940863606c5c | table: 0x4baf940863606c5c | true
+GLOBALS|server|tostring.buf|buffer | buffer | buffer: 0x4770f70be7aef882 | buffer: 0x4770f70be7aef882 | true
+GLOBALS|server|tostring.instance|userdata | Instance | Game | Game | true
+GLOBALS|server|tostring.proxy|userdata | userdata | userdata: 0xc1e14fa497a9e42b | userdata: 0xc1e14fa497a9e42b | true
+GLOBALS|server|tostring.func|function | function | function: 0x9d854cfe2c997015 | function: 0x9d854cfe2c997015 | true
+GLOBALS|server|tostring.thread|thread | thread | thread: 0xa9fb11d3a14b8ae8 | thread: 0xa9fb11d3a14b8ae8 | true
+GLOBALS|server|gc.count|true | 289
+GLOBALS|server|gc.collect|false | ServerScriptService.GlobalsProbe1:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|server|gc.stop|false | ServerScriptService.GlobalsProbe1:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|server|gc.restart|false | ServerScriptService.GlobalsProbe1:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|server|gc.step|false | ServerScriptService.GlobalsProbe1:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|server|gc.setpause|false | ServerScriptService.GlobalsProbe1:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|server|gc.setstepmul|false | ServerScriptService.GlobalsProbe1:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|server|gc.isrunning|false | ServerScriptService.GlobalsProbe1:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|server|gc.bad|false | ServerScriptService.GlobalsProbe1:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|server|gc.default|false | ServerScriptService.GlobalsProbe1:21: missing argument #1 to 'collectgarbage' (string expected)
+GLOBALS|server|gc.info|true | 295 | 295 | true
+GLOBALS|server|error.level0|false | message
+GLOBALS|server|error.level1|false | ServerScriptService.GlobalsProbe1:23: message
+GLOBALS|server|error.level2|false | message
+GLOBALS|server|error.level10|false | message
+GLOBALS|server|error.level-1|false | message
+GLOBALS|server|error.value.number|false | ServerScriptService.GlobalsProbe1:24: 23
+GLOBALS|server|error.value.boolean|false | false
+GLOBALS|server|error.value.table|false | table: 0xcd2cf667dfd3e64b
+GLOBALS|server|error.value.userdata|false | userdata: 0xb980f19b3e47780c
+GLOBALS|server|assert.default|false | ServerScriptService.GlobalsProbe1:25: assertion failed!
+GLOBALS|server|assert.table|false | ServerScriptService.GlobalsProbe1:26: invalid argument #2 to 'assert' (string expected, got table)
+GLOBALS|server|assert.returns|true | true | a | 4
+GLOBALS|server|xpcall.handler|true | false | error in error handling
+GLOBALS|server|trace.default|true | ServerScriptService.GlobalsProbe1:29\nServerScriptService.GlobalsProbe1:6 function probe\nServerScriptService.GlobalsProbe1:29\n
+GLOBALS|server|trace.message|true | message\nServerScriptService.GlobalsProbe1:30\nServerScriptService.GlobalsProbe1:6 function probe\nServerScriptService.GlobalsProbe1:30\n
+GLOBALS|server|trace.coroutine|true | co\nServerScriptService.GlobalsProbe1:31\n
+GLOBALS|server|debug.level0|true | [C] | -1 | info | 0 | true
+GLOBALS|server|debug.level1|true | ServerScriptService.GlobalsProbe1 | 32 |  | 0 | false
+GLOBALS|server|debug.level2|true | [C] | -1 | pcall | 0 | true
+GLOBALS|server|debug.level50|true
+GLOBALS|server|debug.level-1|false | ServerScriptService.GlobalsProbe1:32: invalid argument #1 to 'info' (level can't be negative)
+GLOBALS|server|debug.thread|true | ServerScriptService.GlobalsProbe1 | 33 |  | 0 | false
+GLOBALS|server|getfenv.0|true | table | true | GlobalsProbe2
+GLOBALS|server|getfenv.1|true | table | true | GlobalsProbe2
+GLOBALS|server|getfenv.2|true | table | true | GlobalsProbe2
+GLOBALS|server|getfenv.50|false | ServerScriptService.GlobalsProbe1:34: invalid argument #1 to 'getfenv' (invalid level)
+GLOBALS|server|getfenv.-1|false | ServerScriptService.GlobalsProbe1:34: invalid argument #1 to 'getfenv' (level must be non-negative)
+GLOBALS|server|getfenv.C|true | true | true
+GLOBALS|server|setfenv.C|false | ServerScriptService.GlobalsProbe1:36: 'setfenv' cannot change environment of given object
+GLOBALS|server|setfenv.lua|true | 42
+GLOBALS|server|setfenv.-1|false | ServerScriptService.GlobalsProbe1:38: invalid argument #1 to 'setfenv' (level must be non-negative)
+GLOBALS|server|setfenv.50|false | ServerScriptService.GlobalsProbe1:38: invalid argument #1 to 'setfenv' (invalid level)
+GLOBALS|server|loadstring|false | loadstring() is not available
+GLOBALS|server|loadstring.syntax|false | loadstring() is not available
+GLOBALS|server|loadstring.named|false | loadstring() is not available
+GLOBALS|server|require.table.table: 0xb6c3effb762a98e6|false | Attempted to call require with invalid argument(s).
+GLOBALS|server|require.userdata.Game|false | Attempted to call require with invalid argument(s).
+GLOBALS|server|require.userdata.GlobalsProbe2|false | Attempted to call require with invalid argument(s).
+GLOBALS|server|require.string.bad|false | error requiring "bad": require path must start with a valid prefix: ./, ../, or @
+GLOBALS|server|coroutine.running|thread: 0x24119e16cdeacead | running | true
+GLOBALS|server|coroutine.pcall|true | true | true
+GLOBALS|server|coroutine.metamethod|true | false
+GLOBALS|server|task.spawn|true | thread: 0xf28a47efe4f2cbe1
+GLOBALS|server|task.defer|true | thread: 0x04ce8f9ffe4b8d6f
+GLOBALS|server|task.delay|true | thread: 0x94a2290c61a78ca8
+GLOBALS|server|spawn|true
+GLOBALS|server|delay|true
+GLOBALS|server|task.cancel.running|false | ServerScriptService.GlobalsProbe1:51: cannot cancel thread
+GLOBALS|server|coroutine.close.running|false | ServerScriptService.GlobalsProbe1:52: cannot close running coroutine
+GLOBALS|server|coroutine.close.suspended|true | true
+GLOBALS|server|misc.Version|true | string | string | 0.744.0.7441077
+GLOBALS|server|misc.version|true | string | string | 0.744.0.7441077
+GLOBALS|server|misc.elapsedTime|true | number | number | 132.96040188799873
+GLOBALS|server|misc.time|true | number | number | 0
+GLOBALS|server|misc.tick|true | number | number | 1794155358.8229592
+GLOBALS|server|misc.DebuggerManager|false | The current thread cannot call 'DebuggerManager' (lacking capability Plugin)
+GLOBALS|server|misc.PluginManager|false | The current thread cannot call 'PluginManager' (lacking capability Plugin)
+GLOBALS|server|misc.settings|false | The current thread cannot call 'settings' (lacking capability Plugin)
+GLOBALS|server|misc.stats|true | userdata | Instance | Stats
+GLOBALS|server|misc.UserSettings|true | userdata | Instance | GlobalBasicSettings
+GLOBALS|server|string.metatable|true | string | The metatable is locked | false
+GLOBALS|server|string.setmetatable|false | ServerScriptService.GlobalsProbe1:56: invalid argument #1 to 'setmetatable' (table expected, got string)
+GLOBALS|server|rawlen.userdata|false | ServerScriptService.GlobalsProbe1:57: invalid argument #1 to 'rawlen' (table or string expected)
+GLOBALS|server|rawequal.userdata|true | false
+GLOBALS|server|newproxy.bad|false | ServerScriptService.GlobalsProbe1:59: invalid argument #1 to 'newproxy' (nil or boolean expected, got number)
+GLOBALS|server|freeze|true | true | false | ServerScriptService.GlobalsProbe1:60: attempt to modify a readonly table
+GLOBALS|server|os|true | 1794184159 | 132.10557359999984 | 2026-11-09 | 7
+GLOBALS|server|os.date.table|true | 1970 | 1 | 1 | 0 | 0 | 0 | 5 | 1 | false
+GLOBALS|server|random.seed|true | 0.5576342002772471 | 1 | 0.24915606029512696 | true | true | true
+GLOBALS|server|shared.G|true | false | true | true
+GLOBALS|server|script.callback|true | true
+GLOBALS|server|require.boolean.false|false | Downloading asset failed for asset id 0.  Is the asset id correct and is the asset type "Model"?
+GLOBALS|server|require.number.0|false | Downloading asset failed for asset id 0.  Is the asset id correct and is the asset type "Model"?
+GLOBALS|server|require.boolean.false|false | Downloading asset failed for asset id 0.  Is the asset id correct and is the asset type "Model"?
+GLOBALS|server|require.number.0|false | Downloading asset failed for asset id 0.  Is the asset id correct and is the asset type "Model"?
+GLOBALS|server|require.number.-1|false | Downloading asset failed for asset id -1.  Is the asset id correct and is the asset type "Model"?
+GLOBALS|server|require.number.-1|false | Downloading asset failed for asset id -1.  Is the asset id correct and is the asset type "Model"?
+GLOBALS|server|task.wait.0|true | 0.08886140000001319 | nil | 0.08886549999988347
+GLOBALS|server|task.wait.0|true | 0.05324820000001296 | nil | 0.05325059999995574
+GLOBALS|server|task.wait.0.001|true | 0.1185653000000002 | nil | 0.11857300000156101
+GLOBALS|server|task.wait.0.001|true | 0.11865760000000591 | nil | 0.11866059999920253
+GLOBALS|client|inventory.env._G|table | table | table: 0xe278e29ad1890f4a
+GLOBALS|client|inventory.env.script|userdata | Instance | GlobalsProbe1
+GLOBALS|client|inventory.env.shared|table | table | table: 0x5e603a66c47ea810
+GLOBALS|client|meta.env|string | The metatable is locked
+GLOBALS|client|inventory.visible.Axes|table | table | table: 0x182ee65c188e2416
+GLOBALS|client|inventory.visible.BrickColor|table | table | table: 0xd1f84eb70b534aac
+GLOBALS|client|inventory.visible.CFrame|table | table | table: 0xf655fc642458abbf
+GLOBALS|client|inventory.visible.CatalogSearchParams|table | table | table: 0x4767e7e50f10dd95
+GLOBALS|client|inventory.visible.Color3|table | table | table: 0x89617961ef9312d6
+GLOBALS|client|inventory.visible.ColorSequence|table | table | table: 0x3cdd9de915cc04af
+GLOBALS|client|inventory.visible.ColorSequenceKeypoint|table | table | table: 0xe392fd0d90d562aa
+GLOBALS|client|inventory.visible.Content|table | table | table: 0xd8ddf586e486f9ac
+GLOBALS|client|inventory.visible.DateTime|table | table | table: 0xac2014b9d2c09447
+GLOBALS|client|inventory.visible.DebuggerManager|true | function | function | [C] | -1 | DebuggerManager | 0 | true | function: 0x15c02c44f9244170
+GLOBALS|client|inventory.visible.Delay|true | function | function | [C] | -1 | Delay | 0 | true | function: 0x9a31aa8e93879c79
+GLOBALS|client|inventory.visible.ElapsedTime|true | function | function | [C] | -1 | ElapsedTime | 0 | true | function: 0xec7de65706f27cae
+GLOBALS|client|inventory.visible.Enum|userdata | Enums | Enums
+GLOBALS|client|inventory.visible.Faces|table | table | table: 0xb5e2387d7d42783b
+GLOBALS|client|inventory.visible.FloatCurveKey|table | table | table: 0xea4d5c73cfebaf7e
+GLOBALS|client|inventory.visible.Font|table | table | table: 0x1b8580e49136ea13
+GLOBALS|client|inventory.visible.Game|userdata | Instance | Game
+GLOBALS|client|inventory.visible.Instance|table | table | table: 0xf56aa0a91b9894dc
+GLOBALS|client|inventory.visible.NumberRange|table | table | table: 0x4f7925b72460dde1
+GLOBALS|client|inventory.visible.NumberSequence|table | table | table: 0x0e1f9ef38b3b20bb
+GLOBALS|client|inventory.visible.NumberSequenceKeypoint|table | table | table: 0x5733cbd9e87706df
+GLOBALS|client|inventory.visible.OverlapParams|table | table | table: 0x1a292f51033787d6
+GLOBALS|client|inventory.visible.Path2DControlPoint|table | table | table: 0xf5814167d5a9f9e5
+GLOBALS|client|inventory.visible.PathWaypoint|table | table | table: 0xca15d957fdb04519
+GLOBALS|client|inventory.visible.PhysicalProperties|table | table | table: 0xaf7493604499c5d3
+GLOBALS|client|inventory.visible.PluginManager|true | function | function | [C] | -1 | PluginManager | 0 | true | function: 0x94f670365aba0b86
+GLOBALS|client|inventory.visible.Random|table | table | table: 0x84795af9cd709430
+GLOBALS|client|inventory.visible.Ray|table | table | table: 0x643e8a4025f30ca4
+GLOBALS|client|inventory.visible.RaycastParams|table | table | table: 0xac944bccbf851d4b
+GLOBALS|client|inventory.visible.Rect|table | table | table: 0x96144efef18f2a61
+GLOBALS|client|inventory.visible.Region3|table | table | table: 0xa6710485d5355161
+GLOBALS|client|inventory.visible.Region3int16|table | table | table: 0xdd4ff53a9fa7d26b
+GLOBALS|client|inventory.visible.RotationCurveKey|table | table | table: 0x4cf400c4689e0733
+GLOBALS|client|inventory.visible.SharedTable|table | table | table: 0xd5e0b29a58b75957
+GLOBALS|client|inventory.visible.Spawn|true | function | function | [C] | -1 | Spawn | 0 | true | function: 0x787cc4ab8f443206
+GLOBALS|client|inventory.visible.TweenInfo|table | table | table: 0xc701acc92abbdd5c
+GLOBALS|client|inventory.visible.UDim|table | table | table: 0x7b68196503be1e11
+GLOBALS|client|inventory.visible.UDim2|table | table | table: 0x68b8677fc5fb7c4e
+GLOBALS|client|inventory.visible.User|table | table | table: 0x7e8ad2d662694c90
+GLOBALS|client|inventory.visible.UserSettings|true | function | function | [C] | -1 | UserSettings | 0 | true | function: 0x3cafdd527ab591d0
+GLOBALS|client|inventory.visible.ValueCurveKey|table | table | table: 0x57b7c4500a4c02bb
+GLOBALS|client|inventory.visible.Vector2|table | table | table: 0xe2ee92d0f769e23d
+GLOBALS|client|inventory.visible.Vector2int16|table | table | table: 0x97ce9dfbaa164125
+GLOBALS|client|inventory.visible.Vector3|table | table | table: 0x88a7f3c1a302ed20
+GLOBALS|client|inventory.visible.Vector3int16|table | table | table: 0x71a93adf39ccf1dd
+GLOBALS|client|inventory.visible.Version|true | function | function | [C] | -1 | Version | 0 | true | function: 0x960ddbc2f6359e68
+GLOBALS|client|inventory.visible.Workspace|userdata | Instance | Workspace
+GLOBALS|client|inventory.visible._G|table | table | table: 0xe278e29ad1890f4a
+GLOBALS|client|inventory.visible._VERSION|string | string | Luau
+GLOBALS|client|inventory.visible.assert|true | function | function | [C] | -1 | assert | 0 | true | function: 0x73ffc2ab6364f303
+GLOBALS|client|inventory.visible.bit32|table | table | table: 0x534ee9f70d49891c
+GLOBALS|client|inventory.visible.buffer|table | table | table: 0x6050fe21bd74df0a
+GLOBALS|client|inventory.visible.collectgarbage|true | function | function | [C] | -1 | collectgarbage | 0 | true | function: 0x00008fe94006c873
+GLOBALS|client|inventory.visible.coroutine|table | table | table: 0x64ee79dde9c135d0
+GLOBALS|client|inventory.visible.debug|table | table | table: 0x7464703e61d20755
+GLOBALS|client|inventory.visible.delay|true | function | function | [C] | -1 | delay | 0 | true | function: 0x6e3506f73563f3c9
+GLOBALS|client|inventory.visible.elapsedTime|true | function | function | [C] | -1 | elapsedTime | 0 | true | function: 0x071dda391cf33dc2
+GLOBALS|client|inventory.visible.error|true | function | function | [C] | -1 | error | 0 | true | function: 0x94decf231e2400cb
+GLOBALS|client|inventory.visible.game|userdata | Instance | Game
+GLOBALS|client|inventory.visible.gcinfo|true | function | function | [C] | -1 | gcinfo | 0 | true | function: 0x116b3ac13a999fe8
+GLOBALS|client|inventory.visible.getfenv|true | function | function | [C] | -1 | getfenv | 0 | true | function: 0xef5391c68fd33da0
+GLOBALS|client|inventory.visible.getmetatable|true | function | function | [C] | -1 | getmetatable | 0 | true | function: 0x7eaea4a487d845ff
+GLOBALS|client|inventory.visible.ipairs|true | function | function | [C] | -1 | ipairs | 0 | true | function: 0x5c6efd3c8b45c3a8
+GLOBALS|client|inventory.visible.loadstring|true | function | function | [C] | -1 | loadstring | 0 | true | function: 0xe61e16f3c29ef435
+GLOBALS|client|inventory.visible.math|table | table | table: 0x48daf88f41cca0b4
+GLOBALS|client|inventory.visible.newproxy|true | function | function | [C] | -1 | newproxy | 0 | true | function: 0xa94c9f107ae3ae81
+GLOBALS|client|inventory.visible.next|true | function | function | [C] | -1 | next | 0 | true | function: 0x364a77c28e691da5
+GLOBALS|client|inventory.visible.os|table | table | table: 0x69d13d307efbcb62
+GLOBALS|client|inventory.visible.pairs|true | function | function | [C] | -1 | pairs | 0 | true | function: 0xf136f188ba50b15d
+GLOBALS|client|inventory.visible.pcall|true | function | function | [C] | -1 | pcall | 0 | true | function: 0xae001cf638f2b9fe
+GLOBALS|client|inventory.visible.print|true | function | function | [C] | -1 | print | 0 | true | function: 0x6d4961a01ac7b115
+GLOBALS|client|inventory.visible.printidentity|true | function | function | [C] | -1 | printidentity | 0 | true | function: 0x34831c5e1a462575
+GLOBALS|client|inventory.visible.rawequal|true | function | function | [C] | -1 | rawequal | 0 | true | function: 0x45520a4399996bfb
+GLOBALS|client|inventory.visible.rawget|true | function | function | [C] | -1 | rawget | 0 | true | function: 0x762e5ff3d21db37a
+GLOBALS|client|inventory.visible.rawlen|true | function | function | [C] | -1 | rawlen | 0 | true | function: 0xb7ad0179ae0739c3
+GLOBALS|client|inventory.visible.rawset|true | function | function | [C] | -1 | rawset | 0 | true | function: 0x01ba02a4cac422a8
+GLOBALS|client|inventory.visible.require|true | function | function | [C] | -1 | require | 0 | true | function: 0xa994c234b13f1e68
+GLOBALS|client|inventory.visible.script|userdata | Instance | GlobalsProbe1
+GLOBALS|client|inventory.visible.select|true | function | function | [C] | -1 | select | 0 | true | function: 0xa18cd5fa3646a1d4
+GLOBALS|client|inventory.visible.setfenv|true | function | function | [C] | -1 | setfenv | 0 | true | function: 0xbfe63dfd2ba6f54d
+GLOBALS|client|inventory.visible.setmetatable|true | function | function | [C] | -1 | setmetatable | 0 | true | function: 0xe30e3b4aa306735c
+GLOBALS|client|inventory.visible.settings|true | function | function | [C] | -1 | settings | 0 | true | function: 0x188c9e23411613d5
+GLOBALS|client|inventory.visible.shared|table | table | table: 0x5e603a66c47ea810
+GLOBALS|client|inventory.visible.spawn|true | function | function | [C] | -1 | spawn | 0 | true | function: 0x4f1728330cf168c3
+GLOBALS|client|inventory.visible.stats|true | function | function | [C] | -1 | stats | 0 | true | function: 0x15263c89fe19e800
+GLOBALS|client|inventory.visible.string|table | table | table: 0xf47a59113f066a76
+GLOBALS|client|inventory.visible.table|table | table | table: 0xc10adffb4e65a391
+GLOBALS|client|inventory.visible.task|table | table | table: 0x348d8594b0bbc45c
+GLOBALS|client|inventory.visible.tick|true | function | function | [C] | -1 | tick | 0 | true | function: 0x20384ee83d0b628e
+GLOBALS|client|inventory.visible.time|true | function | function | [C] | -1 | time | 0 | true | function: 0x9665c92bbf73e108
+GLOBALS|client|inventory.visible.tonumber|true | function | function | [C] | -1 | tonumber | 0 | true | function: 0xef33062c393172cf
+GLOBALS|client|inventory.visible.tostring|true | function | function | [C] | -1 | tostring | 0 | true | function: 0x8d7fb1f4f2c28867
+GLOBALS|client|inventory.visible.type|true | function | function | [C] | -1 | type | 0 | true | function: 0x9febaf2c209d215d
+GLOBALS|client|inventory.visible.typeof|true | function | function | [C] | -1 | typeof | 0 | true | function: 0x0d88515d1c961bce
+GLOBALS|client|inventory.visible.unpack|true | function | function | [C] | -1 | unpack | 0 | true | function: 0x5981a15ce35ed308
+GLOBALS|client|inventory.visible.utf8|table | table | table: 0x17e3f1d62930db17
+GLOBALS|client|inventory.visible.vector|table | table | table: 0x1030e0a73defb14b
+GLOBALS|client|inventory.visible.version|true | function | function | [C] | -1 | version | 0 | true | function: 0x25e7045d07dde14d
+GLOBALS|client|inventory.visible.wait|true | function | function | [C] | -1 | wait | 0 | true | function: 0xf48c49532283e17c
+GLOBALS|client|inventory.visible.warn|true | function | function | [C] | -1 | warn | 0 | true | function: 0xf3121582bcd5e295
+GLOBALS|client|inventory.visible.workspace|userdata | Instance | Workspace
+GLOBALS|client|inventory.visible.xpcall|true | function | function | [C] | -1 | xpcall | 0 | true | function: 0x548cdf13008b42eb
+GLOBALS|client|inventory.visible.ypcall|true | function | function | [C] | -1 | pcall | 0 | true | function: 0xae001cf638f2b9fe
+GLOBALS|client|meta.visible|nil | nil
+GLOBALS|client|inventory.coroutine.close|true | function | function | [C] | -1 | close | 0 | true | function: 0x7c8e5303cfcffe98
+GLOBALS|client|inventory.coroutine.create|true | function | function | [C] | -1 | create | 0 | true | function: 0xeff4f884578cc19a
+GLOBALS|client|inventory.coroutine.isyieldable|true | function | function | [C] | -1 | isyieldable | 0 | true | function: 0x53e4ea6a9c3e5273
+GLOBALS|client|inventory.coroutine.resume|true | function | function | [C] | -1 | resume | 0 | true | function: 0xe558515ae445c157
+GLOBALS|client|inventory.coroutine.running|true | function | function | [C] | -1 | running | 0 | true | function: 0x9ef075267e42d1c9
+GLOBALS|client|inventory.coroutine.status|true | function | function | [C] | -1 | status | 0 | true | function: 0x6a465be4b1c6a81d
+GLOBALS|client|inventory.coroutine.wrap|true | function | function | [C] | -1 | wrap | 0 | true | function: 0xad6d3a97d68161ac
+GLOBALS|client|inventory.coroutine.yield|true | function | function | [C] | -1 | yield | 0 | true | function: 0x90f07f46cae56225
+GLOBALS|client|meta.coroutine|nil | nil
+GLOBALS|client|inventory.task.cancel|true | function | function | [C] | -1 | cancel | 0 | true | function: 0x01374a6accca3f7f
+GLOBALS|client|inventory.task.defer|true | function | function | [C] | -1 | defer | 0 | true | function: 0x34191388e58b2e35
+GLOBALS|client|inventory.task.delay|true | function | function | [C] | -1 | delay | 0 | true | function: 0x178ce34052ef2f43
+GLOBALS|client|inventory.task.desynchronize|true | function | function | [C] | -1 | desynchronize | 0 | true | function: 0x5615ccaf2adb35a2
+GLOBALS|client|inventory.task.spawn|true | function | function | [C] | -1 | spawn | 0 | true | function: 0xdaf21dd44f8fc37f
+GLOBALS|client|inventory.task.synchronize|true | function | function | [C] | -1 | synchronize | 0 | true | function: 0x5056cebed2f80803
+GLOBALS|client|inventory.task.wait|true | function | function | [C] | -1 | wait | 0 | true | function: 0x1df23c7fcac3f614
+GLOBALS|client|meta.task|nil | nil
+GLOBALS|client|inventory.debug.dumpcodesize|true | function | function | [C] | -1 | dumpcodesize | 0 | true | function: 0x2861c534d6e8b023
+GLOBALS|client|inventory.debug.dumpheap|true | function | function | [C] | -1 | dumpheap | 0 | true | function: 0x504f22b46cd8488f
+GLOBALS|client|inventory.debug.dumprefs|true | function | function | [C] | -1 | dumprefs | 0 | true | function: 0xf416cec14f798bc9
+GLOBALS|client|inventory.debug.getmemorycategory|true | function | function | [C] | -1 | getmemorycategory | 0 | true | function: 0x1d6b0ef656cd3321
+GLOBALS|client|inventory.debug.info|true | function | function | [C] | -1 | info | 0 | true | function: 0xe1840039a9a46a0a
+GLOBALS|client|inventory.debug.loadmodule|true | function | function | [C] | -1 | loadmodule | 0 | true | function: 0x304bd4cd42b68b45
+GLOBALS|client|inventory.debug.profilebegin|true | function | function | [C] | -1 | profilebegin | 0 | true | function: 0x6f3aa9b5abe0208c
+GLOBALS|client|inventory.debug.profileend|true | function | function | [C] | -1 | profileend | 0 | true | function: 0xb63f04b2fcd0ae1a
+GLOBALS|client|inventory.debug.resetmemorycategory|true | function | function | [C] | -1 | resetmemorycategory | 0 | true | function: 0xaabef54fb24630c2
+GLOBALS|client|inventory.debug.setmemorycategory|true | function | function | [C] | -1 | setmemorycategory | 0 | true | function: 0x7080c4f6c53cc880
+GLOBALS|client|inventory.debug.traceback|true | function | function | [C] | -1 | traceback | 0 | true | function: 0xa5d514f1fc10a477
+GLOBALS|client|inventory.debug.tracerefs|true | function | function | [C] | -1 | tracerefs | 0 | true | function: 0x9ec56e6b5f75337c
+GLOBALS|client|meta.debug|nil | nil
+GLOBALS|client|inventory.os.clock|true | function | function | [C] | -1 | clock | 0 | true | function: 0xe4f9db810c78d938
+GLOBALS|client|inventory.os.date|true | function | function | [C] | -1 | date | 0 | true | function: 0xa110c4a8ac56c93f
+GLOBALS|client|inventory.os.difftime|true | function | function | [C] | -1 | difftime | 0 | true | function: 0x08db8e37d9be93bf
+GLOBALS|client|inventory.os.time|true | function | function | [C] | -1 | time | 0 | true | function: 0xb70e663957902df8
+GLOBALS|client|meta.os|nil | nil
+GLOBALS|client|inventory.math.abs|true | function | function | [C] | -1 | abs | 0 | true | function: 0xa9175645d39a70db
+GLOBALS|client|inventory.math.acos|true | function | function | [C] | -1 | acos | 0 | true | function: 0xd46da1787fed085c
+GLOBALS|client|inventory.math.asin|true | function | function | [C] | -1 | asin | 0 | true | function: 0x836492b02dbb8ebf
+GLOBALS|client|inventory.math.atan|true | function | function | [C] | -1 | atan | 0 | true | function: 0xebf0856100f7c0bc
+GLOBALS|client|inventory.math.atan2|true | function | function | [C] | -1 | atan2 | 0 | true | function: 0x2219b73323f596ef
+GLOBALS|client|inventory.math.ceil|true | function | function | [C] | -1 | ceil | 0 | true | function: 0xfb447985b7c386b4
+GLOBALS|client|inventory.math.clamp|true | function | function | [C] | -1 | clamp | 0 | true | function: 0xcbade434c0224a82
+GLOBALS|client|inventory.math.cos|true | function | function | [C] | -1 | cos | 0 | true | function: 0x6c063adb83bc57b2
+GLOBALS|client|inventory.math.cosh|true | function | function | [C] | -1 | cosh | 0 | true | function: 0xe600f659d404628a
+GLOBALS|client|inventory.math.deg|true | function | function | [C] | -1 | deg | 0 | true | function: 0x0d26e0f4aa0221cb
+GLOBALS|client|inventory.math.e|number | number | 2.718281828459045
+GLOBALS|client|inventory.math.exp|true | function | function | [C] | -1 | exp | 0 | true | function: 0x6a5b4f37ed3c70e3
+GLOBALS|client|inventory.math.floor|true | function | function | [C] | -1 | floor | 0 | true | function: 0x195ba54751ef11f8
+GLOBALS|client|inventory.math.fmod|true | function | function | [C] | -1 | fmod | 0 | true | function: 0x022d8085365f478b
+GLOBALS|client|inventory.math.frexp|true | function | function | [C] | -1 | frexp | 0 | true | function: 0x6b8efd4fb8c86e7f
+GLOBALS|client|inventory.math.huge|number | number | inf
+GLOBALS|client|inventory.math.isfinite|true | function | function | [C] | -1 | isfinite | 0 | true | function: 0x5756cd27cef3fd66
+GLOBALS|client|inventory.math.isinf|true | function | function | [C] | -1 | isinf | 0 | true | function: 0x43c0105771b58b31
+GLOBALS|client|inventory.math.isnan|true | function | function | [C] | -1 | isnan | 0 | true | function: 0xd1ba89f1aa7edc97
+GLOBALS|client|inventory.math.ldexp|true | function | function | [C] | -1 | ldexp | 0 | true | function: 0xcd2e31839555c51d
+GLOBALS|client|inventory.math.lerp|true | function | function | [C] | -1 | lerp | 0 | true | function: 0xd2631ee4225141d2
+GLOBALS|client|inventory.math.log|true | function | function | [C] | -1 | log | 0 | true | function: 0xb7d4185c74eede98
+GLOBALS|client|inventory.math.log10|true | function | function | [C] | -1 | log10 | 0 | true | function: 0xb09b350d45eca923
+GLOBALS|client|inventory.math.map|true | function | function | [C] | -1 | map | 0 | true | function: 0x74bd3794c755b91f
+GLOBALS|client|inventory.math.max|true | function | function | [C] | -1 | max | 0 | true | function: 0x8e7fb04744d14b1b
+GLOBALS|client|inventory.math.min|true | function | function | [C] | -1 | min | 0 | true | function: 0x212caa32a35786a4
+GLOBALS|client|inventory.math.modf|true | function | function | [C] | -1 | modf | 0 | true | function: 0xed3f4e75847884ce
+GLOBALS|client|inventory.math.nan|number | number | nan
+GLOBALS|client|inventory.math.noise|true | function | function | [C] | -1 | noise | 0 | true | function: 0xfff59380fd61c547
+GLOBALS|client|inventory.math.phi|number | number | 1.618033988749895
+GLOBALS|client|inventory.math.pi|number | number | 3.141592653589793
+GLOBALS|client|inventory.math.pow|true | function | function | [C] | -1 | pow | 0 | true | function: 0xe15fcd30d4981cef
+GLOBALS|client|inventory.math.rad|true | function | function | [C] | -1 | rad | 0 | true | function: 0xc593c6e21aff09b6
+GLOBALS|client|inventory.math.random|true | function | function | [C] | -1 | random | 0 | true | function: 0x93f50c7c91ab9be9
+GLOBALS|client|inventory.math.randomseed|true | function | function | [C] | -1 | randomseed | 0 | true | function: 0xc92f5cc346f77d41
+GLOBALS|client|inventory.math.round|true | function | function | [C] | -1 | round | 0 | true | function: 0x6c0cc8fc3c59c8e1
+GLOBALS|client|inventory.math.sign|true | function | function | [C] | -1 | sign | 0 | true | function: 0xaac97eaa7f9bebf9
+GLOBALS|client|inventory.math.sin|true | function | function | [C] | -1 | sin | 0 | true | function: 0x97f8a2a8a56ba5bd
+GLOBALS|client|inventory.math.sinh|true | function | function | [C] | -1 | sinh | 0 | true | function: 0x360d6b3d815e0e5c
+GLOBALS|client|inventory.math.sqrt|true | function | function | [C] | -1 | sqrt | 0 | true | function: 0x5e095d58ece6ab3b
+GLOBALS|client|inventory.math.sqrt2|number | number | 1.4142135623730951
+GLOBALS|client|inventory.math.tan|true | function | function | [C] | -1 | tan | 0 | true | function: 0xc06677fef258c94e
+GLOBALS|client|inventory.math.tanh|true | function | function | [C] | -1 | tanh | 0 | true | function: 0xbe6a85f952bb7036
+GLOBALS|client|inventory.math.tau|number | number | 6.283185307179586
+GLOBALS|client|meta.math|nil | nil
+GLOBALS|client|inventory.string.byte|true | function | function | [C] | -1 | byte | 0 | true | function: 0xf179104f16447c37
+GLOBALS|client|inventory.string.char|true | function | function | [C] | -1 | char | 0 | true | function: 0x3f13fc7489c6b3a5
+GLOBALS|client|inventory.string.find|true | function | function | [C] | -1 | find | 0 | true | function: 0xa71d2e2c7f1d34a3
+GLOBALS|client|inventory.string.format|true | function | function | [C] | -1 | format | 0 | true | function: 0xfe226068b689aa14
+GLOBALS|client|inventory.string.gmatch|true | function | function | [C] | -1 | gmatch | 0 | true | function: 0x2dcfe9236e8114e4
+GLOBALS|client|inventory.string.gsub|true | function | function | [C] | -1 | gsub | 0 | true | function: 0x8007b08ea161309b
+GLOBALS|client|inventory.string.len|true | function | function | [C] | -1 | len | 0 | true | function: 0x7ddf32d6aeea37c3
+GLOBALS|client|inventory.string.lower|true | function | function | [C] | -1 | lower | 0 | true | function: 0x6ab8afe4666ac8bb
+GLOBALS|client|inventory.string.match|true | function | function | [C] | -1 | match | 0 | true | function: 0xc54c628afa1bc7f3
+GLOBALS|client|inventory.string.pack|true | function | function | [C] | -1 | pack | 0 | true | function: 0x1db2dadce90acd77
+GLOBALS|client|inventory.string.packsize|true | function | function | [C] | -1 | packsize | 0 | true | function: 0xfb3d64adff8f05ff
+GLOBALS|client|inventory.string.rep|true | function | function | [C] | -1 | rep | 0 | true | function: 0x1feaa2be549452db
+GLOBALS|client|inventory.string.reverse|true | function | function | [C] | -1 | reverse | 0 | true | function: 0xece8ee4b4ba664d2
+GLOBALS|client|inventory.string.split|true | function | function | [C] | -1 | split | 0 | true | function: 0xd6ce8157d9f46976
+GLOBALS|client|inventory.string.sub|true | function | function | [C] | -1 | sub | 0 | true | function: 0xd768b39654188a1f
+GLOBALS|client|inventory.string.unpack|true | function | function | [C] | -1 | unpack | 0 | true | function: 0x52a415d24149da82
+GLOBALS|client|inventory.string.upper|true | function | function | [C] | -1 | upper | 0 | true | function: 0xbf7a426478f56aa4
+GLOBALS|client|meta.string|nil | nil
+GLOBALS|client|inventory.table.clear|true | function | function | [C] | -1 | clear | 0 | true | function: 0x7e222cd9959be2d1
+GLOBALS|client|inventory.table.clone|true | function | function | [C] | -1 | clone | 0 | true | function: 0x592d9bc89115058e
+GLOBALS|client|inventory.table.concat|true | function | function | [C] | -1 | concat | 0 | true | function: 0xcc6ee8b35723bb01
+GLOBALS|client|inventory.table.create|true | function | function | [C] | -1 | create | 0 | true | function: 0x20a3f0db3edd6016
+GLOBALS|client|inventory.table.find|true | function | function | [C] | -1 | find | 0 | true | function: 0xbcd5b65906b8c1c4
+GLOBALS|client|inventory.table.foreach|true | function | function | [C] | -1 | foreach | 0 | true | function: 0x7febf0577d64dfb3
+GLOBALS|client|inventory.table.foreachi|true | function | function | [C] | -1 | foreachi | 0 | true | function: 0xa91a1eb73e3e2670
+GLOBALS|client|inventory.table.freeze|true | function | function | [C] | -1 | freeze | 0 | true | function: 0xe091cd72b38d3803
+GLOBALS|client|inventory.table.getn|true | function | function | [C] | -1 | getn | 0 | true | function: 0xb1e03c81b1966f98
+GLOBALS|client|inventory.table.insert|true | function | function | [C] | -1 | insert | 0 | true | function: 0x8a5c8e7606daa971
+GLOBALS|client|inventory.table.isfrozen|true | function | function | [C] | -1 | isfrozen | 0 | true | function: 0xac0511ebb83ac81a
+GLOBALS|client|inventory.table.maxn|true | function | function | [C] | -1 | maxn | 0 | true | function: 0x9a74f1e766771d14
+GLOBALS|client|inventory.table.move|true | function | function | [C] | -1 | move | 0 | true | function: 0xaaf1f4f565df60b0
+GLOBALS|client|inventory.table.pack|true | function | function | [C] | -1 | pack | 0 | true | function: 0x4f2479f5c2da4367
+GLOBALS|client|inventory.table.remove|true | function | function | [C] | -1 | remove | 0 | true | function: 0x376bfea07124b263
+GLOBALS|client|inventory.table.sort|true | function | function | [C] | -1 | sort | 0 | true | function: 0x58920af320ab0eb7
+GLOBALS|client|inventory.table.unpack|true | function | function | [C] | -1 | unpack | 0 | true | function: 0xe15487b790f8bfb2
+GLOBALS|client|meta.table|nil | nil
+GLOBALS|client|inventory.utf8.char|true | function | function | [C] | -1 | char | 0 | true | function: 0x7aa9f8db044caa65
+GLOBALS|client|inventory.utf8.charpattern|string | string | [\x00-\x7f\xc2-\xf4][\x80-\xbf]*
+GLOBALS|client|inventory.utf8.codepoint|true | function | function | [C] | -1 | codepoint | 0 | true | function: 0x8b89e1fb4ac6cc38
+GLOBALS|client|inventory.utf8.codes|true | function | function | [C] | -1 | codes | 0 | true | function: 0x7473ff2c885a320b
+GLOBALS|client|inventory.utf8.graphemes|true | function | function | [C] | -1 | graphemes | 0 | true | function: 0x0eeb3a5eac737c19
+GLOBALS|client|inventory.utf8.len|true | function | function | [C] | -1 | len | 0 | true | function: 0xcb408012d5e1c768
+GLOBALS|client|inventory.utf8.nfcnormalize|true | function | function | [C] | -1 | nfcnormalize | 0 | true | function: 0x121209aa0b66f117
+GLOBALS|client|inventory.utf8.nfdnormalize|true | function | function | [C] | -1 | nfdnormalize | 0 | true | function: 0xeac61f84cac33216
+GLOBALS|client|inventory.utf8.offset|true | function | function | [C] | -1 | offset | 0 | true | function: 0xd3a25d490bc33513
+GLOBALS|client|meta.utf8|nil | nil
+GLOBALS|client|inventory.buffer.copy|true | function | function | [C] | -1 | copy | 0 | true | function: 0xebff87d7e1173398
+GLOBALS|client|inventory.buffer.create|true | function | function | [C] | -1 | create | 0 | true | function: 0xc2fc81826f58a15c
+GLOBALS|client|inventory.buffer.fill|true | function | function | [C] | -1 | fill | 0 | true | function: 0xd2097566c34d403b
+GLOBALS|client|inventory.buffer.fromstring|true | function | function | [C] | -1 | fromstring | 0 | true | function: 0xaae8fcbdca886f4c
+GLOBALS|client|inventory.buffer.len|true | function | function | [C] | -1 | len | 0 | true | function: 0x803f6d6dfbd7a196
+GLOBALS|client|inventory.buffer.readbits|true | function | function | [C] | -1 | readbits | 0 | true | function: 0x7737cbcec76d7bf4
+GLOBALS|client|inventory.buffer.readf32|true | function | function | [C] | -1 | readf32 | 0 | true | function: 0x5c6dae357341f95d
+GLOBALS|client|inventory.buffer.readf64|true | function | function | [C] | -1 | readf64 | 0 | true | function: 0x558cc9d7a642f819
+GLOBALS|client|inventory.buffer.readi16|true | function | function | [C] | -1 | readi16 | 0 | true | function: 0xe021afe05315c522
+GLOBALS|client|inventory.buffer.readi32|true | function | function | [C] | -1 | readi32 | 0 | true | function: 0xca4f650c81f9f6cc
+GLOBALS|client|inventory.buffer.readi8|true | function | function | [C] | -1 | readi8 | 0 | true | function: 0xfd73cc8300f84c51
+GLOBALS|client|inventory.buffer.readstring|true | function | function | [C] | -1 | readstring | 0 | true | function: 0x6edb9517f041e767
+GLOBALS|client|inventory.buffer.readu16|true | function | function | [C] | -1 | readu16 | 0 | true | function: 0xcc3494952854c36a
+GLOBALS|client|inventory.buffer.readu32|true | function | function | [C] | -1 | readu32 | 0 | true | function: 0xed1cb72e0b9ddf1b
+GLOBALS|client|inventory.buffer.readu8|true | function | function | [C] | -1 | readu8 | 0 | true | function: 0x522a636306ee6366
+GLOBALS|client|inventory.buffer.tostring|true | function | function | [C] | -1 | tostring | 0 | true | function: 0xbbcdaf159a3e4fa8
+GLOBALS|client|inventory.buffer.writebits|true | function | function | [C] | -1 | writebits | 0 | true | function: 0xdb9e18db3c5c4ac8
+GLOBALS|client|inventory.buffer.writef32|true | function | function | [C] | -1 | writef32 | 0 | true | function: 0x8d1b9e31028ff0a2
+GLOBALS|client|inventory.buffer.writef64|true | function | function | [C] | -1 | writef64 | 0 | true | function: 0x8aa6b59950f3b355
+GLOBALS|client|inventory.buffer.writei16|true | function | function | [C] | -1 | writei16 | 0 | true | function: 0x2a380bac958b69aa
+GLOBALS|client|inventory.buffer.writei32|true | function | function | [C] | -1 | writei32 | 0 | true | function: 0xd518ee83f8ee5677
+GLOBALS|client|inventory.buffer.writei8|true | function | function | [C] | -1 | writei8 | 0 | true | function: 0x2cb192389717d0cd
+GLOBALS|client|inventory.buffer.writestring|true | function | function | [C] | -1 | writestring | 0 | true | function: 0x3234a2bcb34c06cf
+GLOBALS|client|inventory.buffer.writeu16|true | function | function | [C] | -1 | writeu16 | 0 | true | function: 0x016fc30d443b5f8d
+GLOBALS|client|inventory.buffer.writeu32|true | function | function | [C] | -1 | writeu32 | 0 | true | function: 0x022635c3fd350661
+GLOBALS|client|inventory.buffer.writeu8|true | function | function | [C] | -1 | writeu8 | 0 | true | function: 0x4fd217aa64c88933
+GLOBALS|client|meta.buffer|nil | nil
+GLOBALS|client|inventory.bit32.arshift|true | function | function | [C] | -1 | arshift | 0 | true | function: 0x7e365aaab0a235c1
+GLOBALS|client|inventory.bit32.band|true | function | function | [C] | -1 | band | 0 | true | function: 0x8f4df684a5caff6b
+GLOBALS|client|inventory.bit32.bnot|true | function | function | [C] | -1 | bnot | 0 | true | function: 0x94bff29e525569ec
+GLOBALS|client|inventory.bit32.bor|true | function | function | [C] | -1 | bor | 0 | true | function: 0x4cfbc6841c566311
+GLOBALS|client|inventory.bit32.btest|true | function | function | [C] | -1 | btest | 0 | true | function: 0xe049f50981d4c880
+GLOBALS|client|inventory.bit32.bxor|true | function | function | [C] | -1 | bxor | 0 | true | function: 0x7201a4dee9ceb6ab
+GLOBALS|client|inventory.bit32.byteswap|true | function | function | [C] | -1 | byteswap | 0 | true | function: 0xc62902db0538c412
+GLOBALS|client|inventory.bit32.countlz|true | function | function | [C] | -1 | countlz | 0 | true | function: 0xdeb80164a23f6510
+GLOBALS|client|inventory.bit32.countrz|true | function | function | [C] | -1 | countrz | 0 | true | function: 0xd5a409900fb12c6e
+GLOBALS|client|inventory.bit32.extract|true | function | function | [C] | -1 | extract | 0 | true | function: 0xe7f5a147603a803e
+GLOBALS|client|inventory.bit32.lrotate|true | function | function | [C] | -1 | lrotate | 0 | true | function: 0x795c7e63ec9eda05
+GLOBALS|client|inventory.bit32.lshift|true | function | function | [C] | -1 | lshift | 0 | true | function: 0xb53dc81f2778db23
+GLOBALS|client|inventory.bit32.replace|true | function | function | [C] | -1 | replace | 0 | true | function: 0x8b6a3bc93aef65ce
+GLOBALS|client|inventory.bit32.rrotate|true | function | function | [C] | -1 | rrotate | 0 | true | function: 0x85f0da15bf957fca
+GLOBALS|client|inventory.bit32.rshift|true | function | function | [C] | -1 | rshift | 0 | true | function: 0x8cfa7acc7e862f77
+GLOBALS|client|meta.bit32|nil | nil
+GLOBALS|client|tostring.tab|table | table | table: 0xda455499229cf1bb | table: 0xda455499229cf1bb | true
+GLOBALS|client|tostring.buf|buffer | buffer | buffer: 0x6edd291cd2027d92 | buffer: 0x6edd291cd2027d92 | true
+GLOBALS|client|tostring.instance|userdata | Instance | Game | Game | true
+GLOBALS|client|tostring.proxy|userdata | userdata | userdata: 0xa4842a5404c55299 | userdata: 0xa4842a5404c55299 | true
+GLOBALS|client|tostring.func|function | function | function: 0x08dff78b724844f8 | function: 0x08dff78b724844f8 | true
+GLOBALS|client|tostring.thread|thread | thread | thread: 0x3b90719141eab1be | thread: 0x3b90719141eab1be | true
+GLOBALS|client|gc.count|true | 1096
+GLOBALS|client|gc.collect|false | Players.Player.PlayerScripts.GlobalsProbe1:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|client|gc.stop|false | Players.Player.PlayerScripts.GlobalsProbe1:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|client|gc.restart|false | Players.Player.PlayerScripts.GlobalsProbe1:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|client|gc.step|false | Players.Player.PlayerScripts.GlobalsProbe1:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|client|gc.setpause|false | Players.Player.PlayerScripts.GlobalsProbe1:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|client|gc.setstepmul|false | Players.Player.PlayerScripts.GlobalsProbe1:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|client|gc.isrunning|false | Players.Player.PlayerScripts.GlobalsProbe1:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|client|gc.bad|false | Players.Player.PlayerScripts.GlobalsProbe1:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|client|gc.default|false | Players.Player.PlayerScripts.GlobalsProbe1:21: missing argument #1 to 'collectgarbage' (string expected)
+GLOBALS|client|gc.info|true | 1101 | 1101 | true
+GLOBALS|client|error.level0|false | message
+GLOBALS|client|error.level1|false | Players.Player.PlayerScripts.GlobalsProbe1:23: message
+GLOBALS|client|error.level2|false | message
+GLOBALS|client|error.level10|false | message
+GLOBALS|client|error.level-1|false | message
+GLOBALS|client|error.value.number|false | Players.Player.PlayerScripts.GlobalsProbe1:24: 23
+GLOBALS|client|error.value.boolean|false | false
+GLOBALS|client|error.value.table|false | table: 0xa4460cb106aa76c0
+GLOBALS|client|error.value.userdata|false | userdata: 0x12833dce0fbcc98f
+GLOBALS|client|assert.default|false | Players.Player.PlayerScripts.GlobalsProbe1:25: assertion failed!
+GLOBALS|client|assert.table|false | Players.Player.PlayerScripts.GlobalsProbe1:26: invalid argument #2 to 'assert' (string expected, got table)
+GLOBALS|client|assert.returns|true | true | a | 4
+GLOBALS|client|xpcall.handler|true | false | error in error handling
+GLOBALS|client|trace.default|true | Players.Player.PlayerScripts.GlobalsProbe1:29\nPlayers.Player.PlayerScripts.GlobalsProbe1:6 function probe\nPlayers.Player.PlayerScripts.GlobalsProbe1:29\n
+GLOBALS|client|trace.message|true | message\nPlayers.Player.PlayerScripts.GlobalsProbe1:30\nPlayers.Player.PlayerScripts.GlobalsProbe1:6 function probe\nPlayers.Player.PlayerScripts.GlobalsProbe1:30\n
+GLOBALS|client|trace.coroutine|true | co\nPlayers.Player.PlayerScripts.GlobalsProbe1:31\n
+GLOBALS|client|debug.level0|true | [C] | -1 | info | 0 | true
+GLOBALS|client|debug.level1|true | Players.Player.PlayerScripts.GlobalsProbe1 | 32 |  | 0 | false
+GLOBALS|client|debug.level2|true | [C] | -1 | pcall | 0 | true
+GLOBALS|client|debug.level50|true
+GLOBALS|client|debug.level-1|false | Players.Player.PlayerScripts.GlobalsProbe1:32: invalid argument #1 to 'info' (level can't be negative)
+GLOBALS|client|debug.thread|true | Players.Player.PlayerScripts.GlobalsProbe1 | 33 |  | 0 | false
+GLOBALS|client|getfenv.0|true | table | true | GlobalsProbe1
+GLOBALS|client|getfenv.1|true | table | true | GlobalsProbe1
+GLOBALS|client|getfenv.2|true | table | true | GlobalsProbe1
+GLOBALS|client|getfenv.50|false | Players.Player.PlayerScripts.GlobalsProbe1:34: invalid argument #1 to 'getfenv' (invalid level)
+GLOBALS|client|getfenv.-1|false | Players.Player.PlayerScripts.GlobalsProbe1:34: invalid argument #1 to 'getfenv' (level must be non-negative)
+GLOBALS|client|getfenv.C|true | true | true
+GLOBALS|client|setfenv.C|false | Players.Player.PlayerScripts.GlobalsProbe1:36: 'setfenv' cannot change environment of given object
+GLOBALS|client|setfenv.lua|true | 42
+GLOBALS|client|setfenv.-1|false | Players.Player.PlayerScripts.GlobalsProbe1:38: invalid argument #1 to 'setfenv' (level must be non-negative)
+GLOBALS|client|setfenv.50|false | Players.Player.PlayerScripts.GlobalsProbe1:38: invalid argument #1 to 'setfenv' (invalid level)
+GLOBALS|client|loadstring|false | loadstring() is not available
+GLOBALS|client|loadstring.syntax|false | loadstring() is not available
+GLOBALS|client|loadstring.named|false | loadstring() is not available
+GLOBALS|client|require.boolean.false|false | require(assetId) cannot be called from a client.  assetId = 0
+GLOBALS|client|require.table.table: 0xad6a54d4672dd661|false | Attempted to call require with invalid argument(s).
+GLOBALS|client|require.userdata.Game|false | Attempted to call require with invalid argument(s).
+GLOBALS|client|require.userdata.GlobalsProbe1|false | Attempted to call require with invalid argument(s).
+GLOBALS|client|require.string.bad|false | error requiring "bad": require path must start with a valid prefix: ./, ../, or @
+GLOBALS|client|require.number.0|false | require(assetId) cannot be called from a client.  assetId = 0
+GLOBALS|client|require.number.-1|false | require(assetId) cannot be called from a client.  assetId = -1
+GLOBALS|client|coroutine.running|thread: 0xd3ed7da946d6666a | running | true
+GLOBALS|client|coroutine.pcall|true | true | true
+GLOBALS|client|coroutine.metamethod|true | false
+GLOBALS|client|task.spawn|true | thread: 0x902b9a8882eaed7a
+GLOBALS|client|task.defer|true | thread: 0x261928dbbb886033
+GLOBALS|client|task.delay|true | thread: 0x759ed3b58b002fed
+GLOBALS|client|spawn|true
+GLOBALS|client|delay|true
+GLOBALS|client|task.cancel.running|false | Players.Player.PlayerScripts.GlobalsProbe1:51: cannot cancel thread
+GLOBALS|client|coroutine.close.running|false | Players.Player.PlayerScripts.GlobalsProbe1:52: cannot close running coroutine
+GLOBALS|client|coroutine.close.suspended|true | true
+GLOBALS|client|misc.Version|true | string | string | 0.744.0.7441077
+GLOBALS|client|misc.version|true | string | string | 0.744.0.7441077
+GLOBALS|client|misc.elapsedTime|true | number | number | 133.18701184199975
+GLOBALS|client|misc.time|true | number | number | 0.08333333767950535
+GLOBALS|client|misc.tick|true | number | number | 1794155359.0486493
+GLOBALS|client|misc.DebuggerManager|false | The current thread cannot call 'DebuggerManager' (lacking capability Plugin)
+GLOBALS|client|misc.PluginManager|false | The current thread cannot call 'PluginManager' (lacking capability Plugin)
+GLOBALS|client|misc.settings|false | The current thread cannot call 'settings' (lacking capability Plugin)
+GLOBALS|client|misc.stats|true | userdata | Instance | Stats
+GLOBALS|client|misc.UserSettings|true | userdata | Instance | GlobalBasicSettings
+GLOBALS|client|string.metatable|true | string | The metatable is locked | false
+GLOBALS|client|string.setmetatable|false | Players.Player.PlayerScripts.GlobalsProbe1:56: invalid argument #1 to 'setmetatable' (table expected, got string)
+GLOBALS|client|rawlen.userdata|false | Players.Player.PlayerScripts.GlobalsProbe1:57: invalid argument #1 to 'rawlen' (table or string expected)
+GLOBALS|client|rawequal.userdata|true | false
+GLOBALS|client|newproxy.bad|false | Players.Player.PlayerScripts.GlobalsProbe1:59: invalid argument #1 to 'newproxy' (nil or boolean expected, got number)
+GLOBALS|client|freeze|true | true | false | Players.Player.PlayerScripts.GlobalsProbe1:60: attempt to modify a readonly table
+GLOBALS|client|os|true | 1794184159 | 132.3311305999996 | 2026-11-09 | 7
+GLOBALS|client|os.date.table|true | 1970 | 1 | 1 | 0 | 0 | 0 | 5 | 1 | false
+GLOBALS|client|random.seed|true | 0.5576342002772471 | 1 | 0.24915606029512696 | true | true | true
+GLOBALS|client|shared.G|true | false | true | true
+GLOBALS|client|script.callback|true | true
+GLOBALS|client|inventory.env._G|table | table | table: 0xe278e29ad1890f4a
+GLOBALS|client|inventory.env.script|userdata | Instance | GlobalsProbe2
+GLOBALS|client|inventory.env.shared|table | table | table: 0x5e603a66c47ea810
+GLOBALS|client|meta.env|string | The metatable is locked
+GLOBALS|client|inventory.visible.Axes|table | table | table: 0x182ee65c188e2416
+GLOBALS|client|inventory.visible.BrickColor|table | table | table: 0xd1f84eb70b534aac
+GLOBALS|client|inventory.visible.CFrame|table | table | table: 0xf655fc642458abbf
+GLOBALS|client|inventory.visible.CatalogSearchParams|table | table | table: 0x4767e7e50f10dd95
+GLOBALS|client|inventory.visible.Color3|table | table | table: 0x89617961ef9312d6
+GLOBALS|client|inventory.visible.ColorSequence|table | table | table: 0x3cdd9de915cc04af
+GLOBALS|client|inventory.visible.ColorSequenceKeypoint|table | table | table: 0xe392fd0d90d562aa
+GLOBALS|client|inventory.visible.Content|table | table | table: 0xd8ddf586e486f9ac
+GLOBALS|client|inventory.visible.DateTime|table | table | table: 0xac2014b9d2c09447
+GLOBALS|client|inventory.visible.DebuggerManager|true | function | function | [C] | -1 | DebuggerManager | 0 | true | function: 0x15c02c44f9244170
+GLOBALS|client|inventory.visible.Delay|true | function | function | [C] | -1 | Delay | 0 | true | function: 0x9a31aa8e93879c79
+GLOBALS|client|inventory.visible.ElapsedTime|true | function | function | [C] | -1 | ElapsedTime | 0 | true | function: 0xec7de65706f27cae
+GLOBALS|client|inventory.visible.Enum|userdata | Enums | Enums
+GLOBALS|client|inventory.visible.Faces|table | table | table: 0xb5e2387d7d42783b
+GLOBALS|client|inventory.visible.FloatCurveKey|table | table | table: 0xea4d5c73cfebaf7e
+GLOBALS|client|inventory.visible.Font|table | table | table: 0x1b8580e49136ea13
+GLOBALS|client|inventory.visible.Game|userdata | Instance | Game
+GLOBALS|client|inventory.visible.Instance|table | table | table: 0xf56aa0a91b9894dc
+GLOBALS|client|inventory.visible.NumberRange|table | table | table: 0x4f7925b72460dde1
+GLOBALS|client|inventory.visible.NumberSequence|table | table | table: 0x0e1f9ef38b3b20bb
+GLOBALS|client|inventory.visible.NumberSequenceKeypoint|table | table | table: 0x5733cbd9e87706df
+GLOBALS|client|inventory.visible.OverlapParams|table | table | table: 0x1a292f51033787d6
+GLOBALS|client|inventory.visible.Path2DControlPoint|table | table | table: 0xf5814167d5a9f9e5
+GLOBALS|client|inventory.visible.PathWaypoint|table | table | table: 0xca15d957fdb04519
+GLOBALS|client|inventory.visible.PhysicalProperties|table | table | table: 0xaf7493604499c5d3
+GLOBALS|client|inventory.visible.PluginManager|true | function | function | [C] | -1 | PluginManager | 0 | true | function: 0x94f670365aba0b86
+GLOBALS|client|inventory.visible.Random|table | table | table: 0x84795af9cd709430
+GLOBALS|client|inventory.visible.Ray|table | table | table: 0x643e8a4025f30ca4
+GLOBALS|client|inventory.visible.RaycastParams|table | table | table: 0xac944bccbf851d4b
+GLOBALS|client|inventory.visible.Rect|table | table | table: 0x96144efef18f2a61
+GLOBALS|client|inventory.visible.Region3|table | table | table: 0xa6710485d5355161
+GLOBALS|client|inventory.visible.Region3int16|table | table | table: 0xdd4ff53a9fa7d26b
+GLOBALS|client|inventory.visible.RotationCurveKey|table | table | table: 0x4cf400c4689e0733
+GLOBALS|client|inventory.visible.SharedTable|table | table | table: 0xd5e0b29a58b75957
+GLOBALS|client|inventory.visible.Spawn|true | function | function | [C] | -1 | Spawn | 0 | true | function: 0x787cc4ab8f443206
+GLOBALS|client|inventory.visible.TweenInfo|table | table | table: 0xc701acc92abbdd5c
+GLOBALS|client|inventory.visible.UDim|table | table | table: 0x7b68196503be1e11
+GLOBALS|client|inventory.visible.UDim2|table | table | table: 0x68b8677fc5fb7c4e
+GLOBALS|client|inventory.visible.User|table | table | table: 0x7e8ad2d662694c90
+GLOBALS|client|inventory.visible.UserSettings|true | function | function | [C] | -1 | UserSettings | 0 | true | function: 0x3cafdd527ab591d0
+GLOBALS|client|inventory.visible.ValueCurveKey|table | table | table: 0x57b7c4500a4c02bb
+GLOBALS|client|inventory.visible.Vector2|table | table | table: 0xe2ee92d0f769e23d
+GLOBALS|client|inventory.visible.Vector2int16|table | table | table: 0x97ce9dfbaa164125
+GLOBALS|client|inventory.visible.Vector3|table | table | table: 0x88a7f3c1a302ed20
+GLOBALS|client|inventory.visible.Vector3int16|table | table | table: 0x71a93adf39ccf1dd
+GLOBALS|client|inventory.visible.Version|true | function | function | [C] | -1 | Version | 0 | true | function: 0x960ddbc2f6359e68
+GLOBALS|client|inventory.visible.Workspace|userdata | Instance | Workspace
+GLOBALS|client|inventory.visible._G|table | table | table: 0xe278e29ad1890f4a
+GLOBALS|client|inventory.visible._VERSION|string | string | Luau
+GLOBALS|client|inventory.visible.assert|true | function | function | [C] | -1 | assert | 0 | true | function: 0x73ffc2ab6364f303
+GLOBALS|client|inventory.visible.bit32|table | table | table: 0x534ee9f70d49891c
+GLOBALS|client|inventory.visible.buffer|table | table | table: 0x6050fe21bd74df0a
+GLOBALS|client|inventory.visible.collectgarbage|true | function | function | [C] | -1 | collectgarbage | 0 | true | function: 0x00008fe94006c873
+GLOBALS|client|inventory.visible.coroutine|table | table | table: 0x64ee79dde9c135d0
+GLOBALS|client|inventory.visible.debug|table | table | table: 0x7464703e61d20755
+GLOBALS|client|inventory.visible.delay|true | function | function | [C] | -1 | delay | 0 | true | function: 0x6e3506f73563f3c9
+GLOBALS|client|inventory.visible.elapsedTime|true | function | function | [C] | -1 | elapsedTime | 0 | true | function: 0x071dda391cf33dc2
+GLOBALS|client|inventory.visible.error|true | function | function | [C] | -1 | error | 0 | true | function: 0x94decf231e2400cb
+GLOBALS|client|inventory.visible.game|userdata | Instance | Game
+GLOBALS|client|inventory.visible.gcinfo|true | function | function | [C] | -1 | gcinfo | 0 | true | function: 0x116b3ac13a999fe8
+GLOBALS|client|inventory.visible.getfenv|true | function | function | [C] | -1 | getfenv | 0 | true | function: 0xef5391c68fd33da0
+GLOBALS|client|inventory.visible.getmetatable|true | function | function | [C] | -1 | getmetatable | 0 | true | function: 0x7eaea4a487d845ff
+GLOBALS|client|inventory.visible.ipairs|true | function | function | [C] | -1 | ipairs | 0 | true | function: 0x5c6efd3c8b45c3a8
+GLOBALS|client|inventory.visible.loadstring|true | function | function | [C] | -1 | loadstring | 0 | true | function: 0xe61e16f3c29ef435
+GLOBALS|client|inventory.visible.math|table | table | table: 0x48daf88f41cca0b4
+GLOBALS|client|inventory.visible.newproxy|true | function | function | [C] | -1 | newproxy | 0 | true | function: 0xa94c9f107ae3ae81
+GLOBALS|client|inventory.visible.next|true | function | function | [C] | -1 | next | 0 | true | function: 0x364a77c28e691da5
+GLOBALS|client|inventory.visible.os|table | table | table: 0x69d13d307efbcb62
+GLOBALS|client|inventory.visible.pairs|true | function | function | [C] | -1 | pairs | 0 | true | function: 0xf136f188ba50b15d
+GLOBALS|client|inventory.visible.pcall|true | function | function | [C] | -1 | pcall | 0 | true | function: 0xae001cf638f2b9fe
+GLOBALS|client|inventory.visible.print|true | function | function | [C] | -1 | print | 0 | true | function: 0x6d4961a01ac7b115
+GLOBALS|client|inventory.visible.printidentity|true | function | function | [C] | -1 | printidentity | 0 | true | function: 0x34831c5e1a462575
+GLOBALS|client|inventory.visible.rawequal|true | function | function | [C] | -1 | rawequal | 0 | true | function: 0x45520a4399996bfb
+GLOBALS|client|inventory.visible.rawget|true | function | function | [C] | -1 | rawget | 0 | true | function: 0x762e5ff3d21db37a
+GLOBALS|client|inventory.visible.rawlen|true | function | function | [C] | -1 | rawlen | 0 | true | function: 0xb7ad0179ae0739c3
+GLOBALS|client|inventory.visible.rawset|true | function | function | [C] | -1 | rawset | 0 | true | function: 0x01ba02a4cac422a8
+GLOBALS|client|inventory.visible.require|true | function | function | [C] | -1 | require | 0 | true | function: 0xa994c234b13f1e68
+GLOBALS|client|inventory.visible.script|userdata | Instance | GlobalsProbe2
+GLOBALS|client|inventory.visible.select|true | function | function | [C] | -1 | select | 0 | true | function: 0xa18cd5fa3646a1d4
+GLOBALS|client|inventory.visible.setfenv|true | function | function | [C] | -1 | setfenv | 0 | true | function: 0xbfe63dfd2ba6f54d
+GLOBALS|client|inventory.visible.setmetatable|true | function | function | [C] | -1 | setmetatable | 0 | true | function: 0xe30e3b4aa306735c
+GLOBALS|client|inventory.visible.settings|true | function | function | [C] | -1 | settings | 0 | true | function: 0x188c9e23411613d5
+GLOBALS|client|inventory.visible.shared|table | table | table: 0x5e603a66c47ea810
+GLOBALS|client|inventory.visible.spawn|true | function | function | [C] | -1 | spawn | 0 | true | function: 0x4f1728330cf168c3
+GLOBALS|client|inventory.visible.stats|true | function | function | [C] | -1 | stats | 0 | true | function: 0x15263c89fe19e800
+GLOBALS|client|inventory.visible.string|table | table | table: 0xf47a59113f066a76
+GLOBALS|client|inventory.visible.table|table | table | table: 0xc10adffb4e65a391
+GLOBALS|client|inventory.visible.task|table | table | table: 0x348d8594b0bbc45c
+GLOBALS|client|inventory.visible.tick|true | function | function | [C] | -1 | tick | 0 | true | function: 0x20384ee83d0b628e
+GLOBALS|client|inventory.visible.time|true | function | function | [C] | -1 | time | 0 | true | function: 0x9665c92bbf73e108
+GLOBALS|client|inventory.visible.tonumber|true | function | function | [C] | -1 | tonumber | 0 | true | function: 0xef33062c393172cf
+GLOBALS|client|inventory.visible.tostring|true | function | function | [C] | -1 | tostring | 0 | true | function: 0x8d7fb1f4f2c28867
+GLOBALS|client|inventory.visible.type|true | function | function | [C] | -1 | type | 0 | true | function: 0x9febaf2c209d215d
+GLOBALS|client|inventory.visible.typeof|true | function | function | [C] | -1 | typeof | 0 | true | function: 0x0d88515d1c961bce
+GLOBALS|client|inventory.visible.unpack|true | function | function | [C] | -1 | unpack | 0 | true | function: 0x5981a15ce35ed308
+GLOBALS|client|inventory.visible.utf8|table | table | table: 0x17e3f1d62930db17
+GLOBALS|client|inventory.visible.vector|table | table | table: 0x1030e0a73defb14b
+GLOBALS|client|inventory.visible.version|true | function | function | [C] | -1 | version | 0 | true | function: 0x25e7045d07dde14d
+GLOBALS|client|inventory.visible.wait|true | function | function | [C] | -1 | wait | 0 | true | function: 0xf48c49532283e17c
+GLOBALS|client|inventory.visible.warn|true | function | function | [C] | -1 | warn | 0 | true | function: 0xf3121582bcd5e295
+GLOBALS|client|inventory.visible.workspace|userdata | Instance | Workspace
+GLOBALS|client|inventory.visible.xpcall|true | function | function | [C] | -1 | xpcall | 0 | true | function: 0x548cdf13008b42eb
+GLOBALS|client|inventory.visible.ypcall|true | function | function | [C] | -1 | pcall | 0 | true | function: 0xae001cf638f2b9fe
+GLOBALS|client|meta.visible|nil | nil
+GLOBALS|client|inventory.coroutine.close|true | function | function | [C] | -1 | close | 0 | true | function: 0x7c8e5303cfcffe98
+GLOBALS|client|inventory.coroutine.create|true | function | function | [C] | -1 | create | 0 | true | function: 0xeff4f884578cc19a
+GLOBALS|client|inventory.coroutine.isyieldable|true | function | function | [C] | -1 | isyieldable | 0 | true | function: 0x53e4ea6a9c3e5273
+GLOBALS|client|inventory.coroutine.resume|true | function | function | [C] | -1 | resume | 0 | true | function: 0xe558515ae445c157
+GLOBALS|client|inventory.coroutine.running|true | function | function | [C] | -1 | running | 0 | true | function: 0x9ef075267e42d1c9
+GLOBALS|client|inventory.coroutine.status|true | function | function | [C] | -1 | status | 0 | true | function: 0x6a465be4b1c6a81d
+GLOBALS|client|inventory.coroutine.wrap|true | function | function | [C] | -1 | wrap | 0 | true | function: 0xad6d3a97d68161ac
+GLOBALS|client|inventory.coroutine.yield|true | function | function | [C] | -1 | yield | 0 | true | function: 0x90f07f46cae56225
+GLOBALS|client|meta.coroutine|nil | nil
+GLOBALS|client|inventory.task.cancel|true | function | function | [C] | -1 | cancel | 0 | true | function: 0x01374a6accca3f7f
+GLOBALS|client|inventory.task.defer|true | function | function | [C] | -1 | defer | 0 | true | function: 0x34191388e58b2e35
+GLOBALS|client|inventory.task.delay|true | function | function | [C] | -1 | delay | 0 | true | function: 0x178ce34052ef2f43
+GLOBALS|client|inventory.task.desynchronize|true | function | function | [C] | -1 | desynchronize | 0 | true | function: 0x5615ccaf2adb35a2
+GLOBALS|client|inventory.task.spawn|true | function | function | [C] | -1 | spawn | 0 | true | function: 0xdaf21dd44f8fc37f
+GLOBALS|client|inventory.task.synchronize|true | function | function | [C] | -1 | synchronize | 0 | true | function: 0x5056cebed2f80803
+GLOBALS|client|inventory.task.wait|true | function | function | [C] | -1 | wait | 0 | true | function: 0x1df23c7fcac3f614
+GLOBALS|client|meta.task|nil | nil
+GLOBALS|client|inventory.debug.dumpcodesize|true | function | function | [C] | -1 | dumpcodesize | 0 | true | function: 0x2861c534d6e8b023
+GLOBALS|client|inventory.debug.dumpheap|true | function | function | [C] | -1 | dumpheap | 0 | true | function: 0x504f22b46cd8488f
+GLOBALS|client|inventory.debug.dumprefs|true | function | function | [C] | -1 | dumprefs | 0 | true | function: 0xf416cec14f798bc9
+GLOBALS|client|inventory.debug.getmemorycategory|true | function | function | [C] | -1 | getmemorycategory | 0 | true | function: 0x1d6b0ef656cd3321
+GLOBALS|client|inventory.debug.info|true | function | function | [C] | -1 | info | 0 | true | function: 0xe1840039a9a46a0a
+GLOBALS|client|inventory.debug.loadmodule|true | function | function | [C] | -1 | loadmodule | 0 | true | function: 0x304bd4cd42b68b45
+GLOBALS|client|inventory.debug.profilebegin|true | function | function | [C] | -1 | profilebegin | 0 | true | function: 0x6f3aa9b5abe0208c
+GLOBALS|client|inventory.debug.profileend|true | function | function | [C] | -1 | profileend | 0 | true | function: 0xb63f04b2fcd0ae1a
+GLOBALS|client|inventory.debug.resetmemorycategory|true | function | function | [C] | -1 | resetmemorycategory | 0 | true | function: 0xaabef54fb24630c2
+GLOBALS|client|inventory.debug.setmemorycategory|true | function | function | [C] | -1 | setmemorycategory | 0 | true | function: 0x7080c4f6c53cc880
+GLOBALS|client|inventory.debug.traceback|true | function | function | [C] | -1 | traceback | 0 | true | function: 0xa5d514f1fc10a477
+GLOBALS|client|inventory.debug.tracerefs|true | function | function | [C] | -1 | tracerefs | 0 | true | function: 0x9ec56e6b5f75337c
+GLOBALS|client|meta.debug|nil | nil
+GLOBALS|client|inventory.os.clock|true | function | function | [C] | -1 | clock | 0 | true | function: 0xe4f9db810c78d938
+GLOBALS|client|inventory.os.date|true | function | function | [C] | -1 | date | 0 | true | function: 0xa110c4a8ac56c93f
+GLOBALS|client|inventory.os.difftime|true | function | function | [C] | -1 | difftime | 0 | true | function: 0x08db8e37d9be93bf
+GLOBALS|client|inventory.os.time|true | function | function | [C] | -1 | time | 0 | true | function: 0xb70e663957902df8
+GLOBALS|client|meta.os|nil | nil
+GLOBALS|client|inventory.math.abs|true | function | function | [C] | -1 | abs | 0 | true | function: 0xa9175645d39a70db
+GLOBALS|client|inventory.math.acos|true | function | function | [C] | -1 | acos | 0 | true | function: 0xd46da1787fed085c
+GLOBALS|client|inventory.math.asin|true | function | function | [C] | -1 | asin | 0 | true | function: 0x836492b02dbb8ebf
+GLOBALS|client|inventory.math.atan|true | function | function | [C] | -1 | atan | 0 | true | function: 0xebf0856100f7c0bc
+GLOBALS|client|inventory.math.atan2|true | function | function | [C] | -1 | atan2 | 0 | true | function: 0x2219b73323f596ef
+GLOBALS|client|inventory.math.ceil|true | function | function | [C] | -1 | ceil | 0 | true | function: 0xfb447985b7c386b4
+GLOBALS|client|inventory.math.clamp|true | function | function | [C] | -1 | clamp | 0 | true | function: 0xcbade434c0224a82
+GLOBALS|client|inventory.math.cos|true | function | function | [C] | -1 | cos | 0 | true | function: 0x6c063adb83bc57b2
+GLOBALS|client|inventory.math.cosh|true | function | function | [C] | -1 | cosh | 0 | true | function: 0xe600f659d404628a
+GLOBALS|client|inventory.math.deg|true | function | function | [C] | -1 | deg | 0 | true | function: 0x0d26e0f4aa0221cb
+GLOBALS|client|inventory.math.e|number | number | 2.718281828459045
+GLOBALS|client|inventory.math.exp|true | function | function | [C] | -1 | exp | 0 | true | function: 0x6a5b4f37ed3c70e3
+GLOBALS|client|inventory.math.floor|true | function | function | [C] | -1 | floor | 0 | true | function: 0x195ba54751ef11f8
+GLOBALS|client|inventory.math.fmod|true | function | function | [C] | -1 | fmod | 0 | true | function: 0x022d8085365f478b
+GLOBALS|client|inventory.math.frexp|true | function | function | [C] | -1 | frexp | 0 | true | function: 0x6b8efd4fb8c86e7f
+GLOBALS|client|inventory.math.huge|number | number | inf
+GLOBALS|client|inventory.math.isfinite|true | function | function | [C] | -1 | isfinite | 0 | true | function: 0x5756cd27cef3fd66
+GLOBALS|client|inventory.math.isinf|true | function | function | [C] | -1 | isinf | 0 | true | function: 0x43c0105771b58b31
+GLOBALS|client|inventory.math.isnan|true | function | function | [C] | -1 | isnan | 0 | true | function: 0xd1ba89f1aa7edc97
+GLOBALS|client|inventory.math.ldexp|true | function | function | [C] | -1 | ldexp | 0 | true | function: 0xcd2e31839555c51d
+GLOBALS|client|inventory.math.lerp|true | function | function | [C] | -1 | lerp | 0 | true | function: 0xd2631ee4225141d2
+GLOBALS|client|inventory.math.log|true | function | function | [C] | -1 | log | 0 | true | function: 0xb7d4185c74eede98
+GLOBALS|client|inventory.math.log10|true | function | function | [C] | -1 | log10 | 0 | true | function: 0xb09b350d45eca923
+GLOBALS|client|inventory.math.map|true | function | function | [C] | -1 | map | 0 | true | function: 0x74bd3794c755b91f
+GLOBALS|client|inventory.math.max|true | function | function | [C] | -1 | max | 0 | true | function: 0x8e7fb04744d14b1b
+GLOBALS|client|inventory.math.min|true | function | function | [C] | -1 | min | 0 | true | function: 0x212caa32a35786a4
+GLOBALS|client|inventory.math.modf|true | function | function | [C] | -1 | modf | 0 | true | function: 0xed3f4e75847884ce
+GLOBALS|client|inventory.math.nan|number | number | nan
+GLOBALS|client|inventory.math.noise|true | function | function | [C] | -1 | noise | 0 | true | function: 0xfff59380fd61c547
+GLOBALS|client|inventory.math.phi|number | number | 1.618033988749895
+GLOBALS|client|inventory.math.pi|number | number | 3.141592653589793
+GLOBALS|client|inventory.math.pow|true | function | function | [C] | -1 | pow | 0 | true | function: 0xe15fcd30d4981cef
+GLOBALS|client|inventory.math.rad|true | function | function | [C] | -1 | rad | 0 | true | function: 0xc593c6e21aff09b6
+GLOBALS|client|inventory.math.random|true | function | function | [C] | -1 | random | 0 | true | function: 0x93f50c7c91ab9be9
+GLOBALS|client|inventory.math.randomseed|true | function | function | [C] | -1 | randomseed | 0 | true | function: 0xc92f5cc346f77d41
+GLOBALS|client|inventory.math.round|true | function | function | [C] | -1 | round | 0 | true | function: 0x6c0cc8fc3c59c8e1
+GLOBALS|client|inventory.math.sign|true | function | function | [C] | -1 | sign | 0 | true | function: 0xaac97eaa7f9bebf9
+GLOBALS|client|inventory.math.sin|true | function | function | [C] | -1 | sin | 0 | true | function: 0x97f8a2a8a56ba5bd
+GLOBALS|client|inventory.math.sinh|true | function | function | [C] | -1 | sinh | 0 | true | function: 0x360d6b3d815e0e5c
+GLOBALS|client|inventory.math.sqrt|true | function | function | [C] | -1 | sqrt | 0 | true | function: 0x5e095d58ece6ab3b
+GLOBALS|client|inventory.math.sqrt2|number | number | 1.4142135623730951
+GLOBALS|client|inventory.math.tan|true | function | function | [C] | -1 | tan | 0 | true | function: 0xc06677fef258c94e
+GLOBALS|client|inventory.math.tanh|true | function | function | [C] | -1 | tanh | 0 | true | function: 0xbe6a85f952bb7036
+GLOBALS|client|inventory.math.tau|number | number | 6.283185307179586
+GLOBALS|client|meta.math|nil | nil
+GLOBALS|client|inventory.string.byte|true | function | function | [C] | -1 | byte | 0 | true | function: 0xf179104f16447c37
+GLOBALS|client|inventory.string.char|true | function | function | [C] | -1 | char | 0 | true | function: 0x3f13fc7489c6b3a5
+GLOBALS|client|inventory.string.find|true | function | function | [C] | -1 | find | 0 | true | function: 0xa71d2e2c7f1d34a3
+GLOBALS|client|inventory.string.format|true | function | function | [C] | -1 | format | 0 | true | function: 0xfe226068b689aa14
+GLOBALS|client|inventory.string.gmatch|true | function | function | [C] | -1 | gmatch | 0 | true | function: 0x2dcfe9236e8114e4
+GLOBALS|client|inventory.string.gsub|true | function | function | [C] | -1 | gsub | 0 | true | function: 0x8007b08ea161309b
+GLOBALS|client|inventory.string.len|true | function | function | [C] | -1 | len | 0 | true | function: 0x7ddf32d6aeea37c3
+GLOBALS|client|inventory.string.lower|true | function | function | [C] | -1 | lower | 0 | true | function: 0x6ab8afe4666ac8bb
+GLOBALS|client|inventory.string.match|true | function | function | [C] | -1 | match | 0 | true | function: 0xc54c628afa1bc7f3
+GLOBALS|client|inventory.string.pack|true | function | function | [C] | -1 | pack | 0 | true | function: 0x1db2dadce90acd77
+GLOBALS|client|inventory.string.packsize|true | function | function | [C] | -1 | packsize | 0 | true | function: 0xfb3d64adff8f05ff
+GLOBALS|client|inventory.string.rep|true | function | function | [C] | -1 | rep | 0 | true | function: 0x1feaa2be549452db
+GLOBALS|client|inventory.string.reverse|true | function | function | [C] | -1 | reverse | 0 | true | function: 0xece8ee4b4ba664d2
+GLOBALS|client|inventory.string.split|true | function | function | [C] | -1 | split | 0 | true | function: 0xd6ce8157d9f46976
+GLOBALS|client|inventory.string.sub|true | function | function | [C] | -1 | sub | 0 | true | function: 0xd768b39654188a1f
+GLOBALS|client|inventory.string.unpack|true | function | function | [C] | -1 | unpack | 0 | true | function: 0x52a415d24149da82
+GLOBALS|client|inventory.string.upper|true | function | function | [C] | -1 | upper | 0 | true | function: 0xbf7a426478f56aa4
+GLOBALS|client|meta.string|nil | nil
+GLOBALS|client|inventory.table.clear|true | function | function | [C] | -1 | clear | 0 | true | function: 0x7e222cd9959be2d1
+GLOBALS|client|inventory.table.clone|true | function | function | [C] | -1 | clone | 0 | true | function: 0x592d9bc89115058e
+GLOBALS|client|inventory.table.concat|true | function | function | [C] | -1 | concat | 0 | true | function: 0xcc6ee8b35723bb01
+GLOBALS|client|inventory.table.create|true | function | function | [C] | -1 | create | 0 | true | function: 0x20a3f0db3edd6016
+GLOBALS|client|inventory.table.find|true | function | function | [C] | -1 | find | 0 | true | function: 0xbcd5b65906b8c1c4
+GLOBALS|client|inventory.table.foreach|true | function | function | [C] | -1 | foreach | 0 | true | function: 0x7febf0577d64dfb3
+GLOBALS|client|inventory.table.foreachi|true | function | function | [C] | -1 | foreachi | 0 | true | function: 0xa91a1eb73e3e2670
+GLOBALS|client|inventory.table.freeze|true | function | function | [C] | -1 | freeze | 0 | true | function: 0xe091cd72b38d3803
+GLOBALS|client|inventory.table.getn|true | function | function | [C] | -1 | getn | 0 | true | function: 0xb1e03c81b1966f98
+GLOBALS|client|inventory.table.insert|true | function | function | [C] | -1 | insert | 0 | true | function: 0x8a5c8e7606daa971
+GLOBALS|client|inventory.table.isfrozen|true | function | function | [C] | -1 | isfrozen | 0 | true | function: 0xac0511ebb83ac81a
+GLOBALS|client|inventory.table.maxn|true | function | function | [C] | -1 | maxn | 0 | true | function: 0x9a74f1e766771d14
+GLOBALS|client|inventory.table.move|true | function | function | [C] | -1 | move | 0 | true | function: 0xaaf1f4f565df60b0
+GLOBALS|client|inventory.table.pack|true | function | function | [C] | -1 | pack | 0 | true | function: 0x4f2479f5c2da4367
+GLOBALS|client|inventory.table.remove|true | function | function | [C] | -1 | remove | 0 | true | function: 0x376bfea07124b263
+GLOBALS|client|inventory.table.sort|true | function | function | [C] | -1 | sort | 0 | true | function: 0x58920af320ab0eb7
+GLOBALS|client|inventory.table.unpack|true | function | function | [C] | -1 | unpack | 0 | true | function: 0xe15487b790f8bfb2
+GLOBALS|client|meta.table|nil | nil
+GLOBALS|client|inventory.utf8.char|true | function | function | [C] | -1 | char | 0 | true | function: 0x7aa9f8db044caa65
+GLOBALS|client|inventory.utf8.charpattern|string | string | [\x00-\x7f\xc2-\xf4][\x80-\xbf]*
+GLOBALS|client|inventory.utf8.codepoint|true | function | function | [C] | -1 | codepoint | 0 | true | function: 0x8b89e1fb4ac6cc38
+GLOBALS|client|inventory.utf8.codes|true | function | function | [C] | -1 | codes | 0 | true | function: 0x7473ff2c885a320b
+GLOBALS|client|inventory.utf8.graphemes|true | function | function | [C] | -1 | graphemes | 0 | true | function: 0x0eeb3a5eac737c19
+GLOBALS|client|inventory.utf8.len|true | function | function | [C] | -1 | len | 0 | true | function: 0xcb408012d5e1c768
+GLOBALS|client|inventory.utf8.nfcnormalize|true | function | function | [C] | -1 | nfcnormalize | 0 | true | function: 0x121209aa0b66f117
+GLOBALS|client|inventory.utf8.nfdnormalize|true | function | function | [C] | -1 | nfdnormalize | 0 | true | function: 0xeac61f84cac33216
+GLOBALS|client|inventory.utf8.offset|true | function | function | [C] | -1 | offset | 0 | true | function: 0xd3a25d490bc33513
+GLOBALS|client|meta.utf8|nil | nil
+GLOBALS|client|inventory.buffer.copy|true | function | function | [C] | -1 | copy | 0 | true | function: 0xebff87d7e1173398
+GLOBALS|client|inventory.buffer.create|true | function | function | [C] | -1 | create | 0 | true | function: 0xc2fc81826f58a15c
+GLOBALS|client|inventory.buffer.fill|true | function | function | [C] | -1 | fill | 0 | true | function: 0xd2097566c34d403b
+GLOBALS|client|inventory.buffer.fromstring|true | function | function | [C] | -1 | fromstring | 0 | true | function: 0xaae8fcbdca886f4c
+GLOBALS|client|inventory.buffer.len|true | function | function | [C] | -1 | len | 0 | true | function: 0x803f6d6dfbd7a196
+GLOBALS|client|inventory.buffer.readbits|true | function | function | [C] | -1 | readbits | 0 | true | function: 0x7737cbcec76d7bf4
+GLOBALS|client|inventory.buffer.readf32|true | function | function | [C] | -1 | readf32 | 0 | true | function: 0x5c6dae357341f95d
+GLOBALS|client|inventory.buffer.readf64|true | function | function | [C] | -1 | readf64 | 0 | true | function: 0x558cc9d7a642f819
+GLOBALS|client|inventory.buffer.readi16|true | function | function | [C] | -1 | readi16 | 0 | true | function: 0xe021afe05315c522
+GLOBALS|client|inventory.buffer.readi32|true | function | function | [C] | -1 | readi32 | 0 | true | function: 0xca4f650c81f9f6cc
+GLOBALS|client|inventory.buffer.readi8|true | function | function | [C] | -1 | readi8 | 0 | true | function: 0xfd73cc8300f84c51
+GLOBALS|client|inventory.buffer.readstring|true | function | function | [C] | -1 | readstring | 0 | true | function: 0x6edb9517f041e767
+GLOBALS|client|inventory.buffer.readu16|true | function | function | [C] | -1 | readu16 | 0 | true | function: 0xcc3494952854c36a
+GLOBALS|client|inventory.buffer.readu32|true | function | function | [C] | -1 | readu32 | 0 | true | function: 0xed1cb72e0b9ddf1b
+GLOBALS|client|inventory.buffer.readu8|true | function | function | [C] | -1 | readu8 | 0 | true | function: 0x522a636306ee6366
+GLOBALS|client|inventory.buffer.tostring|true | function | function | [C] | -1 | tostring | 0 | true | function: 0xbbcdaf159a3e4fa8
+GLOBALS|client|inventory.buffer.writebits|true | function | function | [C] | -1 | writebits | 0 | true | function: 0xdb9e18db3c5c4ac8
+GLOBALS|client|inventory.buffer.writef32|true | function | function | [C] | -1 | writef32 | 0 | true | function: 0x8d1b9e31028ff0a2
+GLOBALS|client|inventory.buffer.writef64|true | function | function | [C] | -1 | writef64 | 0 | true | function: 0x8aa6b59950f3b355
+GLOBALS|client|inventory.buffer.writei16|true | function | function | [C] | -1 | writei16 | 0 | true | function: 0x2a380bac958b69aa
+GLOBALS|client|inventory.buffer.writei32|true | function | function | [C] | -1 | writei32 | 0 | true | function: 0xd518ee83f8ee5677
+GLOBALS|client|inventory.buffer.writei8|true | function | function | [C] | -1 | writei8 | 0 | true | function: 0x2cb192389717d0cd
+GLOBALS|client|inventory.buffer.writestring|true | function | function | [C] | -1 | writestring | 0 | true | function: 0x3234a2bcb34c06cf
+GLOBALS|client|inventory.buffer.writeu16|true | function | function | [C] | -1 | writeu16 | 0 | true | function: 0x016fc30d443b5f8d
+GLOBALS|client|inventory.buffer.writeu32|true | function | function | [C] | -1 | writeu32 | 0 | true | function: 0x022635c3fd350661
+GLOBALS|client|inventory.buffer.writeu8|true | function | function | [C] | -1 | writeu8 | 0 | true | function: 0x4fd217aa64c88933
+GLOBALS|client|meta.buffer|nil | nil
+GLOBALS|client|inventory.bit32.arshift|true | function | function | [C] | -1 | arshift | 0 | true | function: 0x7e365aaab0a235c1
+GLOBALS|client|inventory.bit32.band|true | function | function | [C] | -1 | band | 0 | true | function: 0x8f4df684a5caff6b
+GLOBALS|client|inventory.bit32.bnot|true | function | function | [C] | -1 | bnot | 0 | true | function: 0x94bff29e525569ec
+GLOBALS|client|inventory.bit32.bor|true | function | function | [C] | -1 | bor | 0 | true | function: 0x4cfbc6841c566311
+GLOBALS|client|inventory.bit32.btest|true | function | function | [C] | -1 | btest | 0 | true | function: 0xe049f50981d4c880
+GLOBALS|client|inventory.bit32.bxor|true | function | function | [C] | -1 | bxor | 0 | true | function: 0x7201a4dee9ceb6ab
+GLOBALS|client|inventory.bit32.byteswap|true | function | function | [C] | -1 | byteswap | 0 | true | function: 0xc62902db0538c412
+GLOBALS|client|inventory.bit32.countlz|true | function | function | [C] | -1 | countlz | 0 | true | function: 0xdeb80164a23f6510
+GLOBALS|client|inventory.bit32.countrz|true | function | function | [C] | -1 | countrz | 0 | true | function: 0xd5a409900fb12c6e
+GLOBALS|client|inventory.bit32.extract|true | function | function | [C] | -1 | extract | 0 | true | function: 0xe7f5a147603a803e
+GLOBALS|client|inventory.bit32.lrotate|true | function | function | [C] | -1 | lrotate | 0 | true | function: 0x795c7e63ec9eda05
+GLOBALS|client|inventory.bit32.lshift|true | function | function | [C] | -1 | lshift | 0 | true | function: 0xb53dc81f2778db23
+GLOBALS|client|inventory.bit32.replace|true | function | function | [C] | -1 | replace | 0 | true | function: 0x8b6a3bc93aef65ce
+GLOBALS|client|inventory.bit32.rrotate|true | function | function | [C] | -1 | rrotate | 0 | true | function: 0x85f0da15bf957fca
+GLOBALS|client|inventory.bit32.rshift|true | function | function | [C] | -1 | rshift | 0 | true | function: 0x8cfa7acc7e862f77
+GLOBALS|client|meta.bit32|nil | nil
+GLOBALS|client|identity.Axes|true
+GLOBALS|client|identity.BrickColor|true
+GLOBALS|client|identity.CFrame|true
+GLOBALS|client|identity.CatalogSearchParams|true
+GLOBALS|client|identity.Color3|true
+GLOBALS|client|identity.ColorSequence|true
+GLOBALS|client|identity.ColorSequenceKeypoint|true
+GLOBALS|client|identity.Content|true
+GLOBALS|client|identity.DateTime|true
+GLOBALS|client|identity.DebuggerManager|true
+GLOBALS|client|identity.Delay|true
+GLOBALS|client|identity.ElapsedTime|true
+GLOBALS|client|identity.Enum|true
+GLOBALS|client|identity.Faces|true
+GLOBALS|client|identity.FloatCurveKey|true
+GLOBALS|client|identity.Font|true
+GLOBALS|client|identity.Game|true
+GLOBALS|client|identity.Instance|true
+GLOBALS|client|identity.LoadLibrary|true
+GLOBALS|client|identity.NumberRange|true
+GLOBALS|client|identity.NumberSequence|true
+GLOBALS|client|identity.NumberSequenceKeypoint|true
+GLOBALS|client|identity.OverlapParams|true
+GLOBALS|client|identity.Path2DControlPoint|true
+GLOBALS|client|identity.PathWaypoint|true
+GLOBALS|client|identity.PhysicalProperties|true
+GLOBALS|client|identity.PluginManager|true
+GLOBALS|client|identity.Random|true
+GLOBALS|client|identity.Ray|true
+GLOBALS|client|identity.RaycastParams|true
+GLOBALS|client|identity.Rect|true
+GLOBALS|client|identity.Region3|true
+GLOBALS|client|identity.Region3int16|true
+GLOBALS|client|identity.RotationCurveKey|true
+GLOBALS|client|identity.SharedTable|true
+GLOBALS|client|identity.Spawn|true
+GLOBALS|client|identity.TweenInfo|true
+GLOBALS|client|identity.UDim|true
+GLOBALS|client|identity.UDim2|true
+GLOBALS|client|identity.User|true
+GLOBALS|client|identity.UserSettings|true
+GLOBALS|client|identity.ValueCurveKey|true
+GLOBALS|client|identity.Vector2|true
+GLOBALS|client|identity.Vector2int16|true
+GLOBALS|client|identity.Vector3|true
+GLOBALS|client|identity.Vector3int16|true
+GLOBALS|client|identity.Version|true
+GLOBALS|client|identity.Workspace|true
+GLOBALS|client|identity._G|true
+GLOBALS|client|identity._VERSION|true
+GLOBALS|client|identity.__ac_capture_begin|true
+GLOBALS|client|identity.__ac_capture_known|true
+GLOBALS|client|identity.__ac_capture_poll|true
+GLOBALS|client|identity.__ac_capture_prompt|true
+GLOBALS|client|identity.__ac_content_begin|true
+GLOBALS|client|identity.__ac_content_ids|true
+GLOBALS|client|identity.__ac_content_poll|true
+GLOBALS|client|identity.__ac_create_decal|true
+GLOBALS|client|identity.__ac_instance_composition|true
+GLOBALS|client|identity.__ac_is_server|true
+GLOBALS|client|identity.__ac_pages|true
+GLOBALS|client|identity.__ac_scene_mem_begin|true
+GLOBALS|client|identity.__ac_scene_mem_restore|true
+GLOBALS|client|identity.__ac_script_memory|true
+GLOBALS|client|identity.__ac_unparented|true
+GLOBALS|client|identity.__ac_web_begin|true
+GLOBALS|client|identity.__ac_web_poll|true
+GLOBALS|client|identity.__geo_nav|true
+GLOBALS|client|identity.__geo_ops|true
+GLOBALS|client|identity.__rs_anim_after|true
+GLOBALS|client|identity.__rs_anim_asset|true
+GLOBALS|client|identity.__rs_anim_drive|true
+GLOBALS|client|identity.__rs_anim_joint_spec|true
+GLOBALS|client|identity.__rs_anim_joint_upgrade|true
+GLOBALS|client|identity.__rs_anim_register|true
+GLOBALS|client|identity.__rs_anim_registered|true
+GLOBALS|client|identity.__rs_anim_rotation_list|true
+GLOBALS|client|identity.__rs_anim_rotation_value|true
+GLOBALS|client|identity.__rs_asset_begin|true
+GLOBALS|client|identity.__rs_asset_ready|true
+GLOBALS|client|identity.__rs_avatar_get|true
+GLOBALS|client|identity.__rs_avatar_load|true
+GLOBALS|client|identity.__rs_avatar_prompt_answer|true
+GLOBALS|client|identity.__rs_cg|true
+GLOBALS|client|identity.__rs_gated_events|true
+GLOBALS|client|identity.__rs_get_callback|true
+GLOBALS|client|identity.__rs_has_peer|true
+GLOBALS|client|identity.__rs_input_event|true
+GLOBALS|client|identity.__rs_input_frame_end|true
+GLOBALS|client|identity.__rs_invoke_reply|true
+GLOBALS|client|identity.__rs_invoke_server|true
+GLOBALS|client|identity.__rs_kfs_parts|true
+GLOBALS|client|identity.__rs_lua_methods|true
+GLOBALS|client|identity.__rs_make_input_object|true
+GLOBALS|client|identity.__rs_make_signal|true
+GLOBALS|client|identity.__rs_member_check|true
+GLOBALS|client|identity.__rs_new_input_object|true
+GLOBALS|client|identity.__rs_new_signal|true
+GLOBALS|client|identity.__rs_pages_list|true
+GLOBALS|client|identity.__rs_pages_new|true
+GLOBALS|client|identity.__rs_particles|true
+GLOBALS|client|identity.__rs_pc_chat_input|true
+GLOBALS|client|identity.__rs_pc_chat_view|true
+GLOBALS|client|identity.__rs_pc_clear_view|true
+GLOBALS|client|identity.__rs_pc_client_receive|true
+GLOBALS|client|identity.__rs_pc_get|true
+GLOBALS|client|identity.__rs_pc_outbox|true
+GLOBALS|client|identity.__rs_pc_server_receive|true
+GLOBALS|client|identity.__rs_pc_set|true
+GLOBALS|client|identity.__rs_pc_step|true
+GLOBALS|client|identity.__rs_pc_translator|true
+GLOBALS|client|identity.__rs_product_info|true
+GLOBALS|client|identity.__rs_profile|true
+GLOBALS|client|identity.__rs_require_for|true
+GLOBALS|client|identity.__rs_seat|true
+GLOBALS|client|identity.__rs_serve_client_invoke|true
+GLOBALS|client|identity.__rs_serve_invoke|true
+GLOBALS|client|identity.__rs_set_raw|true
+GLOBALS|client|identity.__rs_track_get|true
+GLOBALS|client|identity.__rs_track_set|true
+GLOBALS|client|identity.__rs_tracks|true
+GLOBALS|client|identity.__rs_tween_get|true
+GLOBALS|client|identity.__rs_unseat|true
+GLOBALS|client|identity.__rs_user_game_settings|true
+GLOBALS|client|identity.__rs_window_focus|true
+GLOBALS|client|identity.__ws_begin|true
+GLOBALS|client|identity.__ws_bundle_details|true
+GLOBALS|client|identity.__ws_campaign_record|true
+GLOBALS|client|identity.__ws_filter|true
+GLOBALS|client|identity.__ws_filter_text|true
+GLOBALS|client|identity.__ws_info_type|true
+GLOBALS|client|identity.__ws_owned|true
+GLOBALS|client|identity.__ws_page_copy|true
+GLOBALS|client|identity.__ws_poll|true
+GLOBALS|client|identity.__ws_send|true
+GLOBALS|client|identity.__ws_subscription_override|true
+GLOBALS|client|identity.addDialog|true
+GLOBALS|client|identity.assert|true
+GLOBALS|client|identity.bit32|true
+GLOBALS|client|identity.buffer|true
+GLOBALS|client|identity.checkForLeaveArea|true
+GLOBALS|client|identity.collectgarbage|true
+GLOBALS|client|identity.coroutine|true
+GLOBALS|client|identity.createChatNotificationGui|true
+GLOBALS|client|identity.createMessageDialog|true
+GLOBALS|client|identity.currentTone|true
+GLOBALS|client|identity.debug|true
+GLOBALS|client|identity.delay|true
+GLOBALS|client|identity.dialogIsValid|true
+GLOBALS|client|identity.doDialog|true
+GLOBALS|client|identity.elapsedTime|true
+GLOBALS|client|identity.endDialog|true
+GLOBALS|client|identity.error|true
+GLOBALS|client|identity.game|true
+GLOBALS|client|identity.gcinfo|true
+GLOBALS|client|identity.getChatColor|true
+GLOBALS|client|identity.getLocalHumanoidRootPart|true
+GLOBALS|client|identity.getfenv|true
+GLOBALS|client|identity.getmetatable|true
+GLOBALS|client|identity.initialize|true
+GLOBALS|client|identity.integer|true
+GLOBALS|client|identity.ipairs|true
+GLOBALS|client|identity.loadstring|true
+GLOBALS|client|identity.math|true
+GLOBALS|client|identity.newChoice|true
+GLOBALS|client|identity.newproxy|true
+GLOBALS|client|identity.next|true
+GLOBALS|client|identity.normalEndDialog|true
+GLOBALS|client|identity.onLoad|true
+GLOBALS|client|identity.os|true
+GLOBALS|client|identity.pairs|true
+GLOBALS|client|identity.pcall|true
+GLOBALS|client|identity.presentDialogChoices|true
+GLOBALS|client|identity.print|true
+GLOBALS|client|identity.printidentity|true
+GLOBALS|client|identity.rawequal|true
+GLOBALS|client|identity.rawget|true
+GLOBALS|client|identity.rawlen|true
+GLOBALS|client|identity.rawset|true
+GLOBALS|client|identity.removeDialog|true
+GLOBALS|client|identity.renewKillswitch|true
+GLOBALS|client|identity.require|true
+GLOBALS|client|identity.resetColor|true
+GLOBALS|client|identity.sanitizeMessage|true
+GLOBALS|client|identity.script|false
+GLOBALS|client|identity.select|true
+GLOBALS|client|identity.selectChoice|true
+GLOBALS|client|identity.setChatNotificationTone|true
+GLOBALS|client|identity.setUsingGamepad|true
+GLOBALS|client|identity.setfenv|true
+GLOBALS|client|identity.setmetatable|true
+GLOBALS|client|identity.settings|true
+GLOBALS|client|identity.shared|true
+GLOBALS|client|identity.showMessage|true
+GLOBALS|client|identity.spawn|true
+GLOBALS|client|identity.startDialog|true
+GLOBALS|client|identity.stats|true
+GLOBALS|client|identity.string|true
+GLOBALS|client|identity.styleChoices|true
+GLOBALS|client|identity.styleMainFrame|true
+GLOBALS|client|identity.table|true
+GLOBALS|client|identity.task|true
+GLOBALS|client|identity.tick|true
+GLOBALS|client|identity.time|true
+GLOBALS|client|identity.timeoutDialog|true
+GLOBALS|client|identity.tonumber|true
+GLOBALS|client|identity.tostring|true
+GLOBALS|client|identity.type|true
+GLOBALS|client|identity.typeof|true
+GLOBALS|client|identity.unpack|true
+GLOBALS|client|identity.utf8|true
+GLOBALS|client|identity.variableDelay|true
+GLOBALS|client|identity.vector|true
+GLOBALS|client|identity.version|true
+GLOBALS|client|identity.wait|true
+GLOBALS|client|identity.wanderDialog|true
+GLOBALS|client|identity.warn|true
+GLOBALS|client|identity.workspace|true
+GLOBALS|client|identity.xpcall|true
+GLOBALS|client|identity.ypcall|true
+GLOBALS|client|tostring.tab|table | table | table: 0xe8195c04456161f3 | table: 0xe8195c04456161f3 | true
+GLOBALS|client|tostring.buf|buffer | buffer | buffer: 0x6edd291cd2027d92 | buffer: 0x6edd291cd2027d92 | true
+GLOBALS|client|tostring.instance|userdata | Instance | Game | Game | true
+GLOBALS|client|tostring.proxy|userdata | userdata | userdata: 0xd55c33738ea26049 | userdata: 0xd55c33738ea26049 | true
+GLOBALS|client|tostring.func|function | function | function: 0x2babafba415c95b8 | function: 0x2babafba415c95b8 | true
+GLOBALS|client|tostring.thread|thread | thread | thread: 0x579b12b3acdef2a9 | thread: 0x579b12b3acdef2a9 | true
+GLOBALS|client|gc.count|true | 1214
+GLOBALS|client|gc.collect|false | Players.Player.PlayerScripts.GlobalsProbe1:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|client|gc.stop|false | Players.Player.PlayerScripts.GlobalsProbe1:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|client|gc.restart|false | Players.Player.PlayerScripts.GlobalsProbe1:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|client|gc.step|false | Players.Player.PlayerScripts.GlobalsProbe1:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|client|gc.setpause|false | Players.Player.PlayerScripts.GlobalsProbe1:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|client|gc.setstepmul|false | Players.Player.PlayerScripts.GlobalsProbe1:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|client|gc.isrunning|false | Players.Player.PlayerScripts.GlobalsProbe1:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|client|gc.bad|false | Players.Player.PlayerScripts.GlobalsProbe1:20: collectgarbage must be called with 'count'; use gcinfo() instead
+GLOBALS|client|gc.default|false | Players.Player.PlayerScripts.GlobalsProbe1:21: missing argument #1 to 'collectgarbage' (string expected)
+GLOBALS|client|gc.info|true | 1220 | 1220 | true
+GLOBALS|client|error.level0|false | message
+GLOBALS|client|error.level1|false | Players.Player.PlayerScripts.GlobalsProbe1:23: message
+GLOBALS|client|error.level2|false | message
+GLOBALS|client|error.level10|false | message
+GLOBALS|client|error.level-1|false | message
+GLOBALS|client|error.value.number|false | Players.Player.PlayerScripts.GlobalsProbe1:24: 23
+GLOBALS|client|error.value.boolean|false | false
+GLOBALS|client|error.value.table|false | table: 0x1a44d29933468e05
+GLOBALS|client|error.value.userdata|false | userdata: 0x8c332e1f50b93fe8
+GLOBALS|client|assert.default|false | Players.Player.PlayerScripts.GlobalsProbe1:25: assertion failed!
+GLOBALS|client|assert.table|false | Players.Player.PlayerScripts.GlobalsProbe1:26: invalid argument #2 to 'assert' (string expected, got table)
+GLOBALS|client|assert.returns|true | true | a | 4
+GLOBALS|client|xpcall.handler|true | false | error in error handling
+GLOBALS|client|trace.default|true | Players.Player.PlayerScripts.GlobalsProbe1:29\nPlayers.Player.PlayerScripts.GlobalsProbe1:6 function probe\nPlayers.Player.PlayerScripts.GlobalsProbe1:29\n
+GLOBALS|client|trace.message|true | message\nPlayers.Player.PlayerScripts.GlobalsProbe1:30\nPlayers.Player.PlayerScripts.GlobalsProbe1:6 function probe\nPlayers.Player.PlayerScripts.GlobalsProbe1:30\n
+GLOBALS|client|trace.coroutine|true | co\nPlayers.Player.PlayerScripts.GlobalsProbe1:31\n
+GLOBALS|client|debug.level0|true | [C] | -1 | info | 0 | true
+GLOBALS|client|debug.level1|true | Players.Player.PlayerScripts.GlobalsProbe1 | 32 |  | 0 | false
+GLOBALS|client|debug.level2|true | [C] | -1 | pcall | 0 | true
+GLOBALS|client|debug.level50|true
+GLOBALS|client|debug.level-1|false | Players.Player.PlayerScripts.GlobalsProbe1:32: invalid argument #1 to 'info' (level can't be negative)
+GLOBALS|client|debug.thread|true | Players.Player.PlayerScripts.GlobalsProbe1 | 33 |  | 0 | false
+GLOBALS|client|getfenv.0|true | table | true | GlobalsProbe2
+GLOBALS|client|getfenv.1|true | table | true | GlobalsProbe2
+GLOBALS|client|getfenv.2|true | table | true | GlobalsProbe2
+GLOBALS|client|getfenv.50|false | Players.Player.PlayerScripts.GlobalsProbe1:34: invalid argument #1 to 'getfenv' (invalid level)
+GLOBALS|client|getfenv.-1|false | Players.Player.PlayerScripts.GlobalsProbe1:34: invalid argument #1 to 'getfenv' (level must be non-negative)
+GLOBALS|client|getfenv.C|true | true | true
+GLOBALS|client|setfenv.C|false | Players.Player.PlayerScripts.GlobalsProbe1:36: 'setfenv' cannot change environment of given object
+GLOBALS|client|setfenv.lua|true | 42
+GLOBALS|client|setfenv.-1|false | Players.Player.PlayerScripts.GlobalsProbe1:38: invalid argument #1 to 'setfenv' (level must be non-negative)
+GLOBALS|client|setfenv.50|false | Players.Player.PlayerScripts.GlobalsProbe1:38: invalid argument #1 to 'setfenv' (invalid level)
+GLOBALS|client|loadstring|false | loadstring() is not available
+GLOBALS|client|loadstring.syntax|false | loadstring() is not available
+GLOBALS|client|loadstring.named|false | loadstring() is not available
+GLOBALS|client|require.boolean.false|false | require(assetId) cannot be called from a client.  assetId = 0
+GLOBALS|client|require.table.table: 0xd30465b42ff253d4|false | Attempted to call require with invalid argument(s).
+GLOBALS|client|require.userdata.Game|false | Attempted to call require with invalid argument(s).
+GLOBALS|client|require.userdata.GlobalsProbe2|false | Attempted to call require with invalid argument(s).
+GLOBALS|client|require.string.bad|false | error requiring "bad": require path must start with a valid prefix: ./, ../, or @
+GLOBALS|client|require.number.0|false | require(assetId) cannot be called from a client.  assetId = 0
+GLOBALS|client|require.number.-1|false | require(assetId) cannot be called from a client.  assetId = -1
+GLOBALS|client|coroutine.running|thread: 0x0d31af6e1736ea35 | running | true
+GLOBALS|client|coroutine.pcall|true | true | true
+GLOBALS|client|coroutine.metamethod|true | false
+GLOBALS|client|task.spawn|true | thread: 0x92b8c66693ccfe29
+GLOBALS|client|task.defer|true | thread: 0x88140e3bc9e26492
+GLOBALS|client|task.delay|true | thread: 0x9d0f0b4032f42da9
+GLOBALS|client|spawn|true
+GLOBALS|client|delay|true
+GLOBALS|client|task.cancel.running|false | Players.Player.PlayerScripts.GlobalsProbe1:51: cannot cancel thread
+GLOBALS|client|coroutine.close.running|false | Players.Player.PlayerScripts.GlobalsProbe1:52: cannot close running coroutine
+GLOBALS|client|coroutine.close.suspended|true | true
+GLOBALS|client|misc.Version|true | string | string | 0.744.0.7441077
+GLOBALS|client|misc.version|true | string | string | 0.744.0.7441077
+GLOBALS|client|misc.elapsedTime|true | number | number | 133.20922859999882
+GLOBALS|client|misc.time|true | number | number | 0.08333333767950535
+GLOBALS|client|misc.tick|true | number | number | 1794155359.0708451
+GLOBALS|client|misc.DebuggerManager|false | The current thread cannot call 'DebuggerManager' (lacking capability Plugin)
+GLOBALS|client|misc.PluginManager|false | The current thread cannot call 'PluginManager' (lacking capability Plugin)
+GLOBALS|client|misc.settings|false | The current thread cannot call 'settings' (lacking capability Plugin)
+GLOBALS|client|misc.stats|true | userdata | Instance | Stats
+GLOBALS|client|misc.UserSettings|true | userdata | Instance | GlobalBasicSettings
+GLOBALS|client|string.metatable|true | string | The metatable is locked | false
+GLOBALS|client|string.setmetatable|false | Players.Player.PlayerScripts.GlobalsProbe1:56: invalid argument #1 to 'setmetatable' (table expected, got string)
+GLOBALS|client|rawlen.userdata|false | Players.Player.PlayerScripts.GlobalsProbe1:57: invalid argument #1 to 'rawlen' (table or string expected)
+GLOBALS|client|rawequal.userdata|true | false
+GLOBALS|client|newproxy.bad|false | Players.Player.PlayerScripts.GlobalsProbe1:59: invalid argument #1 to 'newproxy' (nil or boolean expected, got number)
+GLOBALS|client|freeze|true | true | false | Players.Player.PlayerScripts.GlobalsProbe1:60: attempt to modify a readonly table
+GLOBALS|client|os|true | 1794184159 | 132.3535978 | 2026-11-09 | 7
+GLOBALS|client|os.date.table|true | 1970 | 1 | 1 | 0 | 0 | 0 | 5 | 1 | false
+GLOBALS|client|random.seed|true | 0.5576342002772471 | 1 | 0.24915606029512696 | true | true | true
+GLOBALS|client|shared.G|true | false | true | true
+GLOBALS|client|script.callback|true | true
+GLOBALS|client|task.wait.0|true | 0.04485180000000355 | nil | 0.04485449999992852
+GLOBALS|client|task.wait.0|true | 0.022262399999988247 | nil | 0.022266900001341128
+GLOBALS|server|task.wait.0.02|true | 0.09930190000000039 | nil | 0.0993071000011696
+GLOBALS|server|task.wait.0.02|true | 0.09931399999999257 | nil | 0.09931649999998626
+GLOBALS|client|task.wait.0.001|true | 0.005577899999991587 | nil | 0.005580999999438063
+GLOBALS|client|task.wait.0.001|true | 0.005555799999996225 | nil | 0.005557700000281329
+GLOBALS|client|task.wait.0.02|true | 0.16081689999998616 | nil | 0.16082099999948696
+GLOBALS|client|task.wait.0.02|true | 0.1609047999999973 | nil | 0.1609067999997933
+GLOBALS|server|wait|true | 0.16654109999998923 | 0.5750406486913562
+GLOBALS|server|DONE|
+GLOBALS|server|wait|true | 0.16662880000001223 | 0.5750406486913562
+GLOBALS|server|DONE|
+GLOBALS|client|wait|true | 0.42570779999999786 | 0.7207867807010189
+GLOBALS|client|DONE|
+GLOBALS|client|wait|true | 0.42570320000001516 | 0.7207867807010189
+GLOBALS|client|DONE|

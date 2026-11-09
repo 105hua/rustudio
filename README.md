@@ -1,0 +1,93 @@
+<p align="center">
+  <img src="assets/icons/rustudio-256.png" width="128" alt="rustudio icon">
+</p>
+
+<h1 align="center">rustudio</h1>
+
+**A native Linux Roblox Studio, written in Rust.** Open, edit and save
+Roblox places, press Play and run them with real Luau, physics, characters
+and GUIs, all without Wine.
+
+![Playing a game in rustudio](docs/images/play.png)
+
+![The rustudio home screen](docs/images/home.png)
+
+> This project is still early, so please please help!! Contributions are super welcome
+
+## Features
+
+- **Editor:** Explorer, Properties, Output, script tabs, move/scale/rotate
+  tools, terrain tools, undo/redo, and Studio's menus, ribbon and shortcuts.
+- **Files:** `.rbxl` / `.rbxlx` places and `.rbxm` / `.rbxmx` models, plus
+  project folders (`*.project.json` with plain files as the source of truth).
+- **Play / Run:** separate server and client, remotes, physics (rapier3d),
+  R15/R6 characters and animation, sounds, tweens, 2D and 3D GUIs.
+- **Luau:** the real Luau VM, with most of the engine API that real games
+  call (see [docs/ENGINE-GAPS.md](docs/ENGINE-GAPS.md) for what's missing).
+- **Rendering:** wgpu, with lighting, shadows, sky, atmosphere and materials
+  tuned against Studio. Meshes, FBX import and terrain are supported.
+- **Roblox account:** open your places, load assets and avatars, use
+  DataStores, and join Team Create sessions.
+
+## Install
+
+You need a Rust toolchain (1.85+) and a GPU with Vulkan (or OpenGL).
+
+```sh
+git clone https://github.com/rippelz/rustudio
+cd rustudio
+cargo build --release
+./target/release/rustudio --demo           # sample scene
+./target/release/rustudio my_place.rbxl    # open a place
+```
+
+On first launch rustudio downloads Roblox Studio's built-in content
+(default characters, camera and control scripts, fonts, textures, sounds;
+about 60 MB) from Roblox's own CDN into `~/.local/share/rustudio/studio`.
+To get it ahead of time, or update it, run
+`rustudio --install-studio-content`.
+
+If you already have Studio installed (e.g. via
+[Vinegar](https://vinegarhq.org)), you can point rustudio at that instead:
+
+```sh
+export RUSTUDIO_STUDIO_DIR=~/.var/app/org.vinegarhq.Vinegar/data/vinegar/versions/version-XXXX
+```
+
+## Platforms
+
+| Platform | Status |
+|---|---|
+| Linux x86_64 (Wayland or X11) | Supported, and the only one tested |
+| Linux ARM64 | Should build; untested |
+| macOS | Not supported yet (untested, likely needs small fixes) |
+| Windows | Not supported yet (doesn't compile: uses Unix-only APIs) |
+
+## Signing in (optional)
+
+Everything above works signed out. To open your own places or load private
+assets, sign in with your Roblox session: use the account button at the top
+right, or put the `.ROBLOSECURITY` cookie in `~/.config/rustudio/roblox-cookie`
+(`chmod 600`). rustudio stores it in your login keyring. Details are in
+[docs/AUTH.md](docs/AUTH.md).
+
+## Docs
+
+- [docs/DEVELOPING.md](docs/DEVELOPING.md): command-line options, tests,
+  code layout
+- [docs/MECHANICS.md](docs/MECHANICS.md): every tuning number and where it
+  comes from
+- [docs/ENGINE-GAPS.md](docs/ENGINE-GAPS.md): engine API that's still missing
+- [docs/TEAMCREATE.md](docs/TEAMCREATE.md), [docs/PROTOCOL.md](docs/PROTOCOL.md):
+  Team Create and the network protocol
+
+## Not affiliated with Roblox
+
+rustudio is an independent project. It is not made, endorsed or supported
+by Roblox Corporation. "Roblox" and "Roblox Studio" are trademarks of Roblox
+Corporation.
+
+## License
+
+MIT OR Apache-2.0, at your option. Vendored crates in `vendor/` keep their
+own licences.

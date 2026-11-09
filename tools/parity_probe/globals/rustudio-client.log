@@ -1,0 +1,672 @@
+Info: rustudio 0.1.0 ready. Reflection database has 931 classes.
+Info: Loaded the sample scene
+Info: Checking the Roblox session…
+Info: Signed in as @testuser1 (session from the login keyring)
+Info: Loading the avatar for Play…
+Info: Avatar of user 10000000001: R6 with 2 worn items
+Info: Not shown yet:  (MoodAnimation)
+Info: Avatar ready for Play (user 10000000001, R6): the next character uses it
+Info: Default player scripts from Studio: PlayerScriptsLoader, PlayerModule, RbxCharacterSounds
+Info: ▶ Play: a server and a client are running; WASD + Space to move, Shift+F5 to stop
+Info: [Server] Hello from rustudio  —  ServerScriptService.Main:1
+Info: Character: R15 (from the place setting)
+Info: Sky: 1024px faces, light from above 0.156 0.399 0.666
+Info: [Client] GLOBALS|client|inventory.env.require|true | function | function | rustudio.prelude | 160 |  | 1 | false | function: 0x000055935efb2810  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.script|userdata | Instance | GlobalsProbe1  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|meta.env|table | table: 0x000055935c054320  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|metakey.env.__index|table | table: 0x0000559353de1290  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|meta.env.index|table | table: 0x000055935544c430  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|metakey.env.index.__index|table | table: 0x0000559355365f90  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.Axes|table | table | table: 0x0000559353e07240  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.BrickColor|table | table | table: 0x0000559353e08170  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.CFrame|table | table | table: 0x0000559353ddead0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.CatalogSearchParams|table | table | table: 0x0000559353e07120  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.Color3|table | table | table: 0x0000559353e08290  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.ColorSequence|table | table | table: 0x0000559353e07660  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.ColorSequenceKeypoint|table | table | table: 0x0000559353e076f0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.Content|table | table | table: 0x0000559354272cb0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.DateTime|table | table | table: 0x0000559353e07450  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.Delay|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc2b40  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.ElapsedTime|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc2ac0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.Enum|userdata | Enums | Enum  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.Faces|table | table | table: 0x0000559353e072a0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.FloatCurveKey|table | table | table: 0x0000559353e077b0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.Font|table | table | table: 0x0000559353de11a0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.Game|userdata | Instance | Game  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.Instance|table | table | table: 0x0000559353e07090  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.LoadLibrary|true | function | function | rustudio.library | 27 | LoadLibrary | 1 | false | function: 0x000055935536e440  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.NumberRange|table | table | table: 0x0000559353e078a0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.NumberSequence|table | table | table: 0x0000559353e07750  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.NumberSequenceKeypoint|table | table | table: 0x0000559353e07840  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.OverlapParams|table | table | table: 0x0000559353e07180  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.Path2DControlPoint|table | table | table: 0x00005593554240b0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.PathWaypoint|table | table | table: 0x0000559355424290  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.PhysicalProperties|table | table | table: 0x0000559353e075a0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.Random|table | table | table: 0x0000559353e074b0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.Ray|table | table | table: 0x0000559353e07a80  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.RaycastParams|table | table | table: 0x0000559353e071e0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.Rect|table | table | table: 0x0000559353e07600  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.Region3|table | table | table: 0x0000559353e07a20  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.Region3int16|table | table | table: 0x0000559353e079c0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.RotationCurveKey|table | table | table: 0x00005593554265a0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.SharedTable|table | table | table: 0x0000559354272d70  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.Spawn|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc2b80  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.TweenInfo|table | table | table: 0x0000559353e07510  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.UDim|table | table | table: 0x0000559353e07f30  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.UDim2|table | table | table: 0x0000559353e07ed0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.User|table | table | table: 0x0000559354272350  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.UserSettings|true | function | function | rustudio.library | 186 | UserSettings | 0 | false | function: 0x0000559353dde260  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.ValueCurveKey|table | table | table: 0x0000559355426510  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.Vector2|table | table | table: 0x0000559353ddf8e0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.Vector2int16|table | table | table: 0x0000559353e07900  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.Vector3|table | table | table: 0x0000559353de10b0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.Vector3int16|table | table | table: 0x0000559353e07960  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.Workspace|userdata | Instance | Workspace  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index._G|table | table | table: 0x0000559355365f90  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index._VERSION|string | string | Luau 0.745  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__ac_capture_begin|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005593554647d0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__ac_capture_known|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355464750  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__ac_capture_poll|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005593557fb3c0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__ac_capture_prompt|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355464710  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__ac_content_begin|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005593554631d0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__ac_content_ids|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355463110  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__ac_content_poll|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355463190  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__ac_create_decal|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355463250  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__ac_instance_composition|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355463290  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__ac_is_server|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005593554646d0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__ac_pages|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355464b10  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__ac_scene_mem_begin|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355463390  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__ac_scene_mem_restore|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355463350  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__ac_script_memory|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005593554632d0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__ac_unparented|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355463310  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__ac_web_begin|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355464b90  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__ac_web_poll|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355464b50  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__geo_nav|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005593541ecf00  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__geo_ops|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005593541ecd80  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_anim_after|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005593541ed440  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_anim_asset|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005593541ed500  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_anim_drive|true | function | function | rustudio.library | 867 | __rs_anim_drive | 0 | false | function: 0x0000559353dc1800  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_anim_joint_spec|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005593541ed480  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_anim_joint_upgrade|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005593541ed4c0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_anim_register|true | function | function | rustudio.library | 473 | __rs_anim_register | 2 | false | function: 0x0000559353dc1e40  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_anim_registered|true | function | function | rustudio.library | 474 | __rs_anim_registered | 1 | false | function: 0x0000559353dddd50  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_anim_rotation_list|true | function | function | rustudio.anim | 253 | rc_list | 1 | false | function: 0x00005593541ed1c0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_anim_rotation_value|true | function | function | rustudio.anim | 266 | rc_value | 2 | false | function: 0x00005593541ed180  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_asset_begin|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355463150  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_asset_ready|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc2580  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_avatar_get|true | function | function | rustudio.avatar | 56 | get | 1 | false | function: 0x0000559354269ee0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_avatar_load|true | function | function | rustudio.avatar.apply | 24 | fetch | 2 | false | function: 0x0000559354269b60  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_avatar_prompt_answer|true | function | function | rustudio.avatar | 259 | __rs_avatar_prompt_answer | 2 | false | function: 0x0000559354203590  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_cg|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc2480  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_gated_events|table | table | table: 0x0000559353e06850  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_get_callback|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc2440  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_has_peer|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355463090  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_input_event|true | function | function | rustudio.gui_input | 1760 |  | 9 | false | function: 0x00005593541dff80  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_input_frame_end|true | function | function | rustudio.library | 1274 | __rs_input_frame_end | 0 | false | function: 0x0000559354272ec0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_invoke_reply|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355463010  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_invoke_server|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355463050  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_kfs_parts|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc25c0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_lua_methods|table | table | table: 0x0000559353de16b0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_make_input_object|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc5640  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_make_signal|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc5600  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_member_check|true | function | function | rustudio.prelude | 166 | __rs_member_check | 3 | false | function: 0x000055935536faa0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_new_input_object|true | function | function | rustudio.library | 1230 | new_input_object | 1 | false | function: 0x000055935426cda0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_new_signal|true | function | function | rustudio.prelude | 45 | __rs_new_signal | 2 | false | function: 0x0000559353e069d0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_pages_list|true | function | function | rustudio.pages | 8 | __rs_pages_list | 3 | false | function: 0x00005593542723b0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_pages_new|true | function | function | rustudio.pages | 4 | __rs_pages_new | 2 | false | function: 0x00005593542723e0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_particles|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc24c0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_pc_chat_input|true | function | function | rustudio.players_chat | 801 | __rs_pc_chat_input | 1 | false | function: 0x0000559355464c90  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_pc_chat_view|true | function | function | rustudio.players_chat | 782 | __rs_pc_chat_view | 0 | false | function: 0x0000559355464cd0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_pc_clear_view|true | function | function | rustudio.players_chat | 796 | __rs_pc_clear_view | 0 | false | function: 0x000055935544dfc0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_pc_client_receive|true | function | function | rustudio.players_chat | 619 | __rs_pc_client_receive | 5 | false | function: 0x0000559354236620  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_pc_get|true | function | function | rustudio.players_chat | 50 | __rs_pc_get | 2 | false | function: 0x000055935544e320  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_pc_outbox|table | table | table: 0x000055935544ddb0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_pc_server_receive|true | function | function | rustudio.players_chat | 593 | __rs_pc_server_receive | 5 | false | function: 0x0000559354217ca0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_pc_set|true | function | function | rustudio.players_chat | 57 | __rs_pc_set | 3 | false | function: 0x000055935544e2f0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_pc_step|true | function | function | rustudio.players_chat | 771 | __rs_pc_step | 0 | false | function: 0x0000559354217c30  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_pc_translator|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355464bd0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_product_info|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc2500  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_profile|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc2540  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_require_for|true | function | function | rustudio.prelude | 160 | __rs_require_for | 1 | false | function: 0x0000559353e06970  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_seat|true | function | function | rustudio.library | 1524 | __rs_seat | 3 | false | function: 0x0000559353e06700  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_serve_client_invoke|true | function | function | rustudio.invoke | 26 | __rs_serve_client_invoke | 2 | true | function: 0x000055935545b360  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_serve_invoke|true | function | function | rustudio.invoke | 40 | __rs_serve_invoke | 3 | true | function: 0x000055935545b340  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_set_raw|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc2400  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_track_get|true | function | function | rustudio.library | 907 | __rs_track_get | 2 | false | function: 0x0000559353dddc60  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_track_set|true | function | function | rustudio.library | 922 | __rs_track_set | 3 | false | function: 0x0000559353dddc30  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_tracks|table | table | table: 0x0000559353e06190  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_tween_get|true | function | function | rustudio.library | 272 | __rs_tween_get | 2 | false | function: 0x0000559353dde020  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_unseat|true | function | function | rustudio.library | 1552 | __rs_unseat | 2 | false | function: 0x000055935421e230  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_user_game_settings|table | table | table: 0x0000559355365960  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__rs_window_focus|true | function | function | rustudio.library | 1279 | __rs_window_focus | 1 | false | function: 0x000055935426cd60  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__ws_begin|true | function | function | [C] | -1 |  | 0 | true | function: 0x000055935426c8a0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__ws_bundle_details|true | function | function | [string "web_social_http"] | 171 |  | 1 | false | function: 0x0000559354206bc0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__ws_campaign_record|true | function | function | rustudio.web_social.ads | 69 | campaign_record | 3 | false | function: 0x000055935426b460  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__ws_filter|true | function | function | [C] | -1 |  | 0 | true | function: 0x000055935426c7a0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__ws_filter_text|true | function | function | [C] | -1 |  | 0 | true | function: 0x000055935426c7e0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__ws_info_type|true | function | function | [C] | -1 |  | 0 | true | function: 0x000055935426c920  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__ws_owned|true | function | function | [C] | -1 |  | 0 | true | function: 0x000055935426c8e0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__ws_page_copy|true | function | function | [C] | -1 |  | 0 | true | function: 0x000055935426c820  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__ws_poll|true | function | function | [C] | -1 |  | 0 | true | function: 0x000055935426c860  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__ws_send|true | function | function | [C] | -1 |  | 0 | true | function: 0x000055935426b8e0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.__ws_subscription_override|true | function | function | rustudio.web_social.cancel_subscription | 18 | cached | 3 | false | function: 0x0000559353e13370  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.addDialog|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 603 | addDialog | 1 | false | function: 0x0000559353dfbda0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.assert|true | function | function | [C] | -1 | assert | 0 | true | function: 0x0000559355365e70  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.bit32|table | table | table: 0x0000559355363da0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.buffer|table | table | table: 0x0000559355363a10  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.checkForLeaveArea|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 561 | checkForLeaveArea | 0 | false | function: 0x00005593557fd780  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.collectgarbage|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355362060  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.coroutine|table | table | table: 0x0000559355364b50  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.createChatNotificationGui|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 133 | createChatNotificationGui | 0 | false | function: 0x00005593558462b0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.createMessageDialog|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 215 | createMessageDialog | 0 | false | function: 0x000055935ec694f0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.currentTone|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 124 | currentTone | 0 | false | function: 0x000055935ec69550  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.debug|table | table | table: 0x00005593553620f0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.delay|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc2b40  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.dialogIsValid|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 710 | dialogIsValid | 1 | false | function: 0x000055935545a140  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.doDialog|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 517 | doDialog | 1 | false | function: 0x00005593554739b0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.elapsedTime|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc2ac0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.endDialog|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 268 | endDialog | 0 | false | function: 0x00005593557f36a0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.error|true | function | function | [C] | -1 | error | 0 | true | function: 0x0000559355365e40  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.game|userdata | Instance | Game  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.gcinfo|true | function | function | [C] | -1 | gcinfo | 0 | true | function: 0x0000559355365e10  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.getChatColor|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 171 | getChatColor | 1 | false | function: 0x000055935545a620  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.getLocalHumanoidRootPart|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 704 | getLocalHumanoidRootPart | 0 | false | function: 0x000055935ec69430  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.getfenv|true | function | function | [C] | -1 | getfenv | 0 | true | function: 0x0000559355365de0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.getmetatable|true | function | function | [C] | -1 | getmetatable | 0 | true | function: 0x0000559355365db0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.initialize|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 405 | initialize | 1 | false | function: 0x0000559354216b20  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.integer|table | table | table: 0x00005593553630b0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.ipairs|true | function | function | [C] | -1 | ipairs | 0 | true | function: 0x0000559353dc5700  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.loadstring|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355362030  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.math|table | table | table: 0x00005593553628a0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.newChoice|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 358 | newChoice | 0 | false | function: 0x00005593557fd840  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.newproxy|true | function | function | [C] | -1 | newproxy | 0 | true | function: 0x0000559355365d50  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.next|true | function | function | [C] | -1 | next | 0 | true | function: 0x0000559355365d80  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.normalEndDialog|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 264 | normalEndDialog | 0 | false | function: 0x000055935545a420  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.onLoad|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 656 | onLoad | 0 | false | function: 0x0000559355473940  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.os|table | table | table: 0x00005593553644f0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.pairs|true | function | function | [C] | -1 | pairs | 0 | true | function: 0x0000559353dc56c0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.pcall|true | function | function | [C] | -1 | pcall | 0 | true | function: 0x0000559355365a80  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.presentDialogChoices|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 433 | presentDialogChoices | 3 | false | function: 0x000055935551ad50  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.print|true | function | function | rustudio.prelude | 66 | print | 0 | true | function: 0x0000559353dc2700  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.printidentity|true | function | function | rustudio.library | 26 | printidentity | 1 | false | function: 0x000055935536e460  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.rawequal|true | function | function | [C] | -1 | rawequal | 0 | true | function: 0x0000559355365cf0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.rawget|true | function | function | [C] | -1 | rawget | 0 | true | function: 0x0000559355365cc0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.rawlen|true | function | function | [C] | -1 | rawlen | 0 | true | function: 0x0000559355365c60  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.rawset|true | function | function | [C] | -1 | rawset | 0 | true | function: 0x0000559355365c90  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.removeDialog|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 592 | removeDialog | 1 | false | function: 0x00005593557ff200  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.renewKillswitch|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 542 | renewKillswitch | 1 | false | function: 0x0000559355846260  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.require|true | function | function | rustudio.prelude | 159 | require | 1 | false | function: 0x0000559353e069a0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.resetColor|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 248 | resetColor | 1 | false | function: 0x000055935545a560  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.sanitizeMessage|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 307 | sanitizeMessage | 1 | false | function: 0x000055935545a3a0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.select|true | function | function | [C] | -1 | select | 0 | true | function: 0x0000559355365c30  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.selectChoice|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 323 | selectChoice | 1 | false | function: 0x0000559354221e90  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.setChatNotificationTone|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 199 | setChatNotificationTone | 3 | false | function: 0x00005593557ff000  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.setUsingGamepad|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 53 | setUsingGamepad | 2 | false | function: 0x000055935ec697c0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.setfenv|true | function | function | [C] | -1 | setfenv | 0 | true | function: 0x0000559355365c00  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.setmetatable|true | function | function | [C] | -1 | setmetatable | 0 | true | function: 0x0000559355365bd0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.settings|true | function | function | rustudio.library | 173 | settings | 0 | false | function: 0x0000559353dde290  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.shared|table | table | table: 0x0000559353e06e50  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.showMessage|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 234 | showMessage | 2 | false | function: 0x000055935ec694c0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.spawn|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc2b80  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.startDialog|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 570 | startDialog | 1 | false | function: 0x0000559355846210  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.stats|true | function | function | rustudio.library | 187 | stats | 0 | false | function: 0x0000559353dde200  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.string|table | table | table: 0x0000559355364370  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.styleChoices|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 181 | styleChoices | 0 | false | function: 0x00005593557fd880  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.styleMainFrame|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 188 | styleMainFrame | 1 | false | function: 0x000055935ec69520  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.table|table | table | table: 0x0000559355364910  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.task|table | table | table: 0x0000559353e07030  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.tick|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc2a80  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.time|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc2b00  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.timeoutDialog|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 258 | timeoutDialog | 0 | false | function: 0x000055935ec69460  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.tonumber|true | function | function | [C] | -1 | tonumber | 0 | true | function: 0x0000559355365ba0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.tostring|true | function | function | [C] | -1 | tostring | 0 | true | function: 0x0000559355365b70  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.type|true | function | function | [C] | -1 | type | 0 | true | function: 0x0000559355365b40  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.typeof|true | function | function | [C] | -1 | typeof | 0 | true | function: 0x0000559355365b10  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.unpack|true | function | function | [C] | -1 | unpack | 0 | true | function: 0x00005593553645b0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.utf8|table | table | table: 0x0000559355363f50  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.variableDelay|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 243 | variableDelay | 1 | false | function: 0x000055935545a580  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.vector|table | table | table: 0x0000559355363470  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.version|true | function | function | rustudio.library | 25 | version | 0 | false | function: 0x000055935536e480  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.wait|true | function | function | rustudio.prelude | 53 | wait | 1 | false | function: 0x0000559353e15410  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.wanderDialog|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 252 | wanderDialog | 0 | false | function: 0x000055935ec69490  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.warn|true | function | function | rustudio.prelude | 70 | warn | 0 | true | function: 0x0000559353dc26c0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.workspace|userdata | Instance | Workspace  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.xpcall|true | function | function | [C] | -1 | xpcall | 0 | true | function: 0x0000559355365a50  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.env.index.index.ypcall|true | function | function | [C] | -1 | pcall | 0 | true | function: 0x0000559355365a80  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|meta.env.index.index|nil | nil  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.Axes|table | table | table: 0x0000559353e07240  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.BrickColor|table | table | table: 0x0000559353e08170  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.CFrame|table | table | table: 0x0000559353ddead0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.CatalogSearchParams|table | table | table: 0x0000559353e07120  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.Color3|table | table | table: 0x0000559353e08290  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.ColorSequence|table | table | table: 0x0000559353e07660  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.ColorSequenceKeypoint|table | table | table: 0x0000559353e076f0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.Content|table | table | table: 0x0000559354272cb0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.DateTime|table | table | table: 0x0000559353e07450  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.Delay|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc2b40  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.ElapsedTime|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc2ac0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.Enum|userdata | Enums | Enum  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.Faces|table | table | table: 0x0000559353e072a0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.FloatCurveKey|table | table | table: 0x0000559353e077b0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.Font|table | table | table: 0x0000559353de11a0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.Game|userdata | Instance | Game  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.Instance|table | table | table: 0x0000559353e07090  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.LoadLibrary|true | function | function | rustudio.library | 27 | LoadLibrary | 1 | false | function: 0x000055935536e440  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.NumberRange|table | table | table: 0x0000559353e078a0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.NumberSequence|table | table | table: 0x0000559353e07750  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.NumberSequenceKeypoint|table | table | table: 0x0000559353e07840  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.OverlapParams|table | table | table: 0x0000559353e07180  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.Path2DControlPoint|table | table | table: 0x00005593554240b0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.PathWaypoint|table | table | table: 0x0000559355424290  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.PhysicalProperties|table | table | table: 0x0000559353e075a0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.Random|table | table | table: 0x0000559353e074b0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.Ray|table | table | table: 0x0000559353e07a80  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.RaycastParams|table | table | table: 0x0000559353e071e0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.Rect|table | table | table: 0x0000559353e07600  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.Region3|table | table | table: 0x0000559353e07a20  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.Region3int16|table | table | table: 0x0000559353e079c0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.RotationCurveKey|table | table | table: 0x00005593554265a0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.SharedTable|table | table | table: 0x0000559354272d70  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.Spawn|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc2b80  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.TweenInfo|table | table | table: 0x0000559353e07510  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.UDim|table | table | table: 0x0000559353e07f30  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.UDim2|table | table | table: 0x0000559353e07ed0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.User|table | table | table: 0x0000559354272350  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.UserSettings|true | function | function | rustudio.library | 186 | UserSettings | 0 | false | function: 0x0000559353dde260  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.ValueCurveKey|table | table | table: 0x0000559355426510  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.Vector2|table | table | table: 0x0000559353ddf8e0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.Vector2int16|table | table | table: 0x0000559353e07900  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.Vector3|table | table | table: 0x0000559353de10b0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.Vector3int16|table | table | table: 0x0000559353e07960  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.Workspace|userdata | Instance | Workspace  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible._G|table | table | table: 0x0000559355365f90  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible._VERSION|string | string | Luau 0.745  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__ac_capture_begin|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005593554647d0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__ac_capture_known|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355464750  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__ac_capture_poll|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005593557fb3c0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__ac_capture_prompt|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355464710  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__ac_content_begin|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005593554631d0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__ac_content_ids|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355463110  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__ac_content_poll|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355463190  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__ac_create_decal|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355463250  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__ac_instance_composition|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355463290  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__ac_is_server|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005593554646d0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__ac_pages|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355464b10  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__ac_scene_mem_begin|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355463390  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__ac_scene_mem_restore|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355463350  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__ac_script_memory|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005593554632d0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__ac_unparented|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355463310  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__ac_web_begin|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355464b90  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__ac_web_poll|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355464b50  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__geo_nav|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005593541ecf00  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__geo_ops|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005593541ecd80  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_anim_after|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005593541ed440  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_anim_asset|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005593541ed500  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_anim_drive|true | function | function | rustudio.library | 867 | __rs_anim_drive | 0 | false | function: 0x0000559353dc1800  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_anim_joint_spec|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005593541ed480  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_anim_joint_upgrade|true | function | function | [C] | -1 |  | 0 | true | function: 0x00005593541ed4c0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_anim_register|true | function | function | rustudio.library | 473 | __rs_anim_register | 2 | false | function: 0x0000559353dc1e40  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_anim_registered|true | function | function | rustudio.library | 474 | __rs_anim_registered | 1 | false | function: 0x0000559353dddd50  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_anim_rotation_list|true | function | function | rustudio.anim | 253 | rc_list | 1 | false | function: 0x00005593541ed1c0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_anim_rotation_value|true | function | function | rustudio.anim | 266 | rc_value | 2 | false | function: 0x00005593541ed180  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_asset_begin|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355463150  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_asset_ready|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc2580  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_avatar_get|true | function | function | rustudio.avatar | 56 | get | 1 | false | function: 0x0000559354269ee0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_avatar_load|true | function | function | rustudio.avatar.apply | 24 | fetch | 2 | false | function: 0x0000559354269b60  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_avatar_prompt_answer|true | function | function | rustudio.avatar | 259 | __rs_avatar_prompt_answer | 2 | false | function: 0x0000559354203590  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_cg|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc2480  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_gated_events|table | table | table: 0x0000559353e06850  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_get_callback|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc2440  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_has_peer|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355463090  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_input_event|true | function | function | rustudio.gui_input | 1760 |  | 9 | false | function: 0x00005593541dff80  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_input_frame_end|true | function | function | rustudio.library | 1274 | __rs_input_frame_end | 0 | false | function: 0x0000559354272ec0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_invoke_reply|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355463010  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_invoke_server|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355463050  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_kfs_parts|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc25c0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_lua_methods|table | table | table: 0x0000559353de16b0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_make_input_object|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc5640  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_make_signal|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc5600  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_member_check|true | function | function | rustudio.prelude | 166 | __rs_member_check | 3 | false | function: 0x000055935536faa0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_new_input_object|true | function | function | rustudio.library | 1230 | new_input_object | 1 | false | function: 0x000055935426cda0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_new_signal|true | function | function | rustudio.prelude | 45 | __rs_new_signal | 2 | false | function: 0x0000559353e069d0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_pages_list|true | function | function | rustudio.pages | 8 | __rs_pages_list | 3 | false | function: 0x00005593542723b0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_pages_new|true | function | function | rustudio.pages | 4 | __rs_pages_new | 2 | false | function: 0x00005593542723e0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_particles|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc24c0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_pc_chat_input|true | function | function | rustudio.players_chat | 801 | __rs_pc_chat_input | 1 | false | function: 0x0000559355464c90  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_pc_chat_view|true | function | function | rustudio.players_chat | 782 | __rs_pc_chat_view | 0 | false | function: 0x0000559355464cd0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_pc_clear_view|true | function | function | rustudio.players_chat | 796 | __rs_pc_clear_view | 0 | false | function: 0x000055935544dfc0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_pc_client_receive|true | function | function | rustudio.players_chat | 619 | __rs_pc_client_receive | 5 | false | function: 0x0000559354236620  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_pc_get|true | function | function | rustudio.players_chat | 50 | __rs_pc_get | 2 | false | function: 0x000055935544e320  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_pc_outbox|table | table | table: 0x000055935544ddb0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_pc_server_receive|true | function | function | rustudio.players_chat | 593 | __rs_pc_server_receive | 5 | false | function: 0x0000559354217ca0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_pc_set|true | function | function | rustudio.players_chat | 57 | __rs_pc_set | 3 | false | function: 0x000055935544e2f0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_pc_step|true | function | function | rustudio.players_chat | 771 | __rs_pc_step | 0 | false | function: 0x0000559354217c30  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_pc_translator|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355464bd0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_product_info|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc2500  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_profile|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc2540  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_require_for|true | function | function | rustudio.prelude | 160 | __rs_require_for | 1 | false | function: 0x0000559353e06970  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_seat|true | function | function | rustudio.library | 1524 | __rs_seat | 3 | false | function: 0x0000559353e06700  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_serve_client_invoke|true | function | function | rustudio.invoke | 26 | __rs_serve_client_invoke | 2 | true | function: 0x000055935545b360  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_serve_invoke|true | function | function | rustudio.invoke | 40 | __rs_serve_invoke | 3 | true | function: 0x000055935545b340  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_set_raw|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc2400  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_track_get|true | function | function | rustudio.library | 907 | __rs_track_get | 2 | false | function: 0x0000559353dddc60  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_track_set|true | function | function | rustudio.library | 922 | __rs_track_set | 3 | false | function: 0x0000559353dddc30  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_tracks|table | table | table: 0x0000559353e06190  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_tween_get|true | function | function | rustudio.library | 272 | __rs_tween_get | 2 | false | function: 0x0000559353dde020  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_unseat|true | function | function | rustudio.library | 1552 | __rs_unseat | 2 | false | function: 0x000055935421e230  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_user_game_settings|table | table | table: 0x0000559355365960  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__rs_window_focus|true | function | function | rustudio.library | 1279 | __rs_window_focus | 1 | false | function: 0x000055935426cd60  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__ws_begin|true | function | function | [C] | -1 |  | 0 | true | function: 0x000055935426c8a0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__ws_bundle_details|true | function | function | [string "web_social_http"] | 171 |  | 1 | false | function: 0x0000559354206bc0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__ws_campaign_record|true | function | function | rustudio.web_social.ads | 69 | campaign_record | 3 | false | function: 0x000055935426b460  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__ws_filter|true | function | function | [C] | -1 |  | 0 | true | function: 0x000055935426c7a0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__ws_filter_text|true | function | function | [C] | -1 |  | 0 | true | function: 0x000055935426c7e0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__ws_info_type|true | function | function | [C] | -1 |  | 0 | true | function: 0x000055935426c920  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__ws_owned|true | function | function | [C] | -1 |  | 0 | true | function: 0x000055935426c8e0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__ws_page_copy|true | function | function | [C] | -1 |  | 0 | true | function: 0x000055935426c820  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__ws_poll|true | function | function | [C] | -1 |  | 0 | true | function: 0x000055935426c860  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__ws_send|true | function | function | [C] | -1 |  | 0 | true | function: 0x000055935426b8e0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.__ws_subscription_override|true | function | function | rustudio.web_social.cancel_subscription | 18 | cached | 3 | false | function: 0x0000559353e13370  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.addDialog|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 603 | addDialog | 1 | false | function: 0x0000559353dfbda0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.assert|true | function | function | [C] | -1 | assert | 0 | true | function: 0x0000559355365e70  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.bit32|table | table | table: 0x0000559355363da0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.buffer|table | table | table: 0x0000559355363a10  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.checkForLeaveArea|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 561 | checkForLeaveArea | 0 | false | function: 0x00005593557fd780  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.collectgarbage|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355362060  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.coroutine|table | table | table: 0x0000559355364b50  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.createChatNotificationGui|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 133 | createChatNotificationGui | 0 | false | function: 0x00005593558462b0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.createMessageDialog|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 215 | createMessageDialog | 0 | false | function: 0x000055935ec694f0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.currentTone|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 124 | currentTone | 0 | false | function: 0x000055935ec69550  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.debug|table | table | table: 0x00005593553620f0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.delay|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc2b40  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.dialogIsValid|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 710 | dialogIsValid | 1 | false | function: 0x000055935545a140  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.doDialog|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 517 | doDialog | 1 | false | function: 0x00005593554739b0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.elapsedTime|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc2ac0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.endDialog|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 268 | endDialog | 0 | false | function: 0x00005593557f36a0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.error|true | function | function | [C] | -1 | error | 0 | true | function: 0x0000559355365e40  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.game|userdata | Instance | Game  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.gcinfo|true | function | function | [C] | -1 | gcinfo | 0 | true | function: 0x0000559355365e10  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.getChatColor|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 171 | getChatColor | 1 | false | function: 0x000055935545a620  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.getLocalHumanoidRootPart|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 704 | getLocalHumanoidRootPart | 0 | false | function: 0x000055935ec69430  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.getfenv|true | function | function | [C] | -1 | getfenv | 0 | true | function: 0x0000559355365de0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.getmetatable|true | function | function | [C] | -1 | getmetatable | 0 | true | function: 0x0000559355365db0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.initialize|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 405 | initialize | 1 | false | function: 0x0000559354216b20  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.integer|table | table | table: 0x00005593553630b0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.ipairs|true | function | function | [C] | -1 | ipairs | 0 | true | function: 0x0000559353dc5700  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.loadstring|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355362030  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.math|table | table | table: 0x00005593553628a0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.newChoice|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 358 | newChoice | 0 | false | function: 0x00005593557fd840  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.newproxy|true | function | function | [C] | -1 | newproxy | 0 | true | function: 0x0000559355365d50  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.next|true | function | function | [C] | -1 | next | 0 | true | function: 0x0000559355365d80  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.normalEndDialog|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 264 | normalEndDialog | 0 | false | function: 0x000055935545a420  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.onLoad|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 656 | onLoad | 0 | false | function: 0x0000559355473940  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.os|table | table | table: 0x00005593553644f0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.pairs|true | function | function | [C] | -1 | pairs | 0 | true | function: 0x0000559353dc56c0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.pcall|true | function | function | [C] | -1 | pcall | 0 | true | function: 0x0000559355365a80  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.presentDialogChoices|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 433 | presentDialogChoices | 3 | false | function: 0x000055935551ad50  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.print|true | function | function | rustudio.prelude | 66 | print | 0 | true | function: 0x0000559353dc2700  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.printidentity|true | function | function | rustudio.library | 26 | printidentity | 1 | false | function: 0x000055935536e460  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.rawequal|true | function | function | [C] | -1 | rawequal | 0 | true | function: 0x0000559355365cf0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.rawget|true | function | function | [C] | -1 | rawget | 0 | true | function: 0x0000559355365cc0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.rawlen|true | function | function | [C] | -1 | rawlen | 0 | true | function: 0x0000559355365c60  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.rawset|true | function | function | [C] | -1 | rawset | 0 | true | function: 0x0000559355365c90  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.removeDialog|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 592 | removeDialog | 1 | false | function: 0x00005593557ff200  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.renewKillswitch|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 542 | renewKillswitch | 1 | false | function: 0x0000559355846260  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.require|true | function | function | rustudio.prelude | 160 |  | 1 | false | function: 0x000055935efb2810  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.resetColor|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 248 | resetColor | 1 | false | function: 0x000055935545a560  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.sanitizeMessage|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 307 | sanitizeMessage | 1 | false | function: 0x000055935545a3a0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.script|userdata | Instance | GlobalsProbe1  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.select|true | function | function | [C] | -1 | select | 0 | true | function: 0x0000559355365c30  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.selectChoice|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 323 | selectChoice | 1 | false | function: 0x0000559354221e90  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.setChatNotificationTone|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 199 | setChatNotificationTone | 3 | false | function: 0x00005593557ff000  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.setUsingGamepad|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 53 | setUsingGamepad | 2 | false | function: 0x000055935ec697c0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.setfenv|true | function | function | [C] | -1 | setfenv | 0 | true | function: 0x0000559355365c00  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.setmetatable|true | function | function | [C] | -1 | setmetatable | 0 | true | function: 0x0000559355365bd0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.settings|true | function | function | rustudio.library | 173 | settings | 0 | false | function: 0x0000559353dde290  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.shared|table | table | table: 0x0000559353e06e50  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.showMessage|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 234 | showMessage | 2 | false | function: 0x000055935ec694c0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.spawn|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc2b80  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.startDialog|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 570 | startDialog | 1 | false | function: 0x0000559355846210  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.stats|true | function | function | rustudio.library | 187 | stats | 0 | false | function: 0x0000559353dde200  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.string|table | table | table: 0x0000559355364370  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.styleChoices|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 181 | styleChoices | 0 | false | function: 0x00005593557fd880  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.styleMainFrame|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 188 | styleMainFrame | 1 | false | function: 0x000055935ec69520  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.table|table | table | table: 0x0000559355364910  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.task|table | table | table: 0x0000559353e07030  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.tick|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc2a80  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.time|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc2b00  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.timeoutDialog|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 258 | timeoutDialog | 0 | false | function: 0x000055935ec69460  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.tonumber|true | function | function | [C] | -1 | tonumber | 0 | true | function: 0x0000559355365ba0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.tostring|true | function | function | [C] | -1 | tostring | 0 | true | function: 0x0000559355365b70  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.type|true | function | function | [C] | -1 | type | 0 | true | function: 0x0000559355365b40  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.typeof|true | function | function | [C] | -1 | typeof | 0 | true | function: 0x0000559355365b10  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.unpack|true | function | function | [C] | -1 | unpack | 0 | true | function: 0x00005593553645b0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.utf8|table | table | table: 0x0000559355363f50  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.variableDelay|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 243 | variableDelay | 1 | false | function: 0x000055935545a580  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.vector|table | table | table: 0x0000559355363470  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.version|true | function | function | rustudio.library | 25 | version | 0 | false | function: 0x000055935536e480  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.wait|true | function | function | rustudio.prelude | 53 | wait | 1 | false | function: 0x0000559353e15410  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.wanderDialog|true | function | function | CoreGui.RobloxGui.CoreScripts/MainBotChatScript2 | 252 | wanderDialog | 0 | false | function: 0x000055935ec69490  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.warn|true | function | function | rustudio.prelude | 70 | warn | 0 | true | function: 0x0000559353dc26c0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.workspace|userdata | Instance | Workspace  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.xpcall|true | function | function | [C] | -1 | xpcall | 0 | true | function: 0x0000559355365a50  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.visible.ypcall|true | function | function | [C] | -1 | pcall | 0 | true | function: 0x0000559355365a80  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|meta.visible|nil | nil  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.coroutine.close|true | function | function | [C] | -1 | close | 0 | true | function: 0x0000559355364a00  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.coroutine.create|true | function | function | [C] | -1 | create | 0 | true | function: 0x0000559355364b20  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.coroutine.isyieldable|true | function | function | [C] | -1 | isyieldable | 0 | true | function: 0x0000559355364a30  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.coroutine.resume|true | function | function | [C] | -1 | resume | 0 | true | function: 0x00005593553649d0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.coroutine.running|true | function | function | [C] | -1 | running | 0 | true | function: 0x0000559355364af0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.coroutine.status|true | function | function | [C] | -1 | status | 0 | true | function: 0x0000559355364ac0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.coroutine.wrap|true | function | function | [C] | -1 | wrap | 0 | true | function: 0x0000559355364a90  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.coroutine.yield|true | function | function | [C] | -1 | yield | 0 | true | function: 0x0000559355364a60  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|meta.coroutine|nil | nil  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.task.cancel|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc2bc0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.task.defer|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc2c40  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.task.delay|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc2c00  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.task.desynchronize|true | function | function | rustudio.library | 377 |  | 0 | false | function: 0x000055935536e020  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.task.spawn|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559353dc2c80  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.task.synchronize|true | function | function | rustudio.library | 376 |  | 0 | false | function: 0x000055935536e040  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.task.wait|true | function | function | rustudio.prelude | 49 | wait | 1 | false | function: 0x0000559353ddd2c0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|meta.task|nil | nil  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.debug.info|true | function | function | [C] | -1 | info | 0 | true | function: 0x00005593553620c0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.debug.profilebegin|true | function | function | rustudio.library | 11 |  | 0 | false | function: 0x000055935536e620  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.debug.profileend|true | function | function | rustudio.library | 12 |  | 0 | false | function: 0x000055935536e600  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.debug.traceback|true | function | function | [C] | -1 | traceback | 0 | true | function: 0x0000559355362090  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|meta.debug|nil | nil  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.os.clock|true | function | function | [C] | -1 |  | 0 | true | function: 0x0000559355462ed0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.os.date|true | function | function | [C] | -1 | date | 0 | true | function: 0x0000559355364490  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.os.difftime|true | function | function | [C] | -1 | difftime | 0 | true | function: 0x0000559355364460  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.os.time|true | function | function | [C] | -1 | time | 0 | true | function: 0x0000559355364430  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|meta.os|nil | nil  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.abs|true | function | function | [C] | -1 | abs | 0 | true | function: 0x0000559355362870  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.acos|true | function | function | [C] | -1 | acos | 0 | true | function: 0x0000559355362840  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.asin|true | function | function | [C] | -1 | asin | 0 | true | function: 0x0000559355362810  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.atan|true | function | function | [C] | -1 | atan | 0 | true | function: 0x00005593553627b0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.atan2|true | function | function | [C] | -1 | atan2 | 0 | true | function: 0x00005593553627e0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.ceil|true | function | function | [C] | -1 | ceil | 0 | true | function: 0x0000559355362780  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.clamp|true | function | function | [C] | -1 | clamp | 0 | true | function: 0x0000559355362300  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.cos|true | function | function | [C] | -1 | cos | 0 | true | function: 0x0000559355362720  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.cosh|true | function | function | [C] | -1 | cosh | 0 | true | function: 0x0000559355362750  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.deg|true | function | function | [C] | -1 | deg | 0 | true | function: 0x00005593553626f0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.e|number | number | 2.718281828459045  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.exp|true | function | function | [C] | -1 | exp | 0 | true | function: 0x00005593553626c0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.floor|true | function | function | [C] | -1 | floor | 0 | true | function: 0x0000559355362690  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.fmod|true | function | function | [C] | -1 | fmod | 0 | true | function: 0x0000559355362660  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.frexp|true | function | function | [C] | -1 | frexp | 0 | true | function: 0x0000559355362630  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.huge|number | number | inf  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.isfinite|true | function | function | [C] | -1 | isfinite | 0 | true | function: 0x00005593553621b0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.isinf|true | function | function | [C] | -1 | isinf | 0 | true | function: 0x00005593553621e0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.isnan|true | function | function | [C] | -1 | isnan | 0 | true | function: 0x0000559355362210  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.ldexp|true | function | function | [C] | -1 | ldexp | 0 | true | function: 0x0000559355362600  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.lerp|true | function | function | [C] | -1 | lerp | 0 | true | function: 0x0000559355362240  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.log|true | function | function | [C] | -1 | log | 0 | true | function: 0x00005593553625a0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.log10|true | function | function | [C] | -1 | log10 | 0 | true | function: 0x00005593553625d0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.map|true | function | function | [C] | -1 | map | 0 | true | function: 0x0000559355362270  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.max|true | function | function | [C] | -1 | max | 0 | true | function: 0x0000559355362570  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.min|true | function | function | [C] | -1 | min | 0 | true | function: 0x0000559355362540  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.modf|true | function | function | [C] | -1 | modf | 0 | true | function: 0x0000559355362510  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.nan|number | number | nan  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.noise|true | function | function | [C] | -1 | noise | 0 | true | function: 0x0000559355362330  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.phi|number | number | 1.618033988749895  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.pi|number | number | 3.141592653589793  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.pow|true | function | function | [C] | -1 | pow | 0 | true | function: 0x00005593553624e0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.rad|true | function | function | [C] | -1 | rad | 0 | true | function: 0x00005593553624b0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.random|true | function | function | [C] | -1 | random | 0 | true | function: 0x0000559355362480  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.randomseed|true | function | function | [C] | -1 | randomseed | 0 | true | function: 0x0000559355362450  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.round|true | function | function | [C] | -1 | round | 0 | true | function: 0x00005593553622a0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.sign|true | function | function | [C] | -1 | sign | 0 | true | function: 0x00005593553622d0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.sin|true | function | function | [C] | -1 | sin | 0 | true | function: 0x00005593553623f0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.sinh|true | function | function | [C] | -1 | sinh | 0 | true | function: 0x0000559355362420  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.sqrt|true | function | function | [C] | -1 | sqrt | 0 | true | function: 0x00005593553623c0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.sqrt2|number | number | 1.4142135623730951  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.tan|true | function | function | [C] | -1 | tan | 0 | true | function: 0x0000559355362360  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.tanh|true | function | function | [C] | -1 | tanh | 0 | true | function: 0x0000559355362390  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.math.tau|number | number | 6.283185307179586  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|meta.math|nil | nil  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.string.byte|true | function | function | [C] | -1 | byte | 0 | true | function: 0x0000559355364340  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.string.char|true | function | function | [C] | -1 | char | 0 | true | function: 0x0000559355364310  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.string.find|true | function | function | [C] | -1 | find | 0 | true | function: 0x00005593553642e0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.string.format|true | function | function | [C] | -1 | format | 0 | true | function: 0x00005593553642b0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.string.gmatch|true | function | function | [C] | -1 | gmatch | 0 | true | function: 0x0000559355364280  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.string.gsub|true | function | function | [C] | -1 | gsub | 0 | true | function: 0x0000559355364250  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.string.len|true | function | function | [C] | -1 | len | 0 | true | function: 0x0000559355364220  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.string.lower|true | function | function | [C] | -1 | lower | 0 | true | function: 0x00005593553641f0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.string.match|true | function | function | [C] | -1 | match | 0 | true | function: 0x00005593553641c0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.string.pack|true | function | function | [C] | -1 | pack | 0 | true | function: 0x00005593553640a0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.string.packsize|true | function | function | [C] | -1 | packsize | 0 | true | function: 0x0000559355364070  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.string.rep|true | function | function | [C] | -1 | rep | 0 | true | function: 0x0000559355364190  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.string.reverse|true | function | function | [C] | -1 | reverse | 0 | true | function: 0x0000559355364160  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.string.split|true | function | function | [C] | -1 | split | 0 | true | function: 0x00005593553640d0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.string.sub|true | function | function | [C] | -1 | sub | 0 | true | function: 0x0000559355364130  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.string.unpack|true | function | function | [C] | -1 | unpack | 0 | true | function: 0x0000559355364040  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.string.upper|true | function | function | [C] | -1 | upper | 0 | true | function: 0x0000559355364100  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|meta.string|nil | nil  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.table.clear|true | function | function | [C] | -1 | clear | 0 | true | function: 0x0000559355364670  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.table.clone|true | function | function | [C] | -1 | clone | 0 | true | function: 0x00005593553645e0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.table.concat|true | function | function | [C] | -1 | concat | 0 | true | function: 0x00005593553648e0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.table.create|true | function | function | [C] | -1 | create | 0 | true | function: 0x00005593553646d0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.table.find|true | function | function | [C] | -1 | find | 0 | true | function: 0x00005593553646a0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.table.foreach|true | function | function | [C] | -1 | foreach | 0 | true | function: 0x00005593553648b0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.table.foreachi|true | function | function | [C] | -1 | foreachi | 0 | true | function: 0x0000559355364880  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.table.freeze|true | function | function | [C] | -1 | freeze | 0 | true | function: 0x0000559355364640  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.table.getn|true | function | function | [C] | -1 | getn | 0 | true | function: 0x0000559355364850  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.table.insert|true | function | function | [C] | -1 | insert | 0 | true | function: 0x00005593553647f0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.table.isfrozen|true | function | function | [C] | -1 | isfrozen | 0 | true | function: 0x0000559355364610  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.table.maxn|true | function | function | [C] | -1 | maxn | 0 | true | function: 0x0000559355364820  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.table.move|true | function | function | [C] | -1 | move | 0 | true | function: 0x0000559355364700  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.table.pack|true | function | function | [C] | -1 | pack | 0 | true | function: 0x0000559355364760  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.table.remove|true | function | function | [C] | -1 | remove | 0 | true | function: 0x00005593553647c0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.table.sort|true | function | function | [C] | -1 | sort | 0 | true | function: 0x0000559355364790  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.table.unpack|true | function | function | [C] | -1 | unpack | 0 | true | function: 0x0000559355364730  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|meta.table|nil | nil  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.utf8.char|true | function | function | [C] | -1 | char | 0 | true | function: 0x0000559355363ec0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.utf8.charpattern|string | string | [\x00-\x7f\xc2-\xf4][\x80-\xbf]*  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.utf8.codepoint|true | function | function | [C] | -1 | codepoint | 0 | true | function: 0x0000559355363ef0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.utf8.codes|true | function | function | [C] | -1 | codes | 0 | true | function: 0x0000559355363e60  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.utf8.len|true | function | function | [C] | -1 | len | 0 | true | function: 0x0000559355363e90  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.utf8.offset|true | function | function | [C] | -1 | offset | 0 | true | function: 0x0000559355363f20  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|meta.utf8|nil | nil  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.buffer.copy|true | function | function | [C] | -1 | copy | 0 | true | function: 0x00005593553635c0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.buffer.create|true | function | function | [C] | -1 | create | 0 | true | function: 0x00005593553639e0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.buffer.fill|true | function | function | [C] | -1 | fill | 0 | true | function: 0x0000559355363590  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.buffer.fromstring|true | function | function | [C] | -1 | fromstring | 0 | true | function: 0x00005593553639b0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.buffer.len|true | function | function | [C] | -1 | len | 0 | true | function: 0x00005593553635f0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.buffer.readbits|true | function | function | [C] | -1 | readbits | 0 | true | function: 0x0000559355363560  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.buffer.readf32|true | function | function | [C] | -1 | readf32 | 0 | true | function: 0x0000559355363830  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.buffer.readf64|true | function | function | [C] | -1 | readf64 | 0 | true | function: 0x0000559355363800  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.buffer.readi16|true | function | function | [C] | -1 | readi16 | 0 | true | function: 0x00005593553638f0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.buffer.readi32|true | function | function | [C] | -1 | readi32 | 0 | true | function: 0x0000559355363890  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.buffer.readi8|true | function | function | [C] | -1 | readi8 | 0 | true | function: 0x0000559355363950  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.buffer.readstring|true | function | function | [C] | -1 | readstring | 0 | true | function: 0x0000559355363650  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.buffer.readu16|true | function | function | [C] | -1 | readu16 | 0 | true | function: 0x00005593553638c0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.buffer.readu32|true | function | function | [C] | -1 | readu32 | 0 | true | function: 0x0000559355363860  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.buffer.readu8|true | function | function | [C] | -1 | readu8 | 0 | true | function: 0x0000559355363920  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.buffer.tostring|true | function | function | [C] | -1 | tostring | 0 | true | function: 0x0000559355363980  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.buffer.writebits|true | function | function | [C] | -1 | writebits | 0 | true | function: 0x0000559355363530  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.buffer.writef32|true | function | function | [C] | -1 | writef32 | 0 | true | function: 0x00005593553636b0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.buffer.writef64|true | function | function | [C] | -1 | writef64 | 0 | true | function: 0x0000559355363680  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.buffer.writei16|true | function | function | [C] | -1 | writei16 | 0 | true | function: 0x0000559355363770  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.buffer.writei32|true | function | function | [C] | -1 | writei32 | 0 | true | function: 0x0000559355363710  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.buffer.writei8|true | function | function | [C] | -1 | writei8 | 0 | true | function: 0x00005593553637d0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.buffer.writestring|true | function | function | [C] | -1 | writestring | 0 | true | function: 0x0000559355363620  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.buffer.writeu16|true | function | function | [C] | -1 | writeu16 | 0 | true | function: 0x0000559355363740  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.buffer.writeu32|true | function | function | [C] | -1 | writeu32 | 0 | true | function: 0x00005593553636e0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.buffer.writeu8|true | function | function | [C] | -1 | writeu8 | 0 | true | function: 0x00005593553637a0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|meta.buffer|nil | nil  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.bit32.arshift|true | function | function | [C] | -1 | arshift | 0 | true | function: 0x0000559355363d70  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.bit32.band|true | function | function | [C] | -1 | band | 0 | true | function: 0x0000559355363d40  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.bit32.bnot|true | function | function | [C] | -1 | bnot | 0 | true | function: 0x0000559355363d10  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.bit32.bor|true | function | function | [C] | -1 | bor | 0 | true | function: 0x0000559355363ce0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.bit32.btest|true | function | function | [C] | -1 | btest | 0 | true | function: 0x0000559355363c80  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.bit32.bxor|true | function | function | [C] | -1 | bxor | 0 | true | function: 0x0000559355363cb0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.bit32.byteswap|true | function | function | [C] | -1 | byteswap | 0 | true | function: 0x0000559355363ad0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.bit32.countlz|true | function | function | [C] | -1 | countlz | 0 | true | function: 0x0000559355363b30  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.bit32.countrz|true | function | function | [C] | -1 | countrz | 0 | true | function: 0x0000559355363b00  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.bit32.extract|true | function | function | [C] | -1 | extract | 0 | true | function: 0x0000559355363c50  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.bit32.lrotate|true | function | function | [C] | -1 | lrotate | 0 | true | function: 0x0000559355363c20  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.bit32.lshift|true | function | function | [C] | -1 | lshift | 0 | true | function: 0x0000559355363bf0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.bit32.replace|true | function | function | [C] | -1 | replace | 0 | true | function: 0x0000559355363bc0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.bit32.rrotate|true | function | function | [C] | -1 | rrotate | 0 | true | function: 0x0000559355363b90  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|inventory.bit32.rshift|true | function | function | [C] | -1 | rshift | 0 | true | function: 0x0000559355363b60  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|meta.bit32|nil | nil  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|tostring.tab|table | table | table: 0x0000559357bd00f0 | table: 0x0000559357bd00f0 | true  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|tostring.buf|buffer | buffer | buffer: 0x0000559353e215d0 | buffer: 0x0000559353e215d0 | true  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|tostring.instance|userdata | Instance | Game | Game | true  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|tostring.proxy|userdata | userdata | userdata: 0x0000559353e215f0 | userdata: 0x0000559353e215f0 | true  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|tostring.func|function | function | function: 0x0000559353b5b1d0 | function: 0x0000559353b5b1d0 | true  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|tostring.thread|thread | thread | thread: 0x0000559357809c40 | thread: 0x0000559357809c40 | true  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|gc.count|true | 23957.6630859375  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|gc.collect|true  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|gc.stop|true  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|gc.restart|true  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|gc.step|true | false  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|gc.setpause|false | Players.testuser1.PlayerScripts.GlobalsProbe1:20: collectgarbage called with invalid option  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|gc.setstepmul|false | Players.testuser1.PlayerScripts.GlobalsProbe1:20: collectgarbage called with invalid option  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|gc.isrunning|true | true  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|gc.bad|false | Players.testuser1.PlayerScripts.GlobalsProbe1:20: collectgarbage called with invalid option  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|gc.default|true  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|gc.info|true | 23023 | 23023.0166015625 | false  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|error.level0|false | message  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|error.level1|false | Players.testuser1.PlayerScripts.GlobalsProbe1:23: message  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|error.level2|false | message  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|error.level10|false | message  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|error.level-1|false | message  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|error.value.number|false | Players.testuser1.PlayerScripts.GlobalsProbe1:24: 23  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|error.value.boolean|false | false  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|error.value.table|false | table: 0x000055935431c710  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|error.value.userdata|false | userdata: 0x0000559353e215d0  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|assert.default|false | Players.testuser1.PlayerScripts.GlobalsProbe1:25: assertion failed!  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|assert.table|false | Players.testuser1.PlayerScripts.GlobalsProbe1:26: invalid argument #2 to 'assert' (string expected, got table)  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|assert.returns|true | true | a | 4  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|xpcall.handler|true | false | error in error handling  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|trace.default|true | Players.testuser1.PlayerScripts.GlobalsProbe1:29\nPlayers.testuser1.PlayerScripts.GlobalsProbe1:6 function probe\nPlayers.testuser1.PlayerScripts.GlobalsProbe1:29\n  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|trace.message|true | message\nPlayers.testuser1.PlayerScripts.GlobalsProbe1:30\nPlayers.testuser1.PlayerScripts.GlobalsProbe1:6 function probe\nPlayers.testuser1.PlayerScripts.GlobalsProbe1:30\n  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|trace.coroutine|true | co\nPlayers.testuser1.PlayerScripts.GlobalsProbe1:31\n  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|debug.level0|true | [C] | -1 | info | 0 | true  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|debug.level1|true | Players.testuser1.PlayerScripts.GlobalsProbe1 | 32 |  | 0 | false  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|debug.level2|true | [C] | -1 | pcall | 0 | true  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|debug.level50|true  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|debug.level-1|false | Players.testuser1.PlayerScripts.GlobalsProbe1:32: invalid argument #1 to 'info' (level can't be negative)  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|debug.thread|true | Players.testuser1.PlayerScripts.GlobalsProbe1 | 33 |  | 0 | false  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|getfenv.0|true | table | false | nil  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|getfenv.1|true | table | true | GlobalsProbe1  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|getfenv.2|true | table | false | nil  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|getfenv.50|false | Players.testuser1.PlayerScripts.GlobalsProbe1:34: invalid argument #1 to 'getfenv' (invalid level)  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|getfenv.-1|false | Players.testuser1.PlayerScripts.GlobalsProbe1:34: invalid argument #1 to 'getfenv' (level must be non-negative)  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] GLOBALS|client|getfenv.C|true | false | true  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Error: [Client] rustudio.prelude:67: attempt to index nil with 'info'
+Info: [Client] Stack Begin
+Info: [Client] Script 'Players.testuser1.PlayerScripts.GlobalsProbe1', Line 4 - function emit  —  Players.testuser1.PlayerScripts.GlobalsProbe1:4
+Info: [Client] Script 'Players.testuser1.PlayerScripts.GlobalsProbe1', Line 6 - function probe  —  Players.testuser1.PlayerScripts.GlobalsProbe1:6
+Info: [Client] Script 'Players.testuser1.PlayerScripts.GlobalsProbe1', Line 36  —  Players.testuser1.PlayerScripts.GlobalsProbe1:36
+Info: [Client] Stack End
+Error: [Client] rustudio.prelude:67: attempt to index nil with 'info'
+Info: [Client] Stack Begin
+Info: [Client] Script 'Players.testuser1.PlayerScripts.GlobalsProbe2', Line 4 - function emit  —  Players.testuser1.PlayerScripts.GlobalsProbe2:4
+Info: [Client] Script 'Players.testuser1.PlayerScripts.GlobalsProbe2', Line 6 - function probe  —  Players.testuser1.PlayerScripts.GlobalsProbe2:6
+Info: [Client] Script 'Players.testuser1.PlayerScripts.GlobalsProbe2', Line 10 - function inv  —  Players.testuser1.PlayerScripts.GlobalsProbe2:10
+Info: [Client] Script 'Players.testuser1.PlayerScripts.GlobalsProbe2', Line 13  —  Players.testuser1.PlayerScripts.GlobalsProbe2:13
+Info: [Client] Stack End
+[shot] /home/user/projects/rustudio/app/tools/parity_probe/globals/client.png
+[shot] /home/user/projects/rustudio/app/tools/parity_probe/globals/client.view.png

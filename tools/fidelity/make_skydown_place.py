@@ -1,0 +1,40 @@
+#!/usr/bin/env python3
+"""Writes corpus/skydown.rbxlx (round 26): an empty place (no terrain, no
+parts, no character) whose client camera looks ever further down into the
+default skybox, to see where Studio's bottom face (SkyboxDn) begins."""
+import os
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+cams = """local RunService = game:GetService("RunService")
+local cam = workspace.CurrentCamera
+local spots = {}
+for _, pitch in {0, 30, 45, 55, 65, 75, 90} do
+	table.insert(spots, CFrame.Angles(0, 0, 0) * CFrame.Angles(-math.rad(pitch), 0, 0))
+end
+table.insert(spots, CFrame.Angles(0, math.rad(45), 0) * CFrame.Angles(-math.rad(55), 0, 0))
+local t0 = os.clock()
+RunService:BindToRenderStep("SkyCams", Enum.RenderPriority.Camera.Value + 1, function()
+	local t = os.clock() - t0
+	local at = spots[1]
+	for i, s in spots do
+		if t >= 8 + (i - 1) * 4 - 2 then at = s end
+	end
+	cam.CameraType = Enum.CameraType.Scriptable
+	cam.FieldOfView = 70
+	cam.CFrame = CFrame.new(0, 100, 0) * at
+end)
+"""
+xml = f'''<roblox version="4">
+<Item class="Workspace" referent="1"><Properties><string name="Name">Workspace</string></Properties>
+<Item class="Terrain" referent="9"><Properties><string name="Name">Terrain</string></Properties></Item>
+</Item>
+<Item class="Lighting" referent="2"><Properties><string name="Name">Lighting</string>
+<float name="ClockTime">14</float><token name="Technology">3</token></Properties></Item>
+<Item class="StarterPlayer" referent="5"><Properties><string name="Name">StarterPlayer</string></Properties>
+<Item class="StarterPlayerScripts" referent="6"><Properties><string name="Name">StarterPlayerScripts</string></Properties>
+<Item class="LocalScript" referent="7"><Properties><string name="Name">SkyCams</string><ProtectedString name="Source">{cams}</ProtectedString></Properties></Item>
+</Item></Item>
+<Item class="Players" referent="8"><Properties><string name="Name">Players</string><bool name="CharacterAutoLoads">false</bool></Properties></Item>
+</roblox>
+'''
+open(os.path.join(HERE, "corpus", "skydown.rbxlx"), "w").write(xml)

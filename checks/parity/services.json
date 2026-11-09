@@ -1,0 +1,688 @@
+{
+ "Instance": {
+  "missing": [
+   "property IsInSandbox",
+   "property PredictionMode",
+   "property Sandboxed",
+   "function GetStyled",
+   "function GetStyledPropertyChangedSignal",
+   "function IsPropertyModified",
+   "function QueryDescendants",
+   "function ResetPropertyToDefault"
+  ],
+  "events_to_check": [
+   "AncestryChanged",
+   "AttributeChanged",
+   "ChildAdded",
+   "ChildRemoved",
+   "DescendantAdded",
+   "DescendantRemoving",
+   "Destroying",
+   "StyledPropertiesChanged",
+   "childAdded"
+  ]
+ },
+ "DataModel": {
+  "missing": [
+   "property GearGenreSetting",
+   "function GetMessage",
+   "function GetRemoteBuildMode",
+   "function IsGearTypeAllowed",
+   "function SavePlace"
+  ],
+  "events_to_check": [
+   "AllowedGearTypeChanged",
+   "GraphicsQualityChangeRequest",
+   "ItemChanged",
+   "Loaded",
+   "ServerLifecycleChanged",
+   "ServerLowMemoryWarning",
+   "ServerRestartScheduled"
+  ]
+ },
+ "RunService": {
+  "missing": [
+   "property FrameNumber",
+   "property RunState",
+   "function BindToAnimation",
+   "function BindToAnimationParallel",
+   "function BindToSimulation",
+   "function BindToSimulationParallel",
+   "function GetPredictionStatus",
+   "function IsResimulating",
+   "function SetPredictionMode"
+  ],
+  "events_to_check": [
+   "Heartbeat",
+   "Misprediction",
+   "PostSimulation",
+   "PreAnimation",
+   "PreRender",
+   "PreSimulation",
+   "RenderStepped",
+   "Rollback",
+   "Stepped"
+  ]
+ },
+ "LogService": {
+  "missing": [
+   "function ClearOutput",
+   "function Error",
+   "function GetLogHistory",
+   "function GetLogger",
+   "function Info",
+   "function Log",
+   "function Output",
+   "function Warn",
+   "function GetLogHistoryAsync"
+  ],
+  "events_to_check": [
+   "MessageOut"
+  ]
+ },
+ "ScriptContext": {
+  "missing": [
+   "function EnableCoverage",
+   "function GetCoverageStats"
+  ],
+  "events_to_check": [
+   "Error"
+  ]
+ },
+ "Stats": {
+  "missing": [
+   "property ContactsCount",
+   "property DataReceiveKbps",
+   "property DataSendKbps",
+   "property FrameTime",
+   "property HeartbeatTime",
+   "property HeartbeatTimeMs",
+   "property InstanceCount",
+   "property MemoryTrackingEnabled",
+   "property MovingPrimitivesCount",
+   "property PhysicsReceiveKbps",
+   "property PhysicsSendKbps",
+   "property PhysicsStepTime",
+   "property PhysicsStepTimeMs",
+   "property PrimitivesCount",
+   "property RenderCPUFrameTime",
+   "property RenderGPUFrameTime",
+   "property SceneDrawcallCount",
+   "property SceneTriangleCount",
+   "property ShadowsDrawcallCount",
+   "property ShadowsTriangleCount",
+   "property UI2DDrawcallCount",
+   "property UI2DTriangleCount",
+   "property UI3DDrawcallCount",
+   "property UI3DTriangleCount",
+   "function GetHarmonyQualityLevel",
+   "function GetMemoryCategoryNames",
+   "function GetMemoryUsageMbAllCategories",
+   "function GetMemoryUsageMbAllCategoriesFiltered",
+   "function GetMemoryUsageMbFiltered",
+   "function GetMemoryUsageMbForTag",
+   "function GetTotalMemoryUsageMb",
+   "function ResetHarmonyMemoryTarget",
+   "function SetHarmonyMemoryTarget"
+  ],
+  "events_to_check": []
+ },
+ "TaskScheduler": {
+  "missing": [
+   "property SchedulerDutyCycle",
+   "property SchedulerRate",
+   "property ThreadPoolSize"
+  ],
+  "events_to_check": []
+ },
+ "CollectionService": {
+  "missing": [
+   "function CreateCollection",
+   "function GetCollection",
+   "function GetCollections"
+  ],
+  "events_to_check": [
+   "ItemAdded",
+   "ItemRemoved",
+   "TagAdded",
+   "TagRemoved"
+  ]
+ },
+ "TweenService": {
+  "missing": [
+   "function SmoothDamp"
+  ],
+  "events_to_check": []
+ },
+ "HttpService": {
+  "missing": [
+   "function CreateWebStreamClient",
+   "function GetSecret"
+  ],
+  "events_to_check": []
+ },
+ "HttpRbxApiService": {
+  "missing": [
+   "function RequestLimitedAsync"
+  ],
+  "events_to_check": []
+ },
+ "EncodingService": {
+  "missing": [
+   "function Base64Decode",
+   "function Base64Encode",
+   "function CompressBuffer",
+   "function ComputeBufferHash",
+   "function ComputeStringHash",
+   "function DecompressBuffer",
+   "function GetDecompressedBufferSize"
+  ],
+  "events_to_check": []
+ },
+ "SerializationService": {
+  "missing": [
+   "function DeserializeInstancesAsync",
+   "function SerializeInstancesAsync"
+  ],
+  "events_to_check": []
+ },
+ "ReflectionService": {
+  "missing": [
+   "function GetClass",
+   "function GetClasses",
+   "function GetEventsOfClass",
+   "function GetMethodsOfClass",
+   "function GetPropertiesOfClass"
+  ],
+  "events_to_check": []
+ },
+ "WebSocketClient": {
+  "missing": [
+   "property ConnectionState",
+   "function Close",
+   "function Send"
+  ],
+  "events_to_check": [
+   "Closed",
+   "MessageReceived",
+   "Opened"
+  ]
+ },
+ "WebSocketService": {
+  "missing": [
+   "function CreateClient"
+  ],
+  "events_to_check": []
+ },
+ "WebStreamClient": {
+  "missing": [
+   "property ConnectionState",
+   "function Close",
+   "function Send"
+  ],
+  "events_to_check": [
+   "Closed",
+   "Error",
+   "MessageReceived",
+   "Opened"
+  ]
+ },
+ "AnalyticsService": {
+  "missing": [
+   "function FireCustomEvent",
+   "function FireEvent",
+   "function FireInGameEconomyEvent",
+   "function FireLogEvent",
+   "function FirePlayerProgressionEvent",
+   "function GetDurationLoggerTimestamp",
+   "function LogCustomEvent",
+   "function LogEconomyEvent",
+   "function LogFunnelStepEvent",
+   "function LogJourneyEvent",
+   "function LogOnboardingFunnelStepEvent",
+   "function LogProgressionCompleteEvent",
+   "function LogProgressionEvent",
+   "function LogProgressionFailEvent",
+   "function LogProgressionStartEvent",
+   "function GetPlayerSegmentsAsync"
+  ],
+  "events_to_check": []
+ },
+ "Logger": {
+  "missing": [
+   "property FullPath",
+   "function Error",
+   "function GetLogger",
+   "function Info",
+   "function Log",
+   "function Output",
+   "function Warn"
+  ],
+  "events_to_check": [
+   "MessageOut"
+  ]
+ },
+ "CustomLog": {
+  "missing": [
+   "function Close",
+   "function GetLogPath",
+   "function Open",
+   "function WriteAppend"
+  ],
+  "events_to_check": []
+ },
+ "CustomEvent": {
+  "missing": [
+   "function GetAttachedReceivers",
+   "function SetValue"
+  ],
+  "events_to_check": [
+   "ReceiverConnected",
+   "ReceiverDisconnected"
+  ]
+ },
+ "CustomEventReceiver": {
+  "missing": [
+   "function GetCurrentValue"
+  ],
+  "events_to_check": [
+   "EventConnected",
+   "EventDisconnected",
+   "SourceValueChanged"
+  ]
+ },
+ "UserSettings": {
+  "missing": [
+   "function IsUserFeatureEnabled",
+   "function Reset"
+  ],
+  "events_to_check": []
+ },
+ "UserGameSettings": {
+  "missing": [
+   "property RotationType",
+   "function GetCameraYInvertValue",
+   "function GetOnboardingCompleted",
+   "function InFullScreen",
+   "function InStudioMode",
+   "function SetCameraYInvertVisible",
+   "function SetGamepadCameraSensitivityVisible",
+   "function SetOnboardingCompleted"
+  ],
+  "events_to_check": [
+   "FullscreenChanged",
+   "StudioModeChanged"
+  ]
+ },
+ "GlobalSettings": {
+  "missing": [
+   "function GetFFlag",
+   "function GetFVariable"
+  ],
+  "events_to_check": []
+ },
+ "Selection": {
+  "missing": [
+   "property SelectionThickness"
+  ],
+  "events_to_check": [
+   "SelectionChanged"
+  ]
+ },
+ "ScriptService": {
+  "missing": [
+   "function ResolveModulePath"
+  ],
+  "events_to_check": []
+ },
+ "UniqueIdLookupService": {
+  "missing": [
+   "function GetOrCreateUniqueIdRemoteCommand"
+  ],
+  "events_to_check": []
+ },
+ "MicroProfilerService": {
+  "missing": [
+   "function GetDataInRange",
+   "function GetDataSize",
+   "function ProcessCommand"
+  ],
+  "events_to_check": [
+   "DataChanged"
+  ]
+ },
+ "LanguageService": {
+  "missing": [
+   "function GetCapabilitiesUsedInPackageAsync"
+  ],
+  "events_to_check": []
+ },
+ "RomarkService": {
+  "missing": [
+   "function EndRemoteRomarkTest"
+  ],
+  "events_to_check": []
+ },
+ "GeneratedFolder": {
+  "missing": [
+   "function SetPrimaryPart"
+  ],
+  "events_to_check": []
+ },
+ "ExplorerServiceVisibilityService": {
+  "missing": [
+   "function GetServiceVisibility"
+  ],
+  "events_to_check": []
+ },
+ "NetworkReplicator": {
+  "missing": [
+   "function GetPlayer"
+  ],
+  "events_to_check": []
+ },
+ "NetworkServer": {
+  "missing": [
+   "function EncryptStringForPlayerId"
+  ],
+  "events_to_check": []
+ },
+ "_unassigned": {
+  "TweenBase": {
+   "missing": [],
+   "events_to_check": [
+    "Completed"
+   ]
+  },
+  "NetworkClient": {
+   "missing": [],
+   "events_to_check": [
+    "ConnectionAccepted",
+    "ConnectionFailed"
+   ]
+  },
+  "BrickColorValue": {
+   "missing": [],
+   "events_to_check": [
+    "Changed",
+    "changed"
+   ]
+  },
+  "RayValue": {
+   "missing": [],
+   "events_to_check": [
+    "Changed",
+    "changed"
+   ]
+  },
+  "Vector3Value": {
+   "missing": [],
+   "events_to_check": [
+    "Changed",
+    "changed"
+   ]
+  },
+  "NetworkMarker": {
+   "missing": [],
+   "events_to_check": [
+    "Received"
+   ]
+  },
+  "StringValue": {
+   "missing": [],
+   "events_to_check": [
+    "Changed",
+    "changed"
+   ]
+  },
+  "CFrameValue": {
+   "missing": [],
+   "events_to_check": [
+    "Changed",
+    "changed"
+   ]
+  },
+  "ClickDetector": {
+   "missing": [],
+   "events_to_check": [
+    "MouseClick",
+    "MouseHoverEnter",
+    "MouseHoverLeave",
+    "RightMouseClick",
+    "mouseClick"
+   ]
+  },
+  "BoolValue": {
+   "missing": [],
+   "events_to_check": [
+    "Changed",
+    "changed"
+   ]
+  },
+  "TerrainReadOperation": {
+   "missing": [],
+   "events_to_check": [
+    "Ready"
+   ]
+  },
+  "TextChatCommand": {
+   "missing": [],
+   "events_to_check": [
+    "Triggered"
+   ]
+  },
+  "RemoteEvent": {
+   "missing": [],
+   "events_to_check": [
+    "OnClientEvent",
+    "OnServerEvent"
+   ]
+  },
+  "ProximityPromptService": {
+   "missing": [],
+   "events_to_check": [
+    "IndicatorHidden",
+    "IndicatorShown",
+    "PromptButtonHoldBegan",
+    "PromptButtonHoldEnded",
+    "PromptHidden",
+    "PromptShown",
+    "PromptTriggerEnded",
+    "PromptTriggered"
+   ]
+  },
+  "ServiceProvider": {
+   "missing": [],
+   "events_to_check": [
+    "Close",
+    "ServiceAdded",
+    "ServiceRemoving"
+   ]
+  },
+  "Color3Value": {
+   "missing": [],
+   "events_to_check": [
+    "Changed",
+    "changed"
+   ]
+  },
+  "HandleAdornment": {
+   "missing": [],
+   "events_to_check": [
+    "MouseButton1Down",
+    "MouseButton1Up",
+    "MouseEnter",
+    "MouseLeave"
+   ]
+  },
+  "ObjectValue": {
+   "missing": [],
+   "events_to_check": [
+    "Changed",
+    "changed"
+   ]
+  },
+  "IntValue": {
+   "missing": [],
+   "events_to_check": [
+    "Changed",
+    "changed"
+   ]
+  },
+  "GuiBase2d": {
+   "missing": [],
+   "events_to_check": [
+    "SelectionChanged"
+   ]
+  },
+  "DoubleConstrainedValue": {
+   "missing": [],
+   "events_to_check": [
+    "Changed",
+    "changed"
+   ]
+  },
+  "IntConstrainedValue": {
+   "missing": [],
+   "events_to_check": [
+    "Changed",
+    "changed"
+   ]
+  },
+  "NumberValue": {
+   "missing": [],
+   "events_to_check": [
+    "Changed",
+    "changed"
+   ]
+  },
+  "RuntimeContentService": {
+   "missing": [],
+   "events_to_check": [
+    "RuntimeContentFail",
+    "RuntimeContentQuery",
+    "RuntimeContentShare"
+   ]
+  },
+  "BinaryStringValue": {
+   "missing": [],
+   "events_to_check": [
+    "Changed"
+   ]
+  },
+  "Mouse": {
+   "missing": [],
+   "events_to_check": [
+    "Button1Down",
+    "Button1Up",
+    "Button2Down",
+    "Button2Up",
+    "Idle",
+    "KeyDown",
+    "KeyUp",
+    "Move",
+    "WheelBackward",
+    "WheelForward",
+    "keyDown"
+   ]
+  },
+  "NotificationService": {
+   "missing": [],
+   "events_to_check": [
+    "Roblox17sConnectionChanged",
+    "Roblox17sEventReceived"
+   ]
+  },
+  "ArcHandles": {
+   "missing": [],
+   "events_to_check": [
+    "MouseButton1Down",
+    "MouseButton1Up",
+    "MouseDrag",
+    "MouseEnter",
+    "MouseLeave"
+   ]
+  },
+  "Team": {
+   "missing": [],
+   "events_to_check": [
+    "PlayerAdded",
+    "PlayerRemoved"
+   ]
+  },
+  "HopperBin": {
+   "missing": [],
+   "events_to_check": [
+    "Deselected",
+    "Selected"
+   ]
+  },
+  "FlagStand": {
+   "missing": [],
+   "events_to_check": [
+    "FlagCaptured"
+   ]
+  },
+  "Object": {
+   "missing": [],
+   "events_to_check": [
+    "Changed"
+   ]
+  },
+  "BindableEvent": {
+   "missing": [],
+   "events_to_check": [
+    "Event"
+   ]
+  },
+  "Handles": {
+   "missing": [],
+   "events_to_check": [
+    "MouseButton1Down",
+    "MouseButton1Up",
+    "MouseDrag",
+    "MouseEnter",
+    "MouseLeave"
+   ]
+  },
+  "Explosion": {
+   "missing": [],
+   "events_to_check": [
+    "Hit"
+   ]
+  },
+  "Lighting": {
+   "missing": [],
+   "events_to_check": [
+    "LightingChanged"
+   ]
+  },
+  "UnreliableRemoteEvent": {
+   "missing": [],
+   "events_to_check": [
+    "OnClientEvent",
+    "OnServerEvent"
+   ]
+  },
+  "GuiButton": {
+   "missing": [],
+   "events_to_check": [
+    "Activated",
+    "MouseButton1Click",
+    "MouseButton1Down",
+    "MouseButton1Up",
+    "MouseButton2Click",
+    "MouseButton2Down",
+    "MouseButton2Up",
+    "SecondaryActivated"
+   ]
+  },
+  "ImportSession": {
+   "missing": [],
+   "events_to_check": [
+    "UploadComplete",
+    "UploadProgress"
+   ]
+  }
+ }
+}

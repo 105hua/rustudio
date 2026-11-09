@@ -1,0 +1,2285 @@
+{
+ "version": 1,
+ "values": [
+  {
+   "name": "field of view",
+   "group": "camera",
+   "value": 70,
+   "unit": "deg",
+   "source": "Roblox Studio (offline Studio): workspace.CurrentCamera.FieldOfView = 70"
+  },
+  {
+   "name": "near clip",
+   "group": "camera",
+   "value": 0.1,
+   "unit": "studs",
+   "estimated": true
+  },
+  {
+   "name": "far clip",
+   "group": "camera",
+   "value": 10000,
+   "unit": "studs",
+   "estimated": true
+  },
+  {
+   "name": "mouse look sensitivity",
+   "group": "camera",
+   "value": 0.25,
+   "unit": "deg/px",
+   "estimated": true
+  },
+  {
+   "name": "camera speed",
+   "group": "camera",
+   "value": 1.5,
+   "unit": "x",
+   "source": "Studio: \"Camera Speed\" default at .data , registered by , read by "
+  },
+  {
+   "name": "fly base step",
+   "group": "camera",
+   "value": 0.5,
+   "unit": "studs/tick",
+   "source": "Studio , .rdata "
+  },
+  {
+   "name": "fly ramp after",
+   "group": "camera",
+   "value": 120,
+   "unit": "ticks",
+   "source": "Studio , .rdata "
+  },
+  {
+   "name": "fly ramp ticks per stud",
+   "group": "camera",
+   "value": 240,
+   "unit": "ticks",
+   "source": "Studio : step = min(ticks / 240, 15), .rdata "
+  },
+  {
+   "name": "fly step cap",
+   "group": "camera",
+   "value": 15,
+   "unit": "studs/tick",
+   "source": "Studio , .rdata "
+  },
+  {
+   "name": "fly tick rate",
+   "group": "camera",
+   "value": 142.7,
+   "unit": "ticks/s",
+   "source": "Studio ticks once per frame; this rate reproduces the offline Studio's measurement (107 studs/s, 300 after 2 s, 1070 after 4 s)",
+   "estimated": true
+  },
+  {
+   "name": "fly speed",
+   "group": "camera",
+   "value": 107,
+   "unit": "studs/s",
+   "source": "0.5 studs x Camera Speed 1.5 x 142.7 ticks/s (Studio /); an offline Studio measured 27/53/108 studs in 0.25/0.5/1 s"
+  },
+  {
+   "name": "fly speed shift factor",
+   "group": "camera",
+   "value": 0.2,
+   "unit": "x",
+   "source": "Studio: \"Camera Shift Speed\" default at .data  (registered by ), applied in ; Shift+W measured 21 studs/s"
+  },
+  {
+   "name": "fly hold reset",
+   "group": "camera",
+   "value": "at once when no movement key is held, and while Shift is held",
+   "source": "Studio caller at , counter [object+0x348]"
+  },
+  {
+   "name": "wheel zoom step",
+   "group": "camera",
+   "value": 15,
+   "unit": "studs/notch",
+   "source": "Studio: \"Camera Mouse Wheel Speed\" default at .data  (registered by ), used at ; measured 15.0 studs at 72 and 222 studs"
+  },
+  {
+   "name": "wheel zoom step with shift",
+   "group": "camera",
+   "value": 0.2,
+   "unit": "studs/notch",
+   "source": "Studio ..: Shift (KeyCode 303/304) uses Camera Shift Speed"
+  },
+  {
+   "name": "wheel zoom target",
+   "group": "camera",
+   "value": "ray under the cursor; camera and focus move together, no stop near the hit",
+   "source": "Studio .."
+  },
+  {
+   "name": "wheel smooth scroll per notch",
+   "group": "camera",
+   "value": 40,
+   "unit": "px",
+   "estimated": true
+  },
+  {
+   "name": "camera pan speed",
+   "group": "camera",
+   "value": 1,
+   "source": "Studio: \"Camera Pan Speed\" default at .data  (registered by ); not yet used"
+  },
+  {
+   "name": "zoom to mouse position",
+   "group": "camera",
+   "value": true,
+   "source": "Studio: \"Camera Zoom to Mouse Position\" default at .data  (registered by ), checked at "
+  },
+  {
+   "name": "pan per pixel",
+   "group": "camera",
+   "value": 0.0016,
+   "unit": "fraction of focus distance",
+   "estimated": true
+  },
+  {
+   "name": "focus framing factor",
+   "group": "camera",
+   "value": 1.6,
+   "unit": "x radius",
+   "estimated": true
+  },
+  {
+   "name": "camera modes",
+   "group": "camera",
+   "value": "fly and orbit",
+   "source": "person's request"
+  },
+  {
+   "name": "move snap",
+   "group": "tools",
+   "value": 1,
+   "unit": "studs",
+   "source": "Roblox Studio Home toolbar: \"1 studs\""
+  },
+  {
+   "name": "snapping on by default",
+   "group": "tools",
+   "value": false,
+   "source": "Roblox Studio Home toolbar: move and rotate snap boxes unticked (StudioService.GridSize 0.01, RotateIncrement 0)"
+  },
+  {
+   "name": "scale snap",
+   "group": "tools",
+   "value": 1,
+   "unit": "studs",
+   "estimated": true
+  },
+  {
+   "name": "rotate snap",
+   "group": "tools",
+   "value": 45,
+   "unit": "deg",
+   "source": "Roblox Studio Home toolbar: \"45°\""
+  },
+  {
+   "name": "increment change enables snap",
+   "group": "tools",
+   "value": true,
+   "source": "Studio  (\"Linear snap increment change -> enable linear snap\") and  (angle)"
+  },
+  {
+   "name": "minimum part size",
+   "group": "tools",
+   "value": 0.001,
+   "unit": "studs",
+   "estimated": true
+  },
+  {
+   "name": "move arrow length",
+   "group": "tools",
+   "value": 90,
+   "unit": "px",
+   "estimated": true
+  },
+  {
+   "name": "rotate ring radius",
+   "group": "tools",
+   "value": 80,
+   "unit": "px",
+   "estimated": true
+  },
+  {
+   "name": "handle grab distance",
+   "group": "tools",
+   "value": 10,
+   "unit": "px",
+   "estimated": true
+  },
+  {
+   "name": "drag select minimum",
+   "group": "tools",
+   "value": 6,
+   "unit": "px",
+   "estimated": true
+  },
+  {
+   "name": "scale is one-sided",
+   "group": "tools",
+   "value": true,
+   "estimated": true
+  },
+  {
+   "name": "default gizmo space",
+   "group": "tools",
+   "value": "world",
+   "estimated": true
+  },
+  {
+   "name": "select tool",
+   "group": "controls",
+   "value": "Ctrl+1",
+   "estimated": true
+  },
+  {
+   "name": "move tool",
+   "group": "controls",
+   "value": "Ctrl+2",
+   "estimated": true
+  },
+  {
+   "name": "scale tool",
+   "group": "controls",
+   "value": "Ctrl+3",
+   "estimated": true
+  },
+  {
+   "name": "rotate tool",
+   "group": "controls",
+   "value": "Ctrl+4",
+   "estimated": true
+  },
+  {
+   "name": "undo",
+   "group": "controls",
+   "value": "Ctrl+Z",
+   "source": "person's request (undo/redo)"
+  },
+  {
+   "name": "redo",
+   "group": "controls",
+   "value": "Ctrl+Y",
+   "estimated": true
+  },
+  {
+   "name": "duplicate",
+   "group": "controls",
+   "value": "Ctrl+D",
+   "estimated": true
+  },
+  {
+   "name": "copy",
+   "group": "controls",
+   "value": "Ctrl+C",
+   "source": "person's request (copy/paste)"
+  },
+  {
+   "name": "paste",
+   "group": "controls",
+   "value": "Ctrl+V",
+   "source": "person's request (copy/paste)"
+  },
+  {
+   "name": "delete",
+   "group": "controls",
+   "value": "Delete",
+   "estimated": true
+  },
+  {
+   "name": "group",
+   "group": "controls",
+   "value": "Ctrl+G",
+   "estimated": true
+  },
+  {
+   "name": "ungroup",
+   "group": "controls",
+   "value": "Ctrl+U",
+   "estimated": true
+  },
+  {
+   "name": "rename",
+   "group": "controls",
+   "value": "F2",
+   "estimated": true
+  },
+  {
+   "name": "focus selection",
+   "group": "controls",
+   "value": "F",
+   "estimated": true
+  },
+  {
+   "name": "toggle local space",
+   "group": "controls",
+   "value": "Ctrl+L",
+   "estimated": true
+  },
+  {
+   "name": "fly camera keys",
+   "group": "controls",
+   "value": "WASD + Q/E",
+   "estimated": true
+  },
+  {
+   "name": "look",
+   "group": "controls",
+   "value": "right mouse drag",
+   "estimated": true
+  },
+  {
+   "name": "pan",
+   "group": "controls",
+   "value": "middle mouse drag",
+   "estimated": true
+  },
+  {
+   "name": "orbit",
+   "group": "controls",
+   "value": "Alt + left drag",
+   "estimated": true
+  },
+  {
+   "name": "new part size x",
+   "group": "objects",
+   "value": 4,
+   "unit": "studs",
+   "estimated": true
+  },
+  {
+   "name": "new part size y",
+   "group": "objects",
+   "value": 1,
+   "unit": "studs",
+   "estimated": true
+  },
+  {
+   "name": "new part size z",
+   "group": "objects",
+   "value": 2,
+   "unit": "studs",
+   "estimated": true
+  },
+  {
+   "name": "new part colour",
+   "group": "objects",
+   "value": "163,162,165",
+   "source": "rbx_reflection_database default Part.Color"
+  },
+  {
+   "name": "new part anchored",
+   "group": "objects",
+   "value": true,
+   "estimated": true
+  },
+  {
+   "name": "baseplate size",
+   "group": "objects",
+   "value": "512x20x512",
+   "unit": "studs",
+   "estimated": true
+  },
+  {
+   "name": "baseplate colour",
+   "group": "objects",
+   "value": "99,95,98",
+   "estimated": true
+  },
+  {
+   "name": "grid spacing",
+   "group": "objects",
+   "value": 4,
+   "unit": "studs",
+   "estimated": true
+  },
+  {
+   "name": "clock time",
+   "group": "lighting",
+   "value": 14,
+   "unit": "h",
+   "estimated": true
+  },
+  {
+   "name": "brightness",
+   "group": "lighting",
+   "value": 2,
+   "estimated": true
+  },
+  {
+   "name": "geographic latitude",
+   "group": "lighting",
+   "value": 41.733,
+   "unit": "deg",
+   "estimated": true
+  },
+  {
+   "name": "ambient",
+   "group": "lighting",
+   "value": "70,70,70",
+   "estimated": true
+  },
+  {
+   "name": "outdoor ambient",
+   "group": "lighting",
+   "value": "128,128,128",
+   "estimated": true
+  },
+  {
+   "name": "undo history",
+   "group": "editing",
+   "value": 500,
+   "unit": "steps",
+   "estimated": true
+  },
+  {
+   "name": "undo merge window",
+   "group": "editing",
+   "value": 700,
+   "unit": "ms",
+   "estimated": true
+  },
+  {
+   "name": "look direction",
+   "group": "camera",
+   "value": "drag right turns right, drag down tilts down",
+   "source": "person's playtest note"
+  },
+  {
+   "name": "cursor during right-drag look",
+   "group": "camera",
+   "value": "hidden + locked (confined fallback), raw motion, restored on release",
+   "source": "person's playtest note"
+  },
+  {
+   "name": "confined fallback threshold",
+   "group": "camera",
+   "value": 24,
+   "unit": "px",
+   "estimated": true
+  },
+  {
+   "name": "explorer reveals selection",
+   "group": "editing",
+   "value": true,
+   "source": "person's playtest note"
+  },
+  {
+   "name": "play",
+   "group": "controls",
+   "value": "F5",
+   "source": "person's request"
+  },
+  {
+   "name": "run",
+   "group": "controls",
+   "value": "F8",
+   "source": "person's request"
+  },
+  {
+   "name": "stop",
+   "group": "controls",
+   "value": "Shift+F5",
+   "source": "person's request"
+  },
+  {
+   "name": "character move keys",
+   "group": "controls",
+   "value": "W/Up, S/Down, A, D (Left/Right arrows turn the camera)",
+   "source": "Studio's ControlModule Keyboard via ContextActionService PlayerActions (read at run time)"
+  },
+  {
+   "name": "character jump key",
+   "group": "controls",
+   "value": "Space",
+   "source": "Roblox default controls"
+  },
+  {
+   "name": "walk speed",
+   "group": "movement",
+   "value": 16,
+   "unit": "studs/s",
+   "source": "Humanoid.WalkSpeed default (Roblox docs)"
+  },
+  {
+   "name": "jump height",
+   "group": "movement",
+   "value": 7.2,
+   "unit": "studs",
+   "source": "Humanoid.JumpHeight default (Roblox docs)"
+  },
+  {
+   "name": "acceleration",
+   "group": "movement",
+   "value": "instant",
+   "source": "Studio (offline Studio): 15.8 studs/s from the first frame of holding W"
+  },
+  {
+   "name": "step-up height",
+   "group": "movement",
+   "value": "anything under the root's bottom (HipHeight): 2.0 studs climbed, 2.5 not (R15 and R6)",
+   "source": "tools/fidelity movement_probe (round 22): step lanes; follows from the floor rays (Studio )"
+  },
+  {
+   "name": "max slope",
+   "group": "movement",
+   "value": 89,
+   "unit": "deg",
+   "source": "Humanoid.MaxSlopeAngle default (Roblox docs)"
+  },
+  {
+   "name": "character height",
+   "group": "movement",
+   "value": "body box from the root's bottom to the head's top (R15 3.27 above the root's bottom)",
+   "source": "tools/fidelity movement_probe (round 22): FIDMOVEDONE parts (R15 HumanoidRootPart, UpperTorso, LowerTorso, Head collide)"
+  },
+  {
+   "name": "character radius",
+   "group": "movement",
+   "value": "no radius: a box 2 wide (root) × 1.16 deep (head), turned with the root",
+   "source": "tools/fidelity movement_probe (round 22): FIDMOVEDONE parts"
+  },
+  {
+   "name": "health",
+   "group": "health",
+   "value": 100,
+   "source": "Humanoid.MaxHealth default (Roblox docs)"
+  },
+  {
+   "name": "respawn time",
+   "group": "health",
+   "value": 5,
+   "unit": "s",
+   "source": "Players.RespawnTime default (Roblox docs)"
+  },
+  {
+   "name": "fallen parts destroy height",
+   "group": "health",
+   "value": -500,
+   "unit": "studs",
+   "source": "Workspace.FallenPartsDestroyHeight default (Roblox docs)"
+  },
+  {
+   "name": "play camera start distance",
+   "group": "camera",
+   "value": 12.5,
+   "unit": "studs",
+   "source": "Studio (offline Studio) Play: camera to Focus 12.5; Roblox's CameraModule (ZoomController ZOOM_DEFAULT) runs unchanged"
+  },
+  {
+   "name": "play camera start pitch",
+   "group": "camera",
+   "value": -15,
+   "unit": "deg",
+   "source": "Studio (offline Studio) Play: CurrentCamera LookVector.Y −0.2599; matched by the CameraModule in rustudio"
+  },
+  {
+   "name": "game wheel input per notch",
+   "group": "camera",
+   "value": 0.5,
+   "source": "Studio (offline Studio): one Qt wheel event of −3/+2/−1 notches zoomed 12.5 → 23.375 → 14.917 → 19.146 studs (ZoomController step at 0.5 per notch)"
+  },
+  {
+   "name": "game camera right-drag turn",
+   "group": "camera",
+   "value": 0.5,
+   "unit": "deg/px",
+   "source": "CameraInput ROTATION_SPEED_MOUSE (Studio's PlayerModule, read at run time); vertical ×0.77"
+  },
+  {
+   "name": "gravity",
+   "group": "physics",
+   "value": 196.2,
+   "unit": "studs/s²",
+   "source": "Workspace.Gravity default (Roblox docs)"
+  },
+  {
+   "name": "part density",
+   "group": "physics",
+   "value": 0.7,
+   "unit": "g/cm³",
+   "source": "Plastic PhysicalProperties (Roblox docs)"
+  },
+  {
+   "name": "part friction",
+   "group": "physics",
+   "value": 0.3,
+   "source": "Plastic PhysicalProperties (Roblox docs)"
+  },
+  {
+   "name": "part elasticity",
+   "group": "physics",
+   "value": 0.5,
+   "source": "Plastic PhysicalProperties (Roblox docs)"
+  },
+  {
+   "name": "physics rate",
+   "group": "physics",
+   "value": 60,
+   "unit": "Hz",
+   "estimated": true
+  },
+  {
+   "name": "solver iterations",
+   "group": "physics",
+   "value": 4,
+   "estimated": true
+  },
+  {
+   "name": "script timeout",
+   "group": "scripts",
+   "value": 3,
+   "unit": "s",
+   "estimated": true
+  },
+  {
+   "name": "signal behaviour",
+   "group": "scripts",
+   "value": "deferred",
+   "source": "Roblox Workspace.SignalBehavior Deferred (docs)"
+  },
+  {
+   "name": "dispatch rounds per frame",
+   "group": "scripts",
+   "value": 64,
+   "estimated": true
+  },
+  {
+   "name": "wait minimum",
+   "group": "scripts",
+   "value": 0.0333,
+   "unit": "s",
+   "source": "Roblox docs (wait)"
+  },
+  {
+   "name": "player name in Play",
+   "group": "modes",
+   "value": "Player",
+   "source": "Roblox Studio (offline Studio) offline Play: Players.Player"
+  },
+  {
+   "name": "server-only services",
+   "group": "replication",
+   "value": "ServerStorage, ServerScriptService",
+   "source": "Roblox docs"
+  },
+  {
+   "name": "replication direction",
+   "group": "replication",
+   "value": "server to client; client changes stay local except its own character",
+   "source": "Roblox docs (client-server, network ownership)"
+  },
+  {
+   "name": "replication timing",
+   "group": "replication",
+   "value": "once per frame after server scripts and physics",
+   "estimated": true
+  },
+  {
+   "name": "remote delivery",
+   "group": "replication",
+   "value": "end of frame",
+   "estimated": true
+  },
+  {
+   "name": "output side tags",
+   "group": "replication",
+   "value": "[Server] / [Client]",
+   "source": "person's request"
+  },
+  {
+   "name": "default rig",
+   "group": "character",
+   "value": "R15",
+   "source": "StarterPlayer default (Roblox docs)"
+  },
+  {
+   "name": "R15 hip height",
+   "group": "character",
+   "value": 2,
+   "unit": "studs",
+   "estimated": true
+  },
+  {
+   "name": "R6 hip height",
+   "group": "character",
+   "value": 0,
+   "unit": "studs",
+   "estimated": true
+  },
+  {
+   "name": "jump power",
+   "group": "character",
+   "value": 50,
+   "unit": "studs/s",
+   "source": "Humanoid.JumpPower default (Roblox docs)"
+  },
+  {
+   "name": "landed state duration",
+   "group": "character",
+   "value": 0.05,
+   "unit": "s",
+   "source": "tools/fidelity movement_probe (round 22): Landed -> Running in jump_stand, jump_run, ledge, ceiling_jump"
+  },
+  {
+   "name": "jump take-off factor",
+   "group": "character",
+   "value": 1.06,
+   "unit": "× commanded jump speed",
+   "source": "Studio GetJumpVelocity  and its inverse  (.rdata  = 1.06); an offline Studio: JumpPower 50 rises 7.27 studs, 100 rises 28.86"
+  },
+  {
+   "name": "JumpHeight jump speed clamp",
+   "group": "character",
+   "value": 1000,
+   "unit": "studs/s",
+   "source": "Studio  minss with .rdata "
+  },
+  {
+   "name": "turn rate",
+   "group": "character",
+   "value": 7,
+   "unit": "1/s",
+   "source": "Studio (offline Studio): turning to a new direction left 1.48 → 0.93 / 0.38 / 0.12 rad after 0.10 / 0.22 / 0.35 s"
+  },
+  {
+   "name": "default PlayerModule",
+   "group": "character",
+   "value": "Studio's StarterPlayerScripts/PlayerModule.module (CameraModule 25338, ControlModule 24195 chars)",
+   "source": "Studio (offline Studio) Play: client PlayerScripts source lengths equal the install's files"
+  },
+  {
+   "name": "default Animate (R15)",
+   "group": "character",
+   "value": "content/avatar/scripts/humanoidAnimateR15_DEPRECATED_20260813.rbxm (28802 chars)",
+   "source": "Studio (offline Studio) Play: the character's Animate source length"
+  },
+  {
+   "name": "studs atlas",
+   "group": "materials",
+   "value": "PlatformContent/pc/textures/studs.dds: 4 bands (studs, weld, inlet, universal) of 2 × 8 studs",
+   "source": "Studio install; an offline Studio screenshot at the same view: studs face 125 vs rustudio 126, weld 103 vs 110"
+  },
+  {
+   "name": "terrain default colours",
+   "group": "materials",
+   "value": "PlatformContent/pc/terrain/materials.json base_color (Grass 106,127,63)",
+   "source": "Studio (offline Studio): Terrain:GetMaterialColor equals them"
+  },
+  {
+   "name": "material variant tiling default",
+   "group": "materials",
+   "value": 10,
+   "unit": "studs per tile",
+   "source": "MaterialVariant.StudsPerTile default (Roblox docs)"
+  },
+  {
+   "name": "air arm lift",
+   "group": "character",
+   "value": 1.2,
+   "unit": "rad",
+   "estimated": true
+  },
+  {
+   "name": "avatar endpoint",
+   "group": "character",
+   "value": "GET avatar.roblox.com/v2/avatar/users/{userId}/avatar",
+   "source": "Roblox docs (public avatar API)"
+  },
+  {
+   "name": "asset delivery endpoint",
+   "group": "assets",
+   "value": "GET apis.roblox.com/asset-delivery-api/v1/assetId/{id}",
+   "source": "Roblox Open Cloud docs"
+  },
+  {
+   "name": "asset delivery scope",
+   "group": "assets",
+   "value": "legacy-asset:manage",
+   "source": "Roblox Open Cloud docs"
+  },
+  {
+   "name": "asset cache",
+   "group": "assets",
+   "value": "~/.cache/rustudio/assets/{id}_v{version}.bin",
+   "estimated": true
+  },
+  {
+   "name": "mesh versions",
+   "group": "assets",
+   "value": "1.00-7.00 (no Draco)",
+   "source": "community-documented mesh format"
+  },
+  {
+   "name": "texture formats",
+   "group": "assets",
+   "value": "PNG, JPEG, DDS",
+   "source": "community-documented formats"
+  },
+  {
+   "name": "clothing template size",
+   "group": "assets",
+   "value": "585x559",
+   "unit": "px",
+   "source": "Roblox docs (classic clothing)"
+  },
+  {
+   "name": "texture tile default",
+   "group": "assets",
+   "value": 2,
+   "unit": "studs",
+   "source": "Texture.StudsPerTileU/V default (rbx_reflection_database)"
+  },
+  {
+   "name": "oauth redirect port",
+   "group": "account",
+   "value": 51917,
+   "estimated": true
+  },
+  {
+   "name": "publish endpoint",
+   "group": "account",
+   "value": "POST /universes/v1/{universeId}/places/{placeId}/versions",
+   "source": "Roblox Open Cloud Place Publishing docs"
+  },
+  {
+   "name": "screenshot frames",
+   "group": "harness",
+   "value": 120,
+   "source": "Craft Anything requirement"
+  },
+  {
+   "name": "oauth default scopes",
+   "group": "account",
+   "value": "openid profile legacy-asset:manage universe:write",
+   "source": "Roblox Open Cloud scopes docs (universe-places:write is API-key only)"
+  },
+  {
+   "name": "publish auth",
+   "group": "account",
+   "value": "Open Cloud API key with universe-places:write",
+   "source": "Roblox Open Cloud Places reference"
+  },
+  {
+   "name": "new part size",
+   "group": "objects",
+   "value": "4 x 1.2 x 2",
+   "unit": "studs",
+   "source": "Roblox Studio: Instance.new(\"Part\").Size"
+  },
+  {
+   "name": "select color",
+   "group": "ui",
+   "value": "0.1, 0.6, 1",
+   "source": "Roblox Studio setting Select Color"
+  },
+  {
+   "name": "hover over color",
+   "group": "ui",
+   "value": "0.7, 0.9, 1",
+   "source": "Roblox Studio setting Hover Over Color"
+  },
+  {
+   "name": "panel color",
+   "group": "ui",
+   "value": "#191a1f",
+   "source": "Roblox Studio dark theme (screenshot pixel)"
+  },
+  {
+   "name": "menu bar color",
+   "group": "ui",
+   "value": "#272930",
+   "source": "Roblox Studio dark theme (screenshot pixel)"
+  },
+  {
+   "name": "accent color",
+   "group": "ui",
+   "value": "#335fff",
+   "source": "Roblox Studio Play button (screenshot pixel)"
+  },
+  {
+   "name": "major grid increment",
+   "group": "tools",
+   "value": 5,
+   "source": "Roblox Studio GlobalSettings DraggerMajorGridIncrement 5"
+  },
+  {
+   "name": "malicious scripts",
+   "group": "scripts",
+   "value": "scripts named like the classic \"Virus\" don't run",
+   "source": "Roblox Studio (offline Studio) Output on og.rbxl: \"Script ... detected as malicious.  Script will not run.\""
+  },
+  {
+   "name": "unpublished DataStore",
+   "group": "scripts",
+   "value": "error",
+   "source": "Roblox Studio (offline Studio) Output on og.rbxl: \"You must publish this place to the web to access DataStore.\""
+  },
+  {
+   "name": "perf check target",
+   "group": "performance",
+   "value": 60,
+   "unit": "fps",
+   "source": "person's request"
+  },
+  {
+   "name": "perf check length",
+   "group": "performance",
+   "value": 10,
+   "unit": "s",
+   "source": "person's request"
+  },
+  {
+   "name": "bench warm-up",
+   "group": "performance",
+   "value": 3,
+   "unit": "s",
+   "estimated": true
+  },
+  {
+   "name": "render cell",
+   "group": "performance",
+   "value": 128,
+   "unit": "studs",
+   "estimated": true
+  },
+  {
+   "name": "lod minimum",
+   "group": "performance",
+   "value": 1,
+   "unit": "px",
+   "estimated": true
+  },
+  {
+   "name": "static settle",
+   "group": "performance",
+   "value": 0.5,
+   "unit": "s",
+   "estimated": true
+  },
+  {
+   "name": "pending static max",
+   "group": "performance",
+   "value": 4096,
+   "estimated": true
+  },
+  {
+   "name": "depth bias step",
+   "group": "performance",
+   "value": 4e-07,
+   "unit": "relative depth",
+   "estimated": true
+  },
+  {
+   "name": "journal limit",
+   "group": "performance",
+   "value": 1000000,
+   "estimated": true
+  },
+  {
+   "name": "journal reader lag",
+   "group": "performance",
+   "value": 200000,
+   "estimated": true
+  },
+  {
+   "name": "script frame budget",
+   "group": "scripts",
+   "value": 6,
+   "unit": "ms per side",
+   "estimated": true
+  },
+  {
+   "name": "max physics steps per frame",
+   "group": "physics",
+   "value": 3,
+   "estimated": true
+  },
+  {
+   "name": "physics length unit",
+   "group": "physics",
+   "value": 5,
+   "unit": "studs",
+   "estimated": true
+  },
+  {
+   "name": "body mover P scale",
+   "group": "physics",
+   "value": 1,
+   "estimated": true
+  },
+  {
+   "name": "align damping ratio",
+   "group": "physics",
+   "value": 1,
+   "estimated": true
+  },
+  {
+   "name": "constraint rigid fraction",
+   "group": "physics",
+   "value": 1,
+   "estimated": true
+  },
+  {
+   "name": "terrain collider cell",
+   "group": "physics",
+   "value": 64,
+   "unit": "studs",
+   "estimated": true
+  },
+  {
+   "name": "terrain friction",
+   "group": "physics",
+   "value": 0.4,
+   "estimated": true
+  },
+  {
+   "name": "terrain elasticity",
+   "group": "physics",
+   "value": 0.1,
+   "estimated": true
+  },
+  {
+   "name": "terrain water opacity",
+   "group": "terrain",
+   "value": 0.45,
+   "estimated": true
+  },
+  {
+   "name": "terrain voxel",
+   "group": "terrain",
+   "value": 4,
+   "unit": "studs",
+   "source": "rbx-dom SmoothGrid community docs"
+  },
+  {
+   "name": "click detector distance",
+   "group": "game",
+   "value": 32,
+   "unit": "studs",
+   "source": "ClickDetector.MaxActivationDistance default (Roblox docs)"
+  },
+  {
+   "name": "move to reached",
+   "group": "game",
+   "value": 1,
+   "unit": "studs",
+   "estimated": true
+  },
+  {
+   "name": "move to timeout",
+   "group": "game",
+   "value": 8,
+   "unit": "s",
+   "source": "Humanoid:MoveTo docs"
+  },
+  {
+   "name": "explosion push",
+   "group": "game",
+   "value": 0.0004,
+   "unit": "studs/s per (BlastPressure/mass)",
+   "estimated": true
+  },
+  {
+   "name": "explosion max speed",
+   "group": "game",
+   "value": 150,
+   "unit": "studs/s",
+   "estimated": true
+  },
+  {
+   "name": "explosion flash",
+   "group": "game",
+   "value": 0.6,
+   "unit": "s",
+   "estimated": true
+  },
+  {
+   "name": "chat line time",
+   "group": "game",
+   "value": 30,
+   "unit": "s",
+   "estimated": true
+  },
+  {
+   "name": "debris default lifetime",
+   "group": "game",
+   "value": 10,
+   "unit": "s",
+   "source": "Debris:AddItem docs"
+  },
+  {
+   "name": "tween back overshoot",
+   "group": "game",
+   "value": 1.70158,
+   "estimated": true
+  },
+  {
+   "name": "sound volume curve above 1",
+   "group": "game",
+   "value": "1 + 0.5 ln(v)",
+   "estimated": true
+  },
+  {
+   "name": "gui top bar inset",
+   "group": "gui",
+   "value": 58,
+   "unit": "px",
+   "source": "Roblox Studio (offline Studio, Play, 863x675 view): GuiService:GetGuiInset() = (0, 58); ScreenGui without IgnoreGuiInset 863x617 at (0,0), with it 863x675 at (0,-58)"
+  },
+  {
+   "name": "gui font em per text size",
+   "group": "gui",
+   "value": 1.04,
+   "unit": "x TextSize / line height per em",
+   "source": "Roblox Studio (offline Studio): TextService:GetTextSize(\"START GAME\", 14/18/24/32, Oswald) = 46/58/78/104 px wide, TextSize tall"
+  },
+  {
+   "name": "gui button hover darken",
+   "group": "gui",
+   "value": 0.3,
+   "unit": "fraction",
+   "estimated": true
+  },
+  {
+   "name": "gui button press darken",
+   "group": "gui",
+   "value": 0.5,
+   "unit": "fraction",
+   "estimated": true
+  },
+  {
+   "name": "gui selection outline",
+   "group": "gui",
+   "value": "2 px, rgb(0, 162, 255)",
+   "estimated": true
+  },
+  {
+   "name": "gui text scaled max",
+   "group": "gui",
+   "value": 100,
+   "unit": "px",
+   "source": "Roblox docs (TextScaled)"
+  },
+  {
+   "name": "gui surface triangle size",
+   "group": "gui",
+   "value": 40,
+   "unit": "px on screen",
+   "estimated": true
+  },
+  {
+   "name": "gui surface lift",
+   "group": "gui",
+   "value": 0.01,
+   "unit": "studs",
+   "estimated": true
+  },
+  {
+   "name": "gui viewport frame max triangles",
+   "group": "gui",
+   "value": 3000,
+   "estimated": true
+  },
+  {
+   "name": "gui scroll per wheel notch",
+   "group": "gui",
+   "value": 100,
+   "unit": "px",
+   "source": "Studio: FInt ScrollWheelDeltaAmount default 100 (.data , name set by ), added to CanvasPosition at "
+  },
+  {
+   "name": "legacy top bar inset flag",
+   "group": "gui",
+   "value": 36,
+   "unit": "px",
+   "source": "Studio: FInt InGameGlobalGuiInset default 36 (.data , ), passed at ; the current top bar reports 58 at run time"
+  },
+  {
+   "name": "AutoButtonColor field",
+   "group": "gui",
+   "value": "GuiButton byte +0x4c; getter , setter , registered ",
+   "source": "Studio (the darkening code itself not located)"
+  },
+  {
+   "name": "default character head and arms",
+   "group": "play",
+   "value": "245, 205, 48",
+   "source": "Roblox Studio (offline Studio): offline Play character Head / RightUpperArm.Color"
+  },
+  {
+   "name": "default character torso",
+   "group": "play",
+   "value": "13, 105, 172",
+   "source": "Roblox Studio (offline Studio): UpperTorso / LowerTorso.Color"
+  },
+  {
+   "name": "default character legs",
+   "group": "play",
+   "value": "164, 189, 71",
+   "source": "Roblox Studio (offline Studio): RightUpperLeg / LeftLowerLeg.Color"
+  },
+  {
+   "name": "raycast from inside a part",
+   "group": "physics",
+   "value": "no hit on that part",
+   "source": "Roblox docs (raycasting)"
+  },
+  {
+   "name": "raycast against MeshParts",
+   "group": "physics",
+   "value": "mesh triangles unless CollisionFidelity is Box",
+   "source": "Roblox behaviour; Place A's viewmodel wall check matches Studio with it (gun 0.94-1.50 studs ahead vs Studio 0.90-1.50)"
+  },
+  {
+   "name": "raycast collision group",
+   "group": "physics",
+   "value": "parts in groups not collidable with RaycastParams.CollisionGroup are skipped",
+   "source": "Roblox docs (RaycastParams.CollisionGroup)"
+  },
+  {
+   "name": "gui 3D order",
+   "group": "gui",
+   "value": "far to near, AlwaysOnTop after, then ScreenGuis by DisplayOrder",
+   "source": "Roblox docs"
+  },
+  {
+   "name": "fbx stud per metre",
+   "group": "fbx",
+   "value": 1,
+   "unit": "studs",
+   "source": "Place A Shared/GunMeshes: uploaded sample pack sizes match the file's metres"
+  },
+  {
+   "name": "fbx axis turn",
+   "group": "fbx",
+   "value": 180,
+   "unit": "deg about Y",
+   "source": "Place A Shared/GunMeshes: \"The imported meshes are turned 180 degrees about Y\""
+  },
+  {
+   "name": "fbx part pivot",
+   "group": "fbx",
+   "value": "centre of its own bounds",
+   "source": "Place A GrenadeArt: \"MeshParts are re-centred on import\""
+  },
+  {
+   "name": "player joins after server scripts start",
+   "group": "play",
+   "value": true,
+   "source": "Roblox docs; Place A made two parties when the player existed first"
+  },
+  {
+   "name": "character auto loads default",
+   "group": "play",
+   "value": true,
+   "source": "Players.CharacterAutoLoads default"
+  },
+  {
+   "name": "play view",
+   "group": "play",
+   "value": "client",
+   "source": "Roblox Studio Play shows the client"
+  },
+  {
+   "name": "script teleport threshold",
+   "group": "play",
+   "value": 0.5,
+   "unit": "studs",
+   "estimated": true
+  },
+  {
+   "name": "query grid cell",
+   "group": "physics",
+   "value": 16,
+   "unit": "studs",
+   "estimated": true
+  },
+  {
+   "name": "query grid max cells per part",
+   "group": "physics",
+   "value": 512,
+   "estimated": true
+  },
+  {
+   "name": "query grid max cells per query",
+   "group": "physics",
+   "value": 4096,
+   "estimated": true
+  },
+  {
+   "name": "colour linearisation exponent",
+   "group": "lighting",
+   "value": 2.0,
+   "source": "Roblox Studio (offline Studio, Future, 863x675 view from (4,9,22) to (4,2,0), FOV 70): part, light and ambient colours squared; fits every calibration scene (/tmp/rs-light/calib*.json)"
+  },
+  {
+   "name": "display gamma",
+   "group": "lighting",
+   "value": 2.0,
+   "source": "Studio shader pack (Future, Vulkan RBXS): output sqrt(c * Exposure)"
+  },
+  {
+   "name": "default tone curve a",
+   "group": "lighting",
+   "value": 6.0402,
+   "source": "Roblox Studio (offline Studio, Future, 863x675 view from (4,9,22) to (4,2,0), FOV 70): y = x(ax+b)/(x(ax+c)+d)*e fitted to 16 screenshots, RMS 0.38 levels (fit_tone.py)"
+  },
+  {
+   "name": "default tone curve b",
+   "group": "lighting",
+   "value": 0.0064675,
+   "source": "same fit"
+  },
+  {
+   "name": "default tone curve c",
+   "group": "lighting",
+   "value": 2.41386,
+   "source": "same fit"
+  },
+  {
+   "name": "default tone curve d",
+   "group": "lighting",
+   "value": 0.656391,
+   "source": "same fit"
+  },
+  {
+   "name": "default tone curve e",
+   "group": "lighting",
+   "value": 1.157207,
+   "source": "same fit"
+  },
+  {
+   "name": "retro tone curve",
+   "group": "lighting",
+   "value": "identity (sqrt(clamp(x)))",
+   "source": "Roblox Studio (offline Studio, Future, 863x675 view from (4,9,22) to (4,2,0), FOV 70): ColorGradingEffect Retro, RMS 2.6 levels (fit_retro.py)"
+  },
+  {
+   "name": "exposure compensation",
+   "group": "lighting",
+   "value": "2^E",
+   "source": "Roblox Studio (offline Studio, Future, 863x675 view from (4,9,22) to (4,2,0), FOV 70): ExposureCompensation 1, 2, 3 screenshots"
+  },
+  {
+   "name": "sun irradiance per Brightness",
+   "group": "lighting",
+   "value": 0.5,
+   "unit": "linear",
+   "source": "Roblox Studio (offline Studio, Future, 863x675 view from (4,9,22) to (4,2,0), FOV 70): Brightness 0.5-4 and 5 clock times (calib.json, calib2.json)"
+  },
+  {
+   "name": "sun colour",
+   "group": "lighting",
+   "value": "white; ColorShift_Top hue only",
+   "source": "Roblox Studio (offline Studio, Future, 863x675 view from (4,9,22) to (4,2,0), FOV 70): clock14shift / clock14shiftbot (ColorShift_Bottom no effect)"
+  },
+  {
+   "name": "sun axial tilt",
+   "group": "lighting",
+   "value": 23.5,
+   "unit": "deg",
+   "source": "Roblox Studio (offline Studio, Future, 863x675 view from (4,9,22) to (4,2,0), FOV 70): GetSunDirection = (cos t cos p, sin t cos p, sin p), t = (ClockTime-6)*15, p = latitude-23.5, 5 times, error < 0.001"
+  },
+  {
+   "name": "ambient rule",
+   "group": "lighting",
+   "value": "Ambient^2 + max(Outdoor^2 - Ambient^2, 0) * sky visibility",
+   "source": "Roblox Studio (offline Studio, Future, 863x675 view from (4,9,22) to (4,2,0), FOV 70): calib.json amb/out tests; night side face 130 vs 132"
+  },
+  {
+   "name": "local light intensity",
+   "group": "lighting",
+   "value": 1.06,
+   "source": "Roblox Studio (offline Studio, Future, 863x675 view from (4,9,22) to (4,2,0), FOV 70): 5 PointLight floor profiles (lightcal.json), RMS ~3 levels"
+  },
+  {
+   "name": "local light fade start",
+   "group": "lighting",
+   "value": 0.7,
+   "unit": "x Range",
+   "source": "same fit (fit_light3.py)"
+  },
+  {
+   "name": "local light falloff K",
+   "group": "lighting",
+   "value": 110,
+   "unit": "studs^2",
+   "source": "same fit: 110/(110+x^2), x = clamp(d,0.7R,R)-0.7R"
+  },
+  {
+   "name": "spot light angle",
+   "group": "lighting",
+   "value": "full cone; cone factor squared",
+   "source": "Roblox Studio (offline Studio, Future, 863x675 view from (4,9,22) to (4,2,0), FOV 70): spot 60 deg at height 10: 97 vs 99 predicted (studio_spot60.png)"
+  },
+  {
+   "name": "light range max",
+   "group": "lighting",
+   "value": 120,
+   "unit": "studs",
+   "source": "Studio Range setters  (SpotLight) and  (PointLight/SurfaceLight): maxss 0, minss [] = 120.0"
+  },
+  {
+   "name": "soft style plateau",
+   "group": "lighting",
+   "value": 0.98,
+   "unit": "x Brightness",
+   "source": "Roblox Studio (offline Studio, Future, 863x675 view from (4,9,22) to (4,2,0), FOV 70): LightingStyle Soft point lights, B 0.1/0.2 (softcal2.json); a lit ball reads 224 at every angle (ball_soft.json)"
+  },
+  {
+   "name": "soft style fade",
+   "group": "lighting",
+   "value": "from 0.6 Range to max(Range, 8)+1",
+   "source": "Roblox Studio (offline Studio, Future, 863x675 view from (4,9,22) to (4,2,0), FOV 70): softcal2/3.json R 4-40"
+  },
+  {
+   "name": "soft style short lights",
+   "group": "lighting",
+   "value": "0.13 at R4, 0.49 at R8, 0.87 at R12, 1 from R20",
+   "unit": "x plateau",
+   "source": "Roblox Studio (offline Studio, Future, 863x675 view from (4,9,22) to (4,2,0), FOV 70): softcal3.json"
+  },
+  {
+   "name": "soft style spot full area",
+   "group": "lighting",
+   "value": 800,
+   "unit": "studs^2",
+   "source": "Roblox Studio (offline Studio, Future, 863x675 view from (4,9,22) to (4,2,0), FOV 70): spot 30-120 deg at height 5-20 (softcal2/3.json); approximate"
+  },
+  {
+   "name": "lighting style default",
+   "group": "lighting",
+   "value": "Realistic",
+   "source": "Roblox Studio (offline Studio, Future, 863x675 view from (4,9,22) to (4,2,0), FOV 70): places without LightingStyle draw with N.L shading"
+  },
+  {
+   "name": "environment diffuse gain",
+   "group": "lighting",
+   "value": 1.0,
+   "source": "Roblox Studio (offline Studio, Future, 863x675 view from (4,9,22) to (4,2,0), FOV 70): EnvironmentDiffuseScale 1: skybox irradiance matches within 7 levels (studio_envd1.json)"
+  },
+  {
+   "name": "dusk sky tint",
+   "group": "lighting",
+   "value": "0.051, 0.032, 0.049",
+   "unit": "x day",
+   "source": "Roblox Studio (offline Studio, Future, 863x675 view from (4,9,22) to (4,2,0), FOV 70): ClockTime 20.3 sky (10,14,27) and env light on a white face (studio_envd_night.json)"
+  },
+  {
+   "name": "dark sky sun height",
+   "group": "lighting",
+   "value": -0.95,
+   "unit": "sun y",
+   "source": "Roblox Studio (offline Studio, Future, 863x675 view from (4,9,22) to (4,2,0), FOV 70): ClockTime 0: sky (0,0,0) (studio_future_night.json)"
+  },
+  {
+   "name": "glass fresnel power",
+   "group": "lighting",
+   "value": 3.5,
+   "source": "Roblox Studio (offline Studio, Future, 863x675 view from (4,9,22) to (4,2,0), FOV 70): Glass cubes unlit and in daylight (studio_glass_dark/day.json)"
+  },
+  {
+   "name": "glass tint floor",
+   "group": "lighting",
+   "value": 0.5,
+   "source": "same: reflection tinted mix(0.5, 1, colour)"
+  },
+  {
+   "name": "neon glow",
+   "group": "lighting",
+   "value": 4.0,
+   "unit": "x colour",
+   "source": "Roblox Studio (offline Studio, Future, 863x675 view from (4,9,22) to (4,2,0), FOV 70): neon cube (0,255,0) unlit"
+  },
+  {
+   "name": "material albedo Snow",
+   "group": "lighting",
+   "value": 0.725,
+   "source": "Roblox Studio (offline Studio, Future, 863x675 view from (4,9,22) to (4,2,0), FOV 70): white Snow cube vs SmoothPlastic (matcal.json; all materials in mech::material_albedo)"
+  },
+  {
+   "name": "material albedo Slate",
+   "group": "lighting",
+   "value": 0.562,
+   "source": "matcal.json"
+  },
+  {
+   "name": "material albedo Wood",
+   "group": "lighting",
+   "value": 0.785,
+   "source": "matcal.json"
+  },
+  {
+   "name": "material albedo Concrete",
+   "group": "lighting",
+   "value": 0.661,
+   "source": "matcal.json"
+  },
+  {
+   "name": "material albedo Fabric",
+   "group": "lighting",
+   "value": 0.169,
+   "source": "matcal.json"
+  },
+  {
+   "name": "material albedo Metal",
+   "group": "lighting",
+   "value": 0.6,
+   "source": "matcal.json"
+  },
+  {
+   "name": "meshpart texture alpha",
+   "group": "lighting",
+   "value": "ignored (Color hidden)",
+   "source": "Place A lobby floor W36-W39 Color set red in Studio: no visible change"
+  },
+  {
+   "name": "surfaceappearance emission",
+   "group": "lighting",
+   "value": "ColorMap x mask x Tint^2 x Strength",
+   "source": "Place A lobby stained glass (EmissiveStrength 2.2) lit with all lights off"
+  },
+  {
+   "name": "texture anisotropy",
+   "group": "lighting",
+   "value": 8,
+   "source": "rustudio: mipmapped trilinear textures (Studio shows tiled floors averaged, no sparkle)"
+  },
+  {
+   "name": "shadow map texels",
+   "group": "lighting",
+   "value": 2048,
+   "source": "rustudio"
+  },
+  {
+   "name": "shadow extent",
+   "group": "lighting",
+   "value": 128,
+   "unit": "studs",
+   "source": "rustudio"
+  },
+  {
+   "name": "sky visibility cell",
+   "group": "lighting",
+   "value": 4,
+   "unit": "studs",
+   "source": "rustudio (Studio lighting voxels are 4 studs)"
+  },
+  {
+   "name": "lighting self-test tolerance",
+   "group": "lighting",
+   "value": 8,
+   "unit": "levels",
+   "source": "rustudio self-test lighting-* steps"
+  },
+  {
+   "name": "Place A lobby lighting",
+   "group": "lighting",
+   "value": "Future, Brightness 0.35, Ambient (8,9,14), Outdoor (12,15,24), ClockTime 7.75, EnvDiffuse 0.08, EnvSpec 0.3, Retro, LightingStyle Soft, 131 spot + 48 point lights",
+   "source": "Place A lobby in Studio (offline Studio) and rustudio, run_luau probe"
+  },
+  {
+   "name": "Place A match lighting",
+   "group": "lighting",
+   "value": "Brightness 1.4, Ambient (48,48,56), Outdoor (84,86,100), ClockTime 20.3, EnvDiffuse 0.5, Soft, Retro, ColorCorrection contrast 0.08 saturation -0.2, Atmosphere density 0.38",
+   "source": "rustudio Play probe of the Map 1 match (Lighting set by Place A scripts)"
+  },
+  {
+   "name": "Place A play fps",
+   "group": "lighting",
+   "value": "265 fps measured (1% low 185)",
+   "source": "rustudio self-test perf step, place-a-latest.rbxl 4751 parts, load average 5.8 on 16 cores"
+  },
+  {
+   "name": "light angle max",
+   "group": "lighting",
+   "value": 180,
+   "unit": "deg",
+   "source": "Studio SpotLight.Angle setter , SurfaceLight.Angle : clamp [0, [] = 180.0]"
+  },
+  {
+   "name": "clock time max",
+   "group": "lighting",
+   "value": 24,
+   "unit": "h",
+   "source": "Studio ClockTime setter  -> : clamp [0, [] = 24.0]"
+  },
+  {
+   "name": "seconds per hour",
+   "group": "lighting",
+   "value": 3600,
+   "unit": "s",
+   "source": "Studio : x [] = 3600.0, truncated to whole seconds, stored x 1000000 (us)"
+  },
+  {
+   "name": "environment scale max",
+   "group": "lighting",
+   "value": 1,
+   "source": "Studio EnvironmentDiffuseScale setter : clamp [0, [] = 1.0]"
+  },
+  {
+   "name": "shadow softness max",
+   "group": "lighting",
+   "value": 1,
+   "source": "Studio ShadowSoftness setter : clamp [0, 1.0]"
+  },
+  {
+   "name": "lighting brightness clamp",
+   "group": "lighting",
+   "value": "none",
+   "source": "Studio Lighting.Brightness setter  stores as given"
+  },
+  {
+   "name": "exposure compensation clamp",
+   "group": "lighting",
+   "value": "none",
+   "source": "Studio ExposureCompensation setter  stores as given"
+  },
+  {
+   "name": "sun direction cache",
+   "group": "lighting",
+   "value": "Lighting+0x188",
+   "source": "Studio GetSunDirection  (registered ) returns the cached Vector3; latitude at Lighting+0x144 (setter )"
+  },
+  {
+   "name": "mesh decomposition concavity",
+   "group": "collision",
+   "value": 0.01,
+   "unit": "fraction of mesh size",
+   "source": "Studio: HACDConcavityMillionth 10000000 / HACDNormalizationDistanceMillionth 1000000000, registered .."
+  },
+  {
+   "name": "decomposition voxel resolution (Precise)",
+   "group": "collision",
+   "value": 64,
+   "unit": "voxels",
+   "estimated": true
+  },
+  {
+   "name": "decomposition voxel resolution (Default)",
+   "group": "collision",
+   "value": 32,
+   "unit": "voxels",
+   "estimated": true
+  },
+  {
+   "name": "material studs per texture repeat",
+   "group": "materials",
+   "value": 8,
+   "unit": "studs",
+   "source": "shaders_glsl3.pack: part shaders sample material maps at TEXCOORD0 = studs / 8 (the studs map uses TEXCOORD0 x 4 with 2-stud tiles)"
+  },
+  {
+   "name": "material table entries",
+   "group": "materials",
+   "value": 43,
+   "unit": "materials",
+   "source": "Studio  (0x58-byte entries, order at .rdata )"
+  },
+  {
+   "name": "RenderEnablePartBaseMaterial4K default",
+   "group": "materials",
+   "value": 1,
+   "unit": "bool",
+   "source": "Studio  (mov r8d,1), tested at "
+  },
+  {
+   "name": "material map layer size",
+   "group": "materials",
+   "value": 1024,
+   "unit": "px",
+   "estimated": true
+  },
+  {
+   "name": "layered clothing binding points",
+   "group": "avatar",
+   "value": 4,
+   "unit": "cage points",
+   "estimated": true
+  },
+  {
+   "name": "R15 HipHeight",
+   "group": "avatar",
+   "value": 2.0,
+   "unit": "studs",
+   "source": "Studio content/avatar/characterR15DynamicHeadV2.rbxm Humanoid.HipHeight"
+  },
+  {
+   "name": "R6 shoulder MaxVelocity",
+   "group": "avatar",
+   "value": 0.1,
+   "unit": "rad/step",
+   "source": "Roblox classic R6 joints"
+  },
+  {
+   "name": "classic head mesh native size",
+   "group": "avatar",
+   "value": 1.2,
+   "unit": "studs",
+   "source": "Studio content/avatar/heads/head.mesh bounds ±0.599"
+  },
+  {
+   "name": "animation fade time default",
+   "group": "animation",
+   "value": 0.1,
+   "unit": "s",
+   "source": "Roblox docs (AnimationTrack:Play fadeTime)"
+  },
+  {
+   "name": "owned experiences page size",
+   "group": "account",
+   "value": 50,
+   "unit": "per request",
+   "source": "docs/AUTH.md: develop.roblox.com/v1/user/universes accepts limit 10, 25, 50 or 100 only"
+  },
+  {
+   "name": "CSRF retries",
+   "group": "account",
+   "value": 3,
+   "unit": "retries",
+   "source": "Studio : a 403 with a new X-CSRF-TOKEN is retried while the counter (+0x178) is under 3 (cmp eax, 3 at )"
+  },
+  {
+   "name": "cookie file mode",
+   "group": "account",
+   "value": 600,
+   "unit": "octal",
+   "source": "docs/AUTH.md: ~/.config/rustudio/roblox-cookie, mode 600"
+  },
+  {
+   "name": "WrapLayer Puffiness min",
+   "group": "avatar",
+   "value": -1.0,
+   "unit": "",
+   "source": "Studio setter : maxss with .rdata  = -1.0"
+  },
+  {
+   "name": "WrapLayer Puffiness max",
+   "group": "avatar",
+   "value": 1.0,
+   "unit": "",
+   "source": "Studio setter : minss with .rdata  = 1.0"
+  },
+  {
+   "name": "WrapLayer Puffiness default",
+   "group": "avatar",
+   "value": 1.0,
+   "unit": "",
+   "source": "Studio FInt WrapPuffinessDefaultPercent = 100 at .data  (registered by )"
+  },
+  {
+   "name": "COREMESH v2 size field",
+   "group": "meshes",
+   "value": 4,
+   "unit": "bytes",
+   "source": "Studio : u32 compressed size; under 4 bytes is 'COREMESH chunk too small'"
+  },
+  {
+   "name": "Draco attributes required",
+   "group": "meshes",
+   "value": 5,
+   "unit": "attributes",
+   "source": "Studio : unique ids 0..4 (position, normal, uv float32; tangent, colour 4 x uint8)"
+  },
+  {
+   "name": "CoreGuiType All",
+   "group": "gui",
+   "value": 4,
+   "unit": "Enum.CoreGuiType",
+   "source": "Studio StarterGui::setCoreGuiEnabled  (cmp $0x4); All key constant at .rdata "
+  },
+  {
+   "name": "CoreGuiType count",
+   "group": "gui",
+   "value": 10,
+   "unit": "types",
+   "source": "Studio : All sets and checks types 0..9 (cmp $0xa at  / )"
+  },
+  {
+   "name": "default glow intensity (no BloomEffect)",
+   "group": "lighting",
+   "value": 1.0,
+   "unit": "x",
+   "estimated": true
+  },
+  {
+   "name": "default glow size",
+   "group": "lighting",
+   "value": 24.0,
+   "unit": "px",
+   "source": "BloomEffect.Size default (API dump); the halo around Neon in Studio's control shot (tools/fidelity)"
+  },
+  {
+   "name": "default glow threshold",
+   "group": "lighting",
+   "value": 2.0,
+   "unit": "HDR",
+   "source": "BloomEffect.Threshold default (API dump)"
+  },
+  {
+   "name": "ShapecastMaxSize",
+   "group": "physics",
+   "value": 512.0,
+   "unit": "studs",
+   "source": "Studio FInt ShapecastMaxSize registered , value .data ; Spherecast compares radius + radius ()"
+  },
+  {
+   "name": "ShapecastMaxDistance",
+   "group": "physics",
+   "value": 1024.0,
+   "unit": "studs",
+   "source": "Studio FInt ShapecastMaxDistance registered , value .data ; compared with the direction's length ()"
+  },
+  {
+   "name": "R15 Play hip height (default scales)",
+   "group": "character",
+   "value": 2.192423,
+   "unit": "studs",
+   "source": "tools/fidelity physics capture, control place: Studio's Play character Humanoid.HipHeight (checks/compare/control/studio/output.log)"
+  },
+  {
+   "name": "character controller hover",
+   "group": "character",
+   "value": 0.05,
+   "unit": "studs",
+   "source": "rustudio's controller skin; the rig is lowered by it so the root rests at Studio's 3.1924 (tools/fidelity restingHeight)"
+  },
+  {
+   "name": "Studio physics step rate",
+   "group": "physics",
+   "value": 240.0,
+   "unit": "Hz",
+   "source": "tools/fidelity jumpApex: Studio 7.269 at JumpPower 50 and 28.86 at 100 = (1.06v)^2/2g + 1.06v/(2*240)"
+  },
+  {
+   "name": "Technology that draws Soft without LightingStyle",
+   "group": "lighting",
+   "value": "Legacy, Voxel, Compatibility (0, 1, 2), or none saved",
+   "unit": "Enum.Technology",
+   "source": "tools/fidelity: Place A (no Technology, no LightingStyle) reads LightingStyle Soft in Studio; the control place (Future) reads Realistic"
+  },
+  {
+   "name": "Humanoid.RootPart / Torso",
+   "group": "character",
+   "value": "one getter: HumanoidRootPart, else UpperTorso (R15) / Torso (R6); Torso is the same value under its deprecated name (and writable)",
+   "source": "Studio registrations  (RootPart) /  (Torso), shared getter  ->  (RigType [+0x1dc], slots +0x488/+0x4e8 R6, +0x5e8/+0x508 R15; name tables  / ); Torso setter "
+  },
+  {
+   "name": "FindFirstChild",
+   "group": "scripts",
+   "value": "first child in child order whose Name is byte-equal (length then memcmp); the found child then passes an access check or the call returns nil",
+   "source": "Studio registration  (findFirstChild: name, recursive) -> ; non-recursive  -> scan  (children at instance+0x70), check ; recursive "
+  },
+  {
+   "name": "SelectionSurfaceGuiCullAngle",
+   "group": "gui",
+   "value": 20,
+   "unit": "FInt",
+   "source": "Studio flag name set by , value at .data  (registered by  -> ); readers not found statically, not used by rustudio"
+  },
+  {
+   "name": "SurfaceGui triangle split",
+   "group": "gui",
+   "value": 0.5,
+   "unit": "px",
+   "estimated": true,
+   "source": "rustudio's own bound (round 20): affine interpolation within 0.5 px of perspective-correct; no Studio value found to match (how Studio rasterises SurfaceGuis wasn't decoded)"
+  },
+  {
+   "name": "terrain occupancy byte",
+   "group": "terrain",
+   "value": "round(share x 255), read (byte + 1) / 256; a share rounding to 0 is Air",
+   "source": "offline Studio ReadVoxels after FillBlock / FillBall (tools/fidelity terrain_probe.luau, round 21)"
+  },
+  {
+   "name": "FillBlock distance",
+   "group": "terrain",
+   "value": "max over axes of (|p| - half size); share = 0.5 - d / 4",
+   "source": "terrain_probe.luau Fill tests, round 21"
+  },
+  {
+   "name": "terrain surface crossing",
+   "group": "terrain",
+   "value": "occupied voxel to air at t = occupancy (samples 0.5 + 0.5 x occupancy); lone voxel tops 3.33 / 2.67 / 2.33 / 2.14 studs for occupancy 1 / .5 / .25 / .1",
+   "source": "terrain_probe.luau rays, round 21"
+  },
+  {
+   "name": "terrain quad split",
+   "group": "terrain",
+   "value": "longer diagonal",
+   "source": "terrain_probe.luau stairs: dh 0.086 (0.278 with a fixed split)"
+  },
+  {
+   "name": "terrain cell material",
+   "group": "terrain",
+   "value": "majority by occupancy, ties to the lower slot",
+   "source": "terrain_probe.luau two_materials, round 21"
+  },
+  {
+   "name": "terrain water meshing",
+   "group": "terrain",
+   "value": "as solid: any water voxel is inside, occupancy moves the surface, no face against solid",
+   "source": "Place B lake (place-b-terrain F4), round 21"
+  },
+  {
+   "name": "terrain height blend",
+   "group": "terrain",
+   "value": "w = clamp((h - max(others) + s/2) / s), back to barycentrics by UV derivative x 7",
+   "source": "Studio shaders_glsl3.pack SmoothCluster FS HQ"
+  },
+  {
+   "name": "terrain projection axes",
+   "group": "terrain",
+   "value": 18,
+   "source": "SmoothCluster VS: 6 faces + 12 edges per corner, random rotation and offset fract(k*0.618034, floor(k*2.6651442)*0.381966)"
+  },
+  {
+   "name": "terrain roughness",
+   "group": "terrain",
+   "value": "0.089 + 0.911 x map, GGX F0 0.04",
+   "source": "SmoothCluster FS HQ"
+  },
+  {
+   "name": "terrain light grid offset",
+   "group": "terrain",
+   "value": 6,
+   "unit": "studs along the normal",
+   "source": "SmoothCluster VS VARYING4 = (pos + 6 n) in light-grid space; rustudio has no light grid"
+  },
+  {
+   "name": "tone curve by Technology",
+   "group": "lighting",
+   "value": "none for Legacy / Voxel / Compatibility (and unsaved): sqrt(c x Exposure); ShadowMap / Future keep the rational curve",
+   "source": "SmoothCluster FS HQ output; tools/fidelity A/B round 21: place-c-terrain 60.4 -> 77.5, place_a render 70.6 -> 81.7, terrain (ShadowMap) 83.3 -> 72.0 without the curve"
+  },
+  {
+   "name": "underwater fog",
+   "group": "terrain",
+   "value": "visibility = clamp(2^(1.066 - 0.00137 d) - 1, 0, 1) toward the lit WaterColor",
+   "unit": "d in studs",
+   "source": "fitted to an offline Studio's Place B lake (place-b-terrain 22 s, hit distances 63-698 studs, < 0.02 off)"
+  },
+  {
+   "name": "water surface mix",
+   "group": "terrain",
+   "value": "lit WaterColor (ambient + shadowed sun, no N.L) mixed with sky by (clamp(0.78 - 2.5|N.V|) + 0.3) x WaterReflectance",
+   "source": "SmoothWater FS LQ"
+  },
+  {
+   "name": "grass blades",
+   "group": "terrain",
+   "value": 4,
+   "unit": "per stud^2",
+   "estimated": true,
+   "source": "offline Studio grass hill shot; height 2.5 x GrassLength, tips sink from 150 to 250 studs (Grass VS)"
+  },
+  {
+   "name": "Lighting.Brightness unsaved",
+   "group": "lighting",
+   "value": 1,
+   "source": "offline Studio reads 1 for a place file without Brightness (reflection database default 1.981), round 21"
+  },
+  {
+   "name": "Random generator",
+   "group": "scripts",
+   "value": "PCG32 (mul 0x5851f42d4c957f2d, inc 105, XSH-RR), pcg32_srandom seeding",
+   "source": "Studio NextNumber() ; matches Studio's sequences for seeds 0, 1, 1001, 1005, 123456789"
+  },
+  {
+   "name": "Random:NextNumber",
+   "group": "scripts",
+   "value": "(second << 32 | first) x 2^-64; (a, b): ends ordered, min(1 - t) + max t clamped",
+   "source": "Studio ,  (method table .data , wrapper )"
+  },
+  {
+   "name": "Random:NextInteger",
+   "group": "scripts",
+   "value": "min + (u32 x span) >> 32 (one 32-bit draw)",
+   "source": "matched to an offline Studio's sequences (tools/fidelity place_c_terrain.luau FIDRNG), round 21"
+  },
+  {
+   "name": "Terrain Editor brush rate",
+   "group": "editing",
+   "value": 30,
+   "unit": "applications/s",
+   "estimated": true,
+   "source": "rustudio's own (round 21 Terrain Editor), not measured in Studio"
+  },
+  {
+   "name": "floor rays",
+   "group": "character",
+   "value": "5 along the root's Z at (0, -0.4 sy, k*0.4 sz), k = 0, 1, -1, 2, -2; else 4 corners (±0.4 sx, ±0.4 sz); straight down; hits averaged",
+   "source": "Studio floor finder  (.rdata , , ; sizes at least 0.05, )"
+  },
+  {
+   "name": "floor ray length",
+   "group": "character",
+   "value": "0.3 x (HipHeight + root size.y) + HipHeight x 1.5 with a floor (1.1 without)",
+   "source": "Studio FInt ExtraFloorRaycastDistanceHipHeightPercent = 30 (.data ); caller  (.rdata  = 1.5,  = 1.1)"
+  },
+  {
+   "name": "Humanoid flag defaults",
+   "group": "character",
+   "value": "MaxAltitudePDHipHeightPercent 100, SimAdaptiveHumanoidPDControllerSubstepMultiplier 2, NewPDSteepSlopeSlidingWithGravityPercent 2, NewPDAltitudeNoForceZonePercent 1, SolidFloorPercentForceApplication 100, NonSolidFloorPercentForceApplication 10, SolidFloorMassMultTenth 50, HumanoidFloorTeleportWeightValue 50, HumanoidFloorManualFrictionVelocityMultValue 100",
+   "source": "Studio FInt values 8 bytes before their name slots (registrations ..), not overridden in the offline Studio settings"
+  },
+  {
+   "name": "hip spring",
+   "group": "character",
+   "value": 39.0,
+   "unit": "1/s",
+   "source": "tools/fidelity movement_probe (round 22): the root rises toward floor + HipHeight + half the root at 39 x the gap (39.5 / 39 / 42 at gaps 0.06 / 0.03 / 0.01); above it, gravity only"
+  },
+  {
+   "name": "walking on slopes",
+   "group": "movement",
+   "value": "WalkSpeed along the floor's plane (the move turned into it at full length)",
+   "source": "tools/fidelity movement_probe (round 22): ramp_60 vy 13.6, vz -8.0 at WalkSpeed 16"
+  },
+  {
+   "name": "walkable slope",
+   "group": "movement",
+   "value": "60 degrees walked, 75 and 85 stop the body at the foot (the front floor rays start inside the ramp)",
+   "source": "tools/fidelity movement_probe (round 22): ramp lanes, MaxSlopeAngle 89"
+  },
+  {
+   "name": "ground acceleration and braking",
+   "group": "movement",
+   "value": "2.0 + 2270 x mu studs/s^2, mu = (f*w + 0.3)/(w + 1)",
+   "source": "tools/fidelity movement_probe (round 22): friction lanes, Studio 8.8 at mu 0.003, 32 at 0.013, 121 at 0.053, a frame or two from 0.15 (fitted)"
+  },
+  {
+   "name": "moving floors",
+   "group": "movement",
+   "value": "the floor's velocity at the contact is added in full; a spinning floor turns the character",
+   "source": "tools/fidelity movement_probe (round 22): conveyor (exactly -10 studs/s), spinner"
+  },
+  {
+   "name": "wall slide",
+   "group": "movement",
+   "value": "the body turns flush to the wall and slides at 9.93 instead of 11.31 studs/s at 45 degrees (rustudio: slide - 0.122 x the speed into the wall)",
+   "estimated": true,
+   "source": "tools/fidelity movement_probe (round 22): wall_slide (one lane; the friction factor is fitted)"
+  },
+  {
+   "name": "ceiling bounce",
+   "group": "movement",
+   "value": 0.5,
+   "estimated": true,
+   "source": "tools/fidelity movement_probe (round 22): ceiling_jump lands 0.11 s after the jump (fitted; Plastic elasticity 0.5)"
+  },
+  {
+   "name": "pushing loose parts",
+   "group": "movement",
+   "value": "pushed along at the walking speed (2-stud block: 39.4 studs in 2.5 s)",
+   "source": "tools/fidelity movement_probe (round 22): push_block"
+  },
+  {
+   "name": "PlatformStand",
+   "group": "character",
+   "value": "no hip support: the root drops onto its own box (3.19 -> 1.0 in 0.15 s)",
+   "source": "tools/fidelity movement_probe (round 22): platform_stand"
+  },
+  {
+   "name": "Jumping state",
+   "group": "character",
+   "value": "one physics step, then Freefall",
+   "source": "tools/fidelity movement_probe (round 22): 0.01-0.02 s in every jump lane"
+  },
+  {
+   "name": "Running to Freefall",
+   "group": "character",
+   "value": "when the floor rays find nothing (no timer): 2.1 studs of fall off a ledge",
+   "source": "tools/fidelity movement_probe (round 22): ledge (Freefall at 0.42 s), step_20 (stays Running on a 2-stud drop)"
+  },
+  {
+   "name": "FloorMaterial in held states",
+   "group": "character",
+   "value": "Air while Seated, PlatformStanding, FallingDown",
+   "source": "tools/fidelity movement_probe (round 22): seat, platform_stand, falling_down"
+  },
+  {
+   "name": "seat sitting",
+   "group": "character",
+   "value": "on a touch that begins; standing on a seat after jumping off doesn't sit again",
+   "source": "tools/fidelity movement_probe (round 22): seat (Studio stays Running on the seat 1 s after landing)"
+  },
+  {
+   "name": "character CanCollide",
+   "group": "character",
+   "value": "R15: HumanoidRootPart, UpperTorso, LowerTorso, Head; R6: Torso, Head",
+   "source": "tools/fidelity movement_probe (round 22): FIDMOVEDONE parts"
+  },
+  {
+   "name": "swim speed",
+   "group": "character",
+   "value": "35 / (35 + 13.4 x parts / mass) x WalkSpeed",
+   "source": "tools/fidelity movement_probe (round 22): water, Studio R15 (16 parts, 14.26) 11.12 studs/s, R6 (7, 12.6) 13.26 (fitted per-part drag)"
+  },
+  {
+   "name": "swim float",
+   "group": "character",
+   "value": 1.63,
+   "unit": "studs/s",
+   "source": "tools/fidelity movement_probe (round 22): water, R15 (R6 0.45: not modelled)"
+  },
+  {
+   "name": "swim posture",
+   "group": "character",
+   "value": "the root lies flat (looks down) while swimming along",
+   "source": "tools/fidelity movement_probe (round 22): water (look vector)"
+  },
+  {
+   "name": "jump in water",
+   "group": "character",
+   "value": "the full jump speed (Jumping, then Swimming again; held, it leaves the water)",
+   "source": "tools/fidelity movement_probe (round 22): water (vy 52.4 at the jump)"
+  },
+  {
+   "name": "JSONEncode empty table",
+   "group": "scripts",
+   "value": "[]",
+   "source": "Roblox HttpService:JSONEncode (Studio's probe output: events [] where rustudio printed {})"
+  },
+  {
+   "name": "asset id whitespace",
+   "group": "assets",
+   "value": "content ids are trimmed: Place B's 'http://www.roblox.com/asset/?id=125882923   ' loads like the bare id",
+   "source": "Studio loads Place B's padded MeshIds (asset report: they were 'not requested' in rustudio)"
+  },
+  {
+   "name": "unloaded mesh",
+   "group": "assets",
+   "value": "a MeshPart / SpecialMesh whose mesh is still loading or failed is drawn as nothing (no box, no placeholder)",
+   "source": "offline Studio, Place B spawn: meshes it can't download leave empty space (round 23 bug 1 before/after)"
+  },
+  {
+   "name": "MeshPart children",
+   "group": "assets",
+   "value": "a SpecialMesh under a MeshPart doesn't replace the MeshPart's own mesh",
+   "source": "Place B: an empty SpecialMesh child wiped a MeshPart's MeshId in rustudio; Studio shows the MeshPart's mesh"
+  },
+  {
+   "name": "CharacterMesh",
+   "group": "assets",
+   "value": "a CharacterMesh in the character model swaps its BodyPart's limb (1 Torso, 2 LeftArm, 3 RightArm, 4 LeftLeg, 5 RightLeg) for MeshId, not fitted to the part's size",
+   "source": "Roblox CharacterMesh docs; Place B's packaged characters"
+  },
+  {
+   "name": "asset download sign-in",
+   "group": "assets",
+   "value": "Roblox's asset delivery now answers 'Authentication required' for most assets to anonymous sessions; rustudio says so once in Output",
+   "source": "AssetStore fetch errors with an expired session (round 23: 478 Place B assets)"
+  },
+  {
+   "name": "SurfaceGui depth",
+   "group": "gui",
+   "value": "SurfaceGui and BillboardGui with AlwaysOnTop false are depth-tested against the world (a part in front hides them); AlwaysOnTop true draws over everything",
+   "source": "tools/fidelity (round 23) gui-depth: sign behind a pillar, billboard behind a wall (render 87)"
+  },
+  {
+   "name": "world GUI tone",
+   "group": "gui",
+   "value": "GUIs in the world (AlwaysOnTop false) go through the scene's tone curve: linear colour² × light, curved (none for Legacy / Voxel / Compatibility), back to sRGB; AlwaysOnTop GUIs keep their exact colours",
+   "source": "tools/fidelity (round 23) gui-depth pixels: LI 1 135 vs Studio 133, Brightness 2 151 vs 148, red sign 223 vs 223, AlwaysOnTop exact"
+  },
+  {
+   "name": "LightInfluence",
+   "group": "gui",
+   "value": "light = Brightness × (1 − LightInfluence) + LightInfluence × (ambient + outdoor + sun × Brightness × N·L); defaults LightInfluence 1, Brightness 1",
+   "source": "tools/fidelity (round 23) gui-depth LI 1 / LI 0 + Brightness 2 panels"
+  },
+  {
+   "name": "wall slide in the air",
+   "group": "character",
+   "value": "a character jumping into a wall while holding toward it slides down and falls (no hanging): the controller's slope-slide limit is 1°, not 90°",
+   "source": "tools/fidelity (round 23) movement-wall-r15 / -r6 wall_jump lane (R15 33.8 -> 83.6)"
+  },
+  {
+   "name": "client-moved anchored parts",
+   "group": "physics",
+   "value": "a part a LocalScript moves (TweenService on CFrame) collides where the client has it for the client's character; the server's copy stays",
+   "source": "tools/fidelity (round 23) movement-r15 tween_platform: Studio's character drops off as the platform slides away (57 -> 94)"
+  },
+  {
+   "name": "R6 swim float",
+   "group": "character",
+   "value": "R6 rises 0.446 studs/s while swimming (R15 1.63)",
+   "source": "tools/fidelity (round 23) movement-r6 water lane (Studio, every frame of a 3 s swim)"
+  },
+  {
+   "name": "swim float at the surface",
+   "group": "character",
+   "value": "the float fades to 0 at the surface − 0.19 (root centre) over 0.27 studs: R15 1.63 at 7.21, 1.28 at 7.60, 0.26 at 7.77 in an 8-deep pool",
+   "source": "tools/fidelity (round 23) movement-r15 water lane"
+  },
+  {
+   "name": "swim force limits",
+   "group": "character",
+   "value": "the swim force per axis is clamped to ±10000 on X and Z and −10000..+1000 on Y (× body scale³)",
+   "source": "Studio Swimming  (clamps ..ce92), limits .data "
+  },
+  {
+   "name": "swim jump force",
+   "group": "character",
+   "value": "Jump while swimming sets the Y force to mass × 500",
+   "source": "Studio , .rdata  = 500.0"
+  },
+  {
+   "name": "world GUI fog",
+   "group": "gui",
+   "value": "lit world GUIs are fogged like the scene: mix(fog colour, colour, clamp(exp2(FogParams.z·d + FogParams.x) − FogParams.w)) before the exposure",
+   "source": "shaders_glsl3.pack UILitFogFSRRectClip (0x3efa69)"
+  },
+  {
+   "name": "world GUI light",
+   "group": "gui",
+   "value": "out = mix(lin × Brightness, lin × light, LightInfluence); light = min(lightgrid × 120 + Ambient + SkyAmbient × skylight, LightConfig0.w) + (Lamp0·max(N·−L,0) + Lamp1·max(−N·−L,0)) × (1 − shadow) × skylight, the grid read 6 studs out along the normal",
+   "source": "shaders_glsl3.pack UITransformedLitFogVS (0x6b7b3), UILitFogFSRRectClip (0x3efa69)"
+  },
+  {
+   "name": "light grid voxel",
+   "group": "lighting",
+   "value": 4,
+   "unit": "studs",
+   "source": "Studio: 4-stud lighting voxels (LightGridSkylightTexture, SmoothCluster VS VARYING4 scale CB0[21])"
+  },
+  {
+   "name": "light grid normal offset",
+   "group": "lighting",
+   "value": 6,
+   "unit": "studs",
+   "source": "shaders_glsl3.pack SmoothCluster VS: VARYING4 = (pos + normal * 6.0).yxz * CB0[21] + CB0[22]"
+  },
+  {
+   "name": "light grid size",
+   "group": "lighting",
+   "value": [
+    256,
+    128,
+    256
+   ],
+   "unit": "studs",
+   "estimated": true
+  },
+  {
+   "name": "light grid skylight ray range",
+   "group": "lighting",
+   "value": 32,
+   "unit": "studs",
+   "estimated": true
+  },
+  {
+   "name": "underwater water faces drawn",
+   "group": "terrain",
+   "value": "surfaces over the camera only (normal y >= 0.5, seen from below)",
+   "source": "offline Studio: terrain Place A (surface drawn) and Place B F4 (no water walls)"
+  }
+ ]
+}

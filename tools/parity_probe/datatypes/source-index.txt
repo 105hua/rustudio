@@ -1,0 +1,121 @@
+60:impl UserData for LVector3 {
+100:        m.add_meta_method(MetaMethod::ToString, |_, this, ()| {
+108:        m.add_meta_method(MetaMethod::Eq, |_, this, o: LVector3| Ok(this.0 == o.0));
+109:        m.add_meta_method(MetaMethod::Unm, |_, this, ()| Ok(LVector3(-this.0)));
+110:        m.add_meta_function(MetaMethod::Add, |_, (a, b): (LVector3, LVector3)| {
+113:        m.add_meta_function(MetaMethod::Sub, |_, (a, b): (LVector3, LVector3)| {
+116:        m.add_meta_function(MetaMethod::Mul, |_, (a, b): (Value, Value)| {
+124:        m.add_meta_function(MetaMethod::Div, |_, (a, b): (Value, Value)| {
+132:        m.add_meta_function(MetaMethod::IDiv, |_, (a, b): (LVector3, f32)| {
+149:impl UserData for LVector2 {
+164:        m.add_meta_method(MetaMethod::ToString, |_, this, ()| {
+167:        m.add_meta_method(MetaMethod::Eq, |_, this, o: LVector2| Ok(this.0 == o.0));
+168:        m.add_meta_method(MetaMethod::Unm, |_, this, ()| Ok(LVector2(-this.0)));
+169:        m.add_meta_function(MetaMethod::Add, |_, (a, b): (LVector2, LVector2)| {
+172:        m.add_meta_function(MetaMethod::Sub, |_, (a, b): (LVector2, LVector2)| {
+175:        m.add_meta_function(MetaMethod::Mul, |_, (a, b): (Value, Value)| {
+183:        m.add_meta_function(MetaMethod::Div, |_, (a, b): (LVector2, Value)| {
+247:impl UserData for LCFrame {
+401:        m.add_meta_method(MetaMethod::ToString, |_, this, ()| {
+408:        m.add_meta_method(MetaMethod::Eq, |_, this, o: LCFrame| Ok(this.0 == o.0));
+409:        m.add_meta_function(MetaMethod::Mul, |lua, (a, b): (LCFrame, Value)| {
+418:        m.add_meta_function(MetaMethod::Add, |_, (a, v): (LCFrame, LVector3)| {
+424:        m.add_meta_function(MetaMethod::Sub, |_, (a, v): (LCFrame, LVector3)| {
+497:impl UserData for LColor3 {
+524:        m.add_meta_method(MetaMethod::ToString, |_, this, ()| {
+532:        m.add_meta_method(MetaMethod::Eq, |_, this, o: LColor3| Ok(this.0 == o.0));
+571:impl UserData for LBrickColor {
+593:        m.add_meta_method(MetaMethod::ToString, |_, this, ()| Ok(this.0.to_string()));
+594:        m.add_meta_method(MetaMethod::Eq, |_, this, o: LBrickColor| Ok(this.0 == o.0));
+612:impl UserData for LUDim {
+620:        m.add_meta_method(MetaMethod::ToString, |_, this, ()| {
+623:        m.add_meta_method(MetaMethod::Eq, |_, this, o: LUDim| Ok(*this == o));
+624:        m.add_meta_function(MetaMethod::Add, |_, (a, b): (LUDim, LUDim)| {
+630:        m.add_meta_function(MetaMethod::Sub, |_, (a, b): (LUDim, LUDim)| {
+651:impl UserData for LUDim2 {
+671:        m.add_meta_method(MetaMethod::ToString, |_, this, ()| {
+680:        m.add_meta_method(MetaMethod::Eq, |_, this, o: LUDim2| Ok(*this == o));
+681:        m.add_meta_function(MetaMethod::Add, |_, (a, b): (LUDim2, LUDim2)| {
+693:        m.add_meta_function(MetaMethod::Sub, |_, (a, b): (LUDim2, LUDim2)| {
+789:impl UserData for LEnumItem {
+799:        m.add_meta_method(MetaMethod::ToString, |_, this, ()| {
+802:        m.add_meta_method(MetaMethod::Eq, |_, this, o: LEnumItem| {
+812:impl UserData for LEnum {
+827:        m.add_meta_method(MetaMethod::ToString, |_, this, ()| Ok(this.0.clone()));
+875:impl UserData for LEnums {
+881:        m.add_meta_method(MetaMethod::Index, |_, _, key: String| {
+888:        m.add_meta_method(MetaMethod::ToString, |_, _, ()| Ok("Enum"));
+1411:impl UserData for LRay {
+1437:        m.add_meta_method(MetaMethod::ToString, |_, this, ()| {
+1449:        m.add_meta_method(MetaMethod::Eq, |_, this, o: LRay| Ok(*this == o));
+1462:impl UserData for LRegion3 {
+1484:        m.add_meta_method(MetaMethod::ToString, |_, this, ()| {
+1501:        m.add_meta_method(MetaMethod::Eq, |_, this, o: LRegion3| Ok(*this == o));
+1533:                m.add_meta_method(MetaMethod::ToString, |_, this, ()| {
+1536:                m.add_meta_method(MetaMethod::Eq, |_, this, o: $t| Ok(*this == o));
+1537:                m.add_meta_method(MetaMethod::Unm, |_, this, ()| Ok($t(this.0.map(|c| c.wrapping_neg()))));
+1538:                m.add_meta_function(MetaMethod::Add, |_, (a, b): ($t, $t)| Ok($t::zip(a, b, i16::wrapping_add)));
+1539:                m.add_meta_function(MetaMethod::Sub, |_, (a, b): ($t, $t)| Ok($t::zip(a, b, i16::wrapping_sub)));
+1540:                m.add_meta_function(MetaMethod::Mul, |_, (a, b): (Value, Value)| {
+1548:                m.add_meta_function(MetaMethod::Div, |_, (a, b): (Value, Value)| {
+1573:impl UserData for LRegion3int16 {
+1581:        m.add_meta_method(MetaMethod::ToString, |_, this, ()| {
+1590:        m.add_meta_method(MetaMethod::Eq, |_, this, o: LRegion3int16| Ok(*this == o));
+1603:impl UserData for LNumberRange {
+1611:        m.add_meta_method(MetaMethod::ToString, |_, this, ()| {
+1614:        m.add_meta_method(MetaMethod::Eq, |_, this, o: LNumberRange| Ok(*this == o));
+1639:impl UserData for LNumberSequenceKeypoint {
+1648:        m.add_meta_method(MetaMethod::ToString, |_, this, ()| Ok(this.text()));
+1649:        m.add_meta_method(MetaMethod::Eq, |_, this, o: LNumberSequenceKeypoint| {
+1668:impl UserData for LFloatCurveKey {
+1689:        m.add_meta_method(MetaMethod::ToString, |_, _, ()| Ok("FloatCurveKey"));
+1690:        m.add_meta_method(MetaMethod::Eq, |_, this, o: LFloatCurveKey| Ok(*this == o));
+1700:impl UserData for LNumberSequence {
+1709:        m.add_meta_method(MetaMethod::ToString, |_, this, ()| {
+1712:        m.add_meta_method(MetaMethod::Eq, |_, this, o: LNumberSequence| Ok(*this == o));
+1735:impl UserData for LColorSequenceKeypoint {
+1743:        m.add_meta_method(MetaMethod::ToString, |_, this, ()| Ok(this.text()));
+1744:        m.add_meta_method(MetaMethod::Eq, |_, this, o: LColorSequenceKeypoint| {
+1756:impl UserData for LColorSequence {
+1765:        m.add_meta_method(MetaMethod::ToString, |_, this, ()| {
+1768:        m.add_meta_method(MetaMethod::Eq, |_, this, o: LColorSequence| Ok(*this == o));
+1816:impl UserData for LRect {
+1826:        m.add_meta_method(MetaMethod::ToString, |_, this, ()| {
+1835:        m.add_meta_method(MetaMethod::Eq, |_, this, o: LRect| Ok(*this == o));
+1940:impl UserData for LPhysicalProperties {
+1956:        m.add_meta_method(MetaMethod::ToString, |_, this, ()| {
+1966:        m.add_meta_method(MetaMethod::Eq, |_, this, o: LPhysicalProperties| {
+1985:impl UserData for LTweenInfo {
+1999:        m.add_meta_method(MetaMethod::ToString, |_, this, ()| {
+2010:        m.add_meta_method(MetaMethod::Eq, |_, this, o: LTweenInfo| Ok(*this == o));
+2100:impl UserData for LRandom {
+2150:        m.add_meta_method(MetaMethod::ToString, |_, _, ()| Ok("Random"));
+2448:impl UserData for LDateTime {
+2471:        m.add_meta_method(MetaMethod::ToString, |_, this, ()| Ok(this.iso()));
+2472:        m.add_meta_method(MetaMethod::Eq, |_, this, o: LDateTime| Ok(*this == o));
+2474:            MetaMethod::Lt,
+2477:        m.add_meta_function(MetaMethod::Le, |_, (a, b): (LDateTime, LDateTime)| {
+2507:impl UserData for LFaces {
+2516:        m.add_meta_method(MetaMethod::ToString, |_, this, ()| {
+2519:        m.add_meta_method(MetaMethod::Eq, |_, this, o: LFaces| Ok(*this == o));
+2523:impl UserData for LAxes {
+2543:        m.add_meta_method(MetaMethod::ToString, |_, this, ()| {
+2546:        m.add_meta_method(MetaMethod::Eq, |_, this, o: LAxes| Ok(*this == o));
+2699:    m.add_meta_method(MetaMethod::ToString, |_, _, ()| Ok(T::NAME));
+2702:impl UserData for LRaycastParams {
+2711:impl UserData for LOverlapParams {
+2740:impl UserData for LCatalogSearchParams {
+2746:        m.add_meta_method(MetaMethod::Index, |_, this, key: String| {
+2758:            MetaMethod::NewIndex,
+2773:        m.add_meta_method(MetaMethod::ToString, |_, _, ()| Ok("CatalogSearchParams"));
+3760:impl UserData for LFont {
+3778:        m.add_meta_method(MetaMethod::ToString, |_, this, ()| {
+3784:        m.add_meta_method(MetaMethod::Eq, |_, this, other: mlua::AnyUserData| {
+3798:impl UserData for LInputObject {
+3804:        m.add_meta_method(mlua::MetaMethod::Index, |_, this, key: Value| {
+3819:            mlua::MetaMethod::NewIndex,
+3822:        m.add_meta_method(mlua::MetaMethod::ToString, |_, _, ()| Ok("InputObject"));
+3836:impl UserData for LSignal {
+3842:        m.add_meta_method(mlua::MetaMethod::Index, |_, this, key: Value| {
+3856:        m.add_meta_method(mlua::MetaMethod::NewIndex, |_, _, (k, _): (Value, Value)| {
+3862:        m.add_meta_method(mlua::MetaMethod::ToString, |_, this, ()| {

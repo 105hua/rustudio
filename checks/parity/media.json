@@ -1,0 +1,445 @@
+{
+ "AudioAnalyzer": {
+  "missing": [
+   "property PeakLevel",
+   "property RmsLevel",
+   "function GetConnectedWires",
+   "function GetInputPins",
+   "function GetOutputPins",
+   "function GetSpectrum"
+  ],
+  "events_to_check": [
+   "WiringChanged"
+  ]
+ },
+ "AudioChannelMixer": {
+  "missing": [
+   "function GetConnectedWires",
+   "function GetInputPins",
+   "function GetOutputPins"
+  ],
+  "events_to_check": [
+   "WiringChanged"
+  ]
+ },
+ "AudioChannelSplitter": {
+  "missing": [
+   "function GetConnectedWires",
+   "function GetInputPins",
+   "function GetOutputPins"
+  ],
+  "events_to_check": [
+   "WiringChanged"
+  ]
+ },
+ "AudioChorus": {
+  "missing": [
+   "function GetConnectedWires",
+   "function GetInputPins",
+   "function GetOutputPins"
+  ],
+  "events_to_check": [
+   "WiringChanged"
+  ]
+ },
+ "AudioCompressor": {
+  "missing": [
+   "function GetConnectedWires",
+   "function GetInputPins",
+   "function GetOutputPins"
+  ],
+  "events_to_check": [
+   "WiringChanged"
+  ]
+ },
+ "AudioDeviceInput": {
+  "missing": [
+   "function GetConnectedWires",
+   "function GetInputPins",
+   "function GetOutputPins",
+   "function GetUserIdAccessList",
+   "function SetUserIdAccessList"
+  ],
+  "events_to_check": [
+   "WiringChanged"
+  ]
+ },
+ "AudioDeviceOutput": {
+  "missing": [
+   "function GetConnectedWires",
+   "function GetInputPins",
+   "function GetOutputPins"
+  ],
+  "events_to_check": [
+   "WiringChanged"
+  ]
+ },
+ "AudioDistortion": {
+  "missing": [
+   "function GetConnectedWires",
+   "function GetInputPins",
+   "function GetOutputPins"
+  ],
+  "events_to_check": [
+   "WiringChanged"
+  ]
+ },
+ "AudioEcho": {
+  "missing": [
+   "function GetConnectedWires",
+   "function GetInputPins",
+   "function GetOutputPins"
+  ],
+  "events_to_check": [
+   "WiringChanged"
+  ]
+ },
+ "AudioEmitter": {
+  "missing": [
+   "function GetAngleAttenuation",
+   "function GetAudibilityFor",
+   "function GetConnectedWires",
+   "function GetDistanceAttenuation",
+   "function GetInputPins",
+   "function GetInteractingListeners",
+   "function GetOutputPins",
+   "function SetAngleAttenuation",
+   "function SetDistanceAttenuation"
+  ],
+  "events_to_check": [
+   "WiringChanged"
+  ]
+ },
+ "AudioEqualizer": {
+  "missing": [
+   "function GetConnectedWires",
+   "function GetInputPins",
+   "function GetOutputPins"
+  ],
+  "events_to_check": [
+   "WiringChanged"
+  ]
+ },
+ "AudioFader": {
+  "missing": [
+   "function GetConnectedWires",
+   "function GetInputPins",
+   "function GetOutputPins"
+  ],
+  "events_to_check": [
+   "WiringChanged"
+  ]
+ },
+ "AudioFilter": {
+  "missing": [
+   "function GetConnectedWires",
+   "function GetGainAt",
+   "function GetInputPins",
+   "function GetOutputPins"
+  ],
+  "events_to_check": [
+   "WiringChanged"
+  ]
+ },
+ "AudioFlanger": {
+  "missing": [
+   "function GetConnectedWires",
+   "function GetInputPins",
+   "function GetOutputPins"
+  ],
+  "events_to_check": [
+   "WiringChanged"
+  ]
+ },
+ "AudioGate": {
+  "missing": [
+   "function GetConnectedWires",
+   "function GetInputPins",
+   "function GetOutputPins"
+  ],
+  "events_to_check": [
+   "WiringChanged"
+  ]
+ },
+ "AudioLimiter": {
+  "missing": [
+   "function GetConnectedWires",
+   "function GetInputPins",
+   "function GetOutputPins"
+  ],
+  "events_to_check": [
+   "WiringChanged"
+  ]
+ },
+ "AudioListener": {
+  "missing": [
+   "function GetAngleAttenuation",
+   "function GetAudibilityFor",
+   "function GetConnectedWires",
+   "function GetDistanceAttenuation",
+   "function GetInputPins",
+   "function GetInteractingEmitters",
+   "function GetOutputPins",
+   "function SetAngleAttenuation",
+   "function SetDistanceAttenuation"
+  ],
+  "events_to_check": [
+   "WiringChanged"
+  ]
+ },
+ "AudioPitchShifter": {
+  "missing": [
+   "function GetConnectedWires",
+   "function GetInputPins",
+   "function GetOutputPins"
+  ],
+  "events_to_check": [
+   "WiringChanged"
+  ]
+ },
+ "AudioPlayer": {
+  "missing": [
+   "property IsPlaying",
+   "property IsReady",
+   "property TimeLength",
+   "function Cancel",
+   "function GetConnectedWires",
+   "function GetInputPins",
+   "function GetOutputPins",
+   "function Play",
+   "function Stop",
+   "function GetWaveformAsync"
+  ],
+  "events_to_check": [
+   "Ended",
+   "Looped",
+   "WiringChanged"
+  ]
+ },
+ "AudioRecorder": {
+  "missing": [
+   "property TimeLength",
+   "function Clear",
+   "function GetConnectedWires",
+   "function GetInputPins",
+   "function GetOutputPins",
+   "function GetTemporaryContent",
+   "function Stop",
+   "function CanRecordAsync",
+   "function GetUnrecordableInstancesAsync",
+   "function RecordAsync"
+  ],
+  "events_to_check": [
+   "WiringChanged"
+  ]
+ },
+ "AudioReverb": {
+  "missing": [
+   "function GetConnectedWires",
+   "function GetInputPins",
+   "function GetOutputPins"
+  ],
+  "events_to_check": [
+   "WiringChanged"
+  ]
+ },
+ "AudioSearchParams": {
+  "missing": [
+   "property MaxPageSize",
+   "property SortType"
+  ],
+  "events_to_check": []
+ },
+ "AudioSpeechToText": {
+  "missing": [
+   "property VoiceDetected",
+   "function GetConnectedWires",
+   "function GetInputPins",
+   "function GetOutputPins"
+  ],
+  "events_to_check": [
+   "WiringChanged"
+  ]
+ },
+ "AudioTextToSpeech": {
+  "missing": [
+   "property IsLoaded",
+   "property IsPlaying",
+   "property TimeLength",
+   "function GetConnectedWires",
+   "function GetInputPins",
+   "function GetOutputPins",
+   "function Pause",
+   "function Play",
+   "function Unload",
+   "function GetWaveformAsync",
+   "function LoadAsync"
+  ],
+  "events_to_check": [
+   "Ended",
+   "Looped",
+   "WiringChanged"
+  ]
+ },
+ "AudioTremolo": {
+  "missing": [
+   "function GetConnectedWires",
+   "function GetInputPins",
+   "function GetOutputPins"
+  ],
+  "events_to_check": [
+   "WiringChanged"
+  ]
+ },
+ "AudioWindSynthesizer": {
+  "missing": [
+   "function GetConnectedWires",
+   "function GetInputPins",
+   "function GetOutputPins"
+  ],
+  "events_to_check": [
+   "WiringChanged"
+  ]
+ },
+ "Wire": {
+  "missing": [
+   "property Connected"
+  ],
+  "events_to_check": []
+ },
+ "Sound": {
+  "missing": [
+   "property MaxDistance",
+   "property PlaybackLoudness",
+   "property isPlaying"
+  ],
+  "events_to_check": [
+   "DidLoop",
+   "Ended",
+   "Loaded",
+   "Paused",
+   "Played",
+   "Resumed",
+   "Stopped"
+  ]
+ },
+ "SoundService": {
+  "missing": [
+   "function GetMixerTime",
+   "function SetInputDevice"
+  ],
+  "events_to_check": []
+ },
+ "VideoPlayer": {
+  "missing": [
+   "property AutoLoadInStudio",
+   "property AutoPlayInStudio",
+   "property IsLoaded",
+   "property IsPlaying",
+   "property Resolution",
+   "property TimeLength",
+   "function GetConnectedWires",
+   "function GetInputPins",
+   "function GetOutputPins",
+   "function Pause",
+   "function Play",
+   "function Unload",
+   "function LoadAsync"
+  ],
+  "events_to_check": [
+   "DidEnd",
+   "DidLoop",
+   "PlayFailed",
+   "WiringChanged"
+  ]
+ },
+ "VideoFrame": {
+  "missing": [
+   "property IsLoaded",
+   "property Resolution",
+   "property TimeLength",
+   "function Pause",
+   "function Play"
+  ],
+  "events_to_check": [
+   "DidLoop",
+   "Ended",
+   "Loaded",
+   "Paused",
+   "Played"
+  ]
+ },
+ "VideoDisplay": {
+  "missing": [
+   "function GetConnectedWires",
+   "function GetInputPins",
+   "function GetOutputPins"
+  ],
+  "events_to_check": [
+   "WiringChanged"
+  ]
+ },
+ "VideoSampler": {
+  "missing": [
+   "property TimeLength",
+   "property VideoContent",
+   "function GetSamplesAtTimesAsync"
+  ],
+  "events_to_check": []
+ },
+ "VideoCapture": {
+  "missing": [
+   "property TimeLength"
+  ],
+  "events_to_check": []
+ },
+ "VideoCaptureService": {
+  "missing": [
+   "function ClearMockInput",
+   "function SetMockInputAsync"
+  ],
+  "events_to_check": []
+ },
+ "VideoDeviceInput": {
+  "missing": [
+   "property IsReady"
+  ],
+  "events_to_check": []
+ },
+ "VideoService": {
+  "missing": [
+   "function CreateVideoSamplerAsync"
+  ],
+  "events_to_check": []
+ },
+ "VoiceChatInternal": {
+  "missing": [
+   "property VoiceChatState",
+   "function GetAudioProcessingSettings",
+   "function GetMicDevices",
+   "function GetParticipants",
+   "function GetVoiceChatApiVersion",
+   "function GetVoiceChatAvailable",
+   "function IsPublishPaused",
+   "function IsSubscribePaused",
+   "function JoinByGroupId",
+   "function JoinByGroupIdToken",
+   "function Leave",
+   "function PublishPause",
+   "function SetMicDevice",
+   "function SubscribePause",
+   "function SubscribePauseAll",
+   "function IsVoiceEnabledForUserIdAsync"
+  ],
+  "events_to_check": [
+   "StateChanged"
+  ]
+ },
+ "VoiceChatService": {
+  "missing": [
+   "function GetChatGroupsAsync",
+   "function IsVoiceEnabledForUserIdAsync"
+  ],
+  "events_to_check": []
+ }
+}

@@ -1,0 +1,45 @@
+rustudio crashed: fatal signal SIGILL
+
+rustudio 0.1.0 (unknown commit) crashed: signal
+pid 364736
+args: rustudio --demo --play --from-play --luau client /home/user/projects/rustudio/app/tools/parity_probe/datatypes/harness-client.luau@3 --screenshot /home/user/projects/rustudio/app/tools/parity_probe/datatypes/client.png --shot-after 12 --log /home/user/projects/rustudio/app/tools/parity_probe/datatypes/rustudio-client.log
+
+backtrace:
+   0: rustudio::crash::on_signal
+   1: <unknown>
+   2: lua_gc
+   3: mlua::userdata::util::lua_error_impl
+   4: _Z12luau_executeILb0EEvP9lua_State
+   5: _ZL15resume_continueP9lua_Statel
+   6: _ZL13resume_finishP9lua_Stateii
+   7: lua_resume
+   8: <mlua::thread::Thread>::resume_inner
+   9: <mlua::thread::Thread>::resume::<mlua::multi::MultiValue, mlua::multi::MultiValue>
+  10: rustudio::runtime::resume
+  11: <rustudio::runtime::Runtime>::run_script
+  12: <rustudio::runtime::Runtime>::dispatch
+  13: <rustudio::app::Editor>::run_luau::{closure#0}
+  14: <rustudio::app::Editor>::run_luau
+  15: <rustudio::app::Editor>::harness_tick
+  16: <rustudio::app::RustudioApp as eframe::epi::App>::ui
+  17: <egui::context::Context>::run_ui_dyn
+  18: <eframe::native::epi_integration::EpiIntegration>::update
+  19: <eframe::native::wgpu_integration::WgpuWinitApp as eframe::native::winit_integration::WinitApp>::run_ui_and_paint
+  20: eframe::native::event_loop_context::with_event_loop_context::<<eframe::native::run::WinitAppWrapper<eframe::native::wgpu_integration::WgpuWinitApp> as winit::application::ApplicationHandler<eframe::native::winit_integration::UserEvent>>::window_event::{closure#0}>
+  21: <&mut <winit::event_loop::EventLoop<eframe::native::winit_integration::UserEvent>>::run_app<eframe::native::run::WinitAppWrapper<eframe::native::wgpu_integration::WgpuWinitApp>>::{closure#0} as core::ops::function::FnMut<(winit::event::Event<eframe::native::winit_integration::UserEvent>, &winit::event_loop::ActiveEventLoop)>>::call_mut
+  22: <winit::platform_impl::linux::x11::EventLoop<eframe::native::winit_integration::UserEvent>>::run_on_demand::<<winit::event_loop::EventLoop<eframe::native::winit_integration::UserEvent> as winit::platform::run_on_demand::EventLoopExtRunOnDemand>::run_app_on_demand<eframe::native::run::WinitAppWrapper<eframe::native::wgpu_integration::WgpuWinitApp>>::{closure#0}>
+  23: <winit::platform_impl::linux::EventLoop<eframe::native::winit_integration::UserEvent>>::run_on_demand::<<winit::event_loop::EventLoop<eframe::native::winit_integration::UserEvent> as winit::platform::run_on_demand::EventLoopExtRunOnDemand>::run_app_on_demand<eframe::native::run::WinitAppWrapper<eframe::native::wgpu_integration::WgpuWinitApp>>::{closure#0}>
+  24: eframe::native::run::run_and_return::<eframe::native::wgpu_integration::WgpuWinitApp>
+  25: <std::thread::local::LocalKey<core::cell::RefCell<core::option::Option<winit::event_loop::EventLoop<eframe::native::winit_integration::UserEvent>>>>>::with::<eframe::native::run::with_event_loop<core::result::Result<(), eframe::Error>, eframe::native::run::run_wgpu::{closure#0}>::{closure#0}, core::result::Result<core::result::Result<(), eframe::Error>, eframe::Error>>
+  26: eframe::native::run::run_wgpu
+  27: eframe::run_native_ext
+  28: eframe::run_native
+  29: rustudio::main
+  30: std::sys::backtrace::__rust_begin_short_backtrace::<fn() -> core::result::Result<(), eframe::Error>, core::result::Result<(), eframe::Error>>
+  31: std::rt::lang_start::<core::result::Result<(), eframe::Error>>::{closure#0}
+  32: std::rt::lang_start_internal
+  33: main
+  34: <unknown>
+  35: __libc_start_main
+  36: _start
+

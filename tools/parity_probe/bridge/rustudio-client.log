@@ -1,0 +1,953 @@
+Info: rustudio 0.1.0 ready. Reflection database has 931 classes.
+Info: Loaded the sample scene
+Info: Checking the Roblox session…
+Info: Signed in as @testuser1 (session from the login keyring)
+Info: Loading the avatar for Play…
+Info: Avatar of user 10000000001: R6 with 2 worn items
+Info: Not shown yet:  (MoodAnimation)
+Info: Avatar ready for Play (user 10000000001, R6): the next character uses it
+Info: Default player scripts from Studio: PlayerScriptsLoader, PlayerModule, RbxCharacterSounds
+Info: ▶ Play: a server and a client are running; WASD + Space to move, Shift+F5 to stop
+Info: [Server] Hello from rustudio  —  ServerScriptService.Main:1
+Info: Character: R15 (from the place setting)
+Info: Sky: 1024px faces, light from above 0.156 0.399 0.666
+Info: [Client] BRIDGE|client|connection.meta|true|false|RBXScriptConnection|userdata|RBXScriptConnection: 0x0000559f23cd0e20  —  harness:2
+Info: [Client] BRIDGE|client|connection.namecall|true|function|harness|13||0|false|function: 0x0000559f23ddff60  —  harness:2
+Info: [Client] BRIDGE|client|connection.namecall.empty|false|harness:13: attempt to call missing method '____________' of RBXScriptConnection  —  harness:2
+Info: [Client] BRIDGE|client|connection.namecall.self|false|harness:13: attempt to call missing method '____________' of RBXScriptConnection  —  harness:2
+Info: [Client] BRIDGE|client|connection.namecall.table|false|harness:13: attempt to call missing method '____________' of RBXScriptConnection  —  harness:2
+Info: [Client] BRIDGE|client|connection.namecall.nil|false|harness:13: attempt to call missing method '____________' of RBXScriptConnection  —  harness:2
+Info: [Client] BRIDGE|client|connection.newindex|true|function|harness|12||0|false|function: 0x0000559f23de0110  —  harness:2
+Info: [Client] BRIDGE|client|connection.newindex.empty|false|harness:12: attempt to index RBXScriptConnection with '____________'  —  harness:2
+Info: [Client] BRIDGE|client|connection.newindex.self|false|harness:12: attempt to index RBXScriptConnection with '____________'  —  harness:2
+Info: [Client] BRIDGE|client|connection.newindex.table|false|harness:12: attempt to index RBXScriptConnection with '____________'  —  harness:2
+Info: [Client] BRIDGE|client|connection.newindex.nil|false|harness:12: attempt to index RBXScriptConnection with '____________'  —  harness:2
+Info: [Client] BRIDGE|client|connection.index.nil|true|nil  —  harness:2
+Info: [Client] BRIDGE|client|connection.index.number|true|nil  —  harness:2
+Info: [Client] BRIDGE|client|connection.write.nil|false|harness:23: attempt to index RBXScriptConnection with nil  —  harness:2
+Info: [Client] BRIDGE|client|connection.unknown|false|harness:24: attempt to call missing method '____________' of RBXScriptConnection  —  harness:2
+Info: [Client] BRIDGE|client|player.meta|true|false|Instance|userdata|testuser1  —  harness:2
+Info: [Client] BRIDGE|client|player.namecall|true|function|[C]|-1||0|true|function: 0x0000559f25ec4fa0  —  harness:2
+Info: [Client] BRIDGE|client|player.namecall.empty|false|bad argument #1: runtime error: Instance expected, got nil  —  harness:2
+Info: [Client] BRIDGE|client|player.namecall.self|false|bad argument #2: error converting Lua nil to string (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|player.namecall.table|false|bad argument #2: error converting Lua table to string (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|player.namecall.nil|false|bad argument #2: error converting Lua nil to string (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|player.index|true|function|[C]|-1||0|true|function: 0x0000559f25ec4fa0  —  harness:2
+Info: [Client] BRIDGE|client|player.index.empty|false|bad argument #1: runtime error: Instance expected, got nil  —  harness:2
+Info: [Client] BRIDGE|client|player.index.self|false|bad argument #2: error converting Lua nil to string (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|player.index.table|false|bad argument #2: error converting Lua table to string (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|player.index.nil|false|bad argument #2: error converting Lua nil to string (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|player.newindex|true|function|[C]|-1||0|true|function: 0x0000559f25ec4f40  —  harness:2
+Info: [Client] BRIDGE|client|player.newindex.empty|false|bad argument #1: runtime error: Instance expected, got nil  —  harness:2
+Info: [Client] BRIDGE|client|player.newindex.self|false|bad argument #2: error converting Lua nil to String (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|player.newindex.table|false|bad argument #2: error converting Lua table to String (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|player.newindex.nil|false|bad argument #2: error converting Lua nil to String (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|player.index.nil|false|bad argument #2: error converting Lua nil to string (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|player.index.number|false|1 is not a valid member of Player "Players.testuser1"  —  harness:2
+Info: [Client] BRIDGE|client|player.write.nil|false|bad argument #2: error converting Lua nil to String (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|player.unknown|false|____________ is not a valid member of Player "Players.testuser1"  —  harness:2
+Info: [Client] BRIDGE|client|item.meta|true|false|EnumItem|userdata|Enum.Material.Plastic  —  harness:2
+Info: [Client] BRIDGE|client|item.namecall|true|function|harness|13||0|false|function: 0x0000559f2f611c70  —  harness:2
+Info: [Client] BRIDGE|client|item.namecall.empty|false|harness:13: attempt to call missing method '____________' of EnumItem  —  harness:2
+Info: [Client] BRIDGE|client|item.namecall.self|false|harness:13: attempt to call missing method '____________' of EnumItem  —  harness:2
+Info: [Client] BRIDGE|client|item.namecall.table|false|harness:13: attempt to call missing method '____________' of EnumItem  —  harness:2
+Info: [Client] BRIDGE|client|item.namecall.nil|false|harness:13: attempt to call missing method '____________' of EnumItem  —  harness:2
+Info: [Client] BRIDGE|client|item.newindex|true|function|harness|12||0|false|function: 0x0000559f2f611d30  —  harness:2
+Info: [Client] BRIDGE|client|item.newindex.empty|false|harness:12: attempt to index EnumItem with '____________'  —  harness:2
+Info: [Client] BRIDGE|client|item.newindex.self|false|harness:12: attempt to index EnumItem with '____________'  —  harness:2
+Info: [Client] BRIDGE|client|item.newindex.table|false|harness:12: attempt to index EnumItem with '____________'  —  harness:2
+Info: [Client] BRIDGE|client|item.newindex.nil|false|harness:12: attempt to index EnumItem with '____________'  —  harness:2
+Info: [Client] BRIDGE|client|item.index.nil|true|nil  —  harness:2
+Info: [Client] BRIDGE|client|item.index.number|true|nil  —  harness:2
+Info: [Client] BRIDGE|client|item.write.nil|false|harness:23: attempt to index EnumItem with nil  —  harness:2
+Info: [Client] BRIDGE|client|item.unknown|false|harness:24: attempt to call missing method '____________' of EnumItem  —  harness:2
+Info: [Client] BRIDGE|client|enums.meta|true|false|Enums|userdata|Enum  —  harness:2
+Info: [Client] BRIDGE|client|enums.namecall|true|function|[C]|-1||0|true|function: 0x0000559f25151fb0  —  harness:2
+Info: [Client] BRIDGE|client|enums.namecall.empty|false|bad argument `self` to `LEnums.__index`: error converting Lua missing argument to userdata
+stack traceback:
+	[C]: in ?
+	harness:16: in function <harness:16>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:16: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|enums.namecall.self|false|bad argument #2 to `LEnums.__index`: error converting Lua nil to String (expected string or number)
+stack traceback:
+	[C]: in ?
+	harness:17: in function <harness:17>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:17: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|enums.namecall.table|false|bad argument #2 to `LEnums.__index`: error converting Lua table to String (expected string or number)
+stack traceback:
+	[C]: in ?
+	harness:18: in function <harness:18>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:18: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|enums.namecall.nil|false|bad argument #2 to `LEnums.__index`: error converting Lua nil to String (expected string or number)
+stack traceback:
+	[C]: in ?
+	harness:19: in function <harness:19>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:19: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|enums.index|true|function|[C]|-1||0|true|function: 0x0000559f25151fb0  —  harness:2
+Info: [Client] BRIDGE|client|enums.index.empty|false|bad argument `self` to `LEnums.__index`: error converting Lua missing argument to userdata
+stack traceback:
+	[C]: in ?
+	harness:16: in function <harness:16>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:16: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|enums.index.self|false|bad argument #2 to `LEnums.__index`: error converting Lua nil to String (expected string or number)
+stack traceback:
+	[C]: in ?
+	harness:17: in function <harness:17>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:17: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|enums.index.table|false|bad argument #2 to `LEnums.__index`: error converting Lua table to String (expected string or number)
+stack traceback:
+	[C]: in ?
+	harness:18: in function <harness:18>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:18: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|enums.index.nil|false|bad argument #2 to `LEnums.__index`: error converting Lua nil to String (expected string or number)
+stack traceback:
+	[C]: in ?
+	harness:19: in function <harness:19>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:19: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|enums.newindex|true|function|harness|12||0|false|function: 0x0000559f2f833330  —  harness:2
+Info: [Client] BRIDGE|client|enums.newindex.empty|false|harness:12: attempt to index Enums with '____________'  —  harness:2
+Info: [Client] BRIDGE|client|enums.newindex.self|false|harness:12: attempt to index Enums with '____________'  —  harness:2
+Info: [Client] BRIDGE|client|enums.newindex.table|false|harness:12: attempt to index Enums with '____________'  —  harness:2
+Info: [Client] BRIDGE|client|enums.newindex.nil|false|harness:12: attempt to index Enums with '____________'  —  harness:2
+Info: [Client] BRIDGE|client|enums.index.nil|false|bad argument #2 to `LEnums.__index`: error converting Lua nil to String (expected string or number)
+stack traceback:
+	[C]: in ?
+	harness:21: in function <harness:21>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:21: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|enums.index.number|false|runtime error: 1 is not a valid member of "Enum"
+stack traceback:
+	[C]: in ?
+	harness:22: in function <harness:22>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:22: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|enums.write.nil|false|harness:23: attempt to index Enums with nil  —  harness:2
+Info: [Client] BRIDGE|client|enums.unknown|false|runtime error: ____________ is not a valid member of "Enum"
+stack traceback:
+	[C]: in ?
+	harness:24: in function <harness:24>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:24: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|part.meta|true|false|Instance|userdata|Part  —  harness:2
+Info: [Client] BRIDGE|client|part.namecall|true|function|[C]|-1||0|true|function: 0x0000559f25ec4fa0  —  harness:2
+Info: [Client] BRIDGE|client|part.namecall.empty|false|bad argument #1: runtime error: Instance expected, got nil  —  harness:2
+Info: [Client] BRIDGE|client|part.namecall.self|false|bad argument #2: error converting Lua nil to string (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|part.namecall.table|false|bad argument #2: error converting Lua table to string (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|part.namecall.nil|false|bad argument #2: error converting Lua nil to string (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|part.index|true|function|[C]|-1||0|true|function: 0x0000559f25ec4fa0  —  harness:2
+Info: [Client] BRIDGE|client|part.index.empty|false|bad argument #1: runtime error: Instance expected, got nil  —  harness:2
+Info: [Client] BRIDGE|client|part.index.self|false|bad argument #2: error converting Lua nil to string (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|part.index.table|false|bad argument #2: error converting Lua table to string (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|part.index.nil|false|bad argument #2: error converting Lua nil to string (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|part.newindex|true|function|[C]|-1||0|true|function: 0x0000559f25ec4f40  —  harness:2
+Info: [Client] BRIDGE|client|part.newindex.empty|false|bad argument #1: runtime error: Instance expected, got nil  —  harness:2
+Info: [Client] BRIDGE|client|part.newindex.self|false|bad argument #2: error converting Lua nil to String (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|part.newindex.table|false|bad argument #2: error converting Lua table to String (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|part.newindex.nil|false|bad argument #2: error converting Lua nil to String (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|part.index.nil|false|bad argument #2: error converting Lua nil to string (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|part.index.number|false|1 is not a valid member of Part "Part"  —  harness:2
+Info: [Client] BRIDGE|client|part.write.nil|false|bad argument #2: error converting Lua nil to String (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|part.unknown|false|____________ is not a valid member of Part "Part"  —  harness:2
+Info: [Client] BRIDGE|client|game.meta|true|false|Instance|userdata|Game  —  harness:2
+Info: [Client] BRIDGE|client|game.namecall|true|function|[C]|-1||0|true|function: 0x0000559f25ec4fa0  —  harness:2
+Info: [Client] BRIDGE|client|game.namecall.empty|false|bad argument #1: runtime error: Instance expected, got nil  —  harness:2
+Info: [Client] BRIDGE|client|game.namecall.self|false|bad argument #2: error converting Lua nil to string (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|game.namecall.table|false|bad argument #2: error converting Lua table to string (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|game.namecall.nil|false|bad argument #2: error converting Lua nil to string (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|game.index|true|function|[C]|-1||0|true|function: 0x0000559f25ec4fa0  —  harness:2
+Info: [Client] BRIDGE|client|game.index.empty|false|bad argument #1: runtime error: Instance expected, got nil  —  harness:2
+Info: [Client] BRIDGE|client|game.index.self|false|bad argument #2: error converting Lua nil to string (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|game.index.table|false|bad argument #2: error converting Lua table to string (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|game.index.nil|false|bad argument #2: error converting Lua nil to string (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|game.newindex|true|function|[C]|-1||0|true|function: 0x0000559f25ec4f40  —  harness:2
+Info: [Client] BRIDGE|client|game.newindex.empty|false|bad argument #1: runtime error: Instance expected, got nil  —  harness:2
+Info: [Client] BRIDGE|client|game.newindex.self|false|bad argument #2: error converting Lua nil to String (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|game.newindex.table|false|bad argument #2: error converting Lua table to String (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|game.newindex.nil|false|bad argument #2: error converting Lua nil to String (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|game.index.nil|false|bad argument #2: error converting Lua nil to string (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|game.index.number|false|1 is not a valid member of DataModel ""  —  harness:2
+Info: [Client] BRIDGE|client|game.write.nil|false|bad argument #2: error converting Lua nil to String (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|game.unknown|false|____________ is not a valid member of DataModel ""  —  harness:2
+Info: [Client] BRIDGE|client|enum.meta|true|false|Enum|userdata|Material  —  harness:2
+Info: [Client] BRIDGE|client|enum.namecall|true|function|[C]|-1||0|true|function: 0x0000559f25ec4dc0  —  harness:2
+Info: [Client] BRIDGE|client|enum.namecall.empty|false|bad argument #1: error converting Lua nil to userdata (expected userdata of type rustudio::ltypes::LEnum)  —  harness:2
+Info: [Client] BRIDGE|client|enum.namecall.self|false|bad argument #2: error converting Lua nil to String (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|enum.namecall.table|false|bad argument #2: error converting Lua table to String (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|enum.namecall.nil|false|bad argument #2: error converting Lua nil to String (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|enum.index|true|function|[C]|-1||0|true|function: 0x0000559f25ec4dc0  —  harness:2
+Info: [Client] BRIDGE|client|enum.index.empty|false|bad argument #1: error converting Lua nil to userdata (expected userdata of type rustudio::ltypes::LEnum)  —  harness:2
+Info: [Client] BRIDGE|client|enum.index.self|false|bad argument #2: error converting Lua nil to String (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|enum.index.table|false|bad argument #2: error converting Lua table to String (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|enum.index.nil|false|bad argument #2: error converting Lua nil to String (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|enum.newindex|true|function|harness|12||0|false|function: 0x0000559f2f7e1dc0  —  harness:2
+Info: [Client] BRIDGE|client|enum.newindex.empty|false|harness:12: attempt to index Enum with '____________'  —  harness:2
+Info: [Client] BRIDGE|client|enum.newindex.self|false|harness:12: attempt to index Enum with '____________'  —  harness:2
+Info: [Client] BRIDGE|client|enum.newindex.table|false|harness:12: attempt to index Enum with '____________'  —  harness:2
+Info: [Client] BRIDGE|client|enum.newindex.nil|false|harness:12: attempt to index Enum with '____________'  —  harness:2
+Info: [Client] BRIDGE|client|enum.index.nil|false|bad argument #2: error converting Lua nil to String (expected string or number)  —  harness:2
+Info: [Client] BRIDGE|client|enum.index.number|false|1 is not a valid member of "Enum.Material"  —  harness:2
+Info: [Client] BRIDGE|client|enum.write.nil|false|harness:23: attempt to index Enum with nil  —  harness:2
+Info: [Client] BRIDGE|client|enum.unknown|false|____________ is not a valid member of "Enum.Material"  —  harness:2
+Info: [Client] BRIDGE|client|signal.meta|true|false|RBXScriptSignal|userdata|Signal Changed  —  harness:2
+Info: [Client] BRIDGE|client|signal.namecall|true|function|[C]|-1||0|true|function: 0x0000559f25150570  —  harness:2
+Info: [Client] BRIDGE|client|signal.namecall.empty|false|bad argument `self` to `LSignal.__index`: error converting Lua missing argument to userdata
+stack traceback:
+	[C]: in ?
+	harness:16: in function <harness:16>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:16: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|signal.namecall.self|false|runtime error: nil is not a valid member of RBXScriptSignal
+stack traceback:
+	[C]: in ?
+	harness:17: in function <harness:17>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:17: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|signal.namecall.table|false|runtime error: table: 0x559f2f7e06b0 is not a valid member of RBXScriptSignal
+stack traceback:
+	[C]: in ?
+	harness:18: in function <harness:18>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:18: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|signal.namecall.nil|false|runtime error: nil is not a valid member of RBXScriptSignal
+stack traceback:
+	[C]: in ?
+	harness:19: in function <harness:19>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:19: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|signal.index|true|function|[C]|-1||0|true|function: 0x0000559f25150570  —  harness:2
+Info: [Client] BRIDGE|client|signal.index.empty|false|bad argument `self` to `LSignal.__index`: error converting Lua missing argument to userdata
+stack traceback:
+	[C]: in ?
+	harness:16: in function <harness:16>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:16: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|signal.index.self|false|runtime error: nil is not a valid member of RBXScriptSignal
+stack traceback:
+	[C]: in ?
+	harness:17: in function <harness:17>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:17: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|signal.index.table|false|runtime error: table: 0x559f2f7e0080 is not a valid member of RBXScriptSignal
+stack traceback:
+	[C]: in ?
+	harness:18: in function <harness:18>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:18: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|signal.index.nil|false|runtime error: nil is not a valid member of RBXScriptSignal
+stack traceback:
+	[C]: in ?
+	harness:19: in function <harness:19>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:19: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|signal.newindex|true|function|[C]|-1||0|true|function: 0x0000559f25150530  —  harness:2
+Info: [Client] BRIDGE|client|signal.newindex.empty|false|bad argument `self` to `LSignal.__newindex`: error converting Lua missing argument to userdata
+stack traceback:
+	[C]: in ?
+	harness:16: in function <harness:16>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:16: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|signal.newindex.self|false|runtime error: nil cannot be assigned to
+stack traceback:
+	[C]: in ?
+	harness:17: in function <harness:17>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:17: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|signal.newindex.table|false|runtime error: table: 0x559f2faf5100 cannot be assigned to
+stack traceback:
+	[C]: in ?
+	harness:18: in function <harness:18>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:18: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|signal.newindex.nil|false|runtime error: nil cannot be assigned to
+stack traceback:
+	[C]: in ?
+	harness:19: in function <harness:19>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:19: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|signal.index.nil|false|runtime error: nil is not a valid member of RBXScriptSignal
+stack traceback:
+	[C]: in ?
+	harness:21: in function <harness:21>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:21: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|signal.index.number|false|runtime error: 1 is not a valid member of RBXScriptSignal
+stack traceback:
+	[C]: in ?
+	harness:22: in function <harness:22>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:22: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|signal.write.nil|false|runtime error: nil cannot be assigned to
+stack traceback:
+	[C]: in ?
+	harness:23: in function <harness:23>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:23: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|signal.unknown|false|runtime error: ____________ is not a valid member of RBXScriptSignal
+stack traceback:
+	[C]: in ?
+	harness:24: in function <harness:24>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:24: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|index.identity|true|true  —  harness:2
+Info: [Client] BRIDGE|client|unknown|false|XYZ is not a valid member of DataModel ""  —  harness:2
+Info: [Client] BRIDGE|client|wrongcase|false|getservice is not a valid member of DataModel ""  —  harness:2
+Info: [Client] BRIDGE|client|propertycall|false|harness:30: attempt to call a string value  —  harness:2
+Info: [Client] BRIDGE|client|eventcall|false|harness:30: attempt to call a RBXScriptSignal value  —  harness:2
+Info: [Client] BRIDGE|client|readonly|false|Unable to assign property ClassName. Property is read only  —  harness:2
+Info: [Client] BRIDGE|client|wrongtype|true  —  harness:2
+Info: [Client] BRIDGE|client|name.table|false|Unable to assign property Name. string expected, got table  —  harness:2
+Info: [Client] BRIDGE|client|parent.number|false|Unable to assign property Parent. Instance expected, got integer  —  harness:2
+Info: [Client] BRIDGE|client|GetService.info|true|function|rustudio.prelude|15||0|true|function: 0x0000559f25fbd1d0  —  harness:2
+Info: [Client] BRIDGE|client|GetService.identity|true  —  harness:2
+Info: [Client] BRIDGE|client|GetService.inspect|true|true  —  harness:2
+Info: [Client] BRIDGE|client|GetService.noself|false|Expected ':' not '.' calling member function GetService  —  harness:2
+Info: [Client] BRIDGE|client|GetService.wrongself|false|Expected ':' not '.' calling member function GetService  —  harness:2
+Info: [Client] BRIDGE|client|GetService.wrongclass|false|Expected ':' not '.' calling member function GetService  —  harness:2
+Info: [Client] BRIDGE|client|WaitForChild.info|true|function|rustudio.prelude|172|WaitForChild|3|false|function: 0x0000559f25eb6530  —  harness:2
+Info: [Client] BRIDGE|client|WaitForChild.identity|true  —  harness:2
+Info: [Client] BRIDGE|client|WaitForChild.inspect|true|true  —  harness:2
+Info: [Client] BRIDGE|client|WaitForChild.noself|false|rustudio.prelude:173: attempt to index nil with 'FindFirstChild'  —  harness:2
+Info: [Client] BRIDGE|client|WaitForChild.wrongself|false|rustudio.prelude:173: attempt to call missing method 'FindFirstChild' of table  —  harness:2
+Info: [Client] BRIDGE|client|WaitForChild.wrongclass|false|Argument 1 missing or nil (expected string, got nil)  —  harness:2
+Info: [Client] BRIDGE|client|Invoke.info|true|function|rustudio.prelude|195|Invoke|1|true|function: 0x0000559f25eb6500  —  harness:2
+Info: [Client] BRIDGE|client|Invoke.identity|true  —  harness:2
+Info: [Client] BRIDGE|client|Invoke.inspect|true|true  —  harness:2
+Info: [Client] BRIDGE|client|Invoke.noself|false|Expected ':' not '.' calling member function Invoke  —  harness:2
+Info: [Client] BRIDGE|client|Invoke.wrongself|false|Expected ':' not '.' calling member function Invoke  —  harness:2
+Info: [Client] BRIDGE|client|Invoke.wrongclass|false|Expected ':' not '.' calling member function Invoke  —  harness:2
+Info: [Client] BRIDGE|client|InvokeServer.info|true|function|rustudio.invoke|3|InvokeServer|1|true|function: 0x0000559f25fbd650  —  harness:2
+Info: [Client] BRIDGE|client|InvokeServer.identity|true  —  harness:2
+Info: [Client] BRIDGE|client|InvokeServer.inspect|true|true  —  harness:2
+Info: [Client] BRIDGE|client|InvokeServer.noself|false|Expected ':' not '.' calling member function InvokeServer  —  harness:2
+Info: [Client] BRIDGE|client|InvokeServer.wrongself|false|Expected ':' not '.' calling member function InvokeServer  —  harness:2
+Info: [Client] BRIDGE|client|InvokeServer.wrongclass|false|Expected ':' not '.' calling member function InvokeServer  —  harness:2
+Info: [Client] BRIDGE|client|InvokeClient.info|true|function|rustudio.invoke|13|InvokeClient|2|true|function: 0x0000559f25fbd610  —  harness:2
+Info: [Client] BRIDGE|client|InvokeClient.identity|true  —  harness:2
+Info: [Client] BRIDGE|client|InvokeClient.inspect|true|true  —  harness:2
+Info: [Client] BRIDGE|client|InvokeClient.noself|false|Expected ':' not '.' calling member function InvokeClient  —  harness:2
+Info: [Client] BRIDGE|client|InvokeClient.wrongself|false|Expected ':' not '.' calling member function InvokeClient  —  harness:2
+Info: [Client] BRIDGE|client|InvokeClient.wrongclass|false|Expected ':' not '.' calling member function InvokeClient  —  harness:2
+Info: [Client] BRIDGE|client|GetEnums.inspect|false|runtime error: GetEnums is not a valid member of "Enum"
+stack traceback:
+	[C]: in ?
+	harness:32: in function <harness:32>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:32: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|GetEnums.noself|false|runtime error: GetEnums is not a valid member of "Enum"
+stack traceback:
+	[C]: in ?
+	harness:32: in function <harness:32>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:32: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|GetEnums.wrongself|false|runtime error: GetEnums is not a valid member of "Enum"
+stack traceback:
+	[C]: in ?
+	harness:32: in function <harness:32>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:32: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|GetEnums.wrongclass|false|runtime error: GetEnums is not a valid member of "Enum"
+stack traceback:
+	[C]: in ?
+	harness:32: in function <harness:32>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:32: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|GetEnumItems.info|true|function|[C]|-1||0|true|function: 0x0000559f2fb22580  —  harness:2
+Info: [Client] BRIDGE|client|GetEnumItems.identity|false  —  harness:2
+Info: [Client] BRIDGE|client|GetEnumItems.inspect|true|true  —  harness:2
+Info: [Client] BRIDGE|client|GetEnumItems.noself|true|table: 0x0000559f2fb11e10  —  harness:2
+Info: [Client] BRIDGE|client|GetEnumItems.wrongself|true|table: 0x0000559f2fb11210  —  harness:2
+Info: [Client] BRIDGE|client|GetEnumItems.wrongclass|true|table: 0x0000559f2fb110c0  —  harness:2
+Info: [Client] BRIDGE|client|FromName.inspect|false|FromName is not a valid member of "Enum.Material"  —  harness:2
+Info: [Client] BRIDGE|client|FromName.noself|false|FromName is not a valid member of "Enum.Material"  —  harness:2
+Info: [Client] BRIDGE|client|FromName.wrongself|false|FromName is not a valid member of "Enum.Material"  —  harness:2
+Info: [Client] BRIDGE|client|FromName.wrongclass|false|FromName is not a valid member of "Enum.Material"  —  harness:2
+Info: [Client] BRIDGE|client|FromValue.inspect|false|FromValue is not a valid member of "Enum.Material"  —  harness:2
+Info: [Client] BRIDGE|client|FromValue.noself|false|FromValue is not a valid member of "Enum.Material"  —  harness:2
+Info: [Client] BRIDGE|client|FromValue.wrongself|false|FromValue is not a valid member of "Enum.Material"  —  harness:2
+Info: [Client] BRIDGE|client|FromValue.wrongclass|false|FromValue is not a valid member of "Enum.Material"  —  harness:2
+Info: [Client] BRIDGE|client|IsA.info|true|function|[C]|-1||0|true|function: 0x0000559f251505f0  —  harness:2
+Info: [Client] BRIDGE|client|IsA.identity|true  —  harness:2
+Info: [Client] BRIDGE|client|IsA.inspect|true|true  —  harness:2
+Info: [Client] BRIDGE|client|IsA.noself|false|bad argument `self` to `LEnumItem.IsA`: error converting Lua missing argument to userdata
+stack traceback:
+	[C]: in ?
+	harness:32: in function <harness:32>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:32: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|IsA.wrongself|false|bad argument `self` to `LEnumItem.IsA`: error converting Lua table to userdata (expected userdata of type 'LEnumItem')
+stack traceback:
+	[C]: in ?
+	harness:32: in function <harness:32>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:32: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|IsA.wrongclass|false|bad argument `self` to `LEnumItem.IsA`: userdata is not expected type
+stack traceback:
+	[C]: in ?
+	harness:32: in function <harness:32>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:32: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|Connect.info|true|function|rustudio.prelude|31|Connect|2|false|function: 0x0000559f251513b0  —  harness:2
+Info: [Client] BRIDGE|client|Connect.identity|true  —  harness:2
+Info: [Client] BRIDGE|client|Connect.inspect|true|true  —  harness:2
+Info: [Client] BRIDGE|client|Connect.noself|false|rustudio.prelude:26: attempt to index nil with '__name'  —  harness:2
+Info: [Client] BRIDGE|client|Connect.wrongself|false|harness:32: Attempt to connect failed: Passed value is not a function  —  harness:2
+Info: [Client] BRIDGE|client|Connect.wrongclass|false|__name is not a valid member of Workspace "Workspace"  —  harness:2
+Info: [Client] BRIDGE|client|Disconnect.info|true|function|[C]|-1||0|true|function: 0x0000559f25fbd010  —  harness:2
+Info: [Client] BRIDGE|client|Disconnect.identity|true  —  harness:2
+Info: [Client] BRIDGE|client|Disconnect.inspect|true|true  —  harness:2
+Info: [Client] BRIDGE|client|Disconnect.noself|false|bad argument `self` to `LConn.Disconnect`: error converting Lua missing argument to userdata
+stack traceback:
+	[C]: in ?
+	harness:32: in function <harness:32>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:32: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|Disconnect.wrongself|false|bad argument `self` to `LConn.Disconnect`: error converting Lua table to userdata (expected userdata of type 'LConn')
+stack traceback:
+	[C]: in ?
+	harness:32: in function <harness:32>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:32: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|Disconnect.wrongclass|false|bad argument `self` to `LConn.Disconnect`: userdata is not expected type
+stack traceback:
+	[C]: in ?
+	harness:32: in function <harness:32>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:32: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|AddItem.info|true|function|rustudio.library|190|AddItem|3|false|function: 0x0000559f2513c650  —  harness:2
+Info: [Client] BRIDGE|client|AddItem.identity|true  —  harness:2
+Info: [Client] BRIDGE|client|AddItem.inspect|true|true  —  harness:2
+Info: [Client] BRIDGE|client|AddItem.noself|true  —  harness:2
+Info: [Client] BRIDGE|client|AddItem.wrongself|true  —  harness:2
+Info: [Client] BRIDGE|client|AddItem.wrongclass|true  —  harness:2
+Info: [Client] BRIDGE|client|GetMaxCollisionGroups.info|true|function|rustudio.library|1106|GetMaxCollisionGroups|1|false|function: 0x0000559f24d53860  —  harness:2
+Info: [Client] BRIDGE|client|GetMaxCollisionGroups.identity|true  —  harness:2
+Info: [Client] BRIDGE|client|GetMaxCollisionGroups.inspect|true|true  —  harness:2
+Info: [Client] BRIDGE|client|GetMaxCollisionGroups.noself|true|32  —  harness:2
+Info: [Client] BRIDGE|client|GetMaxCollisionGroups.wrongself|true|32  —  harness:2
+Info: [Client] BRIDGE|client|GetMaxCollisionGroups.wrongclass|true|32  —  harness:2
+Info: [Client] BRIDGE|client|GetService.arg.table|false|Argument 1 missing or nil (expected string, got table)  —  harness:2
+Info: [Client] BRIDGE|client|GetService.arg.boolean|false|Argument 1 missing or nil (expected string, got boolean)  —  harness:2
+Info: [Client] BRIDGE|client|GetService.arg.number|false|Argument 1 missing or nil (expected string, got integer)  —  harness:2
+Info: [Client] BRIDGE|client|GetService.missing|false|Argument 1 missing or nil (expected string, got nil)  —  harness:2
+Info: [Client] BRIDGE|client|GetService.crossidentity|false|GetService is not a valid member of Workspace "Workspace"  —  harness:2
+Info: [Client] BRIDGE|client|item.Name|true|Plastic  —  harness:2
+Info: [Client] BRIDGE|client|item.write.Name|false|harness:36: attempt to index EnumItem with 'Name'  —  harness:2
+Info: [Client] BRIDGE|client|item.Value|true|256  —  harness:2
+Info: [Client] BRIDGE|client|item.write.Value|false|harness:36: attempt to index EnumItem with 'Value'  —  harness:2
+Info: [Client] BRIDGE|client|item.EnumType|true|Material  —  harness:2
+Info: [Client] BRIDGE|client|item.write.EnumType|false|harness:36: attempt to index EnumItem with 'EnumType'  —  harness:2
+Info: [Client] BRIDGE|client|item.XYZ|true|nil  —  harness:2
+Info: [Client] BRIDGE|client|item.write.XYZ|false|harness:36: attempt to index EnumItem with 'XYZ'  —  harness:2
+Info: [Client] BRIDGE|client|enum.fromname|false|FromName is not a valid member of "Enum.Material"  —  harness:2
+Info: [Client] BRIDGE|client|enum.fromvalue|false|FromValue is not a valid member of "Enum.Material"  —  harness:2
+Info: [Client] BRIDGE|client|enum.compare|false|harness:39: attempt to compare EnumItem < EnumItem  —  harness:2
+Info: [Client] BRIDGE|client|DONE|  —  harness:2
+Info: [Client] BRIDGE|client|library.Debris.AddItem.info|true|function|rustudio.library|190|AddItem|3|false|function: 0x0000559f2513c650  —  harness:2
+Info: [Client] BRIDGE|client|library.Debris.AddItem.badself|true  —  harness:2
+Info: [Client] BRIDGE|client|library.Debris.AddItem|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.AnimationTrack.AdjustSpeed|false|'AnimationTrack' is not a valid Service name  —  harness:2
+Info: [Client] BRIDGE|client|library.AnimationTrack.AdjustWeight|false|'AnimationTrack' is not a valid Service name  —  harness:2
+Info: [Client] BRIDGE|client|library.ContextActionService.BindAction.info|true|function|rustudio.library|1144|BindAction|4|true|function: 0x0000559f25e8d550  —  harness:2
+Info: [Client] BRIDGE|client|library.ContextActionService.BindAction.badself|false|rustudio.library:1142: table index is nil  —  harness:2
+Info: [Client] BRIDGE|client|library.ContextActionService.BindAction|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.ContextActionService.BindActionAtPriority.info|true|function|rustudio.library|1147|BindActionAtPriority|5|true|function: 0x0000559f25e8d4f0  —  harness:2
+Info: [Client] BRIDGE|client|library.ContextActionService.BindActionAtPriority.badself|false|rustudio.library:1142: table index is nil  —  harness:2
+Info: [Client] BRIDGE|client|library.ContextActionService.BindActionAtPriority|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.Actor.BindToMessage.info|true|function|rustudio.library|363|BindToMessage|3|false|function: 0x0000559f25e8da00  —  harness:2
+Info: [Client] BRIDGE|client|library.Actor.BindToMessage.badself|false|harness:48: Unable to cast value to std::string  —  harness:2
+Info: [Client] BRIDGE|client|library.Actor.BindToMessage|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.Actor.BindToMessageParallel.info|true|function|rustudio.library|364|BindToMessageParallel|3|false|function: 0x0000559f25e8d9d0  —  harness:2
+Info: [Client] BRIDGE|client|library.Actor.BindToMessageParallel.badself|false|harness:49: Unable to cast value to std::string  —  harness:2
+Info: [Client] BRIDGE|client|library.Actor.BindToMessageParallel|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.RunService.BindToRenderStep.info|true|function|rustudio.library|1492|BindToRenderStep|4|false|function: 0x0000559f24d4fa20  —  harness:2
+Info: [Client] BRIDGE|client|library.RunService.BindToRenderStep.badself|false|rustudio.library:1495: table index is nil  —  harness:2
+Info: [Client] BRIDGE|client|library.RunService.BindToRenderStep|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.WorldRoot.BulkMoveTo|false|'WorldRoot' is not a valid Service name  —  harness:2
+Info: [Client] BRIDGE|client|library.AudioPlayer.Cancel.info|true|function|rustudio.prelude|15||0|true|function: 0x0000559f2fb21ac0  —  harness:2
+Info: [Client] BRIDGE|client|library.AudioPlayer.Cancel.badself|false|Expected ':' not '.' calling member function Cancel  —  harness:2
+Info: [Client] BRIDGE|client|library.AudioPlayer.Cancel|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.Tween.Cancel.info|true|function|rustudio.library|982|Cancel|1|false|function: 0x0000559f25150970  —  harness:2
+Info: [Client] BRIDGE|client|library.Tween.Cancel.badself|true  —  harness:2
+Info: [Client] BRIDGE|client|library.Tween.Cancel|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.AudioRecorder.Clear.info|true|function|rustudio.prelude|15||0|true|function: 0x0000559f2fb21a40  —  harness:2
+Info: [Client] BRIDGE|client|library.AudioRecorder.Clear.badself|false|Expected ':' not '.' calling member function Clear  —  harness:2
+Info: [Client] BRIDGE|client|library.AudioRecorder.Clear|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.EditableMesh.Clear|false|'EditableMesh' is not a valid Service name  —  harness:2
+Info: [Client] BRIDGE|client|library.ParticleEmitter.Clear.info|true|function|rustudio.library|1027|Clear|1|false|function: 0x0000559f24d539c0  —  harness:2
+Info: [Client] BRIDGE|client|library.ParticleEmitter.Clear.badself|false|bad argument #1: runtime error: Instance expected, got table
+stack traceback:
+	[C]: in function '__rs_particles'
+	rustudio.library:1028: in function 'Clear'
+	harness:56: in function <harness:56>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:56: in function <harness:56>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:56: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|library.ParticleEmitter.Clear|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.ParticleEmitter2D.Clear.info|true|function|rustudio.prelude|15||0|true|function: 0x0000559f2fb21a40  —  harness:2
+Info: [Client] BRIDGE|client|library.ParticleEmitter2D.Clear.badself|false|Expected ':' not '.' calling member function Clear  —  harness:2
+Info: [Client] BRIDGE|client|library.ParticleEmitter2D.Clear|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.Terrain.Clear|false|'Terrain' is not a valid Service name  —  harness:2
+Info: [Client] BRIDGE|client|library.Trail.Clear.info|true|function|rustudio.prelude|15||0|true|function: 0x0000559f2fb21a40  —  harness:2
+Info: [Client] BRIDGE|client|library.Trail.Clear.badself|false|Expected ':' not '.' calling member function Clear  —  harness:2
+Info: [Client] BRIDGE|client|library.Trail.Clear|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.WireframeHandleAdornment.Clear.info|true|function|rustudio.prelude|15||0|true|function: 0x0000559f2fb21a40  —  harness:2
+Info: [Client] BRIDGE|client|library.WireframeHandleAdornment.Clear.badself|false|Expected ':' not '.' calling member function Clear  —  harness:2
+Info: [Client] BRIDGE|client|library.WireframeHandleAdornment.Clear|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.CollisionGroupContainsPart.info|true|function|rustudio.library|1108|CollisionGroupContainsPart|3|false|function: 0x0000559f24d53820  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.CollisionGroupContainsPart.badself|false|rustudio.library:1109: attempt to index nil with 'CollisionGroup'  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.CollisionGroupContainsPart|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.CollisionGroupSetCollidable.info|true|function|rustudio.library|1088|CollisionGroupSetCollidable|4|false|function: 0x0000559f24d53900  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.CollisionGroupSetCollidable.badself|false|runtime error: This API can only be used on the server!
+stack traceback:
+	[C]: in function '__rs_cg'
+	rustudio.library:1089: in function 'CollisionGroupSetCollidable'
+	harness:62: in function <harness:62>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:62: in function <harness:62>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:62: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.CollisionGroupSetCollidable|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.WorldRoot.CollisionGroupSetCollidable|false|'WorldRoot' is not a valid Service name  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.CollisionGroupsAreCollidable.info|true|function|rustudio.library|1091|CollisionGroupsAreCollidable|3|false|function: 0x0000559f24d538e0  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.CollisionGroupsAreCollidable.badself|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.CollisionGroupsAreCollidable|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.WorldRoot.CollisionGroupsAreCollidable|false|'WorldRoot' is not a valid Service name  —  harness:2
+Info: [Client] BRIDGE|client|library.TweenService.Create.info|true|function|rustudio.library|262|Create|4|false|function: 0x0000559f25150ab0  —  harness:2
+Info: [Client] BRIDGE|client|library.TweenService.Create.badself|false|harness:66: TweenService:Create: Unable to cast value to Object  —  harness:2
+Info: [Client] BRIDGE|client|library.TweenService.Create|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.CreateCollisionGroup.info|true|function|rustudio.library|1083|RegisterCollisionGroup|2|false|function: 0x0000559f24d53960  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.CreateCollisionGroup.badself|true  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.CreateCollisionGroup|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.ParticleEmitter.Emit.info|true|function|rustudio.library|1024|Emit|2|false|function: 0x0000559f24d539e0  —  harness:2
+Info: [Client] BRIDGE|client|library.ParticleEmitter.Emit.badself|false|bad argument #1: runtime error: Instance expected, got table
+stack traceback:
+	[C]: in function '__rs_particles'
+	rustudio.library:1025: in function 'Emit'
+	harness:68: in function <harness:68>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:68: in function <harness:68>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:68: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|library.ParticleEmitter.Emit|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.ParticleEmitter2D.Emit.info|true|function|rustudio.prelude|15||0|true|function: 0x0000559f2fb21940  —  harness:2
+Info: [Client] BRIDGE|client|library.ParticleEmitter2D.Emit.badself|false|Expected ':' not '.' calling member function Emit  —  harness:2
+Info: [Client] BRIDGE|client|library.ParticleEmitter2D.Emit|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.Chat.FilterStringAsync.info|true|function|rustudio.players_chat|289||4|false|function: 0x0000559f24daf4e0  —  harness:2
+Info: [Client] BRIDGE|client|library.Chat.FilterStringAsync.badself|false|Argument 1 missing or nil  —  harness:2
+Info: [Client] BRIDGE|client|library.Chat.FilterStringAsync|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.TextService.FilterStringAsync.info|true|function|rustudio.players_chat|289||4|false|function: 0x0000559f24daf4e0  —  harness:2
+Info: [Client] BRIDGE|client|library.TextService.FilterStringAsync.badself|false|Argument 1 missing or nil  —  harness:2
+Info: [Client] BRIDGE|client|library.TextService.FilterStringAsync|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.GamepadSupports.info|true|function|rustudio.library|1290|GamepadSupports|0|false|function: 0x0000559f24d53720  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.GamepadSupports.badself|true|false  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.GamepadSupports|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.Instance.GetActor|false|'Instance' is not a valid Service name  —  harness:2
+Info: [Client] BRIDGE|client|library.ContextActionService.GetAllBoundActionInfo.info|true|function|rustudio.library|1157|GetAllBoundActionInfo|1|false|function: 0x0000559f251508b0  —  harness:2
+Info: [Client] BRIDGE|client|library.ContextActionService.GetAllBoundActionInfo.badself|true|table: 0x0000559f291699d0  —  harness:2
+Info: [Client] BRIDGE|client|library.ContextActionService.GetAllBoundActionInfo|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.Humanoid.GetBodyPartR15.info|true|function|rustudio.library|329|GetBodyPartR15|2|false|function: 0x0000559f2513c4d0  —  harness:2
+Info: [Client] BRIDGE|client|library.Humanoid.GetBodyPartR15.badself|true|Enum.BodyPartR15.Unknown  —  harness:2
+Info: [Client] BRIDGE|client|library.Humanoid.GetBodyPartR15|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.ContextActionService.GetBoundActionInfo.info|true|function|rustudio.library|1152|GetBoundActionInfo|2|false|function: 0x0000559f25e8d430  —  harness:2
+Info: [Client] BRIDGE|client|library.ContextActionService.GetBoundActionInfo.badself|true|table: 0x0000559f291691c0  —  harness:2
+Info: [Client] BRIDGE|client|library.ContextActionService.GetBoundActionInfo|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.ContextActionService.GetButton.info|true|function|rustudio.library|1162|GetButton|0|false|function: 0x0000559f24d53800  —  harness:2
+Info: [Client] BRIDGE|client|library.ContextActionService.GetButton.badself|true|nil  —  harness:2
+Info: [Client] BRIDGE|client|library.ContextActionService.GetButton|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.Controller.GetButton|false|'Controller' is not a valid Service name  —  harness:2
+Info: [Client] BRIDGE|client|library.TextFilterResult.GetChatForUserAsync|false|'TextFilterResult' is not a valid Service name  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.GetCollisionGroupId.info|true|function|rustudio.library|1103|GetCollisionGroupId|2|false|function: 0x0000559f24d538a0  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.GetCollisionGroupId.badself|true|1  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.GetCollisionGroupId|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.GetCollisionGroupName.info|true|function|rustudio.library|1107|GetCollisionGroupName|2|false|function: 0x0000559f24d53840  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.GetCollisionGroupName.badself|false|runtime error: The Collision group Id must be between 0 and 32
+stack traceback:
+	[C]: in function '__rs_cg'
+	rustudio.library:1107: in function 'GetCollisionGroupName'
+	harness:81: in function <harness:81>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:81: in function <harness:81>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:81: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.GetCollisionGroupName|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.GetCollisionGroups.info|true|function|rustudio.library|1098||1|false|function: 0x0000559f25e8d640  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.GetCollisionGroups.badself|true|table: 0x0000559f291685f0  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.GetCollisionGroups|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.GetDeviceGravity.info|true|function|rustudio.gui_input|301||0|false|function: 0x0000559f24db2b30  —  harness:2
+Warn: [Client] Trying to get gravity data on a device without a accelerometer.
+Info: [Client] BRIDGE|client|library.UserInputService.GetDeviceGravity.badself|true|InputObject  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.GetDeviceGravity|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.GetDeviceRotation.info|true|function|rustudio.gui_input|305||0|false|function: 0x0000559f24db2af0  —  harness:2
+Warn: [Client] Trying to get rotation data on a device without a gyroscope.
+Info: [Client] BRIDGE|client|library.UserInputService.GetDeviceRotation.badself|true|InputObject|0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.GetDeviceRotation|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.GuiService.GetEmotesMenuOpen.info|true|function|rustudio.gui_input|126||0|false|function: 0x0000559f26030530  —  harness:2
+Info: [Client] BRIDGE|client|library.GuiService.GetEmotesMenuOpen.badself|true|false  —  harness:2
+Info: [Client] BRIDGE|client|library.GuiService.GetEmotesMenuOpen|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.GetGamepadState.info|true|function|rustudio.library|1286|GetGamepadState|0|false|function: 0x0000559f24d537a0  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.GetGamepadState.badself|true|table: 0x0000559f29167120  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.GetGamepadState|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.GuiService.GetGuiInset.info|true|function|rustudio.library|1304|GetGuiInset|0|false|function: 0x0000559f24d535c0  —  harness:2
+Info: [Client] BRIDGE|client|library.GuiService.GetGuiInset.badself|true|0, 58|0, 0  —  harness:2
+Info: [Client] BRIDGE|client|library.GuiService.GetGuiInset|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.GetImageForKeyCode.info|true|function|rustudio.library|1293|GetImageForKeyCode|0|false|function: 0x0000559f24d536c0  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.GetImageForKeyCode.badself|true|  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.GetImageForKeyCode|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.GuiService.GetInspectMenuEnabled.info|true|function|rustudio.gui_input|128||0|false|function: 0x0000559f260304d0  —  harness:2
+Info: [Client] BRIDGE|client|library.GuiService.GetInspectMenuEnabled.badself|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.GuiService.GetInspectMenuEnabled|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.Camera.GetLargestCutoffDistance.info|true|function|rustudio.library|1389|GetLargestCutoffDistance|0|false|function: 0x0000559f24d534c0  —  harness:2
+Info: [Client] BRIDGE|client|library.Camera.GetLargestCutoffDistance.badself|true|0  —  harness:2
+Info: [Client] BRIDGE|client|library.Camera.GetLargestCutoffDistance|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.GetLastInputType.info|true|function|rustudio.library|1275|GetLastInputType|1|false|function: 0x0000559f24df4000  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.GetLastInputType.badself|true|Enum.UserInputType.Keyboard  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.GetLastInputType|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.Humanoid.GetLimb.info|true|function|rustudio.library|326|GetLimb|2|false|function: 0x0000559f25e8da90  —  harness:2
+Info: [Client] BRIDGE|client|library.Humanoid.GetLimb.badself|true|Enum.Limb.Unknown  —  harness:2
+Info: [Client] BRIDGE|client|library.Humanoid.GetLimb|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.AnimationTrack.GetMarkerReachedSignal|false|'AnimationTrack' is not a valid Service name  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.GetMaxCollisionGroups.info|true|function|rustudio.library|1106|GetMaxCollisionGroups|1|false|function: 0x0000559f24d53860  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.GetMaxCollisionGroups.badself|true|32  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.GetMaxCollisionGroups|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.WorldRoot.GetMaxCollisionGroups|false|'WorldRoot' is not a valid Service name  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.GetMouseDelta.info|true|function|rustudio.library|1285|GetMouseDelta|1|false|function: 0x0000559f24df3fa0  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.GetMouseDelta.badself|true|0, 0  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.GetMouseDelta|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.Humanoid.GetMoveVelocity.info|true|function|rustudio.library|333|GetMoveVelocity|1|false|function: 0x0000559f2513c4b0  —  harness:2
+Info: [Client] BRIDGE|client|library.Humanoid.GetMoveVelocity.badself|false|rustudio.library:334: attempt to perform arithmetic (mul) on nil  —  harness:2
+Info: [Client] BRIDGE|client|library.Humanoid.GetMoveVelocity|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.GetNavigationGamepads.info|true|function|rustudio.gui_input|327||0|false|function: 0x0000559f260303b0  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.GetNavigationGamepads.badself|true|table: 0x0000559f2863e580  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.GetNavigationGamepads|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.TextFilterResult.GetNonChatStringForBroadcastAsync|false|'TextFilterResult' is not a valid Service name  —  harness:2
+Info: [Client] BRIDGE|client|library.TextFilterResult.GetNonChatStringForUserAsync|false|'TextFilterResult' is not a valid Service name  —  harness:2
+Info: [Client] BRIDGE|client|library.Camera.GetPartsObscuringTarget.info|true|function|rustudio.library|1371|GetPartsObscuringTarget|3|false|function: 0x0000559f24d534e0  —  harness:2
+Info: [Client] BRIDGE|client|library.Camera.GetPartsObscuringTarget.badself|false|rustudio.library:1377: attempt to index nil with 'Position'  —  harness:2
+Info: [Client] BRIDGE|client|library.Camera.GetPartsObscuringTarget|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.AnimationController.GetPlayingAnimationTracks.info|true|function|rustudio.prelude|15||0|true|function: 0x0000559f2fb21700  —  harness:2
+Info: [Client] BRIDGE|client|library.AnimationController.GetPlayingAnimationTracks.badself|false|Expected ':' not '.' calling member function GetPlayingAnimationTracks  —  harness:2
+Info: [Client] BRIDGE|client|library.AnimationController.GetPlayingAnimationTracks|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.Animator.GetPlayingAnimationTracks.info|true|function|rustudio.library|936|GetPlayingAnimationTracks|1|false|function: 0x0000559f25e8d7c0  —  harness:2
+Info: [Client] BRIDGE|client|library.Animator.GetPlayingAnimationTracks.badself|false|rustudio.library:937: attempt to call missing method 'IsA' of table  —  harness:2
+Info: [Client] BRIDGE|client|library.Animator.GetPlayingAnimationTracks|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.Humanoid.GetPlayingAnimationTracks.info|true|function|rustudio.library|936|GetPlayingAnimationTracks|1|false|function: 0x0000559f25e8d7c0  —  harness:2
+Info: [Client] BRIDGE|client|library.Humanoid.GetPlayingAnimationTracks.badself|false|rustudio.library:937: attempt to call missing method 'IsA' of table  —  harness:2
+Info: [Client] BRIDGE|client|library.Humanoid.GetPlayingAnimationTracks|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.MarketplaceService.GetProductInfo.info|true|function|[string "web_social_http"]|70|product|3|false|function: 0x0000559f24ded410  —  harness:2
+Info: [Client] BRIDGE|client|library.MarketplaceService.GetProductInfo.badself|false|harness:105: Argument 1 missing or nil  —  harness:2
+Info: [Client] BRIDGE|client|library.MarketplaceService.GetProductInfo|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.MarketplaceService.GetProductInfoAsync.info|true|function|[string "web_social_http"]|70|product|3|false|function: 0x0000559f24ded410  —  harness:2
+Info: [Client] BRIDGE|client|library.MarketplaceService.GetProductInfoAsync.badself|false|harness:106: Argument 1 missing or nil  —  harness:2
+Info: [Client] BRIDGE|client|library.MarketplaceService.GetProductInfoAsync|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.GetRegisteredCollisionGroups.info|true|function|rustudio.library|1093|GetRegisteredCollisionGroups|1|false|function: 0x0000559f25e8d670  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.GetRegisteredCollisionGroups.badself|true|table: 0x0000559f2863cf60  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.GetRegisteredCollisionGroups|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.WorldRoot.GetRegisteredCollisionGroups|false|'WorldRoot' is not a valid Service name  —  harness:2
+Info: [Client] BRIDGE|client|library.BasePart.GetRenderCFrame|false|'BasePart' is not a valid Service name  —  harness:2
+Info: [Client] BRIDGE|client|library.Camera.GetRenderCFrame.info|true|function|rustudio.library|1370|GetRenderCFrame|1|false|function: 0x0000559f24d53500  —  harness:2
+Info: [Client] BRIDGE|client|library.Camera.GetRenderCFrame.badself|true|nil  —  harness:2
+Info: [Client] BRIDGE|client|library.Camera.GetRenderCFrame|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.Camera.GetRoll.info|true|function|rustudio.library|1390|GetRoll|0|false|function: 0x0000559f24d534a0  —  harness:2
+Info: [Client] BRIDGE|client|library.Camera.GetRoll.badself|true|0  —  harness:2
+Info: [Client] BRIDGE|client|library.Camera.GetRoll|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.SharedTableRegistry.GetSharedTable.info|true|function|rustudio.library|1475|GetSharedTable|2|false|function: 0x0000559f25eb6350  —  harness:2
+Info: [Client] BRIDGE|client|library.SharedTableRegistry.GetSharedTable.badself|false|rustudio.library:1477: table index is nil  —  harness:2
+Info: [Client] BRIDGE|client|library.SharedTableRegistry.GetSharedTable|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.GetStringForKeyCode.info|true|function|rustudio.library|1292|GetStringForKeyCode|2|false|function: 0x0000559f24d536e0  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.GetStringForKeyCode.badself|true|  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.GetStringForKeyCode|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.GetSupportedGamepadKeyCodes.info|true|function|rustudio.library|1288|GetSupportedGamepadKeyCodes|0|false|function: 0x0000559f24d53760  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.GetSupportedGamepadKeyCodes.badself|true|table: 0x0000559f2863bf70  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.GetSupportedGamepadKeyCodes|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.AnimationTrack.GetTimeOfKeyframe|false|'AnimationTrack' is not a valid Service name  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.GetUserCFrame.info|true|function|rustudio.prelude|15||0|true|function: 0x0000559f2fb215c0  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.GetUserCFrame.badself|false|Expected ':' not '.' calling member function GetUserCFrame  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.GetUserCFrame|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.VRService.GetUserCFrame.info|true|function|rustudio.library|1298|GetUserCFrame|0|false|function: 0x0000559f24d53660  —  harness:2
+Info: [Client] BRIDGE|client|library.VRService.GetUserCFrame.badself|true|0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1  —  harness:2
+Info: [Client] BRIDGE|client|library.VRService.GetUserCFrame|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.VRService.GetUserCFrameEnabled.info|true|function|rustudio.library|1299|GetUserCFrameEnabled|0|false|function: 0x0000559f24d53640  —  harness:2
+Info: [Client] BRIDGE|client|library.VRService.GetUserCFrameEnabled.badself|true|false  —  harness:2
+Info: [Client] BRIDGE|client|library.VRService.GetUserCFrameEnabled|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.ConfigSnapshot.GetValue|false|'ConfigSnapshot' is not a valid Service name  —  harness:2
+Info: [Client] BRIDGE|client|library.TweenService.GetValue.info|true|function|rustudio.data.config|21||1|true|function: 0x0000559f25ec12e0  —  harness:2
+Info: [Client] BRIDGE|client|library.TweenService.GetValue.badself|false|rustudio.library:225: invalid argument #1 to 'clamp' (number expected, got nil)  —  harness:2
+Info: [Client] BRIDGE|client|library.TweenService.GetValue|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.Camera.Interpolate.info|true|function|rustudio.prelude|15||0|true|function: 0x0000559f2fb21500  —  harness:2
+Info: [Client] BRIDGE|client|library.Camera.Interpolate.badself|false|Expected ':' not '.' calling member function Interpolate  —  harness:2
+Info: [Client] BRIDGE|client|library.Camera.Interpolate|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.IsCollisionGroupRegistered.info|true|function|rustudio.library|1092|IsCollisionGroupRegistered|2|false|function: 0x0000559f24d538c0  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.IsCollisionGroupRegistered.badself|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.IsCollisionGroupRegistered|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.WorldRoot.IsCollisionGroupRegistered|false|'WorldRoot' is not a valid Service name  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.IsGamepadButtonDown.info|true|function|rustudio.library|1289|IsGamepadButtonDown|0|false|function: 0x0000559f24d53740  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.IsGamepadButtonDown.badself|true|false  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.IsGamepadButtonDown|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.IsNavigationGamepad.info|true|function|rustudio.gui_input|326||2|false|function: 0x0000559f260303e0  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.IsNavigationGamepad.badself|true|false  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.IsNavigationGamepad|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.GuiService.IsTenFootInterface.info|true|function|rustudio.library|1302|IsTenFootInterface|0|false|function: 0x0000559f24d535e0  —  harness:2
+Info: [Client] BRIDGE|client|library.GuiService.IsTenFootInterface.badself|true|false  —  harness:2
+Info: [Client] BRIDGE|client|library.GuiService.IsTenFootInterface|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.IsWindowFocused.info|true|function|rustudio.library|1284|IsWindowFocused|1|false|function: 0x0000559f24df3fd0  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.IsWindowFocused.badself|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.IsWindowFocused|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.AnimationController.LoadAnimation.info|true|function|rustudio.library|885|LoadAnimation|2|false|function: 0x0000559f2515c120  —  harness:2
+Info: [Client] BRIDGE|client|library.AnimationController.LoadAnimation.badself|false|harness:128: LoadAnimation requires an Animation object  —  harness:2
+Info: [Client] BRIDGE|client|library.AnimationController.LoadAnimation|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.Animator.LoadAnimation.info|true|function|rustudio.library|885|LoadAnimation|2|false|function: 0x0000559f2515c120  —  harness:2
+Info: [Client] BRIDGE|client|library.Animator.LoadAnimation.badself|false|harness:129: LoadAnimation requires an Animation object  —  harness:2
+Info: [Client] BRIDGE|client|library.Animator.LoadAnimation|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.Humanoid.LoadAnimation.info|true|function|rustudio.library|885|LoadAnimation|2|false|function: 0x0000559f2515c120  —  harness:2
+Info: [Client] BRIDGE|client|library.Humanoid.LoadAnimation.badself|false|harness:130: LoadAnimation requires an Animation object  —  harness:2
+Info: [Client] BRIDGE|client|library.Humanoid.LoadAnimation|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.Humanoid.Move.info|true|function|rustudio.library|1399|Move|3|false|function: 0x0000559f25e8d340  —  harness:2
+Info: [Client] BRIDGE|client|library.Humanoid.Move.badself|false|harness:131: Move: Vector3 expected  —  harness:2
+Info: [Client] BRIDGE|client|library.Humanoid.Move|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.Player.Move.info|true|function|rustudio.library|1399|Move|3|false|function: 0x0000559f25e8d340  —  harness:2
+Info: [Client] BRIDGE|client|library.Player.Move.badself|false|harness:132: Move: Vector3 expected  —  harness:2
+Info: [Client] BRIDGE|client|library.Player.Move|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.AudioTextToSpeech.Pause.info|true|function|rustudio.prelude|15||0|true|function: 0x0000559f2fb21400  —  harness:2
+Info: [Client] BRIDGE|client|library.AudioTextToSpeech.Pause.badself|false|Expected ':' not '.' calling member function Pause  —  harness:2
+Info: [Client] BRIDGE|client|library.AudioTextToSpeech.Pause|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.Sound.Pause.info|true|function|rustudio.prelude|15||0|true|function: 0x0000559f2fb21400  —  harness:2
+Info: [Client] BRIDGE|client|library.Sound.Pause.badself|false|Expected ':' not '.' calling member function Pause  —  harness:2
+Info: [Client] BRIDGE|client|library.Sound.Pause|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.Tween.Pause.info|true|function|rustudio.library|977|Pause|1|false|function: 0x0000559f25e8d790  —  harness:2
+Info: [Client] BRIDGE|client|library.Tween.Pause.badself|true  —  harness:2
+Info: [Client] BRIDGE|client|library.Tween.Pause|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.VideoFrame.Pause.info|true|function|rustudio.prelude|15||0|true|function: 0x0000559f2fb21400  —  harness:2
+Info: [Client] BRIDGE|client|library.VideoFrame.Pause.badself|false|Expected ':' not '.' calling member function Pause  —  harness:2
+Info: [Client] BRIDGE|client|library.VideoFrame.Pause|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.VideoPlayer.Pause.info|true|function|rustudio.prelude|15||0|true|function: 0x0000559f2fb21400  —  harness:2
+Info: [Client] BRIDGE|client|library.VideoPlayer.Pause.badself|false|Expected ':' not '.' calling member function Pause  —  harness:2
+Info: [Client] BRIDGE|client|library.VideoPlayer.Pause|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.AnimationTrack.Play|false|'AnimationTrack' is not a valid Service name  —  harness:2
+Info: [Client] BRIDGE|client|library.AudioPlayer.Play.info|true|function|rustudio.prelude|15||0|true|function: 0x0000559f2fb21380  —  harness:2
+Info: [Client] BRIDGE|client|library.AudioPlayer.Play.badself|false|Expected ':' not '.' calling member function Play  —  harness:2
+Info: [Client] BRIDGE|client|library.AudioPlayer.Play|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.AudioTextToSpeech.Play.info|true|function|rustudio.prelude|15||0|true|function: 0x0000559f2fb21380  —  harness:2
+Info: [Client] BRIDGE|client|library.AudioTextToSpeech.Play.badself|false|Expected ':' not '.' calling member function Play  —  harness:2
+Info: [Client] BRIDGE|client|library.AudioTextToSpeech.Play|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.HapticEffect.Play.info|true|function|rustudio.prelude|15||0|true|function: 0x0000559f2fb21380  —  harness:2
+Info: [Client] BRIDGE|client|library.HapticEffect.Play.badself|false|Expected ':' not '.' calling member function Play  —  harness:2
+Info: [Client] BRIDGE|client|library.HapticEffect.Play|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.Sound.Play.info|true|function|rustudio.prelude|15||0|true|function: 0x0000559f2fb21380  —  harness:2
+Info: [Client] BRIDGE|client|library.Sound.Play.badself|false|Expected ':' not '.' calling member function Play  —  harness:2
+Info: [Client] BRIDGE|client|library.Sound.Play|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.Tween.Play.info|true|function|rustudio.library|946|Play|4|false|function: 0x0000559f25eccfe0  —  harness:2
+Info: [Client] BRIDGE|client|library.Tween.Play.badself|true  —  harness:2
+Info: [Client] BRIDGE|client|library.Tween.Play|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.VideoFrame.Play.info|true|function|rustudio.prelude|15||0|true|function: 0x0000559f2fb21380  —  harness:2
+Info: [Client] BRIDGE|client|library.VideoFrame.Play.badself|false|Expected ':' not '.' calling member function Play  —  harness:2
+Info: [Client] BRIDGE|client|library.VideoFrame.Play|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.VideoPlayer.Play.info|true|function|rustudio.prelude|15||0|true|function: 0x0000559f2fb21380  —  harness:2
+Info: [Client] BRIDGE|client|library.VideoPlayer.Play.badself|false|Expected ':' not '.' calling member function Play  —  harness:2
+Info: [Client] BRIDGE|client|library.VideoPlayer.Play|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.RecenterUserHeadCFrame.info|true|function|rustudio.prelude|15||0|true|function: 0x0000559f2fb21300  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.RecenterUserHeadCFrame.badself|false|Expected ':' not '.' calling member function RecenterUserHeadCFrame  —  harness:2
+Info: [Client] BRIDGE|client|library.UserInputService.RecenterUserHeadCFrame|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.VRService.RecenterUserHeadCFrame.info|true|function|rustudio.library|1300|RecenterUserHeadCFrame|0|false|function: 0x0000559f24d53620  —  harness:2
+Info: [Client] BRIDGE|client|library.VRService.RecenterUserHeadCFrame.badself|true  —  harness:2
+Info: [Client] BRIDGE|client|library.VRService.RecenterUserHeadCFrame|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.KeyframeSequenceProvider.RegisterActiveKeyframeSequence.info|true|function|rustudio.library|453|RegisterKeyframeSequence|2|false|function: 0x0000559f251504b0  —  harness:2
+Info: [Client] BRIDGE|client|library.KeyframeSequenceProvider.RegisterActiveKeyframeSequence.badself|false|harness:148: RegisterKeyframeSequence: KeyframeSequence expected  —  harness:2
+Info: [Client] BRIDGE|client|library.KeyframeSequenceProvider.RegisterActiveKeyframeSequence|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.AnimationClipProvider.RegisterAnimationClip.info|true|function|rustudio.prelude|15||0|true|function: 0x0000559f2fb21280  —  harness:2
+Info: [Client] BRIDGE|client|library.AnimationClipProvider.RegisterAnimationClip.badself|false|Expected ':' not '.' calling member function RegisterAnimationClip  —  harness:2
+Info: [Client] BRIDGE|client|library.AnimationClipProvider.RegisterAnimationClip|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.RegisterCollisionGroup.info|true|function|rustudio.library|1083|RegisterCollisionGroup|2|false|function: 0x0000559f24d53960  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.RegisterCollisionGroup.badself|false|runtime error: Could not register collision group, the name already exists.
+stack traceback:
+	[C]: in function '__rs_cg'
+	rustudio.library:1083: in function 'RegisterCollisionGroup'
+	harness:150: in function <harness:150>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:150: in function <harness:150>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:150: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.RegisterCollisionGroup|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.WorldRoot.RegisterCollisionGroup|false|'WorldRoot' is not a valid Service name  —  harness:2
+Info: [Client] BRIDGE|client|library.KeyframeSequenceProvider.RegisterKeyframeSequence.info|true|function|rustudio.library|453|RegisterKeyframeSequence|2|false|function: 0x0000559f251504b0  —  harness:2
+Info: [Client] BRIDGE|client|library.KeyframeSequenceProvider.RegisterKeyframeSequence.badself|false|harness:152: RegisterKeyframeSequence: KeyframeSequence expected  —  harness:2
+Info: [Client] BRIDGE|client|library.KeyframeSequenceProvider.RegisterKeyframeSequence|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.RemoveCollisionGroup.info|true|function|rustudio.library|1085|UnregisterCollisionGroup|2|false|function: 0x0000559f24d53940  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.RemoveCollisionGroup.badself|true  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.RemoveCollisionGroup|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.RenameCollisionGroup.info|true|function|rustudio.library|1087|RenameCollisionGroup|3|false|function: 0x0000559f24d53920  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.RenameCollisionGroup.badself|true  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.RenameCollisionGroup|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.WorldRoot.RenameCollisionGroup|false|'WorldRoot' is not a valid Service name  —  harness:2
+Info: [Client] BRIDGE|client|library.VRService.RequestNavigation.info|true|function|rustudio.library|1301|RequestNavigation|0|false|function: 0x0000559f24d53600  —  harness:2
+Info: [Client] BRIDGE|client|library.VRService.RequestNavigation.badself|true  —  harness:2
+Info: [Client] BRIDGE|client|library.VRService.RequestNavigation|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.Camera.ScreenPointToRay.info|true|function|rustudio.library|1350|ScreenPointToRay|4|false|function: 0x0000559f25e8d3d0  —  harness:2
+Info: [Client] BRIDGE|client|library.Camera.ScreenPointToRay.badself|false|rustudio.library:1350: attempt to perform arithmetic (add) on nil and number  —  harness:2
+Info: [Client] BRIDGE|client|library.Camera.ScreenPointToRay|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.Actor.SendMessage.info|true|function|rustudio.assets_cloud.gates|11||1|true|function: 0x0000559f25fbdd50  —  harness:2
+Info: [Client] BRIDGE|client|library.Actor.SendMessage.badself|false|The current thread cannot call 'SendMessage' (lacking capability InternalTest)  —  harness:2
+Info: [Client] BRIDGE|client|library.Actor.SendMessage|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.RealtimeMedia.SendMessage|false|'RealtimeMedia' is not a valid Service name  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.SetPartCollisionGroup.info|true|function|rustudio.library|1104|SetPartCollisionGroup|3|false|function: 0x0000559f24d53880  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.SetPartCollisionGroup.badself|false|rustudio.library:1104: attempt to index nil with 'CollisionGroup'  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.SetPartCollisionGroup|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.Camera.SetRoll.info|true|function|rustudio.library|1391|SetRoll|0|false|function: 0x0000559f24d53480  —  harness:2
+Info: [Client] BRIDGE|client|library.Camera.SetRoll.badself|true  —  harness:2
+Info: [Client] BRIDGE|client|library.Camera.SetRoll|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.SharedTableRegistry.SetSharedTable.info|true|function|rustudio.library|1480|SetSharedTable|3|false|function: 0x0000559f25eb6320  —  harness:2
+Info: [Client] BRIDGE|client|library.SharedTableRegistry.SetSharedTable.badself|false|rustudio.library:1480: table index is nil  —  harness:2
+Info: [Client] BRIDGE|client|library.SharedTableRegistry.SetSharedTable|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.AnimationTrack.Stop|false|'AnimationTrack' is not a valid Service name  —  harness:2
+Info: [Client] BRIDGE|client|library.AudioPlayer.Stop.info|true|function|rustudio.prelude|15||0|true|function: 0x0000559f2fb211c0  —  harness:2
+Info: [Client] BRIDGE|client|library.AudioPlayer.Stop.badself|false|Expected ':' not '.' calling member function Stop  —  harness:2
+Info: [Client] BRIDGE|client|library.AudioPlayer.Stop|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.AudioRecorder.Stop.info|true|function|rustudio.prelude|15||0|true|function: 0x0000559f2fb211c0  —  harness:2
+Info: [Client] BRIDGE|client|library.AudioRecorder.Stop.badself|false|Expected ':' not '.' calling member function Stop  —  harness:2
+Info: [Client] BRIDGE|client|library.AudioRecorder.Stop|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.HapticEffect.Stop.info|true|function|rustudio.prelude|15||0|true|function: 0x0000559f2fb211c0  —  harness:2
+Info: [Client] BRIDGE|client|library.HapticEffect.Stop.badself|false|Expected ':' not '.' calling member function Stop  —  harness:2
+Info: [Client] BRIDGE|client|library.HapticEffect.Stop|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.Sound.Stop.info|true|function|rustudio.prelude|15||0|true|function: 0x0000559f2fb211c0  —  harness:2
+Info: [Client] BRIDGE|client|library.Sound.Stop.badself|false|Expected ':' not '.' calling member function Stop  —  harness:2
+Info: [Client] BRIDGE|client|library.Sound.Stop|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.GuiObject.TweenPosition|false|'GuiObject' is not a valid Service name  —  harness:2
+Info: [Client] BRIDGE|client|library.GuiObject.TweenSize|false|'GuiObject' is not a valid Service name  —  harness:2
+Info: [Client] BRIDGE|client|library.GuiObject.TweenSizeAndPosition|false|'GuiObject' is not a valid Service name  —  harness:2
+Info: [Client] BRIDGE|client|library.ContextActionService.UnbindAction.info|true|function|rustudio.library|1150|UnbindAction|2|false|function: 0x0000559f25e8d4c0  —  harness:2
+Info: [Client] BRIDGE|client|library.ContextActionService.UnbindAction.badself|false|rustudio.library:1150: table index is nil  —  harness:2
+Info: [Client] BRIDGE|client|library.ContextActionService.UnbindAction|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.ContextActionService.UnbindAllActions.info|true|function|rustudio.library|1151|UnbindAllActions|1|false|function: 0x0000559f25e8d460  —  harness:2
+Info: [Client] BRIDGE|client|library.ContextActionService.UnbindAllActions.badself|true  —  harness:2
+Info: [Client] BRIDGE|client|library.ContextActionService.UnbindAllActions|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.RunService.UnbindFromRenderStep.info|true|function|rustudio.library|1505|UnbindFromRenderStep|2|false|function: 0x0000559f251507f0  —  harness:2
+Info: [Client] BRIDGE|client|library.RunService.UnbindFromRenderStep.badself|false|rustudio.library:1506: table index is nil  —  harness:2
+Info: [Client] BRIDGE|client|library.RunService.UnbindFromRenderStep|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.UnregisterCollisionGroup.info|true|function|rustudio.library|1085|UnregisterCollisionGroup|2|false|function: 0x0000559f24d53940  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.UnregisterCollisionGroup.badself|true  —  harness:2
+Info: [Client] BRIDGE|client|library.PhysicsService.UnregisterCollisionGroup|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.WorldRoot.UnregisterCollisionGroup|false|'WorldRoot' is not a valid Service name  —  harness:2
+Info: [Client] BRIDGE|client|library.Camera.ViewportPointToRay.info|true|function|rustudio.library|1338|ViewportPointToRay|4|false|function: 0x0000559f25150870  —  harness:2
+Info: [Client] BRIDGE|client|library.Camera.ViewportPointToRay.badself|false|rustudio.library:1319: invalid argument #1 to 'rad' (number expected, got nil)  —  harness:2
+Info: [Client] BRIDGE|client|library.Camera.ViewportPointToRay|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.Camera.WorldToScreenPoint.info|true|function|rustudio.library|1366|WorldToScreenPoint|2|false|function: 0x0000559f25e8d3a0  —  harness:2
+Info: [Client] BRIDGE|client|library.Camera.WorldToScreenPoint.badself|false|rustudio.library:1319: invalid argument #1 to 'rad' (number expected, got nil)  —  harness:2
+Info: [Client] BRIDGE|client|library.Camera.WorldToScreenPoint|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.Camera.WorldToViewportPoint.info|true|function|rustudio.library|1351|WorldToViewportPoint|2|false|function: 0x0000559f25150830  —  harness:2
+Info: [Client] BRIDGE|client|library.Camera.WorldToViewportPoint.badself|false|rustudio.library:1319: invalid argument #1 to 'rad' (number expected, got nil)  —  harness:2
+Info: [Client] BRIDGE|client|library.Camera.WorldToViewportPoint|true|true  —  harness:2
+Info: [Client] BRIDGE|client|library.Camera.ZoomToExtents.info|true|function|rustudio.library|1392|ZoomToExtents|0|false|function: 0x0000559f24d53460  —  harness:2
+Info: [Client] BRIDGE|client|library.Camera.ZoomToExtents.badself|true  —  harness:2
+Info: [Client] BRIDGE|client|library.Camera.ZoomToExtents|true|true  —  harness:2
+Info: [Client] BRIDGE|client|enum.eq|true|false|true|false  —  harness:2
+Info: [Client] BRIDGE|client|enum.items|true|45|Enum.Material.Plastic|true  —  harness:2
+Info: [Client] BRIDGE|client|enums.get|false|runtime error: GetEnums is not a valid member of "Enum"
+stack traceback:
+	[C]: in ?
+	harness:182: in function <harness:182>
+	[C]: in function 'pcall'
+	harness:3: in function 'test'
+	harness:182: in function <harness:1>
+  —  harness:2
+Info: [Client] BRIDGE|client|enum.fromname.absent|false|FromName is not a valid member of "Enum.Material"  —  harness:2
+Info: [Client] BRIDGE|client|enum.fromvalue.absent|false|FromValue is not a valid member of "Enum.Material"  —  harness:2
+Info: [Client] BRIDGE|client|EXTENDED_DONE|  —  harness:2
+[shot] /home/user/projects/rustudio/app/tools/parity_probe/bridge/client.png
+[shot] /home/user/projects/rustudio/app/tools/parity_probe/bridge/client.view.png

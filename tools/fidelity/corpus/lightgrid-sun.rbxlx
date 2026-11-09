@@ -1,0 +1,89 @@
+<roblox version="4">
+<Item class="Workspace" referent="1"><Properties><string name="Name">Workspace</string></Properties>
+<Item class="Terrain" referent="9"><Properties><string name="Name">Terrain</string><bool name="Decoration">false</bool></Properties></Item>
+</Item>
+<Item class="Lighting" referent="2"><Properties><string name="Name">Lighting</string>
+<float name="ClockTime">16.5</float><bool name="GlobalShadows">true</bool><token name="Technology">1</token>
+<Color3 name="Ambient"><R>0</R><G>0</G><B>0</B></Color3><Color3 name="OutdoorAmbient"><R>0</R><G>0</G><B>0</B></Color3><float name="Brightness">2</float>
+<float name="EnvironmentDiffuseScale">0</float><float name="EnvironmentSpecularScale">0</float>
+<float name="ExposureCompensation">0</float>
+</Properties></Item>
+<Item class="ServerScriptService" referent="3"><Properties><string name="Name">ServerScriptService</string></Properties>
+<Item class="Script" referent="4"><Properties><string name="Name">BuildTerrain</string><ProtectedString name="Source">-- Light grid probe, second set (round 26): what decides the skylight in a
+-- shaft, under a roof and down a tunnel. Lit as lightgrid_build.luau (by
+-- OutdoorAmbient alone); stations 1000 studs apart, voxel aligned.
+local T = workspace.Terrain
+local M = Enum.Material
+local function pad(cx, depth, width)
+	T:FillBlock(CFrame.new(cx, -depth / 2, 0), Vector3.new(width or 320, depth, width or 320), M.Sand)
+end
+-- Square pits {centre x, width, depth} in a 96-deep pad, 64 apart.
+pad(0, 96, 1200)
+for _, p in {
+	{-512, 16, 8}, {-448, 16, 24}, {-384, 16, 40}, {-320, 16, 48}, {-256, 16, 56},
+	{-192, 8, 8}, {-128, 8, 16}, {-64, 24, 32}, {0, 32, 32}, {64, 16, 16}, {128, 16, 32}, {192, 16, 64},
+} do
+	T:FillBlock(CFrame.new(p[1], -p[3] / 2, 0), Vector3.new(p[2], p[3], p[2]), M.Air)
+end
+-- Floating roofs 64 x 8 x 64, undersides 16 / 32 / 64 over the ground.
+for i, h in {16, 32, 64} do
+	local cx = 1000 * i
+	pad(cx, 8)
+	T:FillBlock(CFrame.new(cx, h + 4, 0), Vector3.new(64, 8, 64), M.Ground)
+end
+-- A tunnel, 12 x 12 (x 3992..4004, y 0..12), 96 deep into a 128-stud block
+-- whose front face is at z = -64.
+pad(4000, 8)
+T:FillBlock(CFrame.new(4000, 32, 0), Vector3.new(128, 64, 128), M.Ground)
+T:FillBlock(CFrame.new(3998, 6, -16), Vector3.new(12, 12, 96), M.Air)
+-- Walls 8 thick, 128 long, of heights 4 / 8 / 24 / 48, 1000 apart.
+for i, h in {4, 8, 24, 48} do
+	local cx = 4000 + 1000 * i
+	pad(cx, 8)
+	T:FillBlock(CFrame.new(cx, h / 2, 0), Vector3.new(8, h, 128), M.Ground)
+end
+</ProtectedString></Properties></Item>
+</Item>
+<Item class="StarterPlayer" referent="5"><Properties><string name="Name">StarterPlayer</string></Properties>
+<Item class="StarterPlayerScripts" referent="6"><Properties><string name="Name">StarterPlayerScripts</string></Properties>
+<Item class="LocalScript" referent="7"><Properties><string name="Name">LightGridCams</string><ProtectedString name="Source">-- Fixed cameras for the second light grid probe (round 26): a spot every
+-- 5 s from 8 s, held from 3 s before its shot; Focus with the camera.
+local RunService = game:GetService("RunService")
+local cam = workspace.CurrentCamera
+local down = CFrame.Angles(-math.pi / 2, 0, 0) -- looking down, +X to the right
+local spots = {}
+local function top(x, h, z, fov)
+	table.insert(spots, {CFrame.new(x, h, z) * down, fov})
+end
+-- Pit floors, from 8 over each pit's mouth (8 … 63).
+for _, x in {-512, -448, -384, -320, -256, -192, -128, -64, 0, 64, 128, 192} do
+	top(x, 8, 0, 50)
+end
+-- The ground under each roof, from half way up (68 … 78).
+for i, h in {16, 32, 64} do
+	top(1000 * i, h / 2, 0, 90)
+end
+-- The tunnel floor 4 / 12 / 24 / 40 / 64 studs in (83 … 103).
+for _, z in {-60, -52, -40, -24, 0} do
+	top(3998, 9, z, 60)
+end
+-- The ground beside walls 4 / 8 / 24 / 48 high (108 … 123).
+for i = 1, 4 do
+	top(4000 + 1000 * i + 46, 48, 0, 80)
+end
+local t0 = os.clock()
+RunService:BindToRenderStep("LightGridCams", Enum.RenderPriority.Camera.Value + 1, function()
+	local t = os.clock() - t0
+	local at = spots[1]
+	for i, s in spots do
+		if t &gt;= 8 + (i - 1) * 5 - 3 then at = s end
+	end
+	cam.CameraType = Enum.CameraType.Scriptable
+	cam.FieldOfView = at[2]
+	cam.CFrame = at[1]
+	cam.Focus = at[1]
+end)
+</ProtectedString></Properties></Item>
+</Item></Item>
+<Item class="Players" referent="8"><Properties><string name="Name">Players</string><bool name="CharacterAutoLoads">false</bool></Properties></Item>
+</roblox>

@@ -1,0 +1,439 @@
+{
+ "BasePart": {
+  "missing": [
+   "property AssemblyRootPart",
+   "property CurrentPhysicalProperties",
+   "property ReceiveAge",
+   "property ResizeIncrement",
+   "property ResizeableFaces",
+   "property SpecificGravity",
+   "function AngularAccelerationToTorque",
+   "function BindToCollisionSummaries",
+   "function GetNetworkOwnershipAuto",
+   "function IsGrounded",
+   "function TorqueToAngularAcceleration",
+   "function IntersectAsync",
+   "function SubtractAsync",
+   "function UnionAsync"
+  ],
+  "events_to_check": [
+   "LocalSimulationTouched",
+   "OutfitChanged",
+   "StoppedTouching",
+   "TouchEnded",
+   "Touched"
+  ]
+ },
+ "Model": {
+  "missing": [
+   "function AddPersistentPlayer",
+   "function GetPersistentPlayers",
+   "function RemovePersistentPlayer",
+   "function ResetOrientationToIdentity",
+   "function ScaleTo",
+   "function SetIdentityOrientation"
+  ],
+  "events_to_check": []
+ },
+ "PVInstance": {
+  "missing": [
+   "property Origin",
+   "property Pivot Offset"
+  ],
+  "events_to_check": []
+ },
+ "WorldRoot": {
+  "missing": [
+   "function ArePartsTouchingOthers",
+   "function IsRegion3Empty",
+   "function IsRegion3EmptyWithIgnoreList"
+  ],
+  "events_to_check": []
+ },
+ "Workspace": {
+  "missing": [
+   "property FilteringEnabled",
+   "property InsertPoint",
+   "property InterpolationThrottling",
+   "property ReplicationFrequency",
+   "property ReplicationThroughput",
+   "property SignalBehavior",
+   "function GetNumAwakeParts",
+   "function GetPhysicsThrottling",
+   "function JoinToOutsiders",
+   "function PGSIsEnabled",
+   "function UnjoinFromOutsiders"
+  ],
+  "events_to_check": [
+   "PersistentLoaded"
+  ]
+ },
+ "Camera": {
+  "missing": [
+   "property DiagonalFieldOfView",
+   "property MaxAxisFieldOfView",
+   "property OrthographicMode",
+   "property OrthographicSize",
+   "property ProjectionType",
+   "property ViewStretch",
+   "function GetPanSpeed",
+   "function GetTiltSpeed",
+   "function PanUnits",
+   "function SetCameraPanMode",
+   "function TiltUnits"
+  ],
+  "events_to_check": [
+   "InterpolationFinished"
+  ]
+ },
+ "Constraint": {
+  "missing": [
+   "property Active",
+   "function GetDebugAppliedForce",
+   "function GetDebugAppliedTorque"
+  ],
+  "events_to_check": []
+ },
+ "AlignOrientation": {
+  "missing": [
+   "property LookAtPosition",
+   "property PrimaryAxis",
+   "property SecondaryAxis"
+  ],
+  "events_to_check": []
+ },
+ "BallSocketConstraint": {
+  "missing": [
+   "property MaxFrictionTorque"
+  ],
+  "events_to_check": []
+ },
+ "CylindricalConstraint": {
+  "missing": [
+   "property CurrentAngle",
+   "property WorldRotationAxis"
+  ],
+  "events_to_check": []
+ },
+ "HingeConstraint": {
+  "missing": [
+   "property CurrentAngle"
+  ],
+  "events_to_check": []
+ },
+ "RodConstraint": {
+  "missing": [
+   "property CurrentDistance"
+  ],
+  "events_to_check": []
+ },
+ "RopeConstraint": {
+  "missing": [
+   "property CurrentDistance"
+  ],
+  "events_to_check": []
+ },
+ "SlidingBallConstraint": {
+  "missing": [
+   "property CurrentPosition"
+  ],
+  "events_to_check": []
+ },
+ "SpringConstraint": {
+  "missing": [
+   "property CurrentLength"
+  ],
+  "events_to_check": []
+ },
+ "TorsionSpringConstraint": {
+  "missing": [
+   "property CurrentAngle"
+  ],
+  "events_to_check": []
+ },
+ "WeldConstraint": {
+  "missing": [
+   "property Active"
+  ],
+  "events_to_check": []
+ },
+ "BodyPosition": {
+  "missing": [
+   "function GetLastForce",
+   "function lastForce"
+  ],
+  "events_to_check": [
+   "ReachedTarget"
+  ]
+ },
+ "BodyVelocity": {
+  "missing": [
+   "function GetLastForce",
+   "function lastForce"
+  ],
+  "events_to_check": []
+ },
+ "RocketPropulsion": {
+  "missing": [
+   "function Abort",
+   "function Fire",
+   "function fire"
+  ],
+  "events_to_check": [
+   "ReachedTarget"
+  ]
+ },
+ "FluidForceSensor": {
+  "missing": [
+   "property BuoyancyForce",
+   "property BuoyancyTorque",
+   "property CenterOfPressure",
+   "property Torque",
+   "function EvaluateAsync"
+  ],
+  "events_to_check": []
+ },
+ "AtmosphereSensor": {
+  "missing": [
+   "property AirDensity",
+   "property RelativeWindVelocity"
+  ],
+  "events_to_check": []
+ },
+ "PhysicsActivitySensor": {
+  "missing": [
+   "property Active",
+   "property Position",
+   "property Size"
+  ],
+  "events_to_check": []
+ },
+ "SensorBase": {
+  "missing": [
+   "function Sense"
+  ],
+  "events_to_check": [
+   "OnSensorOutputChanged"
+  ]
+ },
+ "Attachment": {
+  "missing": [
+   "function GetConstraints",
+   "function SetAxis",
+   "function SetSecondaryAxis"
+  ],
+  "events_to_check": []
+ },
+ "Terrain": {
+  "missing": [
+   "function AutowedgeCell",
+   "function AutowedgeCells",
+   "function ClearVoxelsAsync_beta",
+   "function CountCells",
+   "function GetCell",
+   "function GetMaterialSlot",
+   "function GetWaterCell",
+   "function IterateVoxelsAsync_beta",
+   "function ModifyVoxelsAsync_beta",
+   "function ReadVoxelsAsync_beta",
+   "function ResetMaterialSlot",
+   "function SetCells",
+   "function SetMaterialSlot",
+   "function SetWaterCell",
+   "function WriteVoxelsAsync_beta"
+  ],
+  "events_to_check": []
+ },
+ "TerrainIterateOperation": {
+  "missing": [
+   "function CommitBlock"
+  ],
+  "events_to_check": [
+   "Ready"
+  ]
+ },
+ "TerrainModifyOperation": {
+  "missing": [
+   "function CommitBlock"
+  ],
+  "events_to_check": [
+   "Ready"
+  ]
+ },
+ "TerrainWriteOperation": {
+  "missing": [
+   "function CommitBlock",
+   "function GetBlock"
+  ],
+  "events_to_check": []
+ },
+ "JointsService": {
+  "missing": [
+   "function ClearJoinAfterMoveJoints",
+   "function CreateJoinAfterMoveJoints",
+   "function SetJoinAfterMoveInstance",
+   "function SetJoinAfterMoveTarget",
+   "function ShowPermissibleJoints"
+  ],
+  "events_to_check": []
+ },
+ "DragDetector": {
+  "missing": [
+   "function AddConstraintFunction",
+   "function GetReferenceFrame",
+   "function RestartDrag",
+   "function SetDragStyleFunction",
+   "function SetPermissionPolicyFunction"
+  ],
+  "events_to_check": [
+   "DragContinue",
+   "DragEnd",
+   "DragStart"
+  ]
+ },
+ "Dragger": {
+  "missing": [
+   "function AxisRotate",
+   "function MouseDown",
+   "function MouseMove",
+   "function MouseUp"
+  ],
+  "events_to_check": []
+ },
+ "VehicleSeat": {
+  "missing": [
+   "property AreHingesDetected"
+  ],
+  "events_to_check": []
+ },
+ "SkateboardController": {
+  "missing": [
+   "property Steer",
+   "property Throttle"
+  ],
+  "events_to_check": [
+   "AxisChanged"
+  ]
+ },
+ "SkateboardPlatform": {
+  "missing": [
+   "property Controller",
+   "property ControllingHumanoid",
+   "function ApplySpecificImpulse"
+  ],
+  "events_to_check": [
+   "Equipped",
+   "MoveStateChanged",
+   "Unequipped",
+   "equipped",
+   "unequipped"
+  ]
+ },
+ "AirController": {
+  "missing": [
+   "property LinearImpulse"
+  ],
+  "events_to_check": []
+ },
+ "ControllerBase": {
+  "missing": [
+   "property Active"
+  ],
+  "events_to_check": []
+ },
+ "Controller": {
+  "missing": [
+   "function BindButton",
+   "function GetButton",
+   "function UnbindButton",
+   "function bindButton",
+   "function getButton"
+  ],
+  "events_to_check": [
+   "ButtonChanged"
+  ]
+ },
+ "ControlState": {
+  "missing": [
+   "function AddBoolField",
+   "function AddCFrameField",
+   "function AddInstanceField",
+   "function AddIntField",
+   "function AddNumberField",
+   "function AddUnitVector3Field",
+   "function AddVector2Field",
+   "function AddVector3Field",
+   "function GetChangedState",
+   "function GetReplicationWeight",
+   "function GetState",
+   "function HasField",
+   "function SetField",
+   "function UpdateFields"
+  ],
+  "events_to_check": [
+   "OnStateChanged"
+  ]
+ },
+ "Beam": {
+  "missing": [
+   "function SetTextureOffset"
+  ],
+  "events_to_check": []
+ },
+ "Trail": {
+  "missing": [
+   "function Clear"
+  ],
+  "events_to_check": []
+ },
+ "Decal": {
+  "missing": [
+   "property ResampleMode"
+  ],
+  "events_to_check": []
+ },
+ "Tool": {
+  "missing": [
+   "property GripForward",
+   "property GripPos",
+   "property GripRight",
+   "property GripUp"
+  ],
+  "events_to_check": [
+   "Activated",
+   "Deactivated",
+   "Equipped",
+   "Unequipped"
+  ]
+ },
+ "StarterGear": {
+  "missing": [
+   "property Loaded"
+  ],
+  "events_to_check": []
+ },
+ "WireframeHandleAdornment": {
+  "missing": [
+   "function AddLine",
+   "function AddLines",
+   "function AddPath",
+   "function AddText",
+   "function Clear"
+  ],
+  "events_to_check": []
+ },
+ "LodDataEntity": {
+  "missing": [
+   "property EntityLodEnabled"
+  ],
+  "events_to_check": []
+ },
+ "ProceduralModel": {
+  "missing": [
+   "property GenerationError",
+   "function ForceGeneration",
+   "function WaitForGenerationAsync"
+  ],
+  "events_to_check": []
+ }
+}

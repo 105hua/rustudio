@@ -1,0 +1,8 @@
+task.spawn(function()
+local d = workspace:WaitForChild("NPC"):WaitForChild("Dialog")
+d.DialogChoiceSelected:Connect(function(p, c) print("DLG client choice", p.Name, c.Name, d.InUse) end)
+d:GetPropertyChangedSignal("InUse"):Connect(function() print("DLG client InUse", d.InUse) end)
+task.wait(1)
+local cam = workspace.CurrentCamera local p = cam:WorldToViewportPoint(workspace.NPC.Position + Vector3.new(0, 3.7, 0))
+print("DLG bubble " .. math.floor(p.X) .. "," .. math.floor(p.Y))
+end)
