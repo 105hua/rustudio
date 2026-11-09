@@ -290,6 +290,8 @@ pub struct Editor {
     pub pending_user_shot: Option<PathBuf>,
     /// The Start Page (src/start_page.rs): shown when nothing is open.
     pub start: crate::start_page::StartPage,
+    /// Requests switching to the main viewport tab.
+    pub switch_to_viewport: bool,
 }
 
 #[derive(Debug, Clone)]
@@ -423,6 +425,7 @@ impl RustudioApp {
             play_here: None,
             pending_user_shot: None,
             start: Default::default(),
+            switch_to_viewport: false,
         };
         ed.info(format!(
             "rustudio {} ready. Reflection database has {} classes.",
@@ -1728,6 +1731,13 @@ impl eframe::App for RustudioApp {
                     .inner_margin(egui::Margin::symmetric(8, 3)),
             )
             .show(ui, |ui| ed.status_bar(ui));
+
+        // Editor::start_run requests this when a playtest begins.
+        if std::mem::take(&mut self.ed.switch_to_viewport) {
+            if let Some(loc) = self.dock.find_tab(&Tab::Viewport) {
+                let _ = self.dock.set_active_tab(loc);
+            }
+        }
 
         let _dock_scope = crate::bench::scope("dock_panels");
         egui::CentralPanel::default()

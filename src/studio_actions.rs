@@ -397,6 +397,10 @@ impl Editor {
             }
             RunType::ServerClients => {}
         }
+
+        // switch window to main viewport when playtesting
+        // (the dock lives on RustudioApp, which consumes this flag in ui())
+        self.switch_to_viewport = true;
     }
 
     /// The menu bar: Studio's menus in Studio's order.
