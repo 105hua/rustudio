@@ -103,7 +103,9 @@ Windows is new, so a few things don't work there yet:
 
 Everything above works signed out. To open your own places or load private
 assets, sign in with your Roblox session: use the account button at the top
-right, or put the `.ROBLOSECURITY` cookie in `~/.config/rustudio/roblox-cookie`
+right and **Sign in with your browser** (rustudio shows a code that you
+confirm on roblox.com, in whatever browser you're signed in to), paste the
+`.ROBLOSECURITY` cookie there, or put it in `~/.config/rustudio/roblox-cookie`
 (`chmod 600`). rustudio stores it in your login keyring. Details are in
 [docs/AUTH.md](docs/AUTH.md).
 

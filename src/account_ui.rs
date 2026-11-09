@@ -6,6 +6,7 @@
 
 use std::collections::{HashMap, HashSet};
 use std::sync::mpsc::{channel, Receiver, Sender};
+use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Mutex};
 
 use egui::RichText;
@@ -78,6 +79,25 @@ pub struct AccountUi {
     heads_asked: HashSet<u64>,
     restored_universes: bool,
     adding_pending: bool,
+    /// A Quick Sign-in in progress (Sign in with your browser).
+    quick: Option<QuickView>,
+}
+
+/// What the Quick Sign-in job shares with the panel: the code to show, a
+/// line about where it is, and a flag that stops it.
+#[derive(Default)]
+struct QuickView {
+    code: Arc<Mutex<Option<String>>>,
+    note: Arc<Mutex<String>>,
+    stop: Arc<AtomicBool>,
+    /// The browser was sent to the confirm page for this code.
+    opened: bool,
+}
+
+impl QuickView {
+    fn cancel(&self) {
+        self.stop.store(true, Ordering::Relaxed);
+    }
 }
 
 impl AccountUi {
@@ -112,6 +132,7 @@ impl AccountUi {
             heads_asked: HashSet::new(),
             restored_universes: false,
             adding_pending: false,
+            quick: None,
         }
     }
 
@@ -299,7 +320,12 @@ impl AccountUi {
                     ));
                     self.avatar = Some(*look);
                 }
-                Msg::Done => self.jobs = self.jobs.saturating_sub(1),
+                Msg::Done => {
+                    self.jobs = self.jobs.saturating_sub(1);
+                    if self.jobs == 0 {
+                        self.quick = None;
+                    }
+                }
             }
         }
         if self.signed_in() && !self.avatar_requested {
@@ -470,6 +496,47 @@ impl AccountUi {
         self.config().signed_out = false;
         let _ = self.config().save();
         self.check_session();
+    }
+
+    /// Sign in with the default browser (Roblox's Quick Sign-in): shows a
+    /// code, sends the browser to Roblox's confirm page, and once the person
+    /// confirms there, the session it yields is added like a pasted one.
+    fn browser_sign_in(&mut self) {
+        use rustudio_account::quick_login::{QuickLogin, QuickStatus};
+        self.add_error = None;
+        self.adding = true;
+        self.adding_pending = true;
+        let view = QuickView::default();
+        let (code, note, stop) = (view.code.clone(), view.note.clone(), view.stop.clone());
+        *note.lock().unwrap() = "Getting a code from Roblox…".into();
+        self.quick = Some(view);
+        self.connect("Signing in with the browser", true, move |cfg| {
+            let fail = |m: String| SignedOut::Rejected(m);
+            let q = QuickLogin::start().map_err(|e| fail(e.to_string()))?;
+            *code.lock().unwrap() = Some(q.code.clone());
+            *note.lock().unwrap() = "Waiting for you to enter the code…".into();
+            let mut why = "the sign-in code expired; try again".to_string();
+            let got = q
+                .wait(&|| stop.load(Ordering::Relaxed), &mut |st| {
+                    let line = match st {
+                        QuickStatus::UserLinked(Some(name)) => format!("Confirm as @{name} in your browser…"),
+                        QuickStatus::UserLinked(None) => "Confirm in your browser…".into(),
+                        QuickStatus::Validated => "Confirmed, signing in…".into(),
+                        QuickStatus::Cancelled => {
+                            why = "the sign-in was turned down in the browser".into();
+                            return;
+                        }
+                        _ => return,
+                    };
+                    *note.lock().unwrap() = line;
+                })
+                .map_err(|e| fail(e.to_string()))?;
+            match got {
+                Some(raw) => Client::sign_in_with(cfg, &raw),
+                None if stop.load(Ordering::Relaxed) => Err(fail("sign-in cancelled".into())),
+                None => Err(fail(why)),
+            }
+        });
     }
 
     /// Signs the active account out and forgets it on this computer; other
@@ -676,6 +743,9 @@ impl Editor {
         let esc = ctx.input(|i| i.key_pressed(egui::Key::Escape));
         if outside || esc {
             self.account.open = false;
+            if let Some(q) = &self.account.quick {
+                q.cancel();
+            }
             self.account.adding = false;
             self.account.cookie_input.clear();
             self.account.add_error = None;
@@ -688,6 +758,7 @@ impl Editor {
             Remove(u64),
             SignOut,
             Retry,
+            BrowserSignIn,
         }
         let mut todo: Option<Do> = None;
         let a = &mut self.account;
@@ -769,6 +840,55 @@ impl Editor {
                     ui.label(RichText::new(e).size(12.0).color(theme::ERROR));
                 }
                 ui.add_space(10.0);
+                if let Some(q) = &mut a.quick {
+                    let code = q.code.lock().unwrap().clone();
+                    let note = q.note.lock().unwrap().clone();
+                    egui::Frame::new()
+                        .fill(theme::PANEL_DARK)
+                        .inner_margin(egui::Margin::same(10))
+                        .show(ui, |ui| {
+                            ui.set_width(ui.available_width());
+                            ui.vertical_centered(|ui| {
+                                match &code {
+                                    Some(c) => {
+                                        ui.label(RichText::new("Enter this code on Roblox").size(12.0).color(theme::TEXT_DIM));
+                                        ui.add_space(4.0);
+                                        ui.label(RichText::new(c).size(26.0).monospace().strong().color(theme::TEXT));
+                                        ui.add_space(4.0);
+                                        if ui.link(RichText::new("Open the page again").size(11.5)).clicked() {
+                                            q.opened = false;
+                                        }
+                                    }
+                                    None => {
+                                        ui.add(egui::Spinner::new().size(14.0).color(theme::TEXT_DIM));
+                                    }
+                                }
+                                ui.add_space(4.0);
+                                ui.label(RichText::new(note).size(11.5).color(theme::TEXT_DIM));
+                            });
+                        });
+                    if code.is_some() && !q.opened {
+                        q.opened = true;
+                        ui.ctx().open_url(egui::OpenUrl::new_tab(rustudio_account::quick_login::CONFIRM_URL));
+                    }
+                    ui.ctx().request_repaint_after(std::time::Duration::from_millis(300));
+                } else {
+                    let browser = ui.add_enabled(
+                        !a.busy(),
+                        egui::Button::new(RichText::new("Sign in with your browser").color(theme::TEXT))
+                            .min_size(egui::vec2(ui.available_width(), 26.0)),
+                    );
+                    ui.add_space(4.0);
+                    ui.label(
+                        RichText::new("Shows a code to confirm on roblox.com, in the browser you're signed in to")
+                            .size(11.5)
+                            .color(theme::TEXT_DIM),
+                    );
+                    if browser.clicked() {
+                        todo = Some(Do::BrowserSignIn);
+                    }
+                }
+                ui.add_space(10.0);
                 let mut go = field.lost_focus() && ui.input(|i| i.key_pressed(egui::Key::Enter));
                 let row = egui::vec2(ui.available_width(), 26.0);
                 ui.allocate_ui_with_layout(row, egui::Layout::right_to_left(egui::Align::Center), |ui| {
@@ -783,11 +903,14 @@ impl Editor {
                                 .min_size(egui::vec2(76.0, 26.0)),
                         )
                         .clicked();
-                    if (signed || !accounts.is_empty())
+                    if (signed || !accounts.is_empty() || a.quick.is_some())
                         && ui
                             .add(egui::Button::new("Cancel").fill(egui::Color32::TRANSPARENT).min_size(egui::vec2(64.0, 26.0)))
                             .clicked()
                     {
+                        if let Some(q) = &a.quick {
+                            q.cancel();
+                        }
                         a.adding = false;
                         a.cookie_input.clear();
                         a.add_error = None;
@@ -895,6 +1018,7 @@ impl Editor {
             }
             Some(Do::SignOut) => a.sign_out(),
             Some(Do::Retry) => a.sign_in(),
+            Some(Do::BrowserSignIn) => a.browser_sign_in(),
             None => {}
         }
     }

@@ -19,7 +19,7 @@ default-run = "rustudio"
 rustudio-account = { path = "crates/rustudio-account" }
 rustudio-net = { path = "crates/rustudio-net" }
 libc = "0.2"
-eframe = { version = "0.36", default-features = false, features = ["wgpu", "wayland", "x11", "default_fonts"] }
+eframe = { version = "0.36", default-features = false, features = ["wgpu", "wayland", "x11", "default_fonts", "links"] }
 egui = "0.36"
 egui-wgpu = "0.36"
 egui_dock = { version = "0.21", features = ["serde"] }

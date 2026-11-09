@@ -153,6 +153,9 @@ pub struct Document {
 fn studio_default(class: &str, name: &str) -> Option<Variant> {
     match (class, name) {
         ("Lighting", "Brightness") => Some(Variant::Float32(crate::mech::LIGHTING_BRIGHTNESS_DEFAULT)),
+        // On in Studio; the reflection database's default is false, which
+        // left a new place (and any file that leaves it out) without shadows.
+        ("Lighting", "GlobalShadows") => Some(Variant::Bool(true)),
         // Studio's UICorner default; the reflection database has none, and
         // files saved at the default leave it out (Place B's index UI).
         ("UICorner", "CornerRadius") => Some(Variant::UDim(rbx_dom_weak::types::UDim::new(0.0, 8))),

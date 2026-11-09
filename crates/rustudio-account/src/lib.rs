@@ -17,6 +17,7 @@ pub mod cloud;
 pub mod config;
 pub mod data;
 pub mod mock;
+pub mod quick_login;
 pub mod session;
 pub mod store;
 pub mod web_social;

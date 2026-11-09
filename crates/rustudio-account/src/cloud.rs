@@ -158,6 +158,13 @@ impl Experience {
     }
 }
 
+/// Most recently updated first, as Studio lists them. `updated` is ISO time,
+/// so comparing the strings compares the times.
+fn newest_first(mut list: Vec<Experience>) -> Vec<Experience> {
+    list.sort_by(|a, b| b.updated.cmp(&a.updated));
+    list
+}
+
 #[derive(Debug, Clone, PartialEq)]
 pub struct CloudPlace {
     pub id: u64,
@@ -318,7 +325,7 @@ impl CloudApi {
     pub fn my_experiences(&self) -> Result<Vec<Experience>> {
         let base = format!("{}/v1/user/universes", self.ep.develop);
         let rows = self.develop_pages(&base, "develop.roblox.com/v1/user/universes")?;
-        Ok(rows.iter().filter_map(Experience::from_json).collect())
+        Ok(newest_first(rows.iter().filter_map(Experience::from_json).collect()))
     }
 
     /// The account's groups (groups `v2/users/{id}/groups/roles`), each
@@ -364,7 +371,7 @@ impl CloudApi {
     pub fn group_experiences(&self, group_id: u64) -> Result<Vec<Experience>> {
         let base = format!("{}/v1/groups/{group_id}/universes", self.ep.develop);
         let rows = self.develop_pages(&base, "develop.roblox.com/v1/groups/{id}/universes")?;
-        Ok(rows.iter().filter_map(Experience::from_json).collect())
+        Ok(newest_first(rows.iter().filter_map(Experience::from_json).collect()))
     }
 
     /// Shared with me: experiences the account collaborates on, as Studio's
