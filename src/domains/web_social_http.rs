@@ -296,11 +296,19 @@ end
 M.GetNonChatStringForBroadcastAsync=function(self) return __ws_filter_text(self) end
 M.GetNonChatStringForUserAsync=function(self,user) if tonumber(user)==nil then error('Argument 1 missing or nil',2) end;return __ws_filter_text(self) end
 M.GetChatForUserAsync=function(self,user) if tonumber(user)==nil then error('Argument 1 missing or nil',2) end;return __ws_filter_text(self) end
+-- __ws_filter's refusals reach scripts as the engine's plain message (a
+-- Rust error raised under this wrapper carried mlua's "runtime error:"
+-- prefix and a traceback into pcall).
+local function filter(text,user,translated)
+    local ok,r=pcall(__ws_filter,text,user,translated)
+    if ok then return r end
+    error((string.match(string.gsub(tostring(r),'^runtime error: ',''),'^[^\n]*')),0)
+end
 M.FilterStringAsync=function(self,text,user)
-    return __ws_filter(text,user,false)
+    return filter(text,user,false)
 end
 M.FilterAndTranslateStringAsync=function(self,text,user,locales)
-    return __ws_filter(text,user,true)
+    return filter(text,user,true)
 end
 local function fetch(name,...)
     local args={...};local token=__ws_begin(name,args)

@@ -5492,7 +5492,7 @@ mod legacy_tests {
 
     /// Round 26's library gaps from Place D's second admin script and Place B's
     /// an admin script, on the client: settings() refused to a game script,
-    /// TextService filtering giving the text back, a CoreGuiType by name,
+    /// TextService filtering refused on the client, a CoreGuiType by name,
     /// and a humanoid model with its Animator.
     #[test]
     fn script_library_gaps() {
@@ -5504,8 +5504,7 @@ mod legacy_tests {
             InstanceBuilder::new("LocalScript").with_name("T").with_property(
                 "Source",
                 "print('settings', pcall(settings))\n\
-                 local r = game:GetService('TextService'):FilterStringAsync('hello', 1)\n\
-                 print('filter', r.ClassName, r:GetNonChatStringForUserAsync(1))\n\
+                 print('filter', pcall(function() return game:GetService('TextService'):FilterStringAsync('hello', 1) end))\n\
                  local sg = game:GetService('StarterGui')\n\
                  sg:SetCoreGuiEnabled('Chat', false)\n\
                  print('coregui', sg:GetCoreGuiEnabled('Chat'), sg:GetCoreGuiEnabled(Enum.CoreGuiType.Chat), sg:GetCoreGuiEnabled(Enum.CoreGuiType.Backpack))\n\
@@ -5527,7 +5526,8 @@ mod legacy_tests {
             has("settings false The current thread cannot call 'settings' (lacking capability Plugin)"),
             "{out:?}"
         );
-        assert!(has("filter TextFilterResult hello"), "{out:?}");
+        // Server-only in Roblox: a LocalScript gets the engine's error.
+        assert!(has("filter false Must only be called from server scripts"), "{out:?}");
         assert!(has("coregui false false true"), "{out:?}");
         assert!(has("animator true"), "{out:?}");
     }
@@ -5591,24 +5591,19 @@ mod legacy_tests {
         }
     }
 
-    /// GetProductInfo yields until the catalog answers, then gives its
-    /// record; a refusal is an error without a position, as are engine
-    /// errors caught by pcall (round 26). The web call is stubbed here.
+    /// Engine errors caught by pcall are the engine's text without a
+    /// position (round 26). (GetProductInfo, once tested here, is
+    /// web_social_http's now: domains/web_social.rs tests it.)
     #[test]
-    fn product_info_and_engine_error_text() {
+    fn engine_error_text() {
         let mut d = Document::new_place();
         let sss = d
             .find_child(d.dom.root_ref(), "ServerScriptService")
             .unwrap();
-        let src = "local mps = game:GetService('MarketplaceService')\n\
-            local t0 = os.clock()\n\
-            local info = mps:GetProductInfo(5)\n\
-            print('info', info.Name, info.Creator.Name, __polls)\n\
-            print('bad', pcall(function() return mps:GetProductInfo(1) end))\n\
-            print('member', pcall(function() return workspace.Nope end))\n\
-            print('dot', pcall(function() Instance.new('Player').Kick(workspace, 'x') end))\n\
+        let src = "print('member', pcall(function() return workspace.Nope end))\n\
+            print('dot', pcall(function() game:GetService('Players'):FindFirstChildOfClass('Player').Kick(workspace, 'x') end))\n\
             print('wskick', pcall(function() workspace:Kick('x') end))\n\
-            local tr = game:GetService('LocalizationService'):GetTranslatorForPlayerAsync(nil)\n\
+            local tr = game:GetService('LocalizationService'):GetTranslatorForLocaleAsync('en-us')\n\
             print('tr', tr.ClassName, tr.LocaleId, tr:Translate(game, 'hi'), tr:GetPropertyChangedSignal('LocaleId'):Connect(print).Connected)\n\
             print('ds', pcall(function() return game:GetService('DataStoreService'):GetDataStore('x') end))";
         let s = d.dom.insert(
@@ -5617,21 +5612,12 @@ mod legacy_tests {
                 .with_name("T")
                 .with_property("Source", src.to_string()),
         );
+        // Game scripts can't make a Player (WritePlayer); the test places one.
+        let players = d.find_child(d.dom.root_ref(), "Players").unwrap();
+        d.dom.insert(players, InstanceBuilder::new("Player").with_name("P"));
         let rt = Runtime::new().unwrap();
         rt.enter(World::new(d, RunMode::Run));
         rt.bind_globals().unwrap();
-        rt.lua
-            .load(
-                "__polls = 0\n\
-                 __rs_product_info = function(id, kind)\n\
-                     if id == 1 then return nil, 'HTTP 404 (Not Found)' end\n\
-                     __polls += 1\n\
-                     if __polls < 3 then return false end\n\
-                     return '{\"Name\":\"Song\",\"Creator\":{\"Name\":\"Me\"},\"PriceInRobux\":null}'\n\
-                 end",
-            )
-            .exec()
-            .unwrap();
         rt.run_script(s);
         for _ in 0..10 {
             rt.step(1.0 / 60.0);
@@ -5641,8 +5627,6 @@ mod legacy_tests {
             .iter()
             .map(|(_, t)| t.split("  —").next().unwrap_or("").to_string())
             .collect();
-        assert!(text.iter().any(|t| t == "info Song Me 3"), "{text:?}");
-        assert!(text.iter().any(|t| t == "bad false HTTP 404 (Not Found)"), "{text:?}");
         assert!(
             text.iter().any(|t| t == "member false Nope is not a valid member of Workspace \"Workspace\""),
             "{text:?}"
