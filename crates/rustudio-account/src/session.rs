@@ -256,6 +256,8 @@ pub fn file_cookie() -> Result<Option<Cookie>> {
             )));
         }
     }
+    #[cfg(not(unix))]
+    let _ = meta;
     let mut s = String::new();
     std::fs::File::open(&path)?.read_to_string(&mut s)?;
     Ok(Cookie::new(&s))
