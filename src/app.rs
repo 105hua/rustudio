@@ -243,8 +243,9 @@ pub struct Editor {
     /// A brush stroke's voxels, the chunks it touched and whether water may
     /// have changed: drawn next frame without decoding the grid.
     pub terrain_brushed: Option<(crate::terrain::Voxels, Vec<[i32; 3]>, bool)>,
-    /// Seconds the fly keys have been held / released (speed ramp).
+    /// Physical key positions held (movement keys; src/keys.rs).
     pub phys: crate::keys::PhysicalKeys,
+    /// Seconds the fly keys have been held / released (speed ramp).
     pub fly_held: f32,
     pub fly_idle: f32,
     /// Last wheel zoom: (cursor ray direction, hit distance) for the self-test.
