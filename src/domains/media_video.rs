@@ -59,6 +59,7 @@ struct Vpx {
     destroy: unsafe extern "C" fn(*mut c_void) -> c_int,
 }
 
+#[cfg(unix)]
 fn vpx() -> Option<&'static Vpx> {
     static LIB: OnceLock<Option<Vpx>> = OnceLock::new();
     LIB.get_or_init(|| unsafe {
@@ -86,6 +87,11 @@ fn vpx() -> Option<&'static Vpx> {
         })
     })
     .as_ref()
+}
+
+#[cfg(not(unix))]
+fn vpx() -> Option<&'static Vpx> {
+    None
 }
 
 /// Whether frames can be decoded on this machine.
@@ -285,6 +291,7 @@ struct Opus {
     destroy: unsafe extern "C" fn(*mut c_void),
 }
 
+#[cfg(unix)]
 fn opus() -> Option<&'static Opus> {
     static LIB: OnceLock<Option<Opus>> = OnceLock::new();
     LIB.get_or_init(|| unsafe {
@@ -309,6 +316,11 @@ fn opus() -> Option<&'static Opus> {
         })
     })
     .as_ref()
+}
+
+#[cfg(not(unix))]
+fn opus() -> Option<&'static Opus> {
+    None
 }
 
 /// A WebM's Opus track → planar f32 at 48 kHz (pre-skip from OpusHead
