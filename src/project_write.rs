@@ -15,9 +15,15 @@ use crate::doc::{self, Document, Marks};
 use crate::project::{self, data_path_for_file, FileKind, Origin};
 use crate::project_values::to_json;
 
-/// The line-ending style of a file's bytes (CRLF when it has any).
+/// The line endings to write over a file's bytes: the project's setting,
+/// else the file's own (CRLF when it has any).
 fn crlf(bytes: &[u8]) -> bool {
-    bytes.windows(2).any(|w| w == b"\r\n")
+    use crate::project_config::LineEndings;
+    match crate::project_config::active().map(|c| c.line_endings) {
+        Some(LineEndings::Lf) => false,
+        Some(LineEndings::Crlf) => true,
+        _ => bytes.windows(2).any(|w| w == b"\r\n"),
+    }
 }
 
 /// `text` in the file's line endings (the editor writes LF).
@@ -155,6 +161,18 @@ impl ProjectState {
     /// it outright.
     fn to_trash(&mut self, path: &Path) {
         if !path.exists() || !self.writable(path) {
+            return;
+        }
+        if !self.config.trash {
+            let gone = if path.is_dir() { std::fs::remove_dir_all(path) } else { std::fs::remove_file(path) };
+            match gone {
+                Ok(()) => {
+                    self.log.push(format!("deleted {}", path.display()));
+                    let p = path.to_path_buf();
+                    self.disk.retain(|k, _| !k.starts_with(&p));
+                }
+                Err(e) => self.warnings.push(format!("couldn't delete {}: {e}", path.display())),
+            }
             return;
         }
         let home = std::env::var_os("HOME").map(PathBuf::from).unwrap_or_default();
@@ -517,7 +535,18 @@ impl ProjectState {
             }
             dir.join(name)
         };
-        if let Some(kind) = script_kind(&class) {
+        // A Script with RunContext Client is a .client file (Rojo's
+        // emitLegacyScripts = false reads it back that way).
+        let kind = match script_kind(&class) {
+            Some(FileKind::Server)
+                if !self.config.emit_legacy_scripts
+                    && matches!(inst.properties.get(&rbx_dom_weak::ustr("RunContext")), Some(Variant::Enum(e)) if e.to_u32() == 2) =>
+            {
+                Some(FileKind::Client)
+            }
+            k => k,
+        };
+        if let Some(kind) = kind {
             if has_kids {
                 let d = free(safe.clone(), "");
                 let init = d.join(format!("init{}", suffix_of(kind, lua)));
@@ -581,6 +610,12 @@ impl ProjectState {
 
     /// The project writes .lua when its folder already does (else .luau).
     fn uses_lua_extension(&self, dir: &Path) -> bool {
+        use crate::project_config::LuaExt;
+        match self.config.lua_ext {
+            LuaExt::Lua => return true,
+            LuaExt::Luau => return false,
+            LuaExt::Auto => {}
+        }
         std::fs::read_dir(dir)
             .map(|rd| {
                 rd.flatten().any(|e| {

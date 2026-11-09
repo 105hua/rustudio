@@ -165,8 +165,19 @@ pub fn is_data_file(name: &str) -> bool {
 
 /// (instance name, kind) of a file name, or None when no rule takes it.
 pub fn classify(file_name: &str) -> Option<(String, FileKind)> {
+    classify_at(None, file_name)
+}
+
+/// [`classify`] for a file at `path`: the open project's custom sync rules
+/// (src/project_config.rs) first, then the defaults.
+pub fn classify_at(path: Option<&Path>, file_name: &str) -> Option<(String, FileKind)> {
     if is_data_file(file_name) {
         return None;
+    }
+    if let Some(c) = crate::project_config::active() {
+        if let Some(r) = c.classify(path, file_name) {
+            return r;
+        }
     }
     for (suffix, kind) in RULES {
         if let Some(stem) = file_name.strip_suffix(suffix) {
@@ -195,6 +206,9 @@ fn init_file(dir: &Path) -> Option<(PathBuf, FileKind)> {
         ("init.rbxm", FileKind::Rbxm),
         ("init.rbxmx", FileKind::Rbxmx),
     ];
+    if let Some(f) = crate::project_config::active().and_then(|c| c.init_file(dir)) {
+        return Some(f);
+    }
     INITS
         .iter()
         .map(|(n, k)| (dir.join(n), *k))
@@ -288,7 +302,7 @@ impl<'a> Reader<'a> {
         if path.is_dir() {
             return Some(self.dir(path));
         }
-        let (name, kind) = classify(name_of(path))?;
+        let (name, kind) = classify_at(Some(path), name_of(path))?;
         let data = data_path_for_file(path, &name);
         let mut s = self.file(path, &name, kind)?;
         self.apply_data(&mut s, &data, false);
@@ -366,6 +380,13 @@ impl<'a> Reader<'a> {
                 };
                 let mut s = Snap::new(name, class);
                 s.set("Source", Variant::String(src));
+                // Rojo's emitLegacyScripts = false: Scripts with a RunContext.
+                let legacy = crate::project_config::active().is_none_or(|c| c.emit_legacy_scripts);
+                if !legacy && kind != FileKind::Module {
+                    s.class = "Script".into();
+                    let rc = if kind == FileKind::Server { 1 } else { 2 };
+                    s.set("RunContext", Variant::Enum(rbx_dom_weak::types::Enum::from_u32(rc)));
+                }
                 s
             }
             FileKind::Txt => {

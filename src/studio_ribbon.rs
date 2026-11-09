@@ -202,8 +202,8 @@ impl Editor {
                     self.rb(ui, "file-code", "Script", "script", false, a);
                     self.rb(ui, "file-import", "Import", "import_model", false, a);
                     divider(ui);
-                    self.rb(ui, "texture", "Material", "material", false, a);
-                    self.rb(ui, "palette", "Color", "color", false, a);
+                    self.material_quick_button(ui);
+                    self.color_quick_button(ui);
                     self.rb(ui, "box-multiple", "Group", "group", false, a);
                     let lock = self.action_state("lock").1 == Some(true);
                     self.rb(ui, "lock", "Lock", "lock", lock, a);
@@ -231,8 +231,8 @@ impl Editor {
                     self.rb(ui, "link", "Constraint", "constraint", false, a);
                     self.rb(ui, "link-plus", "Weld", "weld", false, a);
                     divider(ui);
-                    self.rb(ui, "texture", "Material", "material", false, a);
-                    self.rb(ui, "palette", "Color", "color", false, a);
+                    self.material_quick_button(ui);
+                    self.color_quick_button(ui);
                     self.rb(ui, "photo", "Texture", "texture_tool", false, a);
                     self.rb(ui, "box-multiple", "Group", "group", false, a);
                     let lock = self.action_state("lock").1 == Some(true);
@@ -299,6 +299,7 @@ impl Editor {
                 }
             }
         });
+        self.ribbon_color_popup(&ctx);
         if let Some(a) = act {
             self.ui_action(&ctx, &a);
         }

@@ -606,7 +606,7 @@ impl Editor {
         let server_scripts = self.server_scripts(None);
         self.with_side(Side::Server, |rt, _, _| {
             for r in server_scripts {
-                rt.run_script(r);
+                rt.start_collected(r);
             }
             rt.dispatch();
         });
@@ -631,7 +631,7 @@ impl Editor {
                     rt.fire(p, "PlayerAdded", vec![rt.inst(player)]);
                 }
                 for r in backpack {
-                    rt.run_script(r);
+                    rt.start_collected(r);
                 }
                 rt.dispatch();
             });
@@ -949,7 +949,7 @@ impl Editor {
         self.sync_view_size();
         self.with_side(Side::Client, |rt, _, _| {
             for r in local {
-                rt.run_script(r);
+                rt.start_collected(r);
             }
             rt.dispatch();
         });
@@ -1372,7 +1372,7 @@ impl Editor {
         self.with_side(Side::Server, |rt, _, _| {
             rt.fire(player, "CharacterAdded", vec![rt.inst(m)]);
             for r in server_scripts {
-                rt.run_script(r);
+                rt.start_collected(r);
             }
             rt.dispatch();
         });
@@ -1412,7 +1412,7 @@ impl Editor {
                 }
                 rt.fire(cp, "CharacterAdded", vec![rt.inst(cm)]);
                 for r in local {
-                    rt.run_script(r);
+                    rt.start_collected(r);
                 }
                 rt.dispatch();
             });

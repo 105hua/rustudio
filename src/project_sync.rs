@@ -25,6 +25,8 @@ use crate::project::{self, Origin, Reader, Snap};
 
 #[path = "project_write.rs"]
 mod write;
+#[path = "project_sourcemap.rs"]
+pub mod sourcemap;
 
 pub struct ProjectState {
     /// The project file and its folder.
@@ -52,6 +54,10 @@ pub struct ProjectState {
     /// Files changed during Play: applied when Play stops.
     pub reapply_after_play: bool,
     pub warnings: Vec<String>,
+    /// The project's settings (src/project_config.rs).
+    pub config: std::sync::Arc<crate::project_config::ProjectConfig>,
+    /// The sourcemap needs writing (after a load or a change to the tree).
+    pub sourcemap_dirty: bool,
     /// Files written / trashed (the self-test and Output read it).
     pub log: Vec<String>,
 }
@@ -71,6 +77,9 @@ pub fn open(file: &Path) -> Result<(Document, ProjectState), String> {
         .flatten()
         .filter_map(|g| g.as_str().and_then(|g| glob::Pattern::new(g).ok()))
         .collect();
+    let (config, config_warnings) = crate::project_config::ProjectConfig::load(&file, &pj);
+    let config = std::sync::Arc::new(config);
+    crate::project_config::set_active(Some(config.clone()));
     let place = find_place(&root, &name);
     let mut doc = match &place {
         Some(p) => Document::open(p)?,
@@ -99,7 +108,9 @@ pub fn open(file: &Path) -> Result<(Document, ProjectState), String> {
         pending_since: None,
         place_dirty: false,
         reapply_after_play: false,
-        warnings: std::mem::take(&mut reader.warnings),
+        warnings: config_warnings.into_iter().chain(std::mem::take(&mut reader.warnings)).collect(),
+        config,
+        sourcemap_dirty: true,
         log: Vec::new(),
     };
     st.disk = std::mem::take(&mut reader.read);
@@ -115,6 +126,7 @@ pub fn open(file: &Path) -> Result<(Document, ProjectState), String> {
     // The project reader starts from here: what loading did isn't an edit.
     let _ = doc.marks_for(doc::Reader::Project);
     st.watch();
+    st.update_sourcemap(&doc);
     Ok((doc, st))
 }
 

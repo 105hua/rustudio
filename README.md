@@ -22,7 +22,9 @@ quite yet.
 - **Editor:** Explorer, Properties, Output, script tabs, move/scale/rotate
   tools, terrain tools, undo/redo, and Studio's menus, ribbon and shortcuts.
 - **Files:** `.rbxl` / `.rbxlx` places and `.rbxm` / `.rbxmx` models, plus
-  project folders (`*.project.json` with plain files as the source of truth).
+  project folders (`*.project.json` with plain files as the source of truth,
+  Rojo/Argon sync rules, `sourcemap.json`, and File > Save as Project
+  Folder… to turn any place into one).
 - **Play / Run:** separate server and client, remotes, physics (rapier3d),
   R15/R6 characters and animation, sounds, tweens, 2D and 3D GUIs.
 - **Luau:** the real Luau VM, with most of the engine API that real games

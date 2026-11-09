@@ -766,6 +766,9 @@ pub struct CharBody {
     pub had_floor: bool,
     /// Still rising from a jump (the floor doesn't hold it until it falls).
     pub jump_rise: bool,
+    /// Seconds since the floor last held it (coyote time: a jump still
+    /// takes off this soon after walking off a ledge).
+    pub air_time: f32,
     /// The wall its body box last pushed against (outward normal).
     pub wall: Option<Vec3>,
     /// That wall's friction against the character's Plastic (Roblox's mix).
@@ -831,8 +834,10 @@ pub struct Physics {
     pending_vel: HashMap<Ref, (Vec3, u8)>,
     /// The same for angular impulses (accumulated spin, frames waited).
     pending_spin: HashMap<Ref, (Vec3, u8)>,
-    /// Anchored parts whose collider is where the client has them (follow_client).
-    client_placed: HashSet<Ref>,
+    /// Anchored parts whose collider is where (and how big) the client has
+    /// them, by server part: the client's pose and Size (follow_client;
+    /// build() keeps them through rebuilds).
+    client_over: HashMap<Ref, (Xform, Vec3)>,
     /// Parts the last sync moved for the server (their client marks are
     /// the same moves, replicated: follow_client skips them).
     server_moved: HashSet<Ref>,
@@ -913,7 +918,7 @@ impl Physics {
             anchored_vel: HashMap::new(),
             pending_vel: HashMap::new(),
             pending_spin: HashMap::new(),
-            client_placed: HashSet::new(),
+            client_over: HashMap::new(),
             server_moved: HashSet::new(),
             parts: HashMap::new(),
             asms: HashMap::new(),
@@ -1120,7 +1125,16 @@ impl Physics {
         let mut info: HashMap<Ref, (Xform, Sig)> = HashMap::new();
         for r in &all {
             if self.wanted(doc, ws, *r) {
-                if let Some(v) = part_sig(doc, *r) {
+                if let Some(mut v) = part_sig(doc, *r) {
+                    // A part the client moved or resized collides as the client has it.
+                    if let Some((xf, size)) = self.client_over.get(r) {
+                        if v.1.anchored {
+                            v.0 = *xf;
+                            v.1.size = *size;
+                        } else {
+                            self.client_over.remove(r);
+                        }
+                    }
                     info.insert(*r, v);
                 }
             }
@@ -1243,37 +1257,65 @@ impl Physics {
     /// tweened platform) collide where the client has them. The character
     /// is the client's, and Studio's client simulates it against its own
     /// copy of the world; the server's copy stays where it was. Only parts
-    /// whose client CFrame differs from the server's: most client marks are
-    /// the server's own moves replicated (Place A places whole maps), and
-    /// following those put colliders a frame behind the server. A part is
-    /// put back when the two agree again. Moving parts (with an assembly)
-    /// stay the server's.
+    /// whose client CFrame or Size differs from the server's: most client
+    /// marks are the server's own moves replicated (Place A places whole maps),
+    /// and following those put colliders a frame behind the server. A part
+    /// is put back when the two agree again. Moving parts (with an
+    /// assembly) stay the server's.
+    ///
+    /// Size counts too (Place B's spawn Teleporter: a LocalScript turns a 1×1×1
+    /// part at the spawn into a 2048×1×2048 void catcher under the map). A
+    /// journal read that comes back All (the client's start-up flood)
+    /// compares every part instead of dropping the batch.
     pub fn follow_client(&mut self, server: &Document, client: &mut Document, c2s: &HashMap<Ref, Ref>) {
         let _b = crate::bench::scope("ps_follow_client");
-        let doc::Marks::Some(marks) = client.marks_for(doc::Reader::ClientPhysics) else {
-            return;
-        };
         let cframe = ustr("CFrame");
+        let size = ustr("Size");
+        let changed: Vec<Ref> = match client.marks_for(doc::Reader::ClientPhysics) {
+            doc::Marks::All => c2s.keys().copied().collect(),
+            doc::Marks::Some(marks) => marks
+                .into_iter()
+                .filter_map(|m| match m {
+                    doc::Mark::Prop(c, name) if name == cframe || name == size => Some(c),
+                    _ => None,
+                })
+                .collect(),
+        };
         let mut seen: HashSet<Ref> = HashSet::new();
-        for m in marks {
-            let doc::Mark::Prop(c, name) = m else { continue };
-            if name != cframe {
-                continue;
-            }
+        let mut resized: HashSet<Ref> = HashSet::new();
+        for c in changed {
             let Some(&s) = c2s.get(&c) else { continue };
-            if self.server_moved.contains(&s) && !self.client_placed.contains(&s) {
+            if self.server_moved.contains(&s) && !self.client_over.contains_key(&s) {
                 continue;
             }
             if !seen.insert(c) || !self.parts.get(&s).is_some_and(|pb| pb.asm.is_none()) {
                 continue;
             }
-            let (Some(cx), Some(sx)) = (xform_of(client, c), xform_of(server, s)) else { continue };
-            let same = (cx.pos - sx.pos).length() < 1e-3 && cx.rot.abs_diff_eq(sx.rot, 1e-4);
+            let (Some((cx, csig)), Some((sx, ssig))) = (part_sig(client, c), part_sig(server, s)) else {
+                continue;
+            };
+            let near = |a: Vec3, b: Vec3| (a - b).abs().max_element() < 1e-3;
+            let same = near(cx.pos, sx.pos) && cx.rot.abs_diff_eq(sx.rot, 1e-4) && near(csig.size, ssig.size);
+            // The size the collider has now.
+            let had = self.client_over.get(&s).map_or(ssig.size, |o| o.1);
             if !same {
-                self.teleport(s, &cx);
-                self.client_placed.insert(s);
-            } else if self.client_placed.remove(&s) {
-                self.teleport(s, &sx);
+                self.client_over.insert(s, (cx, csig.size));
+                if near(had, csig.size) {
+                    self.teleport(s, &cx);
+                } else {
+                    resized.insert(s);
+                }
+            } else if self.client_over.remove(&s).is_some() {
+                if near(had, ssig.size) {
+                    self.teleport(s, &sx);
+                } else {
+                    resized.insert(s);
+                }
+            }
+        }
+        if !resized.is_empty() {
+            if let Some(ws) = Self::workspace_of(server) {
+                self.build(server, ws, resized);
             }
         }
     }
@@ -2984,7 +3026,18 @@ impl Physics {
                 c.jump_rise = false;
             }
             let mut on_floor = target.is_some() && !c.jump_rise;
-            if let (Some(v), true, false) = (jump_velocity, on_floor, out.jumped) {
+            if on_floor {
+                c.air_time = 0.0;
+            } else {
+                c.air_time += h;
+            }
+            // Coyote time: just off a ledge (falling, not from a jump) a jump
+            // still takes off.
+            let coyote = !on_floor
+                && !c.jump_rise
+                && c.vel.y <= 0.0
+                && c.air_time <= mech::HUMANOID_COYOTE_S;
+            if let (Some(v), true, false) = (jump_velocity, on_floor || coyote, out.jumped) {
                 c.vel.y = v;
                 c.jump_rise = true;
                 out.jumped = true;
@@ -3550,6 +3603,54 @@ mod tests {
 
     fn v3(v: Vec3) -> Vector3 {
         Vector3::new(v.x, v.y, v.z)
+    }
+
+    /// Place B's spawn Teleporter: a LocalScript turns a 1×1×1 part at the
+    /// spawn into a 2048×1×2048 plate under the map. The collider follows
+    /// the client's Size and pose, also from an All journal read, and comes
+    /// back when the client agrees with the server again.
+    #[test]
+    fn client_resized_anchored_part_collides_where_the_client_has_it() {
+        let mut server = Document::new_place();
+        let sws = server.workspace().unwrap();
+        let s = server.dom.insert(sws, part("Teleporter", Vec3::new(0.0, 150.0, 0.0), true));
+        let mut client = Document::new_place();
+        let cws = client.workspace().unwrap();
+        let c = client.dom.insert(cws, part("Teleporter", Vec3::new(0.0, 150.0, 0.0), true));
+        let c2s: HashMap<Ref, Ref> = [(c, s)].into();
+        let mut p = Physics::new(&mut server);
+        let aabb = |p: &Physics| {
+            let col = &p.world.colliders[p.parts[&s].collider];
+            let a = col.compute_aabb();
+            (gv(a.mins), gv(a.maxs))
+        };
+        let size = ustr("Size");
+        let cf = ustr("CFrame");
+        client.set_prop_live(c, size, Variant::Vector3(Vector3::new(2048.0, 1.0, 2048.0)));
+        client.set_prop_live(
+            c,
+            cf,
+            Variant::CFrame(CFrame::new(Vector3::new(65.0, -3.5, 336.0), CFrame::identity().orientation)),
+        );
+        // First read of the client journal is All.
+        p.follow_client(&server, &mut client, &c2s);
+        let (lo, hi) = aabb(&p);
+        assert!((hi.x - lo.x - 2048.0).abs() < 0.5 && (hi.y + lo.y) * 0.5 < 0.0, "{lo:?} {hi:?}");
+        // A rebuild from the server's copy keeps the client's collider.
+        p.refresh([s]);
+        p.sync(&mut server);
+        let (lo, hi) = aabb(&p);
+        assert!((hi.x - lo.x - 2048.0).abs() < 0.5, "after rebuild {lo:?} {hi:?}");
+        // Back to the server's size and pose: the collider follows.
+        client.set_prop_live(c, size, Variant::Vector3(Vector3::new(2.0, 2.0, 2.0)));
+        client.set_prop_live(
+            c,
+            cf,
+            Variant::CFrame(CFrame::new(Vector3::new(0.0, 150.0, 0.0), CFrame::identity().orientation)),
+        );
+        p.follow_client(&server, &mut client, &c2s);
+        let (lo, hi) = aabb(&p);
+        assert!((hi.x - lo.x - 2.0).abs() < 0.1 && (lo.y - 149.0).abs() < 0.1, "restored {lo:?} {hi:?}");
     }
 
     #[test]

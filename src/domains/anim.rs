@@ -171,6 +171,8 @@ struct AnimState {
     motors: Vec<Ref>,
     iks: Vec<Ref>,
     ik: HashMap<Ref, anim_ik::IkState>,
+    /// Motors and IKControls, kept from the document's change journal.
+    index: Option<crate::doc::ClassIndex>,
 }
 
 fn state(lua: &Lua) -> mlua::AppDataRefMut<'_, AnimState> {
@@ -432,20 +434,32 @@ pub fn install(lua: &Lua) -> mlua::Result<()> {
 }
 
 /// Finds the Motors and IKControls (every 30 frames, or after a script
-/// touched one).
+/// touched one). Only what changed in the DataModel since the last look is
+/// visited (doc::ClassIndex), so this is cheap even when a script writes a
+/// Motor every frame.
 fn rescan(lua: &Lua) -> mlua::Result<()> {
+    let mut index = state(lua)
+        .index
+        .take()
+        .unwrap_or_else(|| crate::doc::ClassIndex::new(crate::doc::Reader::Anim));
     let (motors, iks) = {
-        let w = world(lua)?;
-        let d = w.d();
-        let motors: Vec<Ref> = d
-            .dom
-            .descendants_of(d.dom.root_ref())
-            .filter(|i| i.class == "Motor")
-            .map(|i| i.referent())
-            .collect();
-        (motors, anim_ik::controls(d))
+        let mut w = world(lua)?;
+        let d = w.dm();
+        index.update(d, |c| c == "Motor" || c == "IKControl");
+        let mut motors = Vec::new();
+        let mut iks = Vec::new();
+        for r in index.list() {
+            match d.dom.get_by_ref(*r).map(|i| i.class.as_str()) {
+                Some("Motor") => motors.push(*r),
+                Some("IKControl") => iks.push(*r),
+                _ => {}
+            }
+        }
+        let iks = anim_ik::by_priority(d, &iks);
+        (motors, iks)
     };
     let mut s = state(lua);
+    s.index = Some(index);
     s.motors = motors;
     s.ik.retain(|k, _| iks.contains(k));
     s.iks = iks;

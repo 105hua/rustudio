@@ -58,7 +58,7 @@ impl UiShots {
         // RUSTUDIO_UI_SHOTS=editors: the Properties editors (round 18).
         if std::env::var("RUSTUDIO_UI_SHOTS").as_deref() == Ok("editors") {
             let _ = std::fs::create_dir_all(&dir);
-            let shots = ["brickcolor", "color", "slider"].into_iter().map(|n| (format!("edit-{n}"), Show::Editor(n))).collect();
+            let shots = ["brickcolor", "color", "slider", "material-enum", "ribbon-material", "ribbon-color"].into_iter().map(|n| (format!("edit-{n}"), Show::Editor(n))).collect();
             return UiShots { dir, shots, i: 0, t: 0, queue: Vec::new(), asked: false, rects: Default::default(), done: false };
         }
         // RUSTUDIO_UI_SHOTS=terrain: the Terrain Editor with Draw, then Generate.
@@ -217,8 +217,23 @@ impl Editor {
                     };
                     self.open_color_dialog("Color", rgb);
                 }
+                "material-enum" => egui::Popup::open_id(ctx, egui::Id::new(("enum_popup", "Material"))),
+                "ribbon-material" | "ribbon-color" => {
+                    let k = if *which == "ribbon-material" { "home.material" } else { "home.color" };
+                    if let Some(p) = click_at(k, self) {
+                        s.queue.push(Event::PointerMoved(p));
+                        s.queue.push(Event::PointerButton { pos: p, button: PointerButton::Primary, pressed: true, modifiers: Modifiers::NONE });
+                    }
+                }
                 _ => self.props.active_row = Some("Transparency".into()),
             },
+            (4, Show::Editor(which)) if which.starts_with("ribbon-") => {
+                let k = if *which == "ribbon-material" { "home.material" } else { "home.color" };
+                if let Some(p) = click_at(k, self) {
+                    s.queue.push(Event::PointerButton { pos: p, button: PointerButton::Primary, pressed: false, modifiers: Modifiers::NONE });
+                    s.queue.push(Event::PointerMoved(Pos2::new(p.x, p.y - 30.0)));
+                }
+            }
             (0, Show::OutputRun) => {
                 let root = self.doc.dom.root_ref();
                 if let Some(sss) = self.doc.find_child(root, "ServerScriptService") {

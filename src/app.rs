@@ -277,6 +277,9 @@ pub struct Editor {
     pub project: Option<crate::project_sync::ProjectState>,
     /// A folder with several project files: (folder, the files) to choose from.
     pub project_choice: Option<(PathBuf, Vec<PathBuf>)>,
+    /// File > Save as Project Folder… / Project Settings… (src/project_ui.rs).
+    pub project_export: Option<crate::project_ui::ExportDialog>,
+    pub project_settings: Option<crate::project_ui::SettingsDialog>,
     /// Studio's chrome: ribbon tab, run type, panel toggles, popups (src/studio_ui.rs).
     pub ui: crate::studio_ui::UiState,
     /// Test Here: the character's first spawn point (the camera's position).
@@ -411,6 +414,8 @@ impl RustudioApp {
             lighting: Default::default(),
             project: None,
             project_choice: None,
+            project_export: None,
+            project_settings: None,
             ui: crate::studio_ui::UiState::default(),
             play_here: None,
             pending_user_shot: None,
@@ -526,6 +531,7 @@ impl Editor {
         });
         if self.log.len() > 5000 {
             self.log.drain(0..1000);
+            self.output_view.log_drained(1000);
         }
     }
     pub fn info(&mut self, t: impl Into<String>) {
@@ -545,6 +551,7 @@ impl Editor {
     pub fn set_document(&mut self, doc: Document) {
         // Another document closes the open project (open_project sets it again).
         self.project = None;
+        crate::project_config::set_active(None);
         self.doc = doc;
         self.scene = Scene::default();
         self.drag = None;
@@ -654,6 +661,7 @@ impl Editor {
                     .unwrap_or_else(|| ", no place file (an empty DataModel under it)".into());
                 let synced = st.map.len();
                 self.set_document(doc);
+                crate::project_config::set_active(Some(st.config.clone()));
                 self.project = Some(st);
                 self.info(format!(
                     "Opened project \"{}\" from {} ({n} instances, {synced} from files{place})",
@@ -686,6 +694,7 @@ impl Editor {
             } else if self.doc.id == st.doc_id {
                 let n = st.reconcile(&mut self.doc);
                 if n > 0 {
+                    st.sourcemap_dirty = true;
                     let mut names: Vec<String> = changed
                         .iter()
                         .filter_map(|p| p.strip_prefix(&st.root).ok().map(|x| x.display().to_string()))
@@ -701,6 +710,12 @@ impl Editor {
             let n = st.reconcile(&mut self.doc);
             self.info(format!("Project: {n} instance(s) updated from files changed during Play"));
         }
+        if !st.log.is_empty() {
+            st.sourcemap_dirty = true;
+        }
+        if st.sourcemap_dirty && !playing && self.doc.id == st.doc_id {
+            st.update_sourcemap(&self.doc);
+        }
         for l in std::mem::take(&mut st.log) {
             self.info(format!("Project: {l}"));
         }
@@ -713,7 +728,7 @@ impl Editor {
     /// Ctrl+S with a project: synced instances are already in their files;
     /// the place file is written only when something outside the mapped
     /// paths changed (so an untouched project saves nothing).
-    fn save_project(&mut self) {
+    pub(crate) fn save_project(&mut self) {
         let Some(mut st) = self.project.take() else { return };
         if self.play.is_none() {
             st.write_back(&mut self.doc);
@@ -1633,6 +1648,7 @@ impl eframe::App for RustudioApp {
                 ed.project_choice = None;
             }
         }
+        ed.project_windows(&ctx);
         ed.sync_explorer_to_selection();
         {
             let _p = crate::bench::scope("scene_sync");

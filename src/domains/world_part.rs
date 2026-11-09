@@ -135,7 +135,6 @@ pub fn part_mass(d: &Document, r: Ref) -> PMass {
 
 #[derive(Default)]
 pub struct Graph {
-    key: (u64, u64),
     /// Part → its group (rigidly joined parts).
     group: HashMap<Ref, usize>,
     groups: Vec<Vec<Ref>>,
@@ -145,6 +144,9 @@ pub struct Graph {
     joints: HashMap<Ref, Vec<Ref>>,
     /// Group → its root and whether it holds an anchored part.
     roots: Vec<(Ref, bool)>,
+    /// Joints and constraints that made an edge or named a part, and the
+    /// attachments constraints name (moving one moves the constraint).
+    joint_set: HashSet<Ref>,
 }
 
 fn rigid_joint(class: &str) -> bool {
@@ -158,28 +160,46 @@ fn anchored(d: &Document, r: Ref) -> bool {
 }
 
 fn build(d: &Document) -> Graph {
-    let mut g = Graph { key: (d.id, d.revision), ..Default::default() };
+    let _b = crate::bench::scope("joint_graph");
+    let mut g = Graph::default();
     let Some(ws) = d.workspace() else { return g };
-    let mut parts: Vec<Ref> = Vec::new();
+    // Per class: 0 other, 1 part, 2 joint, 3 constraint (classes repeat; is_a interns its names).
+    let mut kinds: rustc_hash::FxHashMap<rbx_dom_weak::Ustr, u8> = Default::default();
     let mut edges: Vec<(Ref, Ref)> = Vec::new();
     for inst in d.dom.descendants_of(ws) {
-        let r = inst.referent();
-        let class = inst.class.as_str();
-        if doc::is_a(class, "BasePart") {
-            parts.push(r);
+        let class = inst.class;
+        let kind = *kinds.entry(class).or_insert_with(|| {
+            let c = class.as_str();
+            if doc::is_a(c, "BasePart") {
+                1
+            } else if rigid_joint(c) || doc::is_a(c, "JointInstance") {
+                2
+            } else if doc::is_a(c, "Constraint") && c != "NoCollisionConstraint" {
+                3
+            } else {
+                0
+            }
+        });
+        if kind < 2 {
             continue;
         }
-        let pair = if rigid_joint(class) || doc::is_a(class, "JointInstance") {
+        let r = inst.referent();
+        let class = class.as_str();
+        let pair = if kind == 2 {
             (refp(d, r, "Part0"), refp(d, r, "Part1"))
-        } else if doc::is_a(class, "Constraint") && class != "NoCollisionConstraint" {
+        } else {
+            for k in ["Attachment0", "Attachment1"] {
+                if let Some(a) = refp(d, r, k) {
+                    g.joint_set.insert(a);
+                }
+            }
             let pp = |k: &str| refp(d, r, k).and_then(|a| d.dom.get_by_ref(a)).map(|a| a.parent());
             (pp("Attachment0"), pp("Attachment1"))
-        } else {
-            continue;
         };
         for p in [pair.0, pair.1].into_iter().flatten() {
             if is_part(d, p) {
                 g.joints.entry(p).or_default().push(r);
+                g.joint_set.insert(r);
             }
         }
         if let (Some(a), Some(b)) = pair {
@@ -197,8 +217,17 @@ fn build(d: &Document) -> Graph {
             }
         }
     }
-    // Union-find over the rigid edges.
-    let idx: HashMap<Ref, usize> = parts.iter().enumerate().map(|(i, r)| (*r, i)).collect();
+    // Union-find over the rigid edges. Parts no rigid joint names are
+    // single-part assemblies: the lookups' fallback, so they get no entry.
+    let mut parts: Vec<Ref> = Vec::new();
+    let mut idx: HashMap<Ref, usize> = HashMap::new();
+    let mut id_of = |r: Ref, parts: &mut Vec<Ref>| {
+        *idx.entry(r).or_insert_with(|| {
+            parts.push(r);
+            parts.len() - 1
+        })
+    };
+    let edges: Vec<(usize, usize)> = edges.into_iter().map(|(a, b)| (id_of(a, &mut parts), id_of(b, &mut parts))).collect();
     let mut up: Vec<usize> = (0..parts.len()).collect();
     fn find(up: &mut [usize], mut i: usize) -> usize {
         while up[i] != i {
@@ -207,12 +236,10 @@ fn build(d: &Document) -> Graph {
         }
         i
     }
-    for (a, b) in edges {
-        if let (Some(&ia), Some(&ib)) = (idx.get(&a), idx.get(&b)) {
-            let (ra, rb) = (find(&mut up, ia), find(&mut up, ib));
-            if ra != rb {
-                up[ra] = rb;
-            }
+    for (ia, ib) in edges {
+        let (ra, rb) = (find(&mut up, ia), find(&mut up, ib));
+        if ra != rb {
+            up[ra] = rb;
         }
     }
     let mut slot: HashMap<usize, usize> = HashMap::new();
@@ -262,17 +289,96 @@ fn pick_root(d: &Document, members: &[Ref]) -> (Ref, bool) {
 }
 
 thread_local! {
-    static GRAPH: RefCell<Graph> = RefCell::new(Graph::default());
+    /// Document id → its joint graph (server and client documents share a thread).
+    static GRAPHS: RefCell<Vec<(u64, Graph)>> = const { RefCell::new(Vec::new()) };
 }
 
-/// Runs `f` on the joint graph of `d` (rebuilt when the document changed).
-pub fn with_graph<R>(d: &Document, f: impl FnOnce(&Graph) -> R) -> R {
-    GRAPH.with(|g| {
-        let mut g = g.borrow_mut();
-        if g.key != (d.id, d.revision) {
-            *g = build(d);
+/// Properties that change which parts are joined, or which part is a root.
+fn structural_prop(name: &str) -> bool {
+    matches!(
+        name,
+        "Part0" | "Part1" | "Attachment0" | "Attachment1" | "Enabled" | "Anchored" | "Massless" | "RootPriority" | "Parent"
+    )
+}
+
+impl Graph {
+    fn in_multi(&self, r: Ref) -> bool {
+        self.group.get(&r).is_some_and(|gi| self.groups[*gi].len() > 1)
+    }
+
+    /// Whether the journal marks since the last look can change the graph.
+    /// Moving parts (CFrame, Velocity, ...) can't; new parts with no joints are
+    /// single-part assemblies (the lookups' fallback), so they don't either.
+    fn stale(&self, d: &Document, marks: &[doc::Mark]) -> bool {
+        for m in marks {
+            match *m {
+                doc::Mark::Prop(r, name) => {
+                    let n = name.as_str();
+                    // (a part no rigid joint names is its own assembly whatever these say)
+                    if structural_prop(n) && (self.joint_set.contains(&r) || self.group.contains_key(&r)) {
+                        return true;
+                    }
+                    // the root pick weighs these among joined parts
+                    if matches!(n, "Size" | "Name") && self.in_multi(r) {
+                        return true;
+                    }
+                    if structural_prop(n) && d.class_of(r).is_some_and(|c| joint_class(c.as_str())) {
+                        return true;
+                    }
+                }
+                doc::Mark::Tree(r) => {
+                    if self.joint_set.contains(&r) || self.in_multi(r) {
+                        return true;
+                    }
+                    for x in d.subtree(r) {
+                        if self.joint_set.contains(&x) || self.in_multi(x) {
+                            return true;
+                        }
+                        // (a removed instance's class is in limbo; one freed outright is unknown here
+                        // and was neither a known joint nor a joined part)
+                        if d.class_of(x).is_some_and(|c| joint_class(c.as_str())) {
+                            return true;
+                        }
+                    }
+                }
+            }
         }
-        f(&g)
+        false
+    }
+}
+
+fn joint_class(class: &str) -> bool {
+    doc::is_a(class, "JointInstance")
+        || class == "WeldConstraint"
+        || (doc::is_a(class, "Constraint") && class != "NoCollisionConstraint")
+}
+
+/// Runs `f` on the joint graph of `d`, rebuilt only when the document's
+/// change journal holds a change that can alter it.
+pub fn with_graph<R>(d: &Document, f: impl FnOnce(&Graph) -> R) -> R {
+    GRAPHS.with(|gs| {
+        let mut gs = gs.borrow_mut();
+        let marks = d.graph_marks();
+        let i = match gs.iter().position(|(id, _)| *id == d.id) {
+            Some(i) => {
+                let rebuild = match &marks {
+                    doc::Marks::All => true,
+                    doc::Marks::Some(m) => gs[i].1.stale(d, m),
+                };
+                if rebuild {
+                    gs[i].1 = build(d);
+                }
+                i
+            }
+            None => {
+                if gs.len() >= 4 {
+                    gs.remove(0);
+                }
+                gs.push((d.id, build(d)));
+                gs.len() - 1
+            }
+        };
+        f(&gs[i].1)
     })
 }
 

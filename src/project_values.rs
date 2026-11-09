@@ -401,6 +401,47 @@ pub fn to_json(class: &str, prop: &str, v: &Variant) -> Option<J> {
         Variant::ContentId(c) => json!(c.as_str()),
         Variant::BrickColor(b) => json!(*b as u16),
         Variant::Tags(t) => json!(t.iter().collect::<Vec<_>>()),
+        Variant::Vector3int16(a) => json!([a.x, a.y, a.z]),
+        Variant::Vector2int16(a) => json!([a.x, a.y]),
+        Variant::Rect(r) => json!([trim(r.min.x), trim(r.min.y), trim(r.max.x), trim(r.max.y)]),
+        Variant::Font(f) => {
+            let mut o = serde_json::Map::new();
+            o.insert("family".into(), json!(f.family));
+            o.insert("weight".into(), json!(format!("{:?}", f.weight)));
+            o.insert("style".into(), json!(format!("{:?}", f.style)));
+            J::Object(o)
+        }
+        Variant::Faces(f) => {
+            let names: Vec<&str> = [
+                ("Right", Faces::RIGHT), ("Top", Faces::TOP), ("Back", Faces::BACK),
+                ("Left", Faces::LEFT), ("Bottom", Faces::BOTTOM), ("Front", Faces::FRONT),
+            ]
+            .into_iter()
+            .filter(|(_, b)| f.contains(*b))
+            .map(|(n, _)| n)
+            .collect();
+            json!(names)
+        }
+        Variant::Axes(a) => {
+            let names: Vec<&str> = [("X", Axes::X), ("Y", Axes::Y), ("Z", Axes::Z)]
+                .into_iter()
+                .filter(|(_, b)| a.contains(*b))
+                .map(|(n, _)| n)
+                .collect();
+            json!(names)
+        }
+        Variant::NumberSequence(n) => json!({ "keypoints": n.keypoints.iter().map(|k| json!({
+            "time": trim(k.time), "value": trim(k.value), "envelope": trim(k.envelope)
+        })).collect::<Vec<_>>() }),
+        Variant::ColorSequence(c) => json!({ "keypoints": c.keypoints.iter().map(|k| json!({
+            "time": trim(k.time), "color": [trim(k.color.r), trim(k.color.g), trim(k.color.b)]
+        })).collect::<Vec<_>>() }),
+        Variant::PhysicalProperties(PhysicalProperties::Default) => json!("Default"),
+        Variant::PhysicalProperties(PhysicalProperties::Custom(c)) => json!({
+            "density": c.density(), "friction": c.friction(), "elasticity": c.elasticity(),
+            "frictionWeight": c.friction_weight(), "elasticityWeight": c.elasticity_weight(),
+            "acousticAbsorption": c.acoustic_absorption()
+        }),
         Variant::Enum(e) => {
             // The item's name when the database knows the enum.
             match descriptor(class, prop).map(|d| d.1) {

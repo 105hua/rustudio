@@ -56,6 +56,8 @@ pub struct PropertiesState {
     pub drawn: Vec<String>,
     /// Studio's BrickColor palette popup, when open.
     pub brick_popup: Option<crate::color_editors::BrickPopup>,
+    /// The ribbon Color button's BrickColor popup (crate::ribbon_quick).
+    pub ribbon_brick: Option<crate::color_editors::BrickPopup>,
     /// Studio's Select Color dialog, when open.
     pub color_dialog: Option<crate::color_editors::ColorDialog>,
     /// The dialog's 16 custom colours (kept for the session, as Qt does).
@@ -169,7 +171,7 @@ fn parse_v3(s: &str) -> Option<Vec3> {
 }
 
 /// The palette BrickColor closest to a colour.
-fn nearest_brick(rgb: [u8; 3]) -> BrickColor {
+pub(crate) fn nearest_brick(rgb: [u8; 3]) -> BrickColor {
     (1..=1032u16)
         .filter_map(BrickColor::from_number)
         .min_by_key(|b| {
@@ -710,18 +712,39 @@ impl Editor {
                         egui::Popup::open_id(p.ui.ctx(), id);
                     }
                     let mut picked = None;
+                    let just_opened = clicked_value;
+                    // Studio's enum list: as wide as the value cell, compact
+                    // rows, scrollbar on the right edge, ~12 rows tall.
+                    const ITEM_H: f32 = 19.0;
+                    let width = v.width().max(120.0);
                     egui::Popup::new(id, p.ui.ctx().clone(), egui::PopupAnchor::Position(v.left_bottom()), p.ui.layer_id())
                         .open_memory(None)
                         .close_behavior(egui::PopupCloseBehavior::CloseOnClick)
+                        .width(width)
+                        .frame(egui::Frame::popup(p.ui.style()).inner_margin(egui::Margin::same(2)).corner_radius(0))
                         .show(|ui| {
-                            ui.set_min_width(v.width());
-                            egui::ScrollArea::vertical().max_height(300.0).show(ui, |ui| {
-                                for (k, n) in &items {
-                                    if ui.selectable_label(*n == cur, k).clicked() {
-                                        picked = Some(*n);
+                            ui.set_width(width - 4.0);
+                            ui.spacing_mut().item_spacing = egui::vec2(0.0, 0.0);
+                            egui::ScrollArea::vertical()
+                                .max_height(ITEM_H * 12.0)
+                                .auto_shrink([false, true])
+                                .show(ui, |ui| {
+                                    for (k, n) in &items {
+                                        let (r, resp) = ui.allocate_exact_size(egui::vec2(ui.available_width(), ITEM_H), Sense::click());
+                                        let sel = *n == cur;
+                                        if sel || resp.hovered() {
+                                            let bg = if sel { Color32::from_rgb(19, 35, 93) } else { Color32::from_rgb(45, 48, 58) };
+                                            ui.painter().rect_filled(r, 0.0, bg);
+                                        }
+                                        ui.painter().text(Pos2::new(r.min.x + 6.0, r.center().y), egui::Align2::LEFT_CENTER, k, FontId::proportional(FONT), TEXT);
+                                        if sel && just_opened {
+                                            resp.scroll_to_me(Some(egui::Align::Center));
+                                        }
+                                        if resp.clicked() {
+                                            picked = Some(*n);
+                                        }
                                     }
-                                }
-                            });
+                                });
                         });
                     if let Some(n) = picked.filter(|n| *n != cur) {
                         edits.push(Edit::Prop(name.to_string(), Variant::Enum(Enum::from_u32(n))));

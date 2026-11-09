@@ -347,6 +347,8 @@ pub struct Media {
     /// Wirable instances in the DataModel at the last scan, by class.
     nodes: Vec<(Ref, String)>,
     scanned_at: f64,
+    /// Wires and wirable instances, kept from the document's change journal.
+    index: Option<crate::doc::ClassIndex>,
     players: HashMap<Ref, PlayerState>,
     fx: HashMap<Ref, dsp::Fx>,
     wind: HashMap<Ref, dsp::Wind>,
@@ -368,6 +370,7 @@ impl Default for Media {
             wire_order: Vec::new(),
             nodes: Vec::new(),
             scanned_at: f64::NEG_INFINITY,
+            index: None,
             players: HashMap::new(),
             fx: HashMap::new(),
             wind: HashMap::new(),
@@ -1019,23 +1022,33 @@ fn refresh(lua: &Lua, force: bool) -> mlua::Result<()> {
             return Ok(());
         }
     }
+    // Only what changed in the DataModel since the last scan is visited
+    // (doc::ClassIndex): walking every instance each time cost tens of ms a
+    // scan in big places, on the server and the client at once.
+    let mut index = media(lua)?
+        .index
+        .take()
+        .unwrap_or_else(|| crate::doc::ClassIndex::new(crate::doc::Reader::Media));
     let (wires, nodes): (Vec<Ref>, Vec<(Ref, String)>) = {
-        let w = world(lua)?;
-        let d = w.d();
+        let mut w = world(lua)?;
+        let d = w.dm();
+        index.update(d, |c| c == "Wire" || WIRABLE.contains(&c) || matches!(c, "Sound" | "VideoFrame"));
         let mut wires = Vec::new();
         let mut nodes = Vec::new();
-        for i in d.dom.descendants() {
+        for r in index.list() {
+            let Some(i) = d.dom.get_by_ref(*r) else { continue };
             let c = i.class.as_str();
             if c == "Wire" {
-                wires.push(i.referent());
-            } else if WIRABLE.contains(&c) || matches!(c, "Sound" | "VideoFrame") {
-                nodes.push((i.referent(), c.to_string()));
+                wires.push(*r);
+            } else {
+                nodes.push((*r, c.to_string()));
             }
         }
         (wires, nodes)
     };
     let fresh: Vec<Ref> = {
         let mut m = media(lua)?;
+        m.index = Some(index);
         m.scanned_at = now;
         m.nodes = nodes;
         wires.iter().filter(|w| !m.wires.contains_key(w)).copied().collect()

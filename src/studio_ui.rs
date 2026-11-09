@@ -170,6 +170,8 @@ pub const FILE: &[M] = &[
     I("Open from File", "Ctrl+O", "open"),
     I("Open from Roblox", "Ctrl+Shift+O", "open_roblox"),
     I("Open Folder…", "", "open_folder"),
+    I("Save as Project Folder…", "", "export_project"),
+    I("Project Settings…", "", "project_settings"),
     Sub("Recent", &[]),
     S,
     I("Close Place", "Ctrl+F4", "close_place"),

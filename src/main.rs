@@ -1,6 +1,7 @@
 //! rustudio: a native Linux editor for Roblox place and model files.
 
 mod account_ui;
+mod ribbon_quick;
 mod cmeta;
 mod studio_content;
 mod dtmeta;
@@ -57,6 +58,9 @@ mod mesh_bvh;
 mod physics;
 mod play;
 mod project;
+mod project_config;
+mod project_export;
+mod project_ui;
 mod project_sync;
 mod project_values;
 mod properties;
@@ -323,6 +327,76 @@ fn main() -> eframe::Result<()> {
             Ok(()) => std::process::exit(0),
             Err(e) => {
                 eprintln!("write-corpus: {e}");
+                std::process::exit(1);
+            }
+        }
+    }
+    // `--export-project OUT_DIR PLACE.rbxl [--lua] [--containers A,B/C]`: a
+    // place written out as a Rojo / Argon project folder (src/project_export.rs).
+    if let Some(i) = argv.iter().position(|a| a == "--export-project") {
+        let (Some(out), Some(src)) = (argv.get(i + 1), argv.get(i + 2)) else {
+            eprintln!("usage: rustudio --export-project OUT_DIR PLACE.rbxl [--lua] [--no-sourcemap] [--containers ReplicatedStorage,StarterPlayer/StarterPlayerScripts,...]");
+            std::process::exit(2);
+        };
+        let out = PathBuf::from(out);
+        let mut o = project_export::ExportOptions {
+            name: out.file_name().map(|n| n.to_string_lossy().into_owned()).unwrap_or_else(|| "game".into()),
+            lua: argv.iter().any(|a| a == "--lua"),
+            sourcemap: !argv.iter().any(|a| a == "--no-sourcemap"),
+            ..Default::default()
+        };
+        if let Some(j) = argv.iter().position(|a| a == "--containers") {
+            o.containers = argv.get(j + 1).map(|s| s.split(',').map(String::from).collect()).unwrap_or_default();
+        }
+        let res = doc::Document::open(std::path::Path::new(src)).and_then(|d| project_export::export(&d, &out, &o));
+        match res {
+            Ok(r) => {
+                for w in &r.warnings {
+                    eprintln!("warning: {w}");
+                }
+                println!(
+                    "{}: {} scripts, {} folders, {} models",
+                    r.project_file.display(), r.scripts, r.folders, r.models
+                );
+                std::process::exit(0);
+            }
+            Err(e) => {
+                eprintln!("export-project: {e}");
+                std::process::exit(1);
+            }
+        }
+    }
+    // `--sourcemap FOLDER [OUT] [--include-non-scripts]`: Rojo's sourcemap.json.
+    if let Some(i) = argv.iter().position(|a| a == "--sourcemap") {
+        let Some(src) = argv.get(i + 1) else {
+            eprintln!("usage: rustudio --sourcemap FOLDER|FILE.project.json [OUT.json] [--include-non-scripts]");
+            std::process::exit(2);
+        };
+        let src = PathBuf::from(src);
+        let file = if src.is_dir() { project::project_files(&src).into_iter().next() } else { Some(src.clone()) };
+        let all = argv.iter().any(|a| a == "--include-non-scripts");
+        let res = file
+            .ok_or_else(|| format!("no *.project.json in {}", src.display()))
+            .and_then(|f| project_sync::open(&f))
+            .map(|(doc, st)| st.sourcemap_bytes(&doc, all));
+        match res {
+            Ok(bytes) => {
+                match argv.get(i + 2).filter(|a| !a.starts_with("--")) {
+                    Some(out) => {
+                        if let Err(e) = std::fs::write(out, &bytes) {
+                            eprintln!("sourcemap: {out}: {e}");
+                            std::process::exit(1);
+                        }
+                    }
+                    None => {
+                        use std::io::Write;
+                        let _ = std::io::stdout().write_all(&bytes);
+                    }
+                }
+                std::process::exit(0);
+            }
+            Err(e) => {
+                eprintln!("sourcemap: {e}");
                 std::process::exit(1);
             }
         }

@@ -85,6 +85,10 @@ pub enum Reader {
     TeamCreate = 10,
     /// CollectionService's tag index (src/runtime_ext.rs GetTagged).
     Tags = 11,
+    /// Sounds, audio / video instances and Wires (src/domains/media.rs).
+    Media = 12,
+    /// Motors and IKControls (src/domains/anim.rs).
+    Anim = 13,
 }
 
 /// What a reader gets back: everything changed (rebuild), or the new marks.
@@ -99,7 +103,10 @@ struct Journal {
     base: u64,
     marks: Vec<Mark>,
     /// Next sequence number each reader wants; None = hasn't read yet.
-    read: [Option<u64>; 12],
+    read: [Option<u64>; 14],
+    /// The joint graph's position (src/domains/world_part.rs), read through
+    /// `&self`: 0 = not reading, else the next sequence number + 1.
+    graph_pos: std::sync::atomic::AtomicU64,
 }
 
 static NEXT_DOC_ID: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(1);
@@ -316,7 +323,8 @@ impl Document {
             journal: Journal {
                 base: 0,
                 marks: Vec::new(),
-                read: [None; 12],
+                read: [None; 14],
+                graph_pos: std::sync::atomic::AtomicU64::new(0),
             },
         }
     }
@@ -376,12 +384,33 @@ impl Document {
                 *r = None;
             }
         }
-        let keep_from = j.read.iter().flatten().copied().min().unwrap_or(end);
+        use std::sync::atomic::Ordering::Relaxed;
+        let gp = j.graph_pos.load(Relaxed);
+        if gp > 0 && end - (gp - 1) > mech::JOURNAL_READER_LAG as u64 {
+            j.graph_pos.store(0, Relaxed);
+        }
+        let gp = j.graph_pos.load(Relaxed).checked_sub(1);
+        let keep_from = j.read.iter().flatten().copied().chain(gp).min().unwrap_or(end);
         if keep_from > j.base {
             let n = ((keep_from - j.base) as usize).min(j.marks.len());
             j.marks.drain(..n);
             j.base += n as u64;
         }
+        out
+    }
+
+    /// The marks since the joint graph last looked (All the first time or
+    /// after it fell behind). Works through `&self` so property reads can
+    /// keep the graph current without a mutable document.
+    pub fn graph_marks(&self) -> Marks {
+        use std::sync::atomic::Ordering::Relaxed;
+        let j = &self.journal;
+        let end = j.base + j.marks.len() as u64;
+        let out = match j.graph_pos.load(Relaxed).checked_sub(1) {
+            Some(pos) if pos >= j.base => Marks::Some(j.marks[(pos - j.base) as usize..].to_vec()),
+            _ => Marks::All,
+        };
+        j.graph_pos.store(end + 1, Relaxed);
         out
     }
 
@@ -1399,4 +1428,77 @@ pub fn content_legacy_names(twin: &str) -> Vec<&'static str> {
         "MoonTextureId",
     ];
     LEGACY.into_iter().filter(|l| content_twin(l) == Some(twin)).collect()
+}
+
+/// The instances of some classes, kept current from a document's change
+/// journal instead of walking the whole DataModel: a full scan only the first
+/// time (or when the reader fell behind), then just the subtrees that were
+/// added, moved or removed. Full scans list in DOM order; later finds are
+/// appended.
+pub struct ClassIndex {
+    reader: Reader,
+    doc_id: u64,
+    list: Vec<Ref>,
+    set: std::collections::HashSet<Ref>,
+}
+
+impl ClassIndex {
+    pub fn new(reader: Reader) -> Self {
+        ClassIndex { reader, doc_id: 0, list: Vec::new(), set: Default::default() }
+    }
+
+    pub fn list(&self) -> &[Ref] {
+        &self.list
+    }
+
+    /// Brings the index up to date with `d`; `want` picks classes. Returns
+    /// whether the membership changed.
+    pub fn update(&mut self, d: &mut Document, want: impl Fn(&str) -> bool) -> bool {
+        let marks = d.marks_for(self.reader);
+        let marks = match marks {
+            Marks::Some(m) if self.doc_id == d.id => m,
+            _ => {
+                let list: Vec<Ref> = d
+                    .dom
+                    .descendants()
+                    .filter(|i| want(i.class.as_str()))
+                    .map(|i| i.referent())
+                    .collect();
+                let changed = list != self.list || self.doc_id != d.id;
+                self.doc_id = d.id;
+                self.set = list.iter().copied().collect();
+                self.list = list;
+                return changed;
+            }
+        };
+        let mut changed = false;
+        let mut removed = false;
+        let mut tree = false;
+        for m in marks {
+            let Mark::Tree(t) = m else { continue };
+            tree = true;
+            for r in d.subtree(t) {
+                let live = d.dom.get_by_ref(r).is_some_and(|i| want(i.class.as_str()));
+                if live {
+                    if self.set.insert(r) {
+                        self.list.push(r);
+                        changed = true;
+                    }
+                } else if self.set.remove(&r) {
+                    removed = true;
+                }
+            }
+        }
+        // Instances freed outright (no longer in the DOM or in limbo) don't
+        // come back through `subtree`: drop whatever has left the DOM.
+        if removed || tree {
+            let before = self.list.len();
+            self.list.retain(|r| self.set.contains(r) && d.dom.get_by_ref(*r).is_some());
+            if removed || self.list.len() != before {
+                self.set = self.list.iter().copied().collect();
+                changed = true;
+            }
+        }
+        changed
+    }
 }

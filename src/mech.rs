@@ -835,3 +835,4 @@ pub const GC_BUDGET: usize = 20_000; // unparented instances looked at per pass 
 pub const GC_CYCLE_PASSES: usize = 2; // collector passes a Luau GC cycle is stepped over (each steps heap / this KB; keeps weak instance values clearing on quiet scripts)
 pub const GC_STEP_MIN_KB: usize = 256; // least Luau GC work per collector pass
 pub const GC_STEP_MAX_KB: usize = 16 * 1024; // most Luau GC work per collector pass (bounds the pass's time on huge heaps)
+pub const HUMANOID_COYOTE_S: f32 = 0.1; // a jump still takes off this long after walking off a ledge (Studio via an offline Studio, 2026-11-09: always within 0.04 s, sometimes to 0.10 s, never from 0.11 s, at WalkSpeed 16 and 8; Running turns Freefall ~0.11 s after the floor goes)

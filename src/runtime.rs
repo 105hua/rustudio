@@ -4012,6 +4012,17 @@ impl Runtime {
         Ok(())
     }
 
+    /// Starts a script Play collected, if it is still somewhere it runs, as
+    /// in Roblox: Play gathers scripts first and starts them one by one, and
+    /// an earlier one can unparent or clone a later one's GUI in between
+    /// (Place B' button scripts then ran with script.Parent nil).
+    /// One left out stays unstarted, so moving it somewhere it runs starts it.
+    pub fn start_collected(&self, r: Ref) {
+        if world(&self.lua).is_ok_and(|w| w.runs_here(r)) {
+            self.run_script(r);
+        }
+    }
+
     /// Starts a Script or LocalScript as a new coroutine.
     pub fn run_script(&self, r: Ref) {
         let lua = &self.lua;

@@ -77,6 +77,8 @@ impl Editor {
         match a {
             "new" | "open" | "open_roblox" | "open_folder" | "close_place" | "import_model" => (edit, None),
             "save" | "save_as" | "save_roblox" | "publish" => (edit, None),
+            "export_project" => (edit, None),
+            "project_settings" => (edit && self.project.is_some(), None),
             "experience_settings" | "account" | "add_account" => (true, None),
             "live_collaborators" | "invite_collaborators" => (true,None),
             "avatar_settings" => (true, open("Avatar Settings")),
@@ -127,6 +129,7 @@ impl Editor {
             "part" | "part_block" | "part_sphere" | "part_wedge" | "part_corner" | "part_cylinder" => (edit, None),
             "gui" | "script" => (edit, None),
             "effect" | "attachment" => (edit && parts, None),
+            "material" | "color" => (edit && parts, None),
             "weld" => (edit && self.selected_parts().len() >= 2, None),
             "ui_frame" | "ui_label" | "ui_input" | "ui_appearance" | "ui_layout" | "ui_constraint" => {
                 (edit && self.gui_target().is_some(), None)
@@ -180,6 +183,8 @@ impl Editor {
             "close_place" => self.request(PendingAction::Close),
             "open" => self.request(PendingAction::Open(None)),
             "open_folder" => self.request(PendingAction::OpenFolder),
+            "export_project" => self.open_export_dialog(),
+            "project_settings" => self.open_settings_dialog(),
             "open_roblox" => {
                 self.cloud.open = true;
                 let client = self.account.shared_client();

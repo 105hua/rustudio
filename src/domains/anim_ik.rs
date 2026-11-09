@@ -469,11 +469,20 @@ pub fn getter(lua: &Lua, d: &Document, ik: Ref, st: Option<&IkState>, name: &str
 
 /// Every IKControl in a document, by Priority (lowest first).
 pub fn controls(d: &Document) -> Vec<Ref> {
-    let mut v: Vec<(i32, Ref)> = d
+    let all: Vec<Ref> = d
         .dom
         .descendants_of(d.dom.root_ref())
         .filter(|i| i.class == "IKControl")
-        .map(|i| (num(d, i.referent(), "Priority", 0.0) as i32, i.referent()))
+        .map(|i| i.referent())
+        .collect();
+    by_priority(d, &all)
+}
+
+/// IKControls in solving order: by Priority, ties in the given order.
+pub fn by_priority(d: &Document, iks: &[Ref]) -> Vec<Ref> {
+    let mut v: Vec<(i32, Ref)> = iks
+        .iter()
+        .map(|r| (num(d, *r, "Priority", 0.0) as i32, *r))
         .collect();
     v.sort_by_key(|(p, _)| *p);
     v.into_iter().map(|(_, r)| r).collect()
