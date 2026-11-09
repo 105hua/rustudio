@@ -8,7 +8,7 @@
 Roblox places, press Play and run them with real Luau, physics, characters
 and GUIs, without Wine.
 
-This is very much a beta/prototype, I wouldn't call it a studio replacement
+Rustudio is very much a beta/prototype, I wouldn't call it a studio replacement
 quite yet.
 
 ![Playing a game in rustudio](docs/images/play.png)
