@@ -230,15 +230,7 @@ unsafe extern "C-unwind" fn noop(_l: *mut ffi::lua_State) -> c_int {
 /// Seconds east of UTC for the local zone now (Studio's tick() is local
 /// time: it differs from os.time() by the zone offset).
 fn local_offset() -> f64 {
-    unsafe {
-        let now = libc::time(std::ptr::null_mut());
-        let mut tm: libc::tm = std::mem::zeroed();
-        if libc::localtime_r(&now, &mut tm).is_null() {
-            0.0
-        } else {
-            tm.tm_gmtoff as f64
-        }
-    }
+    chrono::Local::now().offset().local_minus_utc() as f64
 }
 
 /// Combining marks / joiners that extend the previous grapheme (an

@@ -42,25 +42,7 @@ pub fn recoverable<R>(f: impl FnOnce() -> R) -> std::thread::Result<R> {
 }
 
 fn stamp() -> String {
-    let now = std::time::SystemTime::now()
-        .duration_since(std::time::UNIX_EPOCH)
-        .unwrap_or_default();
-    let secs = now.as_secs() as libc::time_t;
-    // SAFETY: localtime_r only writes the tm we hand it.
-    let tm = unsafe {
-        let mut tm: libc::tm = std::mem::zeroed();
-        libc::localtime_r(&secs, &mut tm);
-        tm
-    };
-    format!(
-        "{:04}{:02}{:02}-{:02}{:02}{:02}",
-        tm.tm_year + 1900,
-        tm.tm_mon + 1,
-        tm.tm_mday,
-        tm.tm_hour,
-        tm.tm_min,
-        tm.tm_sec
-    )
+    chrono::Local::now().format("%Y%m%d-%H%M%S").to_string()
 }
 
 /// Command-line arguments with anything that looks like a credential removed.
