@@ -593,6 +593,7 @@ fn receivers_of(lua: &Lua, ev: Ref) -> mlua::Result<Vec<Ref>> {
     Ok(out)
 }
 
+#[cfg(target_os = "linux")]
 fn rss_mb() -> f64 {
     let pages = std::fs::read_to_string("/proc/self/statm")
         .ok()
@@ -600,6 +601,11 @@ fn rss_mb() -> f64 {
         .unwrap_or(0.0);
     let page = unsafe { libc::sysconf(libc::_SC_PAGESIZE) } as f64;
     pages * page / (1024.0 * 1024.0)
+}
+
+#[cfg(not(target_os = "linux"))]
+fn rss_mb() -> f64 {
+    0.0
 }
 
 // ------------------------------------------------------------------ output
