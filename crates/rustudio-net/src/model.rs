@@ -422,7 +422,7 @@ pub fn typed_value(v: &Variant) -> Option<PropValue> {
     }
 }
 
-/// The Roblox value for a `PropValue::Typed` payload (docs/PROTOCOL.md "Property
+/// The Roblox value for a `PropValue:Typed` payload (docs/TEAMCREATE.md "Property
 /// value encodings"). Before this, these types were kept raw and dropped, so
 /// live instances fell back to class defaults: every ParticleEmitter's
 /// Size / Transparency / Color / Lifetime / Speed, every GUI's UDim2, Fonts

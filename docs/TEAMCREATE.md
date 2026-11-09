@@ -1,13 +1,6 @@
 # Team Create
 
-Current implementation (2026-11-05): direct QUIC joining, initial DataModel
-loading and cross-account object synchronization work. Protected script Source
-round trips and native atomic script commits passed in the user's authorized
-Place B Studio. The editor keeps private recoverable drafts and offers
-server comparison on conflicts. Live save/publish requests, collaborator lists,
-selection, idle presence and fly-to are integrated. Save/publish encoding is
-tested; this work did not publish the user's game. See PROTOCOL.md §§9–10 for
-evidence and remaining limits. The phased plan below is historical.
+Current implementation (2026-11-05): direct QUIC joining, initial DataModel loading and cross-account object synchronization work. Protected script Source round trips and native atomic script commits passed in the user's authorized Place B Studio. The editor keeps private recoverable drafts and offers server comparison on conflicts. Live save/publish requests, collaborator lists, selection, idle presence and fly-to are integrated. Save/publish encoding is tested; this work did not publish the user's game. The phased plan below is historical.
 
 How Roblox Studio finds, opens and runs a live Team Create (TC) session, and
 what rustudio needs to do the same. Research of 2026-11-01 (first pass) and
@@ -19,9 +12,7 @@ Every fact is tagged:
 - **[verified: live]** the live Roblox service answered it to rustudio's cookie session.
 - **[verified: lua]** read out of the built-in plugin bytecode (constants, table
   templates, call order), citing `Plugin/Module` and the Lua line from the debug info.
-- **[verified: exe]** a string or RTTI name in `Studio`
-  (0.744.0.7441077, in `~/.local/share/rustudio/studio`), with the code address
-  that references it where that matters.
+
 - **[verified: offline-studio]** seen in an offline Studio's mock request log (`~/.local/share/rustudio/run/requests.log`, `bodies.log`)
   for the offline Studio, which is the same build.
 - **[inferred]** follows from the above but was not observed directly.
@@ -45,25 +36,7 @@ Every fact is tagged:
 5. **@testuser2 cannot join any of the user's places yet.** It is not a
    collaborator (`join` answers `403 RccForbidden`) and has no tenure.
 
-> Note for other agents: the keyring cookie (`secret-tool … key roblox-cookie`)
-> currently signs in as **@testuser2 (10000000004)**, not @Owner2
-> (10000000003) as `AUTH.md` records [verified: live,
-> `users.roblox.com/v1/users/authenticated`].
-
-## Tools
-
-New probe tools, all read-only, are in `tools/tc/`:
-
-| Tool | What it does |
-|---|---|
-| `lstr.py FILE.bin…` | Prints the constant strings of a Luau bytecode module (a plugin source extracted with `tools/decompile/rbxm_src.py`). |
-| `ldisk.py FILE.bin [fn…]` | `ldis.py` plus decoded `DUPTABLE` templates, which hold constant query and body keys and values (e.g. `{'creatorType'='Team'}`). |
-| `strctx.py EXE STRING [WINDOW]` | For each code reference to a C string in the exe, lists the other strings the nearby code loads. A cheap way to read how a request or parser is built. |
-| `rget.sh URL` | Cookie GET to `*.roblox.com`. The cookie goes only through curl's stdin config. |
-| `tcpost.sh hasTenure\|join ID` | The two harmless team-create-service POSTs, with the CSRF dance. It refuses any other POST. |
-
-Built-in plugins are Luau **bytecode**, not source. `lstr.py` and `ldisk.py`
-read them well enough to get exact URLs and bodies.
+Built-in plugins are Luau **bytecode**, not source.
 
 ---
 
@@ -197,7 +170,7 @@ Each group then feeds `creatorType=Group&creatorTargetId=<groupId>`. The older
    `Matchmaker`, `RCCConnection`, `RCCConnectionAccepted`, `DMInitialStream`
    (`StudioOpenPlace.Progress.TeamCreate.*.End`) [verified: exe].
    - **Matchmaker = `POST gamejoin.roblox.com/v1/team-create`**: path in the
-     URL table at ``, next to `/v1/teleport` [verified: exe]. Its
+     URL table, next to `/v1/teleport` [verified: exe]. Its
      generated client is `postV1TeamCreateAsync` in the
      `OpenApiGameJoinApiv1` package (host `gamejoin`) [verified: lua].
    - Request `TeamCreateRequest` [verified: lua, `Models.TeamCreateRequest`]:
@@ -211,14 +184,14 @@ Each group then feeds `creatorType=Group&creatorTargetId=<groupId>`. The older
      2 = ready [recalled, unverified]. Failure texts: `JoinErrorServerStartup`,
      `ServerFull`, `Moderated`, `Unauthorized`, `InvalidRequest`, `RccChannel`,
      `GamejoinGeneric` [verified: exe].
-4. **Join payload.** The `TeamCreateJoinPayload` parser at about ``
-   to `` reads these keys, in order [verified: exe via `strctx.py`]:
+4. **Join payload.** The `TeamCreateJoinPayload` parser at about
+   to reads these keys, in order [verified: exe]:
    `GameId, UniverseId, PlaceId, DataCenterId, MachineAddress, ServerPort,
    User…, ClientTicket, SessionId, ServerConnections[{Address,Port}],
    UdmuxEndpoints[{Address,Port}], DirectServerReturn, TokenValue,
    NetStackTokenValue, NetStackPort, UserName, IsUnknownOrUnder13`.
    It then logs `Joining game {} place {} at [{}]:{}`. The game-client parser
-   (`PlayerConfigurer`, ``) reads the same set plus `GameFqdn`,
+ reads the same set plus `GameFqdn`,
    `ClientPort`, `ClientPublicKeyData`, `EphemeralEarlyPubKey`.
    The camelCase `JoinInformation` model lists the full set, including
    `tokenGenAlgorithm, pepperId, clientPublicKeyData, ephemeralEarlyPubKey,
@@ -326,13 +299,7 @@ From memory [recalled, unverified]:
   about 2024), the QUIC transport (about 2025), JoinData v2 and
   instance-intent items. Old captures and code will not decode a current
   session without the keys.
-- What the current exe confirms of that model [verified: exe RTTI, `…Item@Replicator`]:
-  `NewObjectItem`, `DeleteInstanceItem`, `DestroyInstanceItem`,
-  `ChangePropertyItem`, `ChangeAttributeItem`, `EventInvocationItem`,
-  `MarkerItem`, `PingItem`, `TagItem`, `JoinDataItem(V2)`, `ClusterItem`,
-  `SharedStringItem`, `StreamDataItem`, `InstanceIntentItem`,
-  `ResolveNewInstanceAtomicTreeItem`, `SharedReferencePropertyChangedItem`,
-  `StatsItem`. The vocabulary matches; the wire layout must be re-derived from the binary.
+- What the current exe confirms of that model:   `NewObjectItem`, `DeleteInstanceItem`, `DestroyInstanceItem`,   `ChangePropertyItem`, `ChangeAttributeItem`, `EventInvocationItem`,   `MarkerItem`, `PingItem`, `TagItem`, `JoinDataItem(V2)`, `ClusterItem`,   `SharedStringItem`, `StreamDataItem`, `InstanceIntentItem`,   `ResolveNewInstanceAtomicTreeItem`, `SharedReferencePropertyChangedItem`,   `StatsItem`. The vocabulary matches; the wire layout must be re-derived from the binary.
 
 ## 5. What flows during a session
 
@@ -468,13 +435,13 @@ Each phase can ship on its own and is useful alone.
 | Unknown | Experiment |
 |---|---|
 | Exact `/v1/team-create` reply, status codes and polling cadence | With the user's OK, open a TC place in a offline Studio signed in to a real collaborator account, with `mockblox` passing gamejoin through and logging bodies. Or have the offline Studio's mock answer `/v1/team-create` and log what Studio sends and expects. |
-| Whether the TC toggle is `POST` or `PATCH`, and its reply | Read the native `dispatchTurnOn` request builder (`strctx.py` on `/v1/universes/%lld/teamcreate`, then REA on that function). Or capture one toggle the user does by hand on a throwaway universe. |
+| Whether the TC toggle is `POST` or `PATCH`, and its reply | Read the native `dispatchTurnOn` request builder . Or capture one toggle the user does by hand on a throwaway universe. |
 | Fix for `GetCanCollaborate` / `MultiGetCanCollaborate` "Request Context Failure" | One `GetCanCollaborate` POST with `robloxctx-authenticated-userid`, which is read-only but needs the user's OK as a new POST. |
-| SessionCrypto: algorithms, box format, key-exchange version, which side picks the encryption | Decompile the `RbxOpenRequest2` builder (REA on the function that references "RbxOpenRequest2 using encryption {}"). Then confirm against a local RCC-less an offline Studio "Server & Clients" test, where Studio is both client and server, so both ends are observable offline. |
-| RbxTransport channel framing and its SessionCrypto | Same an offline Studio local server/client test with `DebugRbxTransport*` flags and an SSLKEYLOGFILE-style hook; or decompile `RbxTransportControlNetStreams`. |
+| SessionCrypto: algorithms, box format, key-exchange version, which side picks the encryption | Then confirm against a local RCC-less an offline Studio "Server & Clients" test, where Studio is both client and server, so both ends are observable offline. |
+| RbxTransport channel framing and its SessionCrypto |  |
 | Replicator item wire formats in this version | Run an offline Studio "Server & Clients" test with `DFLogRakNetPktTrace`/`DebugRakNetLogAllPackets`, diffing known edits against packet dumps. This is entirely offline and is the best first experiment for Phases 1 and 2. |
 | How a CloudEdit server differs from a play server (property filter, write permissions) | Read `CloudEditPropertiesToNetworkFilter` and the `TeamCreateWorkspaceInstanceAccess` code. |
-| Jupiter op string format | Decompile `LiveScriptingService` "Unable to parse operation from string"; or log RemoteEvent traffic in a local two-Studio session. |
+| Jupiter op string format |  |
 | How tenure is earned; what `access` means in `ActiveSessionMembers` | After @Owner2 adds @testuser2 as an editor, rerun `hasTenure` and `join` as @testuser2 and watch `EstablishedAtMs`. |
 | Whether a user-owned place needs a friend link for edit collaborators | The same step: try adding the account as a non-friend and see what Manage Collaborators says. |
 
@@ -483,5 +450,5 @@ Each phase can ship on its own and is useful alone.
 - Call `team-create-preemptive`, `team-create`, the teamcreate toggle,
   memberships DELETE or permissions writes without the user's go-ahead. Each
   one starts servers or changes access.
-- Print or store the cookie. `rget.sh` and `tcpost.sh` keep it inside curl's
+- Print or store the cookie. the probe scripts keep it inside curl's
   stdin config.

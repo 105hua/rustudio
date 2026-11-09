@@ -1,4 +1,4 @@
-//! The Luau ↔ engine bridge's C functions, as in Roblox (docs/RE-BRIDGE.md).
+//! The Luau ↔ engine bridge's C functions, as in Roblox.
 //!
 //! an admin script's client anti-tamper (Client.Core.Anti: indexInstance,
 //! newindexInstance, namecallInstance, indexEnum, namecallEnum) takes the

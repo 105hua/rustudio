@@ -239,8 +239,8 @@ Studio's viewport shots of the same scenes: `wireframe.luau`,
   scroll phase to −offset at the call (TextureSpeed carries on).
 - Orthographic: Studio gates ProjectionType / OrthographicSize /
   OrthographicMode / ViewStretch behind the feature flag
-  `SupportOrthoCameraApi` (setter  → check ,
-  flag byte , registered at ). the offline Studio's offline
+  `SupportOrthoCameraApi` ( → check,
+  flag byte,). the offline Studio's offline
   flags leave it off: every write is ignored silently (no Changed). With
   the flag on (a second own Studio started with it in
   ClientAppSettings.json, the file restored at once): OrthographicSize
@@ -285,7 +285,7 @@ ControllingHumanoid = the Humanoid, the Humanoid PlatformStanding
 (PlatformStand true), Controller nil, no Equipped / MoveStateChanged /
 AxisChanged; W / A move nothing, Space doesn't get off. A platform inside
 the character model, walked onto: Studio crashed (twice, two fresh
-Studios). The mount () makes the controller object, sets the
+Studios). The mount makes the controller object, sets the
 humanoid's state and fires Equipped(humanoid, controller) when both are
 children of one Model (else the error above). rustudio: the same mount
 (server step), Equipped / equipped with a SkateboardController in the
@@ -295,7 +295,7 @@ that can be measured. Probe: `checks/parity/world/skate_server.luau`.
 
 ## BodyPosition, Interpolate, RocketPropulsion from Studio's code (2026-11-08)
 
-- BodyPosition:  (its per-step check) compares the squared gap
+- BodyPosition: (its per-step check) compares the squared gap
   with 0.01 → ReachedTarget at 0.1 stud (as implemented). The force law
   itself runs in the physics solver behind the managed-joint upgrade
   (flag BodyMoverManagedJointUpgrade) and wasn't found, so it is fitted to
@@ -306,9 +306,7 @@ that can be measured. Probe: `checks/parity/world/skate_server.luau`.
   2.47 → 2.58/s), P×4 1.656 → 0.581 (Studio engages later), D×4 rate
   0.154 → 0.15, P 1e3 D 100 0.587 → 0.548, heavy cube at the default
   MaxForce falls 13.79 / 24.26 / 42.79 → 13.35 / 23.37 / 40.08.
-- Camera:Interpolate's curve and RocketPropulsion's thrust / turn law:
-  not located in Studio's code (no RTTI / strings lead to them); they stay
-  the approximations described above.
+- Camera:Interpolate's curve and RocketPropulsion's thrust / turn law:   not located in Studio's code; they stay   the approximations described above.
 
 ## Left, with reasons
 
@@ -323,8 +321,7 @@ that can be measured. Probe: `checks/parity/world/skate_server.luau`.
   MoveStateChanged / Unequipped: Studio 0.744 crashes on the successful
   mount, so riding can't be measured (Steer / Throttle read 0).
 - RotateTrackball off the sphere: Studio's rule isn't known (15–25° off).
-- Camera:Interpolate's curved path and RocketPropulsion's thrust / turn
-  law: approximations (not found in the decompile).
+- Camera:Interpolate's curved path and RocketPropulsion's thrust / turn   law: approximations.
 - Physical DragDetector response: same shape as Studio (yaw, floor, stop
   on release), speed not fitted exactly.
 - Ownership radius growth: Studio adapts it to the connection; rustudio

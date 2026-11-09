@@ -131,8 +131,8 @@ behaviour, from a server Script in a Run (F8) test.
   ">" combinators, "," lists; "Expected at least one filter". Sandboxed
   stored. IsInSandbox / PredictionMode aren't scriptable: "not a valid member".
 - **TweenService.SmoothDamp**: ported from Studio's own code (
-  scalar,  vector,  CFrame, found from the "Unsupported
-  type" string at ): Unity's spring in single precision, but an
+  scalar, vector, CFrame, found from the "Unsupported
+  type" string): Unity's spring in single precision, but an
   overshoot lands on the target with zero velocity; smoothTime < 1e-4 →
   (target, zero), dt < 1e-5 → (current, velocity). CFrame rotation: the
   rotation vector of cur·conj(target) (shorter arc) damps toward zero, result

@@ -103,14 +103,18 @@ right, or put the `.ROBLOSECURITY` cookie in `~/.config/rustudio/roblox-cookie`
 - [docs/MECHANICS.md](docs/MECHANICS.md): every tuning number and where it
   comes from
 - [docs/ENGINE-GAPS.md](docs/ENGINE-GAPS.md): engine API that's still missing
-- [docs/TEAMCREATE.md](docs/TEAMCREATE.md), [docs/PROTOCOL.md](docs/PROTOCOL.md):
-  Team Create and the network protocol
+- [docs/TEAMCREATE.md](docs/TEAMCREATE.md): Team Create
 
 ## Not affiliated with Roblox
 
 rustudio is an independent project. It is not made, endorsed or supported
 by Roblox Corporation. "Roblox" and "Roblox Studio" are trademarks of Roblox
 Corporation.
+
+This repository doesn't redistribute Roblox Studio or its content. Studio's built-in
+content (fonts, textures, avatar parts, `ReflectionMetadata.xml`) is
+downloaded from Roblox's own CDN onto your machine on first launch and is
+never redistributed here.
 
 ## License
 

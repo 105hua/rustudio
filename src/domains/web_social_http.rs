@@ -483,7 +483,7 @@ M.GetPolicyInfoForPlayerAsync=function(self,player)
     policies[player]=result
     return clone_policy(result)
 end
--- Native parser : skip ended/cancelled/moderated/unpublished
+-- Native parser: skip ended/cancelled/moderated/unpublished
 -- records, preserve backend order, and expose UTC date tables and enum items.
 local function event_record(v)
     if type(v)~='table' or type(v.id)~='string' or type(v.eventTime)~='table' then return nil end
@@ -567,7 +567,7 @@ M.UserOwnsGamePassAsync=function(self,user,id)
     end
     return false
 end
--- Native  parses per-user locations;  overlays
+-- parses per-user locations; overlays
 -- connected players, removes stale local entries, and sorts newest join first.
 local party_requests=0;local party_window=0
 local function valid_party_id(id)
@@ -698,7 +698,7 @@ M.GetSubscriptionProductInfoAsync=function(self,id)
     subscription_id(id)
     local v=fetch('GetSubscriptionProductInfoAsync',id).subscriptionProductInfo
     if not v then error('Product info not found for subscription: '..id,0) end
-    -- Native parser  (GetProductInfo mode, no prompt-only fields).
+    -- Native parser (GetProductInfo mode, no prompt-only fields).
     if v.subscriptionPeriod~='Month' then error('Product info not found for subscription: '..id,0) end
     local out={Name=v.name or '',Description=v.description or '',IconImageAssetId=v.iconImageAssetId or 0,SubscriptionPeriod=Enum.SubscriptionPeriod.Month,DisplayPrice=v.displayPrice or '',DisplaySubscriptionPeriod='/month',PriceTier=v.priceTier or 0,SubscriptionProviderName=v.subscriptionProviderName or '',IsForSale=v.isForSale==true,PriceInRobux=v.priceInRobux or 0,UserBasePriceInRobux=v.userBasePriceInRobux or 0,PriceDiscountDetails={}}
     for _,d in v.priceDiscountDetails or {} do local discount={Type=d.type or '',AmountInRobux=d.amountInRobux or 0,Percent=d.percent or 0};if d.endTimeMs and d.endTimeMs>0 then discount.EndTime=DateTime.fromUnixTimestampMillis(d.endTimeMs) end;table.insert(out.PriceDiscountDetails,discount)end
@@ -790,7 +790,7 @@ M.GetUserSubscriptionPaymentHistoryAsync=function(self,player,id)
     subscription_id(id)
     if not game:GetService('RunService'):IsServer() then error('Can only call GetUserSubscriptionPaymentHistoryAsync from Script with RunContext = Server',0) end
     local now=DateTime.now().UnixTimestampMillis;local rows={}
-    -- Native Studio mock provider . Every other valid EXP ID
+    -- Native Studio mock provider. Every other valid EXP ID
     -- warns and returns an empty array; it does not make a live request.
     if id=='EXP-0' then rows={{now-2419200000,now+172800000,'Paid'},{now-5011200000,now-2419200000,'Paid'},{now-7603200000,now-5011200000,'Paid'}}
     elseif id=='EXP-1' then rows={{1680652800000,1683244800000,'Paid'},{1674086400000,1676764800000,'Paid'}}

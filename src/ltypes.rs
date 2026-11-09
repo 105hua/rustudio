@@ -99,7 +99,7 @@ impl FromLua for LVector3 {
     }
 }
 
-/// Vector3 is Luau's native vector (RE-DATATYPES item 1: type "vector",
+/// Vector3 is Luau's native vector (Studio probes item 1: type "vector",
 /// typeof "Vector3", equal values rawequal and the same table key,
 /// float32 components, -0 kept).
 impl IntoLua for LVector3 {
@@ -215,7 +215,7 @@ impl UserData for LVector2 {
                 (Some(x), Some(y), _, _) => Ok(LVector2(x.0 * y.0)),
                 (Some(x), None, _, Some(k)) => Ok(LVector2(x.0 * k as f32)),
                 (None, Some(y), Some(k), _) => Ok(LVector2(y.0 * k as f32)),
-                // Studio's own text, location-free (RE-DATATYPES Vector2.mul).
+                // Studio's own text, location-free.
                 _ => Err(rt_err("attempt to multiply a Vector2 with an incompatible value type or nil")),
             }
         });
@@ -870,7 +870,7 @@ impl LEnumItem {
 }
 
 // Enum, Enums and EnumItem metamethods are C functions as in Studio
-// (src/cmeta.rs; docs/RE-BRIDGE.md 5): reads check self then the key, writes the
+//: reads check self then the key, writes the
 // key then self, and every write fails. Methods (GetEnums, GetEnumItems,
 // FromName, FromValue, IsA) are new named C functions on every read.
 const ITEM_INDEX: crate::cmeta::Spec = crate::cmeta::Spec { self_types: &[c"EnumItem"], key_first: false };
@@ -2246,8 +2246,8 @@ pub struct LRandom {
 from_ud!(LRandom, "Random");
 
 impl LRandom {
-    /// PCG32 as Studio's Random (decompiled, round 21: step at
-    /// , increment 105): pcg32_srandom with that increment.
+    /// PCG32 as Studio's Random (from Studio, round 21: step at
+    /// increment 105): pcg32_srandom with that increment.
     pub fn new(seed: u64) -> Self {
         let mut r = LRandom {
             state: 0,
@@ -2282,7 +2282,7 @@ impl LRandom {
         xorshifted.rotate_right((old >> 59) as u32)
     }
 
-    /// Two draws, the second in the high half ().
+    /// Two draws, the second in the high half.
     pub fn next_u64(&mut self) -> u64 {
         let lo = self.next_u32() as u64;
         ((self.next_u32() as u64) << 32) | lo
@@ -2293,7 +2293,7 @@ impl LRandom {
         self.next_u64() as f64 * (-64f64).exp2()
     }
 
-    /// NextNumber(a, b) (): ends put in order, then
+    /// NextNumber(a, b): ends put in order, then
     /// min·(1 − t) + max·t kept inside [min, max].
     pub fn next_range(&mut self, a: f64, b: f64) -> f64 {
         let (lo, hi) = if a > b { (b, a) } else { (a, b) };
@@ -2928,7 +2928,7 @@ fn query_methods<T: HasQuery, M: UserDataMethods<T>>(m: &mut M) {
         }
         Ok(())
     });
-    // Studio's text (RE-DATATYPES *Params.create).
+    // Studio's text.
     m.add_meta_method(MetaMethod::ToString, |_, this, ()| {
         let q = this.q();
         let filter = q
@@ -2950,7 +2950,7 @@ fn query_methods<T: HasQuery, M: UserDataMethods<T>>(m: &mut M) {
             )
         })
     });
-    // Studio: two fresh params are == (RE-DATATYPES *Params.values).
+    // Studio: two fresh params are ==.
     m.add_meta_function(MetaMethod::Eq, |_, (a, b): (mlua::AnyUserData, mlua::AnyUserData)| {
         let (Ok(a), Ok(b)) = (a.borrow::<T>(), b.borrow::<T>()) else { return Ok(false) };
         let (a, b) = (a.q(), b.q());
@@ -2997,7 +2997,7 @@ pub fn overlap_params(v: &Value) -> Option<QueryParams> {
 // ----------------------------------------------------------- RaycastResult
 
 /// WorldRoot:Raycast's answer: read-only userdata as in Studio
-/// (RE-DATATYPES RaycastResult rows), `==` by content.
+///, `==` by content.
 #[derive(Clone)]
 pub struct LRaycastResult {
     pub instance: Value,
@@ -3107,7 +3107,7 @@ impl UserData for LCatalogSearchParams {
             },
         );
         // CatalogSearchParams{SearchKeyword=, CategoryFilter=None, …}: names
-        // for enums, lists joined, in Studio's order (RE-DATATYPES).
+        // for enums, lists joined, in Studio's order.
         m.add_meta_method(MetaMethod::ToString, |_, this, ()| {
             let text = |v: &Value| -> String {
                 match v {
@@ -4180,7 +4180,7 @@ impl UserData for LFont {
             None => Ok(Value::Nil),
         });
         f.add_field_method_get("Bold", |_, this| Ok(this.0.weight.as_u16() >= 600));
-        // Font is mutable in Studio (RE-DATATYPES Font.writeKnown).
+        // Font is mutable in Studio.
         f.add_field_method_set("Family", |_, this, v: String| {
             this.0.family = v;
             this.0.cached_face_id = None;
@@ -4279,7 +4279,7 @@ const SIGNAL: crate::cmeta::Spec =
 impl UserData for LSignal {
     fn add_fields<F: UserDataFields<Self>>(f: &mut F) {
         f.add_meta_field("__type", "RBXScriptSignal");
-        // C functions checking the key, then self (docs/RE-BRIDGE.md 1). A
+        // C functions checking the key, then self. A
         // method is a new named C function on every read, as Studio's
         // (`sig.Connect ~= sig.Connect`), over the prelude's Lua one.
         f.add_meta_field_with("__index", |lua| {
@@ -4292,7 +4292,7 @@ impl UserData for LSignal {
                     }
                     if let Value::Function(f) = this.methods.raw_get::<Value>(key.as_str())? {
                         // ConnectParallel checks its Actor rule before self
-                        // (RE-DATATYPES ConnectParallel.dot/badself).
+                        //.
                         let self_type = (key != "ConnectParallel").then_some("RBXScriptSignal");
                         return crate::cmeta::method(lua, &key, None, Some(f), self_type)
                             .map(Value::Function);
@@ -4313,7 +4313,7 @@ impl UserData for LSignal {
     }
 
     fn add_methods<M: UserDataMethods<Self>>(m: &mut M) {
-        // Every read of an event is a new object (RE-DATATYPES
+        // Every read of an event is a new object (Studio probes
         // RBXScriptSignal.values: `a == b`, not rawequal); equal when they
         // are the same event.
         m.add_meta_function(mlua::MetaMethod::Eq, |_, (a, b): (Value, Value)| {

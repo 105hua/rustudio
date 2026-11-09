@@ -1,5 +1,5 @@
 //! Studio ad opportunity registration. Native placement lookup,
-//! validation/, local tracker/.
+//! validation, local tracker.
 //! Registration does not request or display an ad. Metadata is login-session GET.
 use super::*;
 pub fn install(lua:&Lua)->mlua::Result<()> {

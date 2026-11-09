@@ -97,7 +97,7 @@ Folder… (round 15's project folders).
 | Item | Studio (measured in an offline Studio) | rustudio | Status |
 |---|---|---|---|
 | Drag a part | with Select or Move, press on a part and drag: it slides over the surfaces under the cursor (a 4-stud cube from (−12, 2, −16) to (−9.33, 2, −1.98) with snap off, (−7, 2, −2) with 1-stud snap), lands on top of a part it is dragged onto, an unselected part is selected first, the selection moves together, one Undo puts it back | the same (src/part_drag.rs): the grab point follows the surface under the cursor (else the ground plane), the part rests on it by its half-extent along the surface normal, the axes along the surface snap to the Move increment, Locked parts stay, one "Drag" undo step; self-test `part-drag` | done |
-| Box selection | parts inside the box light up while it is dragged; release keeps them; Shift / Ctrl add to the selection; decompiled (DragSelector): from 3 px of travel, a selectable (top Model or part) is in when its centre is inside the box's frustum | the same (src/viewport.rs `marquee_pick`); self-test `box-select-live` | done |
+| Box selection |  | the same (src/viewport.rs `marquee_pick`); self-test `box-select-live` | done |
 
 ## Playtests (round 17)
 
@@ -157,8 +157,8 @@ pair in `checks/ui/side-output.png`.
 
 | Item | Studio | rustudio | Status |
 |---|---|---|---|
-| Colours | by message type from the theme (decompiled, ): Log MainText (188, 190, 200); Information InfoText (143, 180, 255); Warning (245, 118, 48) and Error (231, 87, 80) DemiBold; System SensitiveText (223, 106, 247) | the same, Builder Mono (Bold: no semi-bold face ships) | done |
-| Line form | "message - Script:line"; errors "Full.Name:3: boom - Script:3", then "Stack Begin", one "Script 'Full.Name', Line N - function f" (or without " - function") per Luau frame, "Stack End", in blue () | the same, every Luau frame from `debug.traceback` | done |
+| Colours | by message type from the theme: Log MainText (188, 190, 200); Information InfoText (143, 180, 255); Warning (245, 118, 48) and Error (231, 87, 80) DemiBold; System SensitiveText (223, 106, 247) | the same, Builder Mono (Bold: no semi-bold face ships) | done |
+| Line form | "message - Script:line"; errors "Full.Name:3: boom - Script:3", then "Stack Begin", one "Script 'Full.Name', Line N - function f" (or without " - function") per Luau frame, "Stack End", in blue | the same, every Luau frame from `debug.traceback` | done |
 | Timestamps | "HH:MM:SS.mmm  " local time, off by default (⋯ > Show Timestamp) | the same | done |
 | Context bar | green (0, 204, 103) for server lines (Run included), blue (52, 154, 213) for client lines; none on stack lines | the same | done |
 | Toolbar | All Messages, All Contexts, Filter…, clear, ⋯ | the same; ⋯ holds Show Timestamp / Show Context / Show Source | done |

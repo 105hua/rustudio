@@ -246,7 +246,7 @@ mod tests {
     fn dump_counts_match_studio() {
         let Some(api) = super::get() else { return };
         use super::Kind::*;
-        // Studio 0.744.0.7441077's own `-API` dump (RE-BRIDGE: 652 enums).
+        // Studio 0.744.0.7441077's own `-API` dump.
         assert_eq!(api.classes.len(), 942);
         assert_eq!(api.count(Property, false), 3796);
         assert_eq!(api.count(Function, false), 3374);

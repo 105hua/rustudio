@@ -12,12 +12,12 @@
 use std::collections::HashSet;
 use std::sync::{Arc, Mutex};
 
-pub const MAX_GROUPS: usize = 32; // "Cannot register more than 32 collision groups." ()
+pub const MAX_GROUPS: usize = 32; // "Cannot register more than 32 collision groups."
 pub const DEFAULT: &str = "Default";
-pub const MAX_NAME_LEN: usize = 100; // "Collision group name length cannot exceed %zu chars", 0x64 ()
+pub const MAX_NAME_LEN: usize = 100; // "Collision group name length cannot exceed %zu chars", 0x64
 
 /// Studio's name check before registering, renaming or removing a group
-/// ( / ): empty, "Default" and over 100 bytes refused.
+/// empty, "Default" and over 100 bytes refused.
 pub fn check_name(name: &str) -> Result<(), String> {
     if name.is_empty() {
         return Err("Collision group requires a valid name.".into());
@@ -80,7 +80,7 @@ impl CollisionGroups {
         self.id(name).is_some()
     }
 
-    /// PhysicsService:RegisterCollisionGroup (): the name check,
+    /// PhysicsService:RegisterCollisionGroup: the name check,
     /// then at most 32 groups (Default counts), then no duplicate names.
     pub fn register(&mut self, name: &str) -> Result<(), String> {
         check_name(name)?;
@@ -95,7 +95,7 @@ impl CollisionGroups {
         Ok(())
     }
 
-    /// CollisionGroupSetCollidable (): both groups registered
+    /// CollisionGroupSetCollidable: both groups registered
     /// (Default included).
     pub fn set_collidable_checked(&mut self, a: &str, b: &str, on: bool) -> Result<(), String> {
         if !self.is_registered(a) || !self.is_registered(b) {

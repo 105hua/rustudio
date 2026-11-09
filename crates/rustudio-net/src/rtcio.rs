@@ -1,4 +1,4 @@
-//! The `rbx-rtcio` channel layer on top of QUIC (docs/PROTOCOL.md §3b).
+//! The `rbx-rtcio` channel layer on top of QUIC.
 //!
 //! - Every unidirectional stream starts `06 01 <u8 channel> <4-byte tag>`:
 //!   the tag is a big-endian lane sequence number, or ASCII `ctrl` on a

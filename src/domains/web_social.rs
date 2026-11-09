@@ -190,7 +190,7 @@ pub fn call(
 }
 pub fn prop_get(lua: &Lua, r: Ref, class: &str, key: &str) -> mlua::Result<Option<Value>> {
     if class == "TeleportAsyncResult" && matches!(key, "PrivateServerId" | "ReservedServerAccessCode") {
-        // Native constructor initializes the result's string storage
+        // initializes the result's string storage
         // empty. Engine-produced results replace these with returned server IDs.
         let value=world(lua)?.d().dom.get_by_ref(r)
             .and_then(|instance|instance.properties.get(&key.into()).cloned())

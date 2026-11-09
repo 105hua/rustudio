@@ -121,9 +121,9 @@ impl Editor {
     }
 
     /// Sets the place's avatar type (undoable, saved with the place).
-    /// Studio's setter (, registered by  on
-    /// StarterPlayer, category "Character", value at [component+0x50] with
-    /// the component at StarterPlayer+0xd0) returns at once when the value
+    /// Studio's setter (, on
+    /// StarterPlayer, category "Character", value at with
+    /// the component at) returns at once when the value
     /// is unchanged: no change is recorded, so no undo step either.
     pub fn set_avatar_type(&mut self, v: u32) {
         if v > 2 || self.avatar_type() == v {

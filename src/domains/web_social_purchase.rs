@@ -151,8 +151,8 @@ pub fn install(lua: &Lua) -> mlua::Result<()> {
     )?;
     ctx.set("mock_subscription",lua.create_function(|lua,value:Value| {
         let player=opt_inst(&value).ok_or_else(||rt_err("Player expected"))?;
-        // Native mock signal handler  calls the HasRobloxSubscription
-        // setter ; descriptor binding is at .
+        // Native mock signal handler calls the HasRobloxSubscription
+        // descriptor binding is.
         store_prop(lua,player,"HasRobloxSubscription",Variant::Bool(true))
     })?)?;
     ctx.set("subscription_begin",lua.create_function(|lua,()| {

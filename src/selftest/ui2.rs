@@ -236,7 +236,7 @@ impl SelfTest {
                 self.steps.push(Step {
                     step: "output-studio-format",
                     passed: kinds == want && colours_ok && text == "hello from a script - RefScript:1" && ctx_ok && ed.hud.output_lines > 0,
-                    detail: format!("print / warn / error / client print / system line → kinds ok: {}, colours {colours:?} (Studio's theme colours by type, : Log MainText 188,190,200; Warning 245,118,48; Error 231,87,80; Information InfoText 143,180,255), first line reads {text:?}, server / client bars: {ctx_ok}, lines drawn {}", kinds == want, ed.hud.output_lines),
+                    detail: format!("print / warn / error / client print / system line → kinds ok: {}, colours {colours:?}, first line reads {text:?}, server / client bars: {ctx_ok}, lines drawn {}", kinds == want, ed.hud.output_lines),
                 });
                 self.r4.phase = 110;
                 self.ui2.started = f;

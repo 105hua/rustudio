@@ -135,13 +135,7 @@ Localization (Studio)
 
 ## Web endpoints (login session only; reads)
 
-From Studio strings: `/v1/users/%s/friends/online?origin=
-getFriendsOnline`, `v1/users/%s/friends/statuses`, `/v1/users/%s/friends/find`,
-`/v1/usernames/users`, `v1/users/%lld`, groups roles. rustudio uses
-friends.roblox.com, users.roblox.com and groups.roblox.com
-(`/v2/users/{id}/groups/roles`). FriendPages: friends/find ids + POST
-users.roblox.com/v1/users for names + friends/online for IsOnline, 50 a page
-(through the data domain's register_pages).
+From Studio strings: `/v1/users/%s/friends/online?origin= getFriendsOnline`, `v1/users/%s/friends/statuses`, `/v1/users/%s/friends/find`, `/v1/usernames/users`, `v1/users/%lld`, groups roles. rustudio uses friends.roblox.com, users.roblox.com and groups.roblox.com (`/v2/users/{id}/groups/roles`). FriendPages: friends/find ids + POST users.roblox.com/v1/users for names + friends/online for IsOnline, 50 a page (through the data domain's register_pages).
 
 ## Local player identity (2026-11-08)
 

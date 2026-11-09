@@ -1,5 +1,5 @@
 //! CancelSubscriptionApp controller and native PerformCancelSubscription's local
-//! cache update. No cancellation HTTP endpoint is called (native).
+//! cache update. No cancellation HTTP endpoint is called.
 use super::*;
 pub fn install(lua:&Lua)->mlua::Result<()> {
     let ctx=lua.create_table()?;

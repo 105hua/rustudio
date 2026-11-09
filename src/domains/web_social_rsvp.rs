@@ -1,4 +1,4 @@
-//! RSVP preconditions/completion//,
+//! RSVP preconditions/completion,
 //! online VirtualEvents PromptConnections/RsvpPrompt. Live verification reads
 //! only; confirmations and their transport are tested against localhost mocks.
 use super::*;

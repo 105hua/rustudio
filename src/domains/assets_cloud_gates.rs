@@ -55,7 +55,7 @@ local function disabled(message,yielding)
         error(message,0)
     end
 end
--- Shared CreateAsset*/Version guard, , refuses a Play
+-- Shared CreateAsset*/Version guard, refuses a Play
 -- datamodel before any upload (the edit-datamodel API is outside Play).
 M.CreateAssetAsync=disabled('CreateAssetAsync can only be used in the Edit datamodel',true)
 M.CreateAssetVersionAsync=M.CreateAssetAsync

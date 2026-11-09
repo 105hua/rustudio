@@ -1,5 +1,5 @@
 //! Studio's local EditableImage -> Decal builder; no asset upload is involved.
-//! Native helper , runtime probes in parity notes.
+//! Native helper, runtime probes in parity notes.
 use super::*;
 pub fn install(lua:&Lua)->mlua::Result<()>{
     lua.globals().set("__ac_create_decal",lua.create_function(|lua,maps:mlua::Table|{

@@ -1,12 +1,11 @@
 # Credits: original files used
 
 rustudio is the person's own editor for their Roblox places. Nothing from
-Roblox Studio is copied into this folder or compiled into the program. The
-files below, from the Studio install at
-`/home/user/.local/share/rustudio/studio` (Studio's folder),
-are read at run time only, through `~/.local/share/rustudio/content` (a link
-the person made to Studio's `content/` folder; `RUSTUDIO_CONTENT_DIR` points
-it elsewhere).
+Roblox Studio is copied into this repository or compiled into the program. The
+files below are downloaded from Roblox's own CDN into
+`~/.local/share/rustudio/studio` on first launch and read at run time only,
+through `~/.local/share/rustudio/content` (`RUSTUDIO_CONTENT_DIR` points it
+elsewhere).
 
 | File in the game's folder | Used for |
 |---|---|
@@ -41,41 +40,16 @@ else `~/.local/share/rustudio/studio`):
 | `ReflectionMetadata.xml` | the Insert Object popup's categories (ClassCategory) and the Explorer's sibling order (ExplorerOrder) |
 | `content/fonts/BuilderSans-Regular.otf`, `BuilderSans-Bold.otf` (through the content link) | the editor's own text, as Studio's panels and ribbon use |
 
-Rules and default values read from Studio's code and data
-(camera speed settings, the fly speed-up rule, wheel zoom, snap increments;
-listed with their addresses in `docs/MECHANICS.md`) are written into rustudio's
-own code; no Studio code is copied. Values measured from Studio rather than
-read from its files (listed with
-their sources in `docs/MECHANICS.md` and `mechanics.json`): camera speed, wheel
-step, field of view, snap increments, part defaults, theme colours, Studio's
-settings in an offline Studio's `appdata/Roblox/GlobalSettings_13.xml`, and Output
-messages seen while playing og.rbxl and Place A in an offline Studio. The fidelity
-captures in `../checks/compare/*/studio/` (screenshots, Output, structural
-dumps, physics facts) are Studio's own, taken offline in an offline Studio by
-`tools/fidelity/fidelity.py`; the R15 hip height, part sizes, resting height,
-jump apex, fall time and walk speed used in code come from them.
+Studio's rules and default values (camera speed settings, the fly speed-up
+rule, wheel zoom, snap increments) are written into rustudio's own code; no
+Studio code is copied. Values measured from Studio (listed in
+`docs/MECHANICS.md` and `mechanics.json`): camera speed, wheel step, field of view, snap increments, part defaults, theme colours, Studio's settings in an offline Studio's `appdata/Roblox/GlobalSettings_13.xml`, and Output messages seen while playing og.rbxl and Place A in an offline Studio. The fidelity captures in `../checks/compare/*/studio/` (screenshots, Output, structural dumps, physics facts) are Studio's own, taken offline in an offline Studio by `tools/fidelity/fidelity.py`; the R15 hip height, part sizes, resting height, jump apex, fall time and walk speed used in code come from them.
 
-Downloaded at run time from Roblox's public asset delivery (no login;
-`docs/MATERIALS.md`) and cached in `~/.cache/rustudio/assets`: the material
-texture packs named in Studio's material tables and their
-images, the default animations Roblox's Animate scripts ask for, the body
-part meshes and cages the body files above point at, and any other public
-asset a place uses. The material tables (pack ids, colours), the HACD
-collision settings and the material texture repeat were read from
-Studio and its shader pack (`shaders/shaders_glsl3.pack`, read
-while studying, not at run time); the values are written into rustudio's own
-code with their addresses in `docs/MECHANICS.md`.
+Downloaded at run time from Roblox's public asset delivery (no login; `docs/MATERIALS.md`) and cached in `~/.cache/rustudio/assets`: the material texture packs Studio uses and their images, the default animations Roblox's Animate scripts ask for, the body part meshes and cages the body files above point at, and any other public asset a place uses. The material tables (pack ids, colours), the HACD collision settings and the
+material texture repeat are matched to Studio; the values are written into
+rustudio's own code.
 
-With the person's own Roblox session (`docs/AUTH.md`; signed in only), the same
-endpoint also gives assets Roblox serves to signed-in accounts: the current
-dynamic head of the R15 body file (mesh, cage, face), the person's avatar
-items (clothing, accessories, layered clothing), models a place loads with
-InsertService, and the person's own places. Those meshes are often
-Draco-compressed; they are decoded with the `draco-core` crate (Apache-2.0,
-a Rust reading of Google's Draco format). The self-test's "catalog-assets"
-step puts on Roblox's catalog item "Hooded Jacket - Gray" (8516620262). The
-place-upload route `/ide/publish/UploadExistingAsset` was read from
-Studio's strings to test publishing (`docs/AUTH.md`).
+With the person's own Roblox session (`docs/AUTH.md`; signed in only), the same endpoint also gives assets Roblox serves to signed-in accounts: the current dynamic head of the R15 body file (mesh, cage, face), the person's avatar items (clothing, accessories, layered clothing), models a place loads with InsertService, and the person's own places. Those meshes are often Draco-compressed; they are decoded with the `draco-core` crate (Apache-2.0, a Rust reading of Google's Draco format). The self-test's "catalog-assets" step puts on Roblox's catalog item "Hooded Jacket - Gray" (8516620262). The place-upload route `/ide/publish/UploadExistingAsset` is the one Studio uses for publishing (`docs/AUTH.md`).
 
 Other files read at run time, outside the game's folder: the offline Studio's local asset
 store `~/.local/share/rustudio/assets/<id>[.ext]` and the person's rbxasset
@@ -86,7 +60,6 @@ rustudio writes nothing into either.
 GUI measurements (top bar inset, text widths) were taken from Studio in
 an offline Studio; Place A' own notes on its uploads (Shared/GunMeshes, GrenadeArt)
 confirmed how Roblox places imported FBX meshes.
-
 
 ## Bundled third-party art
 

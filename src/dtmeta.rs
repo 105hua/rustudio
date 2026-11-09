@@ -1,5 +1,5 @@
 //! Datatype, RBXScriptSignal and RBXScriptConnection metatables as in
-//! Studio 0.744 (docs/RE-DATATYPES.md implementation items 2 and 3).
+//! Studio 0.744.
 //!
 //! mlua builds each userdata metatable itself: `__index` / `__newindex` are
 //! generated Lua closures (raising with mlua's own `error` C function, which
@@ -85,7 +85,7 @@ impl TypeMeta {
     }
 }
 
-/// Per type, as measured (docs/RE-DATATYPES.md `read` / `write` / `namecall` /
+/// Per type, as measured (Studio probes `read` / `write` / `namecall` /
 /// `method.*` rows; `index.namecall.same` true = quoted family).
 pub static TYPES: &[TypeMeta] = &[
     TypeMeta { assign_any: true, ..TypeMeta::new("Vector3", false) },
@@ -789,7 +789,7 @@ mod tests {
         lua.load(src).set_name("=T").eval::<String>().unwrap_or_else(|e| panic!("{src}: {e}"))
     }
 
-    /// docs/RE-DATATYPES.md rows read / write / writeX / namecall / *.info.
+    /// Studio probes rows read / write / writeX / namecall / *.info.
     #[test]
     fn members_and_raisers_like_studio() {
         let lua = lua();
@@ -842,7 +842,7 @@ mod tests {
         assert_eq!(e("DateTime.now() < DateTime.now()"), "T:1: attempt to compare DateTime < DateTime");
     }
 
-    /// RE-DATATYPES constructor / constructor.bad / values / writeKnown
+    /// Studio probes constructor / constructor.bad / values / writeKnown
     /// rows and the message replacement inventory.
     #[test]
     fn constructors_and_messages_like_studio() {
@@ -872,7 +872,7 @@ mod tests {
         assert_eq!(e("(function() local f = Font.new('a') f.Family = 'b' f.Bold = true return f.Family .. tostring(f.Bold) end)()"), "true|string|btrue");
     }
 
-    /// RE-DATATYPES `create` / `unm` rows: per-type number formatting.
+    /// Studio probes `create` / `unm` rows: per-type number formatting.
     #[test]
     fn tostring_like_studio() {
         use crate::ltypes::fmt_g;
@@ -906,7 +906,7 @@ mod tests {
         }
     }
 
-    /// RE-DATATYPES Vector3 rows: Luau's native vector.
+    /// Studio probes Vector3 rows: Luau's native vector.
     #[test]
     fn vector3_is_native() {
         let lua = lua();
@@ -937,7 +937,7 @@ mod tests {
         );
     }
 
-    /// RE-DATATYPES PhysicalProperties.constructor.bad: a lone non-number
+    /// Studio probes PhysicalProperties.constructor.bad: a lone non-number
     /// is cast to a Material; an unknown one gives the "default" value.
     #[test]
     fn physical_properties_default() {
@@ -952,7 +952,7 @@ mod tests {
         run(&lua, &format!("return tostring(PhysicalProperties.new(Enum.Material.{m}))"))
     }
 
-    /// RaycastResult's metatable is the quoted family's (RE-DATATYPES
+    /// RaycastResult's metatable is the quoted family's (Studio probes
     /// RaycastResult read / write / namecall / writeKnown rows).
     #[test]
     fn raycast_result_metatable() {
@@ -1052,7 +1052,7 @@ pub fn install_all(lua: &Lua) -> mlua::Result<()> {
 
 // ---------------------------------------------------------- constructors
 
-/// The datatype globals: frozen tables in Studio (RE-DATATYPES
+/// The datatype globals: frozen tables in Studio (Studio probes
 /// `constructor` rows: `table.isfrozen` true, writes fail with "attempt to
 /// modify a readonly table").
 const CONSTRUCTORS: &[&str] = &[

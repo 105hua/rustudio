@@ -1,4 +1,4 @@
-//! Native feedback state machine// and
+//! Native feedback state machine and
 //! CoreScriptsPlayerFeedback text prompt. Submission verification is mock only.
 //! PlayerSupport is disabled by the measured current native feature flag.
 use super::*;

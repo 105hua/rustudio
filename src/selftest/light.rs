@@ -385,7 +385,7 @@ impl SelfTest {
             step: "lighting-setters",
             passed: ok,
             detail: format!(
-                "a script set ClockTime 25.5 and 7.7505, EnvironmentDiffuseScale 3, ShadowSoftness −1, Brightness 50, SpotLight Range 200 and Angle 270; Studio's setters (, , , , , ) give \"{want}\"; got {:?}",
+                "a script set ClockTime 25.5 and 7.7505, EnvironmentDiffuseScale 3, ShadowSoftness −1, Brightness 50, SpotLight Range 200 and Angle 270; Studio's setters give \"{want}\"; got {:?}",
                 line.unwrap_or_else(|| "no output".into())
             ),
         });

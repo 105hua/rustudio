@@ -663,7 +663,7 @@ macro_rules! inst_userdata {
 impl UserData for $ty {
     fn add_fields<F: UserDataFields<Self>>(f: &mut F) {
         f.add_meta_field("__type", $type_name);
-        // The bridge's C functions (src/cmeta.rs, docs/RE-BRIDGE.md): unnamed,
+        // The bridge's C functions: unnamed,
         // shared by every Instance; the metatable is locked (lock_bridge).
         f.add_meta_field_with("__namecall", |lua| {
             lua.named_registry_value::<Function>("rs_inst_namecall")
@@ -705,7 +705,7 @@ struct LConn {
 impl UserData for LConn {
     fn add_fields<F: UserDataFields<Self>>(f: &mut F) {
         f.add_meta_field("__type", "RBXScriptConnection");
-        // C functions, as Studio's (docs/RE-BRIDGE.md 1): self is checked first
+        // C functions, as Studio's: self is checked first
         // on reads, the key first on writes.
         f.add_meta_field_with("__index", |lua| {
             crate::cmeta::cached(lua, "rs_conn_index", |lua| {
@@ -1050,7 +1050,7 @@ fn lua_to_variant(
         VariantType::Ref => match v {
             Value::Nil => Variant::Ref(Ref::none()),
             // Luau's own argument error, at the assigning line (`p.Parent
-            // = 3`, docs/RE-BRIDGE.md 4): the value is the metamethod's #3.
+            // = 3`, Studio probes 4): the value is the metamethod's #3.
             _ => Variant::Ref(opt_inst(v).ok_or_else(|| {
                 crate::cmeta::located(format!(
                     "invalid argument #3 (Instance expected, got {})",
@@ -1343,7 +1343,7 @@ fn checked(lua: &Lua, r: mlua::Result<MultiValue>) -> mlua::Result<MultiValue> {
 }
 
 fn signal(lua: &Lua, r: Ref, name: &str) -> mlua::Result<Value> {
-    // A new signal object on every read, as Studio's (RE-DATATYPES
+    // A new signal object on every read, as Studio's (Studio probes
     // RBXScriptSignal.values: two reads are `==` but not rawequal). They
     // share one state table per (instance, event) while Lua holds any of
     // them, kept in a weak-valued table: the state holds its instance, so a
@@ -1393,7 +1393,7 @@ fn index(lua: &Lua, r: Ref, key: &str) -> mlua::Result<Value> {
     }
     match disp(class_u, key) {
         // Callbacks can only be set: Studio's __index (Luau bridge,
-        // ) refuses to read one, set or not.
+        //) refuses to read one, set or not.
         Disp::Callback => {
             return Err(rt_err(format!(
                 "{key} is a callback member of {class}; you can only set the callback value, get is not available"
@@ -1915,7 +1915,7 @@ fn newindex(lua: &Lua, r: Ref, key: &str, value: Value) -> mlua::Result<()> {
         "Parent" => {
             let p = match &value {
                 Value::Nil => Ref::none(),
-                // Luau's argument error at the assigning line (docs/RE-BRIDGE.md 4).
+                // Luau's argument error at the assigning line.
                 v => opt_inst(v).ok_or_else(|| {
                     crate::cmeta::located(format!(
                         "invalid argument #3 (Instance expected, got {})",
@@ -2135,7 +2135,7 @@ fn arg_str(args: &MultiValue, i: usize, what: &str) -> mlua::Result<String> {
     match arg(args, i) {
         // Studio's reflected string argument converts what it can
         // (GetService(true) is `'true' is not a valid Service name`,
-        // GetService({}) `'{}' …`); only nil is missing (docs/RE-BRIDGE.md 3).
+        // GetService({}) `'{}' …`); only nil is missing.
         Value::String(s) => Ok(s.to_str()?.to_string()),
         Value::Number(n) => Ok(n.to_string()),
         Value::Integer(n) => Ok(n.to_string()),
@@ -2328,7 +2328,7 @@ fn get_service(lua: &Lua, class: &str, create: bool) -> mlua::Result<Option<Ref>
         return Err(rt_err(format!("'{class}' is not a valid Service name")));
     }
     if !doc::is_service(class) {
-        // Any other class answers nil (docs/RE-BRIDGE.md 6, every library row:
+        // Any other class answers nil (Studio probes 6, every library row:
         // AnimationTrack, WorldRoot, Terrain, RealtimeMedia…); one that can
         // be created is created first, so Player wants WritePlayer
         // (library.Player.Move).
@@ -2384,7 +2384,7 @@ fn model_pivot(w: &World, r: Ref) -> Xform {
     {
         return Xform::from_cframe(&cf);
     }
-    // Studio's fallback ( →  / ): the centre
+    // Studio's fallback: the centre
     // of the parts' boxes (each part's half size through |R|), measured in
     // the world frame when there is no PrimaryPart (identity rotation).
     let (mut mn, mut mx) = (Vec3::splat(f32::MAX), Vec3::splat(f32::MIN));
@@ -2486,7 +2486,7 @@ fn part_size(lua: &Lua, r: Ref) -> mlua::Result<Vec3> {
     })
 }
 
-/// Studio's attribute-name check (): not empty, at most 100
+/// Studio's attribute-name check: not empty, at most 100
 /// bytes (0x64), and only ASCII letters, digits, '_', '-', '.' and '/'.
 fn check_attribute_name(n: &str) -> mlua::Result<()> {
     if n.is_empty() {
@@ -2981,7 +2981,7 @@ local function gate(self, verb)
     end
 end
 -- Studio: a non-function still answers a (dead) Connection; the failure
--- goes to Output as an error, not to the caller (RE-DATATYPES signal.*).
+-- goes to Output as an error, not to the caller.
 local function noop() end
 local function connect(self, fn, once)
     gate(self, "connect")
@@ -3056,7 +3056,7 @@ local FAILED = newproxy(false) -- a module whose code raised
 -- "@self/X" its child, "@game/Service/X" from the DataModel (estimated); ".." inside a
 -- path goes to the parent. Children are found, not waited for.
 local function require_path(path, ctx)
-    -- Studio's require raises without a position (docs/RE-GLOBALS.md require.*).
+    -- Studio's require raises without a position.
     local function fail(why) error(string.format('error requiring "%s": %s', path, why), 0) end
     if typeof(ctx) ~= "Instance" then fail("could not get requiring context") end
     local node, rest
@@ -3211,7 +3211,7 @@ return inst_index, inst_newindex, wrap
 // ---------------------------------------------------------------- runtime
 
 /// `getmetatable` of every bridge object answers "The metatable is locked",
-/// as in Studio (docs/RE-BRIDGE.md 1): one throwaway object of each type.
+/// as in Studio: one throwaway object of each type.
 fn lock_bridge(lua: &Lua) -> mlua::Result<()> {
     use crate::cmeta::lock;
     lock(lua, &lua.create_userdata(LInst(Ref::none()))?)?;
@@ -3857,7 +3857,7 @@ impl Runtime {
                         Value::Nil
                     }
                     "set" => {
-                        // Server only while the game runs ().
+                        // Server only while the game runs.
                         if world(lua)?.side == Side::Client {
                             return Err(rt_err("This API can only be used on the server!"));
                         }
@@ -3866,11 +3866,11 @@ impl Runtime {
                     }
                     "id" => match cg.id(&a) {
                         Some(i) => Value::Number(i as f64),
-                        // GetCollisionGroupId ().
+                        // GetCollisionGroupId.
                         None => return Err(rt_err("Collision group not found.")),
                     },
                     "name" => {
-                        // GetCollisionGroupName (): ids 0..31.
+                        // GetCollisionGroupName: ids 0..31.
                         let id = a.parse::<i64>().unwrap_or(-1);
                         if !(0..crate::collision_groups::MAX_GROUPS as i64).contains(&id) {
                             return Err(rt_err(format!(
@@ -3978,7 +3978,7 @@ impl Runtime {
         g.set("workspace", inst_value(lua, ws)?)?;
         g.set("Workspace", inst_value(lua, ws)?)?;
         // os.clock: Studio's counts from its own process start (2633 s into a
-        // long session, measured; Studio's clock, not the
+        // long session, measured; Studio clock, not the
         // machine's uptime that Luau's built-in gives on Linux). The fidelity
         // harness sets RUSTUDIO_CLOCK_BASE to Studio's reading at Play start
         // so time-driven game code (Place A's menu camera sway) runs in phase.
@@ -4341,7 +4341,7 @@ impl Runtime {
 /// (chunk name, line, function name), read with Luau's own
 /// `debug.traceback(thread)` ("Name:3 function f" / "Name:6" / "[C] function
 /// error"). C frames and rustudio's own chunks are left out, as Studio's
-/// stack printer () skips frames without a line.
+/// stack printer skips frames without a line.
 fn thread_frames(lua: &Lua, th: &Thread) -> Vec<(String, u32, Option<String>)> {
     let tb = lua
         .globals()
@@ -4366,7 +4366,7 @@ fn report(lua: &Lua, e: &mlua::Error) {
     report_frames(lua, e, Vec::new());
 }
 
-/// Output for a script error, as Studio prints it (): the error,
+/// Output for a script error, as Studio prints it: the error,
 /// then in blue "Stack Begin", one "Script '{}', Line {} - function {}" (or
 /// "Script '{}', Line {}" when the frame has no function name) per Luau
 /// frame, "Stack End". With no frames known, the error's own "Name:line".
@@ -5265,7 +5265,7 @@ mod legacy_tests {
         assert!(has("sun 1"), "{text:?}");
         assert!(has("job true 0"), "{text:?}");
         assert!(has("archivable 1"), "{text:?}");
-        // Studio's own messages (): max radius 256 = ShapecastMaxSize 512 / 2.
+        // Studio's own messages: max radius 256 = ShapecastMaxSize 512 / 2.
         let lim = |s: &str| text.iter().any(|t| t.starts_with("limits") && t.contains(s));
         assert!(lim("The maximum radius is 256.000000."), "{text:?}");
         assert!(lim("Attempt to shapecast with distance 2000.000000. The maximum distance is 1024."), "{text:?}");

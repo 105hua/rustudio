@@ -125,32 +125,27 @@ scheduler integration. A final integrated cargo check/test remains required.
 Integrated cargo check and all three data unit tests now pass after the avatar
 owner repaired its constant. The temporary harness is no longer the only check.
 
-The actual login session validates, but `Session::my_universe_ids()` returns
-**zero owned universes**. Thus the authorized read-only probe could not obtain
-any owned published universe to read/capture a successful persistence response
-or an API-access denial. No other person's universe was substituted. the offline Studio's
-request log has no captured DataStore traffic. REA search_strings timed out
-at 300 seconds; the existing local Ghidra workflow succeeded instead.
+The actual login session validates, but `Session::my_universe_ids()` returns **zero owned universes**. Thus the authorized read-only probe could not obtain any owned published universe to read/capture a successful persistence response or an API-access denial. No other person's universe was substituted. the offline Studio's request log has no captured DataStore traffic.
 
 Recovered actual function entries and formats:
 
-- `` obtains a universe configuration URL via ``, using
-  `/v1/universes/%s/configuration`; `` reads the explicit boolean
+- obtains a universe configuration URL via, using
+  `/v1/universes/%s/configuration`; reads the explicit boolean
   `isStudioAccessToApisAllowed` and treats missing/nonboolean as false.
   Added a session-only, mockable access-check module in rustudio-account.
-- Persistence-v2 builders: `` version-at-time query
+- Persistence-v2 builders: version-at-time query
   `datastore={}&objectKey={}&versionCurrentTime={}`;
-  `` increment suffix `/increment` with
+ increment suffix `/increment` with
   `datastore={}&objectKey={}&incrementBy={}{} [optional &lockId]`;
-  `` `/versions` query sortOrder/startTime/endTime/maxItemsToReturn;
-  `` `/lock` query datastore/objectKey/lockId/ttl;
-  `` object query datastore/objectKey/optional lockId;
-  `` `/unlock` query datastore/objectKey/lockId.
-- Classic engine builders at `` and `` use
+ `/versions` query sortOrder/startTime/endTime/maxItemsToReturn;
+ `/lock` query datastore/objectKey/lockId/ttl;
+ object query datastore/objectKey/optional lockId;
+ `/unlock` query datastore/objectKey/lockId.
+- Classic engine builders use
   `%s%s?scope=%s&key=%s&target=%s` and
-  `%s%s?key=%s&scope=%s&target=%s&usn=%s`; sorted at ``
+  `%s%s?key=%s&scope=%s&target=%s&usn=%s`; sorted
   uses `%ssorted/list?scope=%s&key=%s&pageSize=%i&direction=%s`.
-  `` performs URL escaping conditional on engine context.
+ performs URL escaping conditional on engine context.
 
 These are distinct code paths. The response schema, current Play-test path,
 write verb/body and optimistic concurrency token contract are still unresolved.
@@ -226,15 +221,7 @@ validation and yielded indefinitely rather than producing a success. The same
 happened to a valid subscription. Server/edit checking preserves the directly
 observed edit error `MessagingService can only be executed by game server`.
 
-Decompiled `` validates server context, topic length, and feature-
-conditional universe handling, then calls ``. That function creates
-and connects a persistent CSM client (calls ``, ``,
-``, ``), rather than a simple stateless REST publish.
-Neither the offline runtime probes nor an account with zero owned universes
-can establish successful subscription/authentication/renewal and message wire
-frames. Published CSM support is genuinely blocked on that missing contract;
-normal valid calls currently produce an explicitly rustudio-specific unimplemented
-transport error after yielding. This is not claimed as Studio backend parity.
+That function creates and connects a persistent CSM client (calls, ), rather than a simple stateless REST publish. Neither the offline runtime probes nor an account with zero owned universes can establish successful subscription/authentication/renewal and message wire frames. Published CSM support is genuinely blocked on that missing contract; normal valid calls currently produce an explicitly rustudio-specific unimplemented transport error after yielding. This is not claimed as Studio backend parity.
 
 Local unit coverage includes multiple listeners, disconnects, per-listener and
 caller payload isolation, timestamp presence, 1024/1025-byte boundary, unsupported
@@ -296,17 +283,7 @@ bookmarks**. Both were checked without logging credentials. No foreign universe
 was substituted. Studio CSM connections never completed in the offline Run.
 The owned hidden Studio was stopped and closed; the REA target was closed.
 
-Further static recovery: `` selects the `gamepersistence` host;
-`` selects `develop`. The persistence-v2 path is therefore on the
-former host, not apis.roblox.com. No speculative request was sent. The budget
-getter is actually ``; the first string hit was only its telemetry
-counter name. Its assembly returns clamped nonnegative integer token counts,
-UpdateAsync takes the minimum of read/write pools, OnUpdate calls
-``, and modern request types have distinct pools at offsets
-0x218..0x234. Ghidra loses the floating-point return loads in its pseudocode;
-assembly confirms them. `` adjusts budget minimums, but is not enough
-to establish initial balances, refill scheduling, caps, player-count behavior,
-or throttle queue semantics. No sampled number was turned into a fake budget.
+Further static recovery: selects the `gamepersistence` host;  selects `develop`. The persistence-v2 path is therefore on the former host, not apis.roblox.com. No speculative request was sent. The budget getter is actually; the first string hit was only its telemetry counter name. Its assembly returns clamped nonnegative integer token counts, UpdateAsync takes the minimum of read/write pools, OnUpdate calls , and modern request types have distinct pools at offsets 0x218..0x234. No sampled number was turned into a fake budget.
 
 Current scoped source counts (not a fresh release coverage run): functions
 **3 -> 42 / 74** with real implementations (32 added methods use explicit
@@ -419,7 +396,7 @@ OnUpdate budget is (30+5*players)*30/60 minus refetch work (none yet here).
 Rates can be reduced, modern limits cap at base 10000/per-player 200, and
 repeated changes warn. Implemented single-precision token arithmetic, refill,
 rate overrides, request charging and yielding queues with Studio's overflow
-messages. Source: getter assembly  and direct before/after API probes.
+messages. Source: getter assembly and direct before/after API probes.
 
 Validation now includes a **real rustudio release Play run** under gamescope
 headless, with RUSTUDIO_PLACE_CONTEXT=10000000000008. The harness script runs

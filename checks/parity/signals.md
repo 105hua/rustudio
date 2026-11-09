@@ -16,16 +16,13 @@ newindex / `__rs_fire` wrappers).
   are read; missing = Default = Immediate.
 - Debug FFlags in the exe: `DebugForceDeferredSignalBehavior`,
   `DebugForceAncestryDeferredSignalBehavior` (not modelled).
-- Deferred re-entrancy: FInt `MaxDeferReentrancyDepth` (name ,
-  value  = 80).  increments a byte counter, compares
+- Deferred re-entrancy: FInt `MaxDeferReentrancyDepth` (name,
+  value = 80). increments a byte counter, compares
   `> FInt`, logs at error level "Maximum event re-entrancy depth (%d)
-  exceeded for %s.%s" () and drops the invocation.
-- Immediate re-entrancy message "Maximum event re-entrancy depth exceeded
-  for {}.{} when calling {} on line {} in {}" (, referenced at
-   / ). Its depth constant wasn't located (Ghidra
-  without analysis only gave fragments); rustudio uses 80 here too.
+  exceeded for %s.%s" and drops the invocation.
+- Immediate re-entrancy message "Maximum event re-entrancy depth exceeded   for {}.{} when calling {} on line {} in {}" (, referenced at ).
 - Also present: "Maximum re-entrancy depth (%i) exceeded calling task.defer"
-  (; task.defer limit, not done here).
+.
 
 ## How rustudio does it
 

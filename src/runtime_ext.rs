@@ -2736,7 +2736,7 @@ fn device_prop(lua: &Lua, r: Ref, class: &str, key: &str) -> mlua::Result<Option
             Ok(LVector3(Vec3::ZERO).into_value())
         }),
         // RootPart and the deprecated Torso share one getter in Studio
-        // ( → ): the rig's HumanoidRootPart, else
+        // the rig's HumanoidRootPart, else
         // UpperTorso (R15) / Torso (R6). Old free-model NPCs test
         // `Humanoid.Torso ~= nil` to see they're alive (Place B's ZombieScript).
         ("Humanoid", "RootPart" | "Torso") => {
@@ -3129,9 +3129,9 @@ pub fn prop_get(lua: &Lua, r: Ref, class: &str, key: &str) -> mlua::Result<Optio
                 w.input.sound_len.get(&r).copied().unwrap_or(0.0),
             )),
             "IsPlaying" => Some(Value::Boolean(w.input.sound_playing.contains(&r))),
-            // Studio's IsPaused getter ( → ) is
-            // `Sound+0x150 == 0`, the same byte Playing / IsPlaying read
-            // (: property object +0x90, i.e. Sound+0xC0+0x90): a
+            // Studio's IsPaused getter is
+            // == 0`, the same byte Playing / IsPlaying read
+            // a
             // sound that never played or has ended reads IsPaused = true.
             "IsPaused" => Some(Value::Boolean(!w.input.sound_playing.contains(&r))),
             "IsLoaded" => Some(Value::Boolean(true)),
@@ -3226,7 +3226,7 @@ pub fn newindex(lua: &Lua, r: Ref, class: &str, key: &str, value: &Value) -> mlu
                 Variant::OptionalCFrame(Some(pivot.to_cframe())),
             )?,
         }
-        // Studio's setter () then signals WorldPivot itself changed.
+        // Studio's setter then signals WorldPivot itself changed.
         let mut w = world(lua)?;
         w.fire(r, "Changed", vec![Value::String(lua.create_string("WorldPivot")?)]);
         w.fire(r, "Changed:WorldPivot", vec![]);
@@ -3399,8 +3399,8 @@ fn call_inner(lua: &Lua, name: &str, this: Ref, args: &MultiValue) -> mlua::Resu
         "Spherecast" | "Blockcast" | "Shapecast" => {
             let probe: Option<(u8, Vec3, glam::Mat3)>;
             let (origin, grow, dir, params) = match name {
-                // Studio's checks (Spherecast , Blockcast
-                // , Shapecast ), with its messages:
+                // Studio's checks (Spherecast, Blockcast
+                // Shapecast), with its messages:
                 // finite inputs, radius ≥ 0, sizes up to FInt
                 // ShapecastMaxSize (512; a sphere's diameter), distance up to
                 // ShapecastMaxDistance (1024).
@@ -3772,8 +3772,8 @@ fn call_inner(lua: &Lua, name: &str, this: Ref, args: &MultiValue) -> mlua::Resu
         }
         "HasAppearanceLoaded" | "IsLoaded" => one(Value::Boolean(true)),
         "SetCoreGuiEnabled" | "GetCoreGuiEnabled" => {
-            // StarterGui::setCoreGuiEnabled  / getCoreGuiEnabled
-            // : client only; All (4) sets every type 0..9; one
+            // StarterGui::setCoreGuiEnabled / getCoreGuiEnabled
+            // client only; All (4) sets every type 0..9; one
             // type is set, then All becomes `enabled` only if every other
             // type agrees with it (else false). Get reads the type's own
             // entry, All included.

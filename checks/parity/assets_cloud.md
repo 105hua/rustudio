@@ -79,30 +79,30 @@ No full self-test, live write, or authenticated endpoint parity claim is made.
 
 ## Follow-up group 1: session asset reads
 
-Recovered bundle/package implementations at  / ;
+Recovered bundle/package implementations;
 base resolver literals are `catalog` / `inventory`. Package response uses
-`assetIds`. Insert legacy search at  uses
+`assetIds`. Insert legacy search uses
 `apis.roblox.com/toolbox-service/v1/legacy-insert-service/{Model|Decal}` with
 `keyword` and `pageNumber`. Removed sets/categories immediately call the
-error continuation with `LuaWebService error` (/).
+error continuation with `LuaWebService error`.
 CreatePlaceInPlayerInventoryAsync unconditionally errors as removed in release
-471 (). No live write was attempted.
+471. No live write was attempted.
 
 GetGamePlacesAsync constructs develop's v1 universe places URL, Asc, limit 50
-( / ); records map name/id to Name/PlaceId. Real pages
+; records map name/id to Name/PlaceId. Real pages
 are fetched before StandardPages registration. Latest versions uses develop's
-`/v2/assets/{id}/versions` (), taking the first data record's `Id`.
+`/v2/assets/{id}/versions`, taking the first data record's `Id`.
 LoadAsset/LoadAssetAsync now yield on worker downloads; LoadAssetVersion uses
 asset delivery's version-id query rather than incorrectly treating a version
 ID as an asset ID. Authenticated fetch_bytes now preserves Roblox-Place-Id.
 
-Audio search v2 body recovered from : read-only POST to
+Audio search v2 body recovered: read-only POST to
 `toolbox-service/v2/assets:search`, searchCategoryType Audio, searchView Core,
 query, sortCategory/sortDirection, optional maxPageSize/pageToken/tags, and
 audioSearchFilters. The `Core` value was essential: CreatorStore gave HTTP400.
 AudioPages uses real creatorStoreAssets and nextPageToken pages. Sorting
 MostUsed/Trending and Title vs SearchKeyword still need Studio validation;
-they are partial parity, not claimed exact. Native record mapper 
+they are partial parity, not claimed exact. Native record mapper
 maps asset/creator fields to the exposed record, including numeric Creator.Type.
 
 Signed-in, read-only smoke tests: bundle 1 and free-model search succeeded;
@@ -112,7 +112,7 @@ names only, never logging credentials. The account mock route/session test
 passed. Metadata retrieval candidate returned HTTP404: its request schema and
 availability are unresolved, so it is not registered as an engine method.
 GetCreatorAssetID's legacy LuaWebService base route remains unresolved despite
-tracing . CreatePlace/SavePlace publish-setting gates are present in
+tracing. CreatePlace/SavePlace publish-setting gates are present in
 binary but runtime validation is blocked: two attempts to create an owned hidden
 Studio both failed with MaxInstanceCount. No other agent's Studio was touched.
 Other asset creation methods need their actual Play-mode gate verified; they
@@ -130,11 +130,11 @@ Preload queues a request without yielding; PreloadAsync waits on the scheduler.
 
 AssetFetchFailed is delivered for new cloud-asset failures from that shared
 loader. Local file failures retain the prior observed status/callback-only path.
-The deprecated event descriptor is at ; installed docs describe its
+The deprecated event descriptor is; installed docs describe its
 asset-fetch-failure semantics. Its exact client/server ordering remains blocked
 by the Studio instance limit; this behavior is meaningful but not asserted exact.
 
-Encryption native entrypoints , ,  all immediately
+Encryption native entrypoints all immediately
 return when EnableLuaApiToRegisterEncryptedAssets is false. Its initializer at
  only sets name/length; the flag storage defaults false. Implemented
 the disabled Studio mode (registration/unregistration do nothing, listing is
@@ -161,8 +161,8 @@ Gallery saving/sharing and video capture remain blocked on exact desktop
 Studio behavior. Binary strings prove server-only errors for gallery prompts
 and show platform storage/video capability paths; synthesizing a client result
 without probing would be speculative. Source addresses: prompt errors
-/590, screenshot object not-implemented gate , gallery
-permission gate , upload disabled . CaptureSaved and
+/590, screenshot object not-implemented gate, gallery
+permission gate, upload disabled. CaptureSaved and
 UserCaptureSaved are not advertised: no gallery-save action has been implemented.
 No capture upload or remote write was attempted. VideoCapture.TimeLength has
 no value source because no video recorder has been connected.
@@ -190,30 +190,30 @@ FBX converter via a surgical visibility change. Compilation passed.
 Added the shipped binary's disabled-mode gates (yielding on the scheduler for
 Async entrypoints):
 - MLService CreateSessionAsync / MLSession ForwardAsync: `MLService is not enabled`
-  ( / ); post-process load/set: `MLPostProcess is not enabled`
-  ( / ). IsPostProcessReady reads false without a model
-  (). EnableMLService initializer  sets the flag name only.
+; post-process load/set: `MLPostProcess is not enabled`
+. IsPostProcessReady reads false without a model
+. EnableMLService initializer sets the flag name only.
 - Six exported SceneAnalysis methods: `SceneAnalysisService is not enabled`
-  ( through ); flag initializer  defaults off.
+; flag initializer defaults off.
   GetCollisionGeometryMemoryAsync is in api-dump but its name was not found in
   this executable, so its behavior cannot be asserted from this build.
 - FeatureMatchingTable.GetSchema: `FeatureMatchingTable:GetSchema is not yet enabled`
-  (). The enabled table decoder and schema-derived SchemaName remain
+. The enabled table decoder and schema-derived SchemaName remain
   unimplemented; the service/session class names are absent from this executable
   string inventory, though FeatureMatchingTable is present. No fake feature rows.
 - GenerateModelAsync / SegmentMeshAsync / LoadGeneratedMeshAsync:
   `GenerationService is not enabled.` Native registration maps the methods to
-   /  / , respectively.
+, respectively.
   Five video-gen methods use `VideoGen service is not enabled.` The flag overrides
   in a running signed-in Studio are still unverified; these are binary-default
   modes, not evidence of account-specific rollout settings.
 - RemoteCommandService's four public context methods fail with
   `<method> can only be called from within an executed command` in ordinary Play.
   Native guards check the execution context before looking up its command
-  ( /  /  / ).
+.
 - Unattached AppHandle / ParticipantHandle operations report
   `<class>:<method>: owning TestCoordinatorService is no longer available`.
-  AppHandle.Call is directly traced at . Valid attached handles and
+  AppHandle.Call is directly traced. Valid attached handles and
   their input/error validation need a real TestCoordinator session.
 
 Gate/error unit test passed (1 test) in headless gamescope. Compilation passed.
@@ -225,11 +225,11 @@ Remaining genuine blockers, after source/binary inspection and read attempts:
   currently prevented by MaxInstanceCount.
 - RealtimeMedia: actual WebRTC signaling/device/session lifecycle is absent;
   binary shows eligibility checks, SDP exchange, and input permission paths
-  ( onward). No invented connected state or OnMessage/WiringChanged/
+. No invented connected state or OnMessage/WiringChanged/
   Disconnected/AudioInputRequested events. Cannot assert the right connection
   refusal without a valid Studio eligibility context.
 - OpenCloud*: InvokeAsync's server gate and `Open Cloud not loaded.` are traced
-  (), but Studio's registration/bootstrap state and typed CreateModel
+, but Studio's registration/bootstrap state and typed CreateModel
   schemas are unresolved. Notifications are live writes and were not sent.
   No API keys were used or requested.
 - ExecutedRemoteCommand: rustudio has no attached remote-command executor;
@@ -242,7 +242,7 @@ Remaining genuine blockers, after source/binary inspection and read attempts:
 
 ## Final verification follow-up and recovered metadata route
 
-Further tracing resolved metadata:  constructs a GET with repeated
+Further tracing resolved metadata: constructs a GET with repeated
 `assetIds` query parameters. The previous POST candidate's 404 was a method
 mismatch, not an unavailable service. Signed-in GET returned audioMetadataResults;
 an audio returned by the creator-store search supplied title, artist, duration,
@@ -250,7 +250,7 @@ and audioType metadata. GetAudioMetadataAsync is now implemented with the native
 30-entry limit, order/duplicate preservation, ContentId normalization and
 AssetId-only rows for unavailable metadata. It performs no write.
 
-AudioPages constructor  resolves all sort mappings: MostUsed -> Top,
+AudioPages resolves all sort mappings: MostUsed -> Top,
 Trending -> Trending, RecentlyCreated -> CreateTime, the duration sorts ->
 AudioDuration with Ascending only for ShortestToLongest. SearchKeyword is used
 by the v2 constructor; the older Title filter belongs to the old v1 path.
@@ -259,8 +259,8 @@ logging asset content. Bundle items now include AssetType and the DynamicHead
 SupportsHeadShapes flag; arbitrary raw web Product/Creator fields are not added.
 
 ApproveAssetId and ApproveAssetVersionId bind to an empty native thunk
-( / ), agreeing with installed docs that they do nothing.
-Insert's implementation at  inserts into Workspace and rejects nil
+, agreeing with installed docs that they do nothing.
+Insert's implementation inserts into Workspace and rejects nil
 with `instance must be non-nil`. Implemented all three and extended the focused
 test, which passed. Direct public_cached/remote_cached callers now participate
 in queue tracking too; fast worker completion cannot be overwritten by Pending.
@@ -275,11 +275,7 @@ confirmed the returned content ID draws the captured viewport in an ImageLabel.
 The capture metadata factory path works; a coverage probe's fabricated raw
 Capture object has no capture record, so its five properties remain flagged.
 
-Remaining unresolved write APIs were not sent to Roblox. Legacy creator lookup
-was traced through  into the dynamically configured LuaWebService base;
-its exact runtime URL cannot be recovered from the method fragment alone, and
-owned Studio attempts were blocked by MaxInstanceCount. The native REA string
-searches also timed out at 300s; direct local Ghidra provided the evidence above.
+Remaining unresolved write APIs were not sent to Roblox. Legacy creator lookup was traced through into the dynamically configured LuaWebService base; its exact runtime URL cannot be recovered from the method fragment alone, and owned Studio attempts were blocked by MaxInstanceCount.
 
 ## Priority regression: Place A live InsertService model/source selection
 
@@ -376,17 +372,17 @@ an executable's zero-initialized flag is its effective value:
 - SceneAnalysisService *is enabled*. The previous six unconditional disabled
   shims were removed. `GetInstanceCompositionAsync` now counts the actual live
   DOM using the native root-service whitelist, all 85 ordered IsA category
-  rules, and the native Name/Size/Children tree ( / ;
-  tables  and ). A focused test adds a Part, Light and
+  rules, and the native Name/Size/Children tree (;
+  tables). A focused test adds a Part, Light and
   Folder and verifies the measured +3 delta and category subtotals.
   `GetCollisionGeometryMemoryAsync` is absent in this Studio build and reading
   it raises the native invalid-member error; GetLatestVersionUriAsync is also
   absent from this shipped executable and documentation.
 
 Additional write guards recovered without executing writes:
-`CreateAssetAsync` and `CreateAssetVersionAsync` share , whose Play
+`CreateAssetAsync` and `CreateAssetVersionAsync` share, whose Play
 refusal is `CreateAssetAsync can only be used in the Edit datamodel`.
-`PromptImportAnimationClipFromVideoAsync` uses  and its effective
+`PromptImportAnimationClipFromVideoAsync` uses and its effective
 DFFlag is false (StudioAppSettings, sole place override 14883099012):
 `AssetService::PromptImportAnimationClipFromVideoAsync feature not enabled.`
 These Play refusals are implemented. The native Edit upload path is intentionally
@@ -400,7 +396,7 @@ the repeatable verification command. No full self-test was run.
 
 ## Capture status: recovered read-only polling route
 
-`CheckUploadCaptureStatusAsync` (, response ) now makes
+`CheckUploadCaptureStatusAsync` now makes
 Studio's session-authenticated GET:
 `https://apis.roblox.com/content-captures-api/v1/check-upload-status?token=...`
 (client), or `check-upload-status-rcc` (server). No upload/start-upload call is
@@ -500,7 +496,7 @@ that very EditableImage object. URI, none and string values fail
 `AssetService:CreateDecalAsync: <key> value should be an EditableImage Content`.
 No maps -> `AssetService:CreateDecalAsync: No Content Maps provided`.
 Unknown keys warn `AssetService:CreateDecalAsync: Unknown content parameter: <key>`.
-Native helper: ; English shipped docs confirm the map keys/types.
+Native helper:; English shipped docs confirm the map keys/types.
 These paths are implemented using existing editable objects and real DOM content
 properties, without changing CreateEditableImage* / CreateEditableMesh*.
 

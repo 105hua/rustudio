@@ -1,15 +1,15 @@
 //! Part material textures: Studio's material tables and their texture packs.
 //!
 //! Studio builds three tables of 43 materials in one function
-//! (): `PartMaterialInfosPre2022`, then either the 4K 2022 table
+//! `PartMaterialInfosPre2022`, then either the 4K 2022 table
 //! (fast flag RenderEnablePartBaseMaterial4K, default true, registered at
-//! ) or the plain 2022 table. Each entry is a texture pack id
+//!) or the plain 2022 table. Each entry is a texture pack id
 //! (colour / normal / roughness or metalness / height), a second "detail"
 //! pack (a normal map only), a colour 0xAABBGGRR and one 16-bit word. The
 //! colour is the material's average: drawn on its own when the maps aren't
 //! there (offline Studio shows exactly these, squared), and close to the
 //! colour map's mean (pre-2022 Fabric 0x666869 vs 101, 100, 98 measured).
-//! Material order: the Enum.Material list at .
+//! Material order: the Enum.Material list.
 //!
 //! A pack is fetched from public asset delivery (docs/MATERIALS.md: no login,
 //! gzip, two hops), its maps decoded, resized to one layer size and turned
@@ -53,7 +53,7 @@ const fn e(material: u32, pack: u64, detail: u64, color: u32, word: u16) -> Entr
     }
 }
 
-/// RenderEnablePartBaseMaterial4K's default ( registers it as 1).
+/// RenderEnablePartBaseMaterial4K's default.
 pub const PART_BASE_MATERIAL_4K: bool = true;
 /// Studs per texture repeat of the 2022 tables (and of the studs atlas:
 /// TEXCOORD0 = studs / 8); the pre-2022 table's are per material (`consts`).
@@ -244,7 +244,7 @@ pub fn full_consts(pack: u64) -> Option<&'static [f32; 21]> {
 
 /// Wang index is DDS A8L8, uploaded by Studio as two channels (L, A).
 /// Four 4-bit cells per f32, all integers exactly representable; the shader
-/// uses nearest/wrap, matching slot 9's filter=0 in .
+/// uses nearest/wrap, matching slot 9's filter=0.
 pub fn wang_index() -> Vec<[f32; 4]> {
     let mut out = vec![[0.0; 4]; 1024];
     let img = crate::assets::resolve(crate::mech::WANG_INDEX, None)
@@ -259,8 +259,8 @@ pub fn wang_index() -> Vec<[f32; 4]> {
     out
 }
 
-///  hashes an instance allocation's eight address bytes with
-/// FNV-1a;  turns the hash into the part's offset. The renderer
+/// hashes an instance allocation's eight address bytes with
+/// FNV-1a; turns the hash into the part's offset. The renderer
 /// supplies a stable random referent identity in place of Studio's address.
 pub fn uv_offset(size: glam::Vec3, material: u32, identity: u64) -> [f32; 2] {
     let hash = identity.to_le_bytes().iter().fold(crate::mech::MATERIAL_UV_FNV_OFFSET,

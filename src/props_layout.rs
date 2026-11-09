@@ -164,8 +164,8 @@ pub fn rows(class: &str, can_collide: bool) -> Vec<Category> {
             continue;
         }
         // Studio starts "Surface" and "Surface Inputs" collapsed, the rest
-        // open, unless toggled before (Studio ,
-        // the set built by ).
+        // open, unless toggled before (,
+        // the set built).
         cats.push(Category { collapsed: matches!(cat.as_str(), "Surface" | "Surface Inputs"), name: cat, rows });
     }
     cats

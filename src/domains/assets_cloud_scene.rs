@@ -1,5 +1,5 @@
 //! SceneAnalysisService instance composition from the live DOM. Studio's
-//! whitelist and ordered IsA categories:  / .
+//! whitelist and ordered IsA categories:.
 use super::*;
 use std::collections::BTreeMap;
 #[derive(Default)]

@@ -209,7 +209,7 @@ pub fn fitted(doc: &Document, model: Ref) -> Lookup {
                     _ => 1,
                 },
                 // Studio clamps Puffiness to [-1, 1] in its setter (:
-                // maxss .rdata  = -1, minss  = 1); default 1
+                // maxss = -1, minss = 1); default 1
                 // (FInt WrapPuffinessDefaultPercent = 100).
                 puffiness: f32_of(doc.prop(w, "Puffiness"))
                     .unwrap_or(crate::mech::WRAP_PUFFINESS_DEFAULT)

@@ -36,11 +36,11 @@ pub const ASSET_V2_URL: &str = "https://assetdelivery.roblox.com/v2/assetId";
 const KEYRING_SERVICE: &str = "rustudio";
 const KEYRING_KEY: &str = "roblox-cookie";
 
-/// Retries of a CSRF-refused request (Studio: counter at +0x178, `cmp eax, 3`
-/// at ).
+/// Retries of a CSRF-refused request (Studio: counter at 
+///).
 pub const CSRF_MAX_RETRIES: usize = 3;
 
-/// Cookie names Studio keeps as secrets (its set built at ):
+/// Cookie names Studio keeps as secrets:
 /// none of them is ever shown.
 pub const SECRET_COOKIES: [&str; 3] = [".ROBLOSECURITY", ".RBXIDCHECK", ".RBXID"];
 
@@ -547,7 +547,7 @@ impl Session {
     }
 
     /// A state-changing POST with the X-CSRF-TOKEN dance, Studio's rule
-    /// (Studio ): a reply of 403 to a method other
+    /// a reply of 403 to a method other
     /// than GET / HEAD / OPTIONS / TRACE that carries a non-empty
     /// `x-csrf-token` different from the one sent is retried with it, at most
     /// [`CSRF_MAX_RETRIES`] times. The token is kept for the session.

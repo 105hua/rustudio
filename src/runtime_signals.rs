@@ -21,12 +21,12 @@
 //! input) run at the next `dispatch`, before deferred threads.
 //!
 //! Re-entrancy limits (Studio):
-//! - Deferred: FInt `MaxDeferReentrancyDepth` (name at , value
-//!   at , default 80); past it  logs at error level
-//!   "Maximum event re-entrancy depth (%d) exceeded for %s.%s" ()
+//! - Deferred: FInt `MaxDeferReentrancyDepth` (name, value
+//! default 80); past it logs at error level
+//! "Maximum event re-entrancy depth (%d) exceeded for %s.%s"
 //!   and drops the invocation.
 //! - Immediate: "Maximum event re-entrancy depth exceeded for {}.{} when
-//!   calling {} on line {} in {}" (, used by ). The
+//! calling {} on line {} in {}". The
 //!   depth constant for this path wasn't located; it uses the same 80.
 
 use super::*;

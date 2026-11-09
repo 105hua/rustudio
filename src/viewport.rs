@@ -361,7 +361,7 @@ impl Editor {
         }
     }
 
-    /// Fly speed multiplier over the base step, Studio's rule ():
+    /// Fly speed multiplier over the base step, Studio's rule:
     /// the base step until 120 ticks held, then ticks / 240 studs, capped at 15
     /// (×30 base, reached after about 25 s).
     pub fn fly_boost(&self) -> f32 {
@@ -524,7 +524,7 @@ impl Editor {
                             eprintln!("MESHPART_SOURCE {:?} Size={:?} MeshSize={:?} InitialSize={:?} bounds_extent={:?} uv={}", sp.r, d.size, self.doc.prop(sp.r,"MeshSize"), self.doc.prop(sp.r,"InitialSize"), m.extent, if sp.texture_id.is_some() { "authored" } else { "built-in stud projection" });
                         }
                     }
-                    // Studio  -> : source mesh units
+                    // Studio: source mesh units
                     // scale by current Size / stored InitialSize (MeshSize).
                     // The upload normalized by extent, so restore that factor.
                     if asset.fit_to_part && self.doc.class_of(sp.r).is_some_and(|c| c == "MeshPart") {
@@ -1727,7 +1727,7 @@ impl Editor {
         }
         // Holding movement keys ramps the speed up. Studio clears its hold
         // counter as soon as no movement key is down, and while Shift is held
-        // (caller at , counter [obj+0x348]).
+        //.
         if moving && !shift {
             self.fly_held += dt;
             self.fly_idle = 0.0;

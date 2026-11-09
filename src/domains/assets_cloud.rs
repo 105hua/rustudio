@@ -152,7 +152,7 @@ pub fn call(
             return Ok(MultiValue::new());
         }
         // Studio's EnableLuaApiToRegisterEncryptedAssets defaults false. Native
-        // entrypoints /9a0/a50 return without changing keys in this mode.
+        // entrypoints/9a0/a50 return without changing keys in this mode.
         if name=="ListEncryptedAssets" {return one(Value::Table(lua.create_table()?));}
         if name.starts_with("Register") || name.starts_with("Unregister") {
             let count=match name {"UnregisterDefaultEncryptionKey"=>0,"RegisterEncryptedAsset"|"RegisterSessionEncryptedAsset"=>2,_=>1};

@@ -1,6 +1,6 @@
 //! Studio's session-authenticated experience API-access check.
-//! Recovered from Studio  ->  (URL) and
-//!  (isStudioAccessToApisAllowed boolean). No Open Cloud key.
+//! Recovered from Studio (URL) and
+//! (isStudioAccessToApisAllowed boolean). No Open Cloud key.
 use crate::{Error, Result, Session};
 
 pub const UNPUBLISHED: &str = "You must publish this place to the web to access DataStore.";

@@ -1,8 +1,8 @@
 //! The CloudEdit replicator: the item stream carried over the transport.
 //!
 //! The wire layout here is decoded from a real, decrypted Team Create join
-//! (Studio 0.746, docs/PROTOCOL.md §3b, [verified: capture]); the research decoder
-//! it was derived from is `tools/tc/rig/rtcio_*.py`.
+//!; the research decoder
+//! it was derived from is a capture script.
 //!
 //! Layers, outermost first:
 //! - [`split_stream`]: a reassembled `rbx-rtcio` QUIC stream is
@@ -33,7 +33,7 @@ pub mod packet_id {
     pub const SOLID_MESH: u8 = 0xa5;
 }
 
-/// The replicator item kinds. Names match the exe's RTTI (`NewObjectItem`,
+/// The replicator item kinds. Names match the type names (`NewObjectItem`,
 /// `ChangePropertyItem`, …).
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ItemKind {
@@ -226,7 +226,7 @@ impl<'a> Cur<'a> {
     }
     /// `01 <u32 LE id>` or `00` (nil).
     fn reference(&mut self) -> R<Option<u64>> {
-        // Native serializer  writes a varint scope followed by
+        // writes a varint scope followed by
         // the u32 instance index. Scope 1 is the server's usual namespace;
         // peer-created instances retain their own scope.
         let scope = self.varint()?;
@@ -600,7 +600,7 @@ fn unzstd(d: &[u8], size: usize) -> R<Vec<u8>> {
 }
 
 /// SET_GLOBALS assigns the client's GUID namespace after seven flags.
-/// Native client parser: , , ...
+/// Native client parser:...
 /// The second flag enables an optional terrain block, not supported here.
 pub fn assigned_peer_scope(body: &[u8]) -> Result<u32, String> {
     let mut c = Cur::new(body);
@@ -772,7 +772,7 @@ impl Decoder {
                 if stage != 1 {
                     // JoinDataItemV2 writes a u32, a varint pair count, then
                     // that many (u32-varint, u32-varint) metadata pairs.
-                    // Serializer: ... Empty tables
+                    // Serializer:... Empty tables
                     // looked like a fixed five-byte trailer in early captures.
                     c.u32()?;
                     let count = c.varint()? as usize;
@@ -819,7 +819,7 @@ impl Decoder {
                 }
                 // StreamDataItem writes zero or more compact region markers
                 // after the records. Empty batches omit the compressed block.
-                // Native serializer  / .
+                //.
                 loop {
                     let flags = c.u8()?;
                     match flags & 7 {
@@ -950,7 +950,7 @@ impl Decoder {
                     ops.push(RepOp::Reparent { id, parent });
                 }
             }
-            // StreamDataInfoItem, serializer : compact region
+            // StreamDataInfoItem,: compact region
             // coordinate, then two u32 fields. Studio 0.746 capabilities do
             // not enable the optional third u32 (capability bit 56).
             0x14 => {

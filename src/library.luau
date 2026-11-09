@@ -96,7 +96,7 @@ local ugs_values = {
     ChatVisible = true,
     PlayerHeight = 5,
 }
--- Studio's are Instances (RE-GLOBALS misc.UserSettings / misc.stats): a
+-- Studio's are Instances: a
 -- UserSettings named "GlobalBasicSettings" holding the UserGameSettings;
 -- their properties read and write `ugs_values` (src/domains/services.rs),
 -- Changed fires as for any Instance. Made on first use (the library loads
@@ -1475,7 +1475,7 @@ end
 -- What Roblox does when a Humanoid sits in a Seat / VehicleSeat (the engine
 -- decides when, see play.rs update_seat): a SeatWeld from the seat to the
 -- HumanoidRootPart, Seat.Occupant, Humanoid.SeatPart and Humanoid.Sit.
--- The weld as Studio builds it (): C0 = (0, Seat.Size.Y × 0.5, 0)
+-- The weld as Studio builds it: C0 = (0, Seat.Size.Y × 0.5, 0)
 -- and C1 = (0, y, 0), both turned by the basis look (0, -1, 0) / up (0, 0, -1)
 -- (Angles(-π/2, 0, 0)). R6: y = -(max(root.Size.Y, 0.05) × 0.5 + 0.5).
 -- R15: y = root RootRigAttachment.Y - LowerTorso RootRigAttachment.Y

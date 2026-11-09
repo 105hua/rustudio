@@ -22,7 +22,7 @@ impl mlua::UserData for AdReward {
         });
     }
 }
-// Native SocialService signals CoreScripts (/).
+// Native SocialService signals CoreScripts.
 // Headless Studio has no camera/self-view window; the signals still dispatch.
 fn self_view_position(value: &Value) -> mlua::Result<LEnumItem> {
     let result = crate::ltypes::enum_arg(Some(value), "SelfViewPosition", "LastPosition");
@@ -74,7 +74,7 @@ pub fn observe_captures(lua: &Lua) -> mlua::Result<()> {
     data.raw_set("review.capture_observer", true)
 }
 fn key_encoding(id: &str, mime: &str, length: usize) -> String {
-    // Native  writes this order, compact JSON, then padded Base64.
+    // writes this order, compact JSON, then padded Base64.
     let json = format!(r#"{{"id":"{id}","contentType":"{mime}","contentLength":{length}}}"#);
     const T: &[u8;64] = b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
     let mut out = String::with_capacity(json.len().div_ceil(3)*4);

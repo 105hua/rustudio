@@ -7,11 +7,7 @@ hooks) with `avatar_props.rs`, `avatar_desc.rs`, `avatar_rig.rs`,
 (ApplyDescription, GetAppliedInstance, Wrap* methods) and
 `avatar_rules.luau` (Studio's GetValidationRules table).
 
-Ground truth: a offline Studio 0.744 (own instance, closed after), the
-strings and CoreScripts of `Studio`
-(`ExtraContent/scripts/CoreScripts/Modules/AvatarEditorPrompts`), and live
-read-only calls through the login session (the ignored test
-`probe_avatar_endpoint` in `crates/rustudio-account/src/avatar.rs`).
+Ground truth: a offline Studio 0.744 (own instance, closed after), the strings and CoreScripts of `Studio` (`ExtraContent/scripts/CoreScripts/Modules/AvatarEditorPrompts`), and live read-only calls through the login session (the ignored test `probe_avatar_endpoint` in `crates/rustudio-account/src/avatar.rs`).
 
 ## Coverage (`--api-coverage`, game-script members of this domain's classes)
 
@@ -198,10 +194,7 @@ average 86–92), so the absolute numbers are inflated:
 - **Skinning on the GPU**: skinning runs on the CPU. It costs about
   0.2 ms per animating 8.8k-corner head under heavy load and nothing for
   still parts. A GPU skinning pass would remove the re-upload.
-- **Uncertain shapes**: InventoryPages entries are {AssetId, AssetType (name),
-  Name, Created}. GetItemDetails keeps the catalog's numeric AssetType. The
-  CatalogSearchParams → query mapping (sort/aggregation numbers, sales-type
-  ids) comes from the catalog API and wasn't decompiled from Studio.
+- **Uncertain shapes**: InventoryPages entries are {AssetId, AssetType (name),   Name, Created}. GetItemDetails keeps the catalog's numeric AssetType.
 - **Shared-runtime notes**: events fire through World::fire, so they are
   delivered deferred, while Studio 0.744 delivered the HumanoidDescription
   events immediately in the edit-mode command bar.

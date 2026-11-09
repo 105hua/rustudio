@@ -1,4 +1,4 @@
-//! SharedTable as in Studio 0.744 (docs/RE-DATATYPES.md SharedTable rows):
+//! SharedTable as in Studio 0.744:
 //! userdata (`typeof` "SharedTable", tostring `SharedTable: 0x…`, locked
 //! metatable), indexable and assignable like a table, generalized iteration
 //! (`for k, v in st`), no `__namecall` (`st:f()` is the VM's "attempt to
@@ -289,7 +289,7 @@ mod tests {
         lua.load(src).set_name("=T").eval::<String>().unwrap_or_else(|e| panic!("{src}: {e}"))
     }
 
-    /// RE-DATATYPES SharedTable create / values / read / write / namecall /
+    /// Studio probes SharedTable create / values / read / write / namecall /
     /// operator / constructor rows.
     #[test]
     fn shape_like_studio() {

@@ -1,14 +1,14 @@
-//! The `RbxTransportSessionCrypto` hello (docs/PROTOCOL.md §2, §8).
+//! The `RbxTransportSessionCrypto` hello.
 //!
 //! Studio's `0xa8` message is a fixed two-field container [verified: exe,
-//! builder ``; verified: capture]:
+//! verified: capture]:
 //!
 //! ```text
 //! a8 11 <len1> <len1 bytes> <len2> <len2 bytes>
 //! ```
 //!
 //! - `0xa8` is the packet id.
-//! - `0x11` is the byte the object holds at `+0x1130` (the encryption/key
+//! - `0x11` is the byte the object holds at (the encryption/key
 //!   suite selector).
 //! - Each length is one byte (the low byte of the `std::string` size in the
 //!   builder); live Studio sends `len1 = 33` and `len2 = 66`, for 103 bytes
@@ -18,7 +18,7 @@
 //! server in the join script's `ClientTicket` bundle. Studio splits that
 //! bundle on `;`, Base64-decodes fields 3 and 4 (zero-based indices 2 and 3),
 //! and parses the final field as the suite byte [verified: exe, parser
-//! ``, caller ``, Base64 decoder ``]. No
+//! Base64 decoder]. No
 //! client ephemeral key is generated for this message.
 //!
 //! This module never logs or formats the decoded bodies.
@@ -41,7 +41,7 @@ pub const WIRE_LEN: usize = 3 + FIRST_LEN + 1 + SECOND_LEN;
 /// A SessionCrypto hello, with the bodies kept opaque.
 #[derive(Clone, PartialEq, Eq)]
 pub struct Hello {
-    /// The byte at object `+0x1130` (`0x11` on the live build).
+    /// The byte at object (`0x11` on the live build).
     pub suite: u8,
     /// First length-prefixed, server-supplied ticket body.
     pub first: Vec<u8>,

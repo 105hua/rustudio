@@ -1,4 +1,4 @@
-//! The global environment as Roblox game scripts observe it (docs/RE-GLOBALS.md,
+//! The global environment as Roblox game scripts observe it (Studio probes,
 //! measured against Studio 0.744; anti-cheats such as an admin script probe these).
 //!
 //! * A script's environment holds exactly `_G`, `shared` and `script`; its
@@ -21,7 +21,7 @@ use mlua::{ffi, Function, Lua, Table, Thread, Value};
 use std::ffi::CStr;
 use std::os::raw::{c_char, c_int};
 
-/// The compatibility version Studio reports (docs/RE-GLOBALS.md misc.version).
+/// The compatibility version Studio reports.
 pub const VERSION: &str = "0.744.0.7441077";
 pub const LOCKED: &str = "The metatable is locked";
 
@@ -57,7 +57,7 @@ pub fn init_vm(lua: &Lua) {
     }
 }
 
-/// Globals that are rustudio's and absent in Studio (docs/RE-GLOBALS.md
+/// Globals that are rustudio's and absent in Studio (Studio probes
 /// "Internal globals visible to game scripts" and the inventory rows Studio
 /// reads as nil). `_G` and `shared` live in each script environment itself.
 pub fn hidden(name: &str) -> bool {

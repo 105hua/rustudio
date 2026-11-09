@@ -13,7 +13,7 @@
 //! - one undo step per drag.
 //!
 //! The rules are Studio's own DraggerFramework (SelectDragger.rbxm, read
-//! from its Luau bytecode; docs/MECHANICS.md "Round 17, decompiled"):
+//! from its Luau bytecode; docs/MECHANICS.md "Round 17, from Studio"):
 //! - a box face's surface frame has its origin at the face corner nearest
 //!   the point, Y along the face normal and X / Z along the face's edges
 //!   (DragHelper.getSurfaceSnapForPartTreatedAsBox, buildSurfaceMatrix);

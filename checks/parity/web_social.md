@@ -8,12 +8,7 @@ firing audit (registration alone is not proof).
 
 ## Sources
 
-an offline Studio exe and packed ExtraContent/models/DataModelPatch/DataModelPatch.rbxm.
-Extracted 42,990 scripts with tools/decompile/rbxm_src.py; parsed bytecode with
-ldis.py/lstr.py. PurchasePrompt source is packed here, not absent. Main evidence:
-Utils.isMockingPurchases, Network.getBalanceInfo, Thunks.completePurchase,
-Thunks.completeRequest, Services.Network, resolvePromptState and English locale.
-Own Ghidra scratch project /tmp/web-social-ghidra avoids the shared-project lock.
+an offline Studio exe and packed ExtraContent/models/DataModelPatch/DataModelPatch.rbxm. PurchasePrompt source is packed here, not absent. Main evidence: Utils.isMockingPurchases, Network.getBalanceInfo, Thunks.completePurchase, Thunks.completeRequest, Services.Network, resolvePromptState and English locale.
 
 Online signed-in Vinegar Studio 0.746.0.7461269, unpublished Place1 (PlaceId=0,
 GameId=0). Only this unpublished window targeted; published Team Create window
@@ -48,11 +43,11 @@ POST batch reads use the existing session CSRF handling.
   /v1/subscriptions/{id}/status?userId=...
 * apis /developer-products/v2/universes/{universe}/developerproducts?limit=50&cursor=...
 
-Native builders: groups , badge /,
-inventory , users , gamepass ownership ,
-policy //, developer products
-/, virtual events //.
-Upcoming event parser  filters ended/cancelled/moderated/unpublished,
+Native builders: groups, badge,
+inventory, users, gamepass ownership,
+policy, developer products
+, virtual events.
+Upcoming event parser filters ended/cancelled/moderated/unpublished,
 converts ISO timestamps to UTC date tables, and maps enum status/RSVP.
 
 Real login-session reads succeeded for Marketplace, Badge, Group, User, Policy,
@@ -62,7 +57,7 @@ Social upcoming events, gamepass ownership and scratch universe products
 calls are in the explicitly ignored account live_reads test. Mock route tests
 cover each implemented route, cookie forwarding, malformed JSON, 429 and cache.
 Product/gamepass/subscription metadata cache is session-scoped, 60 seconds;
-asset default cache is zero. Native defaults /1778/0ee0 and installed
+asset default cache is zero. Native defaults/1778/0ee0 and installed
 Studio settings corroborate this. Other service throttles/cache parity remains
 under investigation. Failed HTTP responses are not cached.
 
@@ -90,7 +85,7 @@ mock metadata at /tmp/web-social-prompt-fixture.png.
 
 ProcessReceipt server-only; BindReceiptHandler supports filters/catch-all,
 prioritizes specific IDs, disconnect/rebind and Enum.ReceiptDecision validation.
-Native registry  -> ; installed fallback/transfer/product
+Native registry; installed fallback/transfer/product
 flags enabled. Duplicate-handler/catch-all/filter errors measured in offline
 Studio. Handler returns RBXScriptConnection-shaped userdata with Connected.
 
@@ -104,7 +99,7 @@ under investigation. This is not a verified cancellation firing claim yet.
 Teleport variant state copies containers; missing nil arguments reject; fresh
 arrival data/gui nil. No valid-target teleport attempted: online Studio's
 EnableStudioTeleports flag is true, so it might leave the local test.
-Native old Studio failure handler  raises
+Native old Studio failure handler raises
 “Cannot Teleport in the Roblox Studio.” Invalid server place ID: “Invalid
 placeId.” Client side/server-only checks measured separately.
 
@@ -137,26 +132,26 @@ users' policy context. No claim that all 127 functions are done.
 
 ## Additional read verification and Studio defaults
 
-Corrected subscription host/path from the native URL builder :
+Corrected subscription host/path from the native URL:
 `https://apis.roblox.com/v1/subscriptions/...` (there is no `/subscriptions`
 prefix). Login-session EXP-1 details returned NeverSubscribed and status returned
 false/false. Product info returned subscriptionProductInfo:null, now converted
 to native `Product info not found for subscription: EXP-1` rather than a raw
-wrapper table. Non-null product parser traced at , details parser at
+wrapper table. Non-null product parser traced, details parser at
 . Converts enums, DateTime milliseconds, price-discount records and
 PascalCase keys. Metadata/details caching defaults to 60 seconds.
 
-Payment history is a native local Studio mock (): EXP-0 relative
+Payment history is a native local Studio mock: EXP-0 relative
 three Paid cycles, EXP-1 fixed two Paid cycles, EXP-2 fixed Refunded/Paid/Paid,
 EXP-3 two relative Paid cycles; other valid EXP IDs warn and return an empty
 array. Measured exact dates in owned offline server Play. It makes no web call.
 
-CanViewBrandProjectAsync native builder  calls apis
-`/brand-platform/v1/brand-projects/{id}/decision/studio`, parser 
+CanViewBrandProjectAsync calls apis
+`/brand-platform/v1/brand-projects/{id}/decision/studio`, parser
 reads isProjectAvailable. Real session read returned false for id 0. Price levels
-builder  calls apis `/developer-products/v1/universes/{universe}/price-levels`
+ calls apis `/developer-products/v1/universes/{universe}/price-levels`
 with repeated userIds query parameters; real session returned price level 1000.
-GetUserBadgesAsync parser  reads the same awarded-dates response,
+GetUserBadgesAsync parser reads the same awarded-dates response,
 returns {BadgeId,AwardedDate=DateTime}, skips malformed records, maximum 100 IDs.
 New conversion test covers badge statistics/dates, group membership, subscription
 info/details/status/history and price levels. Domain focused tests now 9 passed;
@@ -179,14 +174,13 @@ Latest release coverage retry failed during unrelated data-domain initialization
 `rustudio.data.memory:106: Expected <eof>, got 'end'`. No coverage file was emitted.
 The focused domain tests pass; retry coverage after a later shared release build.
 
-
 ## Native batch reads, pages, and teleport failure (continued)
 
 Current Studio 0.746 enables the request orchestrators: GamePass metadata is
 POST apis `/game-passes/v1/game-passes:batchGet` with gamePassIds/passView=Price
-(builder , body ). Developer-product metadata is GET
+. Developer-product metadata is GET
 apis `/developer-products/v1/developer-products/batch?productIds=...`
-(builder ). Public ProductId 1286521615 succeeds; the different
+. Public ProductId 1286521615 succeeds; the different
 DeveloperProductId is not the metadata identifier. Login-session mock/live tests
 pass after route correction. Native GamePass and Bundle return shapes are
 normalized separately. Asset cache remains zero, Product/GamePass cache60s,
@@ -195,12 +189,12 @@ unimplemented and is not claimed as cache/throttling parity.
 
 Developer-product/group relationship pages now fetch the first page only and
 advance on demand, retaining the last successful page after errors. Native
-GetPlayersByPartyId () is a local Player.PartyId filter, not an HTTP
+GetPlayersByPartyId is a local Player.PartyId filter, not an HTTP
 party lookup. UUID argument validation and server-only behavior are implemented.
 Recommendation-item read uses native POST `/recommendation-api/v1/recommendation-item/get`
-(, record parser ); real public unknown item0 returns400.
+; real public unknown item0 returns400.
 Player-place read uses `/reserved-servers-service/get-player-place-instance`
-(); scratch-context real read403, not a fabricated Studio fallback.
+; scratch-context real read403, not a fabricated Studio fallback.
 
 Native offline legacy teleport probes fire TeleportInitFailed before raising
 `Cannot Teleport in the Roblox Studio.` Options contain copied data/instance/
@@ -234,7 +228,6 @@ notification prompt events still need implementation/firing verification.
 The owned offline an offline Studio instance and MCP disappeared externally; online Place1
 remains usable. Play is stopped, no save/publish performed.
 
-
 ## Additional native checks (online Place1)
 
 Notification CoreScript modal appeared in normal Client Play: title `Turn on
@@ -259,8 +252,7 @@ CreateReviewableContentKey twice passed WS_CAPTURE_KEY_PASS. No upload.
 Coverage now emits successfully again after shared rebuild; latest result is
 /tmp/web-social-after6.json (counts pending domain-only aggregation).
 
-
-Commerce metadata: builder GET apis
+Commerce metadata: GET apis
 `/commerce/v1/purchasing/in-experience/commerce-products/{id}/product-info`;
 identifier validator accepts optional COM- prefix and1..20digits.
 Parser returns IsForSale/Item/Benefits; item parser
@@ -269,15 +261,13 @@ Name/Description/IconImageAssetId/DisplayPrice/IsPurchasable, benefit parser
 HTTP400(Bad Request), login-session same route400. Success-schema mock tested;
 no real commerce purchase. Focused tests18 passed, account3+live1 passed.
 
-
-Ad campaign eligibility builder GET apis
+Ad campaign eligibility GET apis
 `/brand-platform/v1/immersive-branded-ads/campaigns/{campaign}/eligibility`,
 HTTP/status parser, JSON parser. Validates isEligible bool,
 advertiserName string, immersiveBrandedAdPlacementIds string array. Public result
 IsEligible only; successful local responses cached by player/campaign. Errors
 remain Request failed as native Studio for unknown campaign0; live metadata-only
 request tested, no ad displayed. Domain19 tests, account3+live1 pass.
-
 
 ## Explicit event firing audit (all18, still in progress)
 
@@ -302,7 +292,6 @@ request tested, no ad displayed. Domain19 tests, account3+live1 pass.
 | TeleportInitFailed | Implemented. Native legacy error event precedes thrown Studio error; headless client/server-handoff ordering and TeleportOptions payload tested. |
 | VideoAdClosed | Implemented. Native obsolete ShowVideoAd fires false; local runtime verified, no real ad displayed. |
 
-
 Latest complete coverage /tmp/web-social-after7.json:85/127 functions,21/24
 properties,7/18 registered emitting events. Four remaining TextService layout
 methods belong to gui_input. Registration count deliberately not described as
@@ -312,14 +301,12 @@ reservation/teleport backend work before legacy client Studio rejection, unlike
 the verified four legacy methods. No valid live TeleportAsync/ReserveServer call.
 Native Premium/RobloxPlus/Bulk probes left no prompt to cancel; Play stopped.
 
-
-UserService GetUserInfosByUserIdsAsync native explicitly serializes
+UserService GetUserInfosByUserIdsAsync explicitly serializes
 excludeBannedUsers=true (store boolean1 at field offset0x40), corrected helper
 from false. ID list accepts negative numeric IDs; native empty list and{-1}
 return empty arrays, nonnumeric exact `UserService: invalid userId(s) given.
 Please make sure they are of number type`. Helper now keeps signed IDs.
 Native transport error wrapper is `UserService: Request Failed because %s`.
-
 
 Further safe native reads: BadgeInfo0/-1 -> Invalid badgeId; positive1HTTP404
 -> badgeId is invalid or does not exist. Native callback specially
@@ -327,19 +314,18 @@ maps only404, leaving other transport errors intact. GroupInfo0 rejects with
 GroupService:GetGroupInfoAsync() argument is not a valid groupId; fixed before
 HTTP. UserHasBadge(1,0) and UserOwnsGamePass(1,0) bothfalse.
 
-Global-user lookup is not a plain users GET: traced ->
--> -> ->. Native request is POST
+Global-user lookup is not a plain users GET: traced
+->. Native request is POST
 /private-users-service/v1beta1/getOrCreatePrivateUserId. It can allocate a
 private identity. Not added to the read-only request enum and never called live.
 This blocks safe live parity verification/implementation as a read-only lookup
 until a nonallocating native route or local Studio-mode behavior is established.
 
 Legacy policy route remains apis/player-policy-service/v1/player-policy-client.
-Alternate native builder is gameinternationalization.roblox.com
-/v1/player-policies-client (host getter). Which feature-flag branch
+Alternate is gameinternationalization.roblox.com
+/v1/player-policies-client. Which feature-flag branch
 Studio0.746 actively selects still needs runtime flag evidence; not silently
 switched based on a dead-string match.
-
 
 Recommendation GenerateItemListAsync: validation; URL
 POST apis/recommendation-api/v1/recommendation/generate; body.
@@ -354,7 +340,6 @@ was created, so positive live fixture remains unavailable. Mock two-page test
 covers context preservation, count, cursor, per-page tracing and required-context
 errors. Domain20/account3/explicit live1 passed. Current policy migration flag
 was read through settings():GetFFlag and is true; selected apis route retained.
-
 
 Native GetFVariable settings: ad campaignId max36bytes, cache max50 campaigns,
 placement IDs max110, HTTP timeout3000ms and client response timeout6000ms.
@@ -372,7 +357,6 @@ helper preserves signed values. GetGroupsAsync(-1) returns{}, helper now accepts
 signed user ID. GetUserBadgesAsync(-1,...) instead returns GetUserBadgesAsync:
 User is invalid or does not exist. These methods deliberately differ.
 
-
 Marketplace ranking read trace (implementation next): rank POST body
 {universeId,productIdentifiers:[{id,type:Product|GamePass}]}; recommend body
  {universeId,productInfoTypes:[Product|GamePass]}. URLs native
@@ -385,7 +369,6 @@ Rank index errors are1-based, Recommend index errors0-based. Limit50, rank cache
 true, fallbackfalse, both60s; rank quota10/minute/recommend5/minute. Empty rank
 argument exact must have at least one ProductIdentifier; Edit recommendedProduct
 request with valid type reaches backend and400 with task wait prefix.
-
 
 Marketplace RankProductsAsync/RecommendTopProductsAsync implemented from the
 above trace. Login-session scratch-context rank returned200 with
@@ -406,7 +389,6 @@ settings. Scope0 remains available for explicit standalone account read probes.
 Latest release coverage emits /tmp/web-social-after10.json; expected function
 count88/127, properties21/24, emitting-event registrations7/18.
 
-
 Important teleport follow-up: online Studio GetFVariable EnableStudioTeleports
 is true. The exe contains a StudioTeleportsManager and the alternate message
 Teleporting while using Roblox Studio is not permitted. A flag value alone does
@@ -415,19 +397,9 @@ No valid online teleport was attempted. Existing legacy failure evidence is from
 the owned offline Studio, not proof of every online/beta Studio configuration.
 Do not replace the unknown TeleportAsync behavior with a guessed constant error.
 
+Teleport deeper trace: shared manager and validation have separate server/context checks and can reach HTTP via. Only the exe in installed Studio DLL/EXE inventory contains the manager name. The alternate Teleporting while using Roblox Studio... text is an indexed script-message table entry, not an established active teleport rejection path; bounded direct-reference search found no use of its index. It must not be used as a guessed constant. No online teleport or global flag setting changed (the Studio process also owns the user's published window).
 
-Teleport deeper trace: shared manager and validation
-have separate server/context checks and can reach HTTP via.
-StudioTeleportsManager RTTI at, vtables/5428, constructor
-. Only the exe in installed Studio DLL/EXE inventory contains the
-manager name. The alternate Teleporting while using Roblox Studio... text is
-an indexed script-message table entry (), not an established active
-teleport rejection path; bounded direct-reference search found no use of its
-index. It must not be used as a guessed constant. No online teleport or global
-flag setting changed (the Studio process also owns the user's published window).
-
-
-Self-view implemented from native engine / and bundled
+Self-view implemented from native engine and bundled
 Chrome/Integrations/SelfieView. Native methods dispatch protected SelfViewHidden
 and SelfViewVisible(position) signals without client/server restriction or HTTP.
 Headless mode has no camera window; internal signals remain real. Online Place1
@@ -447,18 +419,17 @@ InternalRequestReviewableContentReviewAsync POSTs same root plus
 paths, not safe metadata reads, and neither was invoked. Their enabled-path
 implementation remains open; no disabled-only registration added for coverage.
 
-
 GetPartyAsync added after correcting an earlier inference about its output.
  constructs dictionaries, not private User SDK objects: UserId,
 PlaceId, JobId, optional PrivateServerId and ReservedServerAccessCode. Parser
  consumes universeMembers, ignores invalid user/place/job entries,
-and keeps latestGroupUpJoinTimeMs for descending ordering ().
+and keeps latestGroupUpJoinTimeMs for descending ordering.
 Callback overlays matching connected Player.PartyId and removes
 stale backend entries for connected players no longer in this party. Local
 ReservedServerAccessCode comes from the top-level response. No identity write.
 Read URL: apis/group-up/v1/get-group-up-universe-members?groupUpId=
 ...&universeId=...&placeId=...&instanceId=... (escaped values), no result cache.
-Online PartyAsyncThrottleCountPerMinute=120; constructor uses that
+Online PartyAsyncThrottleCountPerMinute=120; uses that
 base budget, no per-player increment, default60-second window.
 Online Place1 Server invalid UUID gives Received invalid party id.; all-zero
 UUID reaches read request and returns exact Request failed: %s (literal percent
@@ -468,14 +439,12 @@ Domain24/account3 tests pass; live_party_read passes. Headless actual Server
 WS_PARTY_READ_PASS matches native failure. Place1 stopped after probes.
 Self-view release/headless actual Client WS_SELF_VIEW_PASS also confirmed.
 
-
 Pending cached metadata/ownership reads now share the same request within the
 login-session+VM scope. Completion publishes independent JSON copies to current
 waiters; failures are not retained for later calls. A dropped request wakes its
 waiters with an interrupted error. Mock eight simultaneous Product reads yield
 one HTTP call; another VM scope yields its own call. Account4 tests pass, cargo
 check passes. Different-ID native batch aggregation remains separate work.
-
 
 Different-ID request batching now follows the native template scheduler.
 Online settings: GamePassOwnershipBatching, GamePassInfoBatching and
@@ -484,17 +453,17 @@ ActivityCooldown1000ms, MaxTotalCallablesInflight5000. The named
 SubsequentRequestCooldownMs10 settings exist but no active read of that raw
 value was established; no invented10ms inter-batch sleep added.
 
-Native product batch vtable: +50/max, +58/short, +60/long,
+Native product batch: +50/max, +58/short, +60/long,
 +68/activity; getters/1440/1430/1420. Base scheduler
 uses short40 AFTER >=1s idle, long200 during activity, subtracting elapsed time
 from the first queued call. Enqueue schedules one pending batch,
 without an early-full-queue dispatch. Flush takes at most50 and
-records dispatch time. Completion -> clears busy and
+records dispatch time. Completion clears busy and
 schedules the next batch, so requests remain queued during the HTTP call.
 No assumption that long means idle or that50 triggers immediate send.
 
 Developer product URL joins IDs with comma and productIds={}
-(), not repeated query parameters. Game-pass info batches gamePassIds
+, not repeated query parameters. Game-pass info batches gamePassIds
 with passView Price; ownership batches user/pass identifier pairs. Queue keys
 include cookie fingerprint, VM scope, origin and request kind; each VM final
 release clears its idle queues. Result rows are narrowed to each requested ID;
@@ -508,13 +477,12 @@ from its public product list and successfully fetches both metadata records in
 one login-session batch. Domain24 focused tests pass, cargo check passes.
 No purchase or backend mutation.
 
-
 Notification eligibility corrected for published context. Native
 CanPromptOptInAsync only returns true locally when GameId0.
-Otherwise URL builder GETs apis/notifications/v1/
+Otherwise URL GETs apis/notifications/v1/
 can-prompt-experience-notification-opt-in?universeId=..., no cache. Parser
  reads boolean canPrompt. Error callback matches
-429 (literal initialized from) and resumes false,
+429 and resumes false,
 otherwise prefixes ExperienceNotificationService request failed: . Empty,
 malformed JSON and missing-key messages copied from parser/error helper
 . Read-only scratch login probe returns {canPrompt:true}.
@@ -522,22 +490,7 @@ Domain25/account6 focused tests pass. No notification follow or prompt POST
 was performed. Headless WS_BATCH_METADATA_PASS also passed, fetching Product
 and GamePass records through the new batch queue.
 
-PromptOptIn investigation (not implemented yet): native checks
-local script, directly requests CoreScript UI at GameId0, otherwise POSTs
-apis/notifications/v1/prompt-experience-notification-opt-in {universeId}.
-Callback requires canPrompt:true; failure helper logs
-an error and fires OptInPromptClosed even when no dialog was shown.
-CoreScript NotificationsUpsell/Requests/FollowingsPostFollow POSTs JSONEncode({})
-(which native Studio encodes as []) to
-followings.roblox.com/v1/users/{localUserId}/universes/{universeId} only
-after Yes and only for nonzero universe, then closes immediately before
-HTTP completion/toast. Native/online test clicked Cancel only.
-ModalRenderController.UpdateRoot invokes the old CloseCallback only when the
-modal key changes; another UENUpsell replaces its parameters without firing
-closed. This condition was confirmed by further disassembly and online probe. English Heading Turn on Notifications;
-unpublished body Receive updates on activity while you're away; published
-body Receive notifications from {experienceName} while you're away?
-
+PromptOptIn investigation (not implemented yet): checks local script, directly requests CoreScript UI at GameId0, otherwise POSTs apis/notifications/v1/prompt-experience-notification-opt-in {universeId}. Callback requires canPrompt:true; failure helper logs an error and fires OptInPromptClosed even when no dialog was shown. CoreScript NotificationsUpsell/Requests/FollowingsPostFollow POSTs JSONEncode({}) (which native Studio encodes as []) to followings.roblox.com/v1/users/{localUserId}/universes/{universeId} only after Yes and only for nonzero universe, then closes immediately before HTTP completion/toast. Native/online test clicked Cancel only. ModalRenderController.UpdateRoot invokes the old CloseCallback only when the modal key changes; another UENUpsell replaces its parameters without firing closed. English Heading Turn on Notifications; unpublished body Receive updates on activity while you're away; published body Receive notifications from {experienceName} while you're away?
 
 Notification prompt implemented in web_social_prompts.rs. Online Place1
 Client3 requests kept closed=0; explicit mouse Cancel produced closed=1 with
@@ -589,7 +542,6 @@ flag in the Client does not imply the connector is unloaded. Continue prompt
 investigation against the online package. Actual native Client binding and
 Studio mock-subscription flags are both true. Native Play stopped after reads.
 
-
 Online purchase initialization/cancellation correction: requests made before the
 CoreScript UI mounted were previously recorded as nil/no-controls. Retrying
 once initialized produced FoundationOverlay dialogs. Native Premium now routes
@@ -601,7 +553,7 @@ RobloxPlusAmpSubscriptionCheck=false, FixSignalFinishedOnError=true;
 RobloxSubscriptionPurchasePollingTimeoutSeconds=8 (source default4 overridden).
 The source mock confirm hook is SignalMockPurchaseRobloxSubscription: native
  sends a server signal; receiver branch sets
-HasRobloxSubscription via (binding). Implemented local
+HasRobloxSubscription via. Implemented local
 property replication and source event-before-polling ordering, no purchase HTTP.
 Current UI uses a simplified engine-owned sheet; layout/icons/discount feature
 copy are not pixel-identical to Foundation. Product prices/offers come from the
@@ -628,7 +580,6 @@ produced(player,1,false). Native public Product1286521615 displayed 1 REVIVE,
 Updated generic Error/Buy item title, Buy label, X control, error disclaimer
 visibility. Confirmation remains mock-only. Native Play stopped after probes.
 
-
 ReserveServer / ReserveServerAsync now use native reservation operation
 , yielding two strings in source order: ReservedServerAccessCode,
 ReservedServerGameCode (the latter is the public PrivateServerId result).
@@ -649,31 +600,15 @@ client calls warn "Can only be called on the server." and return without an
 event. C++ validates max20/empty before side/guest guards. Server
 caller quotes a Studio-only order through POST
 apis/marketplace-ua/game-engine/v1/prepare-studio-bulk-purchase-prompt
-(URL, request). Body purchaserUserId, items[{id,type}],
+. Body purchaserUserId, items[{id,type}],
 optional purchaseOptions; offer flags can add applyOffers/unselectedOffers.
 Parser requires numeric purchaserRobuxBalance/orderTotalRobux,
 receives items/order/discountInformation, and fills absent batchPurchaseAuthToken
-with studio-bulk-purchase-{UUID} (). Prepare helper is now implemented,
+with studio-bulk-purchase-{UUID}. Prepare helper is now implemented,
 with localhost-only POST tests for success/400/429/invalid JSON/schema. No direct
 live helper POST was run. Native authorized Studio itself opened the prompt.
 
-Online native server order with asset1818 failed HTTP400: no GUI, one event
-(player,Enum.MarketplaceBulkPurchasePromptStatus.Error,{RobuxSpent=0,Items={}}),
-plus output "MarketplaceService.PromptBulkPurchase: HTTP 400 (Bad Request)".
-A subsequent valid public avatar order (63690008,48474313,1029025) opened Summary.
-Only X was clicked. It fired Aborted, RobuxSpent0, three items with string IDs,
-Enum.MarketplaceProductType.AvatarAsset and **SystemError for every status**,
-including already-owned items. Native Play stopped after cancellation.
-Do not translate cancellation into AlreadyOwned/Success: selectResultItems uses
-SystemError until there are purchase-result statuses; selectRobuxSpent sums
-only items with Success. Draft UI/controller remains /tmp/web-social-bulk-source.lua,
-not registered as implemented until its confirmation path is traced.
-Native PerformBulkPurchase goes through Studio SDK provider vtable+0x78,
-, POST cloud/v2/avatar-marketplace-orders?idempotencyKey.key={GUID}
-with the quoted order. No such POST or native confirmation was executed.
-Investigate the mock-token/server contract before integrating this path; never
-use an API key or create a production purchase order. Generic test purchases
-and Plus remain local mock paths.10 account tests pass.
+Online native server order with asset1818 failed HTTP400: no GUI, one event (player,Enum.MarketplaceBulkPurchasePromptStatus.Error,{RobuxSpent=0,Items={}}), plus output "MarketplaceService.PromptBulkPurchase: HTTP 400 (Bad Request)". A subsequent valid public avatar order (63690008,48474313,1029025) opened Summary. Only X was clicked. It fired Aborted, RobuxSpent0, three items with string IDs, Enum.MarketplaceProductType.AvatarAsset and **SystemError for every status**, including already-owned items. Native Play stopped after cancellation. Do not translate cancellation into AlreadyOwned/Success: selectResultItems uses SystemError until there are purchase-result statuses; selectRobuxSpent sums only items with Success. Draft UI/controller remains /tmp/web-social-bulk-source.lua, not registered as implemented until its confirmation path is traced. No such POST or native confirmation was executed. Investigate the mock-token/server contract before integrating this path; never use an API key or create a production purchase order. Generic test purchases and Plus remain local mock paths.10 account tests pass.
 
 Additional online AdService probes: only invisible/unparented Folder/TextButton,
 placement0. No ad rendered or impression produced. RegisterAdOpportunityAsync
@@ -701,7 +636,7 @@ explicit ID => "Placement ID is invalid."; failed HTTP/schema => "Placement
 validation request failed.". Shared pending/failed result is retained per
 universe in the VM, matching the shared native future. Native tracker
  validates max count before duplicate detection, then actual GuiButton
-and ScreenGui ancestry (). Stores the instance/selected placement;
+and ScreenGui ancestry. Stores the instance/selected placement;
 repeat registration does not replace its placement. Unregister is
 local, any side, and clears all matching opportunity records. No ad display is
 requested by these methods. Native tracked limit AdOpportunityTrackedInstancesMax
@@ -713,7 +648,6 @@ Disclosure-button and impression-source SDK operations remain under investigatio
 Actual headless client + server API probes passed
 WS_AD_OPPORTUNITY_CLIENT_PASS / WS_AD_OPPORTUNITY_SERVER_PASS, using only
 metadata GET and unregister (no real ad registration/impression/display).
-
 
 Online social remeasurement after UI initialization: PromptGameInvite(LocalPlayer)
 opened Invite Friends in unpublished Place1. Only title-bar CloseButton clicked;
@@ -779,15 +713,15 @@ for both aliases returned HTTP403 in unpublished Place1; client guard is exact.
 No feedback was submitted, no sharing or invitation action was completed.
 
 Recommendation mutation source reconstructed: RegisterItemAsync,
-serializer; UpdateItemAsync/;
+; UpdateItemAsync;
 RemoveItemAsync. Fixed login-session POST routes:
 /recommendation-api/v1/rcc/recommendation-item/batch and /update; deletion
 uses /recommendation-api/v1/rcc/recommendation-item/delete on Server and
 /recommendation-api/v1/recommendation-item/delete on Client. Register body
 experienceId/items, creator user ID/type User, ReferenceId, optional enum names,
 integer Duration, attribute-table array, CustomTags string array. Update supports
-creator User only as native does. Register source validates unknown
-keys against exact six-key list (); Current online Studio confirmed
+creator User only as does. Register source validates unknown
+keys against exact six-key list; Current online Studio confirmed
 all six malformed-request error texts before HTTP, including allowed-key order.
 Response reads results[1].itemId/referenceId, returns ItemId/ReferenceId;
 empty results produces empty strings, malformed/missing items reject. Failure
@@ -842,17 +776,7 @@ response requires nonempty productDetailPageUrl or invalidReason;
 opens native purchase browser then returns CheckoutSessionId. Its browser and
 status paths are still not implemented/countable. No checkout accepted.
 
-PromptCancelSubscription implemented from native and online
-CancelSubscriptionApp. Prompt guard uses common regex
-^[a-zA-Z]{1,5}-\d{1,19}$, total <=25, distinguishes missing/invalid IDs;
-updated shared subscription validator to accept native RBP/other valid prefixes.
-Server hands prompt to targeted client; duplicate active prompts are ignored.
-Details are REAL login-session reads (/), not an EXP fixture:
-its proximity to the payment-history mock was misleading until decompiled.
-WillRenew/PaymentPending request uses NextRenewTime local-date format; Never/
-Expired show Can't Cancel; WillNotRenew shows Already Canceled; failed details
-show Error. English strings obtained read-only from native CoreScriptLocalization
-translator. Native EXP-0 showed exact error body; only OK was dismissed.
+PromptCancelSubscription implemented and online CancelSubscriptionApp. Prompt guard uses common regex ^[a-zA-Z]{1,5}-\d{1,19}$, total <=25, distinguishes missing/invalid IDs; updated shared subscription validator to accept native RBP/other valid prefixes. Server hands prompt to targeted client; duplicate active prompts are ignored. WillRenew/PaymentPending request uses NextRenewTime local-date format; Never/ Expired show Can't Cancel; WillNotRenew shows Already Canceled; failed details show Error. English strings obtained read-only from native CoreScriptLocalization translator. Native EXP-0 showed exact error body; only OK was dismissed.
 
 Protected PerformCancelSubscription does NOT call a cancellation
 endpoint: writes local details SubscribedWillNotRenew, ExpireTime=now,
@@ -861,7 +785,7 @@ ExpirationDetails.Reason=SubscriberCancelled, and writes local status
 Both local caches have100-entry limit and60s lifetime (native fields
 /1198 and/11b0). Success toast onDismissed and Expiring OK
 signal MarketplaceService's protected UserSubscriptionStatusChanged(id), not
-Players' public event. Native only fires the local service signal.
+Players' public event. only fires the local service signal.
 Source UIBlox Toast has no duration supplied here; do not invent an automatic
 status event/timed close. Error/Unsubscribed/Don't Cancel dismiss with no signal.
 Buttons delay input0.75s as source. UI shell is simplified; localized English
@@ -886,7 +810,7 @@ This closes the earlier uninitialized-UI measurement gaps for these events.
 Native Play stopped after all three. Artifacts /tmp/web-social-event-*-finished.json.
 
 TeleportAsyncResult properties now read actual engine instance string storage,
-with empty constructor defaults rather than stub nil. Constructor
+with empty constructor defaults rather than stub nil. Constru
 initializes its std::string fields empty; class descriptor and
 PrivateServerId reflection binding establish the string property.
 35 focused tests pass, including an internally created result (game code cannot
@@ -894,8 +818,8 @@ create this NotCreatable class), stored mock server/code strings, empty defaults
 and read-only write rejection. No actual teleport or result was created in live
 Studio. Modern teleport success remains unverified under the no-teleport rule.
 
-UserService GetUserFromGlobalUserIdAsync now follows native , worker
-, callback, serializer and parser.
+UserService GetUserFromGlobalUserIdAsync now follows, worker
+, callback, and parser.
 Fixed POST private-users-service/v1beta1/getOrCreatePrivateUserId body uses numeric
 global_user_id/domain_id/domain_type=1; response privateUserId must be positive.
 It is deliberately outside the read allowlist: **no live get-or-create request
@@ -946,11 +870,11 @@ UI assertions; no Join button activated. No new event among the18 game events.
 Coverage before this group chunk (/tmp/web-social-after18.json):107/127 functions,
 23/24 properties,13/18 registered events. UserService exact invalid-ID/unpublished-
 universe/client-side errors corroborated online after implementation, matching
-native; Play stopped. Native PromptRobuxTransferAsync feature is enabled
+; Play stopped. Native PromptRobuxTransferAsync feature is enabled
 on current online Studio (invalid receiver errors before context), unlike old
 unreleased assumptions: do not implement it as always disabled.
 
-InternalRequestReviewableContentReviewAsync implemented from native
+InternalRequestReviewableContentReviewAsync implemented
 and completion. No feature allowlist on this internal action (unlike
 creation). Server-only; strict string ReviewableContentId field required (empty
 string accepted by native dictionary extraction). Fixed login-session POST to
@@ -966,18 +890,10 @@ return nil. Current API requires Consequences+InternalTest capabilities as in du
 Focused tests and cargo check pass. Native Edit empty-config guards were probed
 without any content or review ID, so no moderation action could be submitted.
 
-Correction to private ad-disclosure reconstruction: inputObject is **not nil**.
-Ghidra inferred too few parameters for templated map insertion and
-omitted its fourth argument on one branch. Direct assembly at and
- both load R9 from the saved native param4 (InputObject); the callee
-forwards R8/R9 to node constructor. The old decompiler-only conclusion
-was wrong. Private registry now forwards GuiButton.Activated's actual InputObject
-to the protected callback; mock test asserts identity. This matches packed
-DisclosureButtonListenerComponent's required InputObject validation. Methods
-remain private/not counted until consumers are ported.
+Correction to private ad-disclosure reconstruction: inputObject is **not nil**. Direct assembly and  both load R9 from the saved native param4 (InputObject); the callee forwards R8/R9 to node. Private registry now forwards GuiButton.Activated's actual InputObject to the protected callback; mock test asserts identity. This matches packed DisclosureButtonListenerComponent's required InputObject validation. Methods remain private/not counted until consumers are ported.
 
 Further mutation-boundary tracing: PromptRobuxTransferAsync validates then calls
-provider BEFORE opening its client flow. URLbuilder uses
+provider BEFORE opening its client flow. URL uses
 /transfer/v1/robux-transfer/experience/{universe}/initiate-transfer with POST JSON
 senderId/recipientId/sendAmount/UniverseId. This is an initiation action, not a
 read-only eligibility request. No valid native call was made. A transient Play
@@ -993,7 +909,7 @@ nonempty segment; empty/non-string path and malformed JSON have distinct errors.
 Media branch checks returned content.items array and matching length,
 image/video.uploadUri, connected source Player, then sends that player native
 ContentKeyId/UploadUri upload requests and waits. It is not a server media upload.
-/ send the RPC and arms its timeout. This client
+ send the RPC and arms its timeout. This client
 handoff remains to be ported before exposing content creation. No create/upload
 was performed live.
 
@@ -1023,7 +939,7 @@ PromptRsvpToEventAsync remains Client-only and its guard messages deliberately
 use the GetEventRsvpStatusAsync name. Fixes and deferred response parser tracing
 are in progress before the new RSVP controller is exposed.
 
-Event-read fixes completed from deferred callbacks/ and
+Event-read fixes completed from deferred callbacks and
 RsvpInfo parser. Decimal IDs now coerce number/string, reject nil/cast
 failures, zero/overflow beyond signed64, and preserve leading zero IDs in errors.
 Read context permits Client or Edit (ExperienceEventsAllowEditMode); prompt stays
@@ -1037,16 +953,7 @@ matrix and40 domain tests pass. No change to coverage count; existing behavior
 was corrected instead of claiming new names. Native current Edit calls were
 read-only and returned the recorded404/nil/empty-array outcomes.
 
-Recommendation logging resolved with both artifacts, rather than assuming a
-backend route. Old native LogAction/Impression/Preference
- and online equivalents// all build
-EventStream payloads and destroy them WITHOUT dispatch. Online ctor
-initializes callback fields zero; destructor only destroys callbacks/
-fields. Old versions/ likewise. Their field helpers only
-validate/append typed payload fields (online/). Compare
-protected RSVP completion, which DOES call EventStream dispatch
- after filling fields; its dispatch routine invokes configured sinks.
-Direct objdump corroborates call graphs, not just inferred Ghidra signatures.
+Recommendation logging resolved with both artifacts, rather than assuming a backend route. Old native LogAction/Impression/Preference  and online equivalents all build EventStream payloads and destroy them WITHOUT dispatch. Online initializes callback fields zero; destru only destroys callbacks/ fields. Old versions likewise. Their field helpers only validate/append typed payload fields. Compare protected RSVP completion, which DOES call EventStream dispatch  after filling fields; its dispatch routine invokes configured sinks.
 
 Port now exposes LogActionEvent/LogImpressionEvent/LogPreferenceEvent with native
 argument conversions, client context, item/tracing/target guards, lowercase UUID
@@ -1103,7 +1010,7 @@ GETs now in the login-session helper, with exact-route/session mock coverage:
 - apis/player-generated-reviews-service/v1/channels/experience-discovery-page/assets/{placeOrResolvedRootPlaceId}
 - apis/creator-communication/v1beta1/creator-communication-api/universes/{universeId}/ticket-creation-eligibility
 - apis/marketplace-widgets/v1/widgets/shop-widgets?requestId={guid}&universeId={id}
-Native feedback builder and player-support branch;
+Native feedback and player-support branch;
 shop packed InExperienceShop.Api.fetchShopItemIds, buildShopWidgetsUrl.
 Explicit read-only session smoke for scratch place10000000000008/universe10000000007
 returned feedback capabilities allfalse, support isEligiblefalse with
@@ -1123,7 +1030,7 @@ canSubmitComment, can_submit_category_options/canSubmitCategoryOptions, prefer
 snake spelling, optionally inside capabilities. Parser accepts bool,
 nonzero integer/double, and case-insensitive string true/false/1/0. Invalid JSON
 or unknown fields default reviewfalse/commenttrue/categoryfalse. Native reason
-also depends on Player under13 state (getter, offset46d), which this
+also depends on Player under13 state, which this
 port does not yet receive from its player initialization. Do not silently infer
 it from the public user profile. Native HTTP failure reason is RateLimited.
 
@@ -1131,10 +1038,10 @@ Current native FastFlags: PlayerFeedbackPromptEnabled=true,
 EnablePlayerSupportPrompt=false, SkipShopWidgetsCallInUnpublishedStudio=true,
 HideShopMenuOnFailure=false. PlayerFeedbackPromptWatchdogSeconds=30 confirmed.
 Thus current feedback options' FeedbackType is ignored by the native entry.
-Native submit hook accepts10..1000 bytes; CoreScript constants impose
+Native submit accepts10..1000 bytes; CoreScript constants impose
 10..500 and2seconds acceptance delay. SignalFeedbackSubmissionPermissionDenied
 clears in-flight state and completes nil; POST success/failure/
- also both complete nil. Submission builder targets
+ also both complete nil. Submission targets
 .../assets/{id}/reviews with category_type InExperience, category_option_ids[],
 comment string. It was traced statically only; never invoked live. UI/controller
 and local player age state remain to be connected before registering the API.
@@ -1185,7 +1092,7 @@ from the eligibility target. No live submission was used to test this branch.
 A separate fixed submission helper posts category_type InExperience,
 category_option_ids[],comment; JSON escaping and HTTP429 are verified only on
 localhost. Success and failure both release the API with nil, as native POST
-completion/ do. All feedback development confirmations use
+completion do. All feedback development confirmations use
 mock transport. Native online measurement only dismissed the unavailable OK.
 Headless public-API login-read fixture displayed the same unavailable text,
 completed nil before dismissal, and passed WS_FEEDBACK_DISMISS_PASS after the
@@ -1195,7 +1102,7 @@ activated in the native or headless app.44 focused domain tests pass with
 hit SIGILL; the serial run passes. cargo check/release build pass.
 
 Bulk fulfillment transport is isolated in the account helper, with an explicit
-Studio test-token gate. Native posts the quoted order to
+Studio test-token gate. posts the quoted order to
 apis/cloud/v2/avatar-marketplace-orders?idempotencyKey.key={GUID}; native
  supplies studio-bulk-purchase-{GUID} if the quote lacks its token.
 The port refuses non-Studio authorization before any HTTP.20 account fixtures
@@ -1221,7 +1128,7 @@ then closes UI. That ordering means a thrown Studio teleport error prevents its
 final UI close; do not wrap this in pcall/finally and silently change behavior.
 No join/teleport action was invoked. Play stopped after the native dialog cancel.
 
-PromptExperienceDetailsAsync now installed from native plus shipped
+PromptExperienceDetailsAsync now installed plus shipped
 InExperienceDetailsPromptApp/container/DataHydration. Player argument, client
 context, LocalPlayer, pending-per-player errors match source/native measurements;
 there is no invented positive-universe validation. It yields until a completion.
@@ -1337,12 +1244,11 @@ Completed for mixed results versus Error for a common failure. Native quote
 spelling is preserved and normalized at the CoreScript boundary. Empty statuses
 have no common status, so current CoreScripts select PartialSuccess, not Success.
 Error-dialog dismissal signals3; partial-success dismissal signals1.
-Additional source correction: native requires PurchaseOptions arrays
+Additional source correction: requires PurchaseOptions arrays
 to contain exactly1 entry (including rejecting an empty array); its exact error
 is Input contained a badly formed line item. Item N PurchaseOptions must
 contain exactly 1 entry, but X were provided. Missing/non-array options are
 ignored. This is static evidence, not a live fulfillment observation.
-
 
 ## Final handoff — lead time limit
 

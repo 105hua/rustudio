@@ -2,7 +2,7 @@
 //!
 //! This crate carries the network half of "Open a Team Create place from
 //! Roblox and join the live session" (see the app's `docs/TEAMCREATE.md` and this
-//! crate's `docs/PROTOCOL.md`). It is split so each layer can be built and tested
+//! docs/TEAMCREATE.md). It is split so each layer can be built and tested
 //! on its own:
 //!
 //! - [`joinscript`] — parse the join script that `gamejoin /v1/team-create`

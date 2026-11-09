@@ -1,5 +1,5 @@
 //! The client's opening messages on the replication lane (channel 4, lane 1),
-//! as Studio 0.746 sends them [verified: capture, docs/PROTOCOL.md §3c]:
+//! as Studio 0.746 sends them:
 //!
 //! | id | what |
 //! |---|---|
@@ -34,7 +34,7 @@ pub fn shared_string_cache_message(hashes: &[[u8; 16]]) -> Result<Vec<u8>> {
 
 /// The per-session 0x92 nonce. Studio combines a fresh random u32 with a
 /// build-specific mask, then writes the combined i64 as a ZigZag varint
-/// [verified: exe, ``]. The mask is recovered from the reference
+///. The mask is recovered from the reference
 /// capture as `random ^ low_word`.
 pub fn place_verification(random: u32) -> Vec<u8> {
     const BUILD_MASK: u32 = 0x9d58_f351;

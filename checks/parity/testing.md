@@ -7,9 +7,7 @@ debugger), `testing_studio.rs` (StudioService, DraggerService, Plugin…).
 One hook in `src/play.rs` (`play_tick`): EndTest stops Play, and the editor's
 snapping settings are mirrored for the Studio services.
 
-Measured against Studio build 1708278 in an offline Studio (own instance,
-`testprobe.rbxlx`), command bar (plugin security) and game Scripts in Run /
-Play, plus strings in `Studio`.
+Measured against Studio build 1708278 in an offline Studio (own instance, `testprobe.rbxlx`), command bar (plugin security) and game Scripts in Run / Play, plus strings in `Studio`.
 
 ## TestService (Studio behaviour reproduced)
 

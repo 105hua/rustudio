@@ -42,8 +42,8 @@ The rest of `docs/`:
   measured by playing real places.
 - [docs/UI-PARITY.md](docs/UI-PARITY.md), [docs/MATERIALS.md](docs/MATERIALS.md):
   matching Studio's editor UI and materials.
-- [docs/TEAMCREATE.md](docs/TEAMCREATE.md), [docs/PROTOCOL.md](docs/PROTOCOL.md),
-  [docs/AUTH.md](docs/AUTH.md): Team Create, the network protocol and sign-in.
+- [docs/TEAMCREATE.md](docs/TEAMCREATE.md), [docs/AUTH.md](docs/AUTH.md):
+  Team Create and sign-in.
 - `checks/parity/`: per-area notes and results comparing rustudio with Studio.
 
 ## How changes should look

@@ -459,7 +459,7 @@ struct Vertex {
 /// (Position, Normal, TexCoord attributes) and triangles, decoded with
 /// draco-core (a pure-Rust decoder of Google's Draco format).
 fn decode_draco_core(data: &[u8]) -> Result<(Vec<Vertex>, Vec<[u32; 3]>), String> {
-    // Studio (): a chunk under 4 bytes "is too small to hold the
+    // Studio: a chunk under 4 bytes "is too small to hold the
     // compressed mesh data size"; a size past the chunk "exceeds" it.
     let head = crate::mech::COREMESH_V2_SIZE_BYTES;
     let mut c = Reader::new(data);
@@ -475,7 +475,7 @@ fn decode_draco_core(data: &[u8]) -> Result<(Vec<Vertex>, Vec<[u32; 3]>), String
         .decode(&mut buf, &mut mesh)
         .map_err(|e| format!("mesh: Draco decode failed: {e:?}"))?;
     // Studio's rule (, attributes looked up by unique id through
-    // ): id 0 position 3 × float32, 1 normal 3 × float32, 2 uv
+    //): id 0 position 3 × float32, 1 normal 3 × float32, 2 uv
     // 2 × float32, 3 tangent 4 × uint8, 4 colour 4 × uint8, all required.
     // Values are copied as they are (no flip) into its 40-byte vertex.
     use draco_core::draco_types::DataType as T;
@@ -673,7 +673,7 @@ fn solid_mesh_start(bytes: &[u8]) -> Option<usize> {
     head.windows(9).position(|w| w == b"SolidMesh")
 }
 
-/// Studio's SolidMesh reader (Studio 0.746, ; docs/STUDIO-SKY-RE.md
+/// Studio's SolidMesh reader (Studio, Studio measurements
 /// "Unions"): `SolidMesh` + u32 version 0, then
 /// positions (u64 n, n × vec3), normals (vec3[]), UVs (u64 n, n × 2 f32),
 /// per-corner colours (vec3[], sRGB 0..1: the child parts' colours), then
@@ -726,8 +726,8 @@ fn parse_solid_mesh(b: &[u8]) -> Result<MeshData, String> {
         out.push(p, nrm, uv);
     }
     let mut m = out.finish();
-    // Modern SolidMesh generates a plane for each triangle (),
-    // from its geometric normal (), not the smooth corner normals.
+    // Modern SolidMesh generates a plane for each triangle,
+    // from its geometric normal, not the smooth corner normals.
     for tri in m.positions.chunks_exact(3) {
         let plane = solid_mesh_projection_plane(tri[0], tri[1], tri[2]);
         // 9..14 distinguish generated modern planes from CSGMDL's 1..6.
@@ -742,8 +742,8 @@ fn parse_solid_mesh(b: &[u8]) -> Result<MeshData, String> {
     Ok(m)
 }
 
-/// Studio  normalizes the triangle normal with FLT_MIN;
-///  then adds X=.01/Y=.02 before choosing the first maximum.
+/// Studio normalizes the triangle normal with FLT_MIN;
+/// then adds X=.01/Y=.02 before choosing the first maximum.
 /// The bias applies to unit normals, so it must not depend on triangle area.
 fn solid_mesh_projection_plane(a: Vec3, b: Vec3, c: Vec3) -> usize {
     let cross = (b - a).cross(c - a);
@@ -759,7 +759,7 @@ fn solid_mesh_projection_plane(a: Vec3, b: Vec3, c: Vec3) -> usize {
     axis + if n[axis] < 0.0 { 3 } else { 0 }
 }
 
-/// The key that hides a CSGMDL header (): MSVC `rand()` seeded
+/// The key that hides a CSGMDL header: MSVC `rand` seeded
 /// with 1337, each value mod 127, 31 bytes, repeated.
 fn csgmdl_key() -> [u8; 31] {
     let mut x: u32 = 1337;
@@ -783,14 +783,14 @@ fn is_csgmdl(bytes: &[u8]) -> bool {
     csgmdl_header(bytes).is_some()
 }
 
-/// CSGMDL version 5 (Studio 0.746, ; docs/STUDIO-SKY-RE.md "Unions"),
+/// CSGMDL version 5 (Studio 0.746, Studio measurements "Unions"),
 /// after the 10-byte header, all per vertex and u16-counted (< 60001):
 /// positions (vec3), normals (u32 byte count, then 3 × u16 each: (v − 0x7fff)
 /// / 32767), colours (RGBA8), projection plane IDs (u8), UVs (2 × f32),
 /// tangents (packed like normals, unused); then an i32 index count, a u32
 /// byte length and the indices delta-coded as SolidMesh's; then a u8 LOD
 /// count and that many u32 offsets: LOD 0 is indices[lod0..lod1].
-/// Versions 2–4 () aren't read yet.
+/// Versions 2–4 aren't read yet.
 fn parse_csgmdl(bytes: &[u8]) -> Result<MeshData, String> {
     let version = csgmdl_header(bytes).ok_or("CSGMDL: bad header")?;
     if version != 5 {
@@ -895,7 +895,7 @@ fn parse_csgmdl(bytes: &[u8]) -> Result<MeshData, String> {
     Ok(m)
 }
 
-/// One value of the 1-or-3-byte signed delta coding ().
+/// One value of the 1-or-3-byte signed delta coding.
 fn delta_value(r: &mut Reader) -> Result<i32, String> {
     let c = r.u8()?;
     let hi = ((c << 1) as i8 as i32) >> 1;
@@ -908,7 +908,7 @@ fn delta_value(r: &mut Reader) -> Result<i32, String> {
     })
 }
 
-/// A delta-coded u32 list (): u64 count, then per value one byte
+/// A delta-coded u32 list: u64 count, then per value one byte
 /// (high bit clear: a 7-bit signed delta) or three (high bit set: a 23-bit
 /// signed delta, big-endian); the first value is taken from 0.
 fn delta_u32s(r: &mut Reader) -> Result<Vec<u32>, String> {

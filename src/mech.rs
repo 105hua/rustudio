@@ -24,12 +24,12 @@ pub const R15_DEFAULT_PART_SIZES: &[(&str, [f32; 3])] = &[
     ("RightFoot", [1.009, 0.312, 1.001]),
 ];
 pub const MATERIAL_AIR: u32 = 1792; // Enum.Material.Air (Humanoid.FloorMaterial in the air)
-pub const CORE_GUI_ALL: u32 = 4; // Enum.CoreGuiType.All: StarterGui::setCoreGuiEnabled  branches on 4 (cmp $0x4); the All entry key is the constant 4 at .rdata 
-pub const CORE_GUI_TYPE_COUNT: u32 = 10; // setCoreGuiEnabled loops types 0..9 (cmp $0xa at  / )
+pub const CORE_GUI_ALL: u32 = 4; // Enum.CoreGuiType.All: StarterGui::setCoreGuiEnabled branches on 4; the All entry key is the constant 4
+pub const CORE_GUI_TYPE_COUNT: u32 = 10; // setCoreGuiEnabled loops types 0..9
 pub const PLACE_A_GATE_MIN_MOVE: f32 = 2.0; // self-test Place A match: studs the character must cover while the harness holds W (it walked 13 in 3 s; a downed player crawls)
 pub const MOON_PHASE: f32 = 0.75; // Lighting:GetMoonPhase: Roblox's moon has no cycle; the phase is a constant (estimated)
-pub const SHAPECAST_MAX_SIZE: f32 = 512.0; // FInt ShapecastMaxSize (registered , value at .data ): sphere diameter (radius + radius, compared at ), block / part side length
-pub const SHAPECAST_MAX_DISTANCE: f32 = 1024.0; // FInt ShapecastMaxDistance (registered , value at .data ): the cast direction's length ()
+pub const SHAPECAST_MAX_SIZE: f32 = 512.0; // FInt ShapecastMaxSize: sphere diameter, block / part side length
+pub const SHAPECAST_MAX_DISTANCE: f32 = 1024.0; // FInt ShapecastMaxDistance: the cast direction's length
 pub const DEFAULT_GLOW_INTENSITY: f32 = 1.0; // Studio glows over-bright pixels (Neon) without a BloomEffect; BloomEffect's own defaults (Intensity 1, Size 24, Threshold 2) are the starting point, checked against the control shots (estimated)
 pub const DEFAULT_GLOW_SIZE_PX: f32 = 24.0; // (BloomEffect.Size default)
 pub const DEFAULT_GLOW_THRESHOLD: f32 = 2.0; // (BloomEffect.Threshold default)
@@ -41,7 +41,7 @@ pub const TECHNOLOGY_SOFT: [u32; 4] = [0, 1, 2, 3]; // Enum.Technology Legacy, V
 pub const TECHNOLOGY_FUTURE: u32 = 4; // Enum.Technology.Future: PrioritizeLightingQuality on when not saved (control place reads true; Place A Voxel reads false)
 pub const TERRAIN_BRUSH_INTERVAL_S: f32 = 1.0 / 30.0; // Terrain Editor: one brush application per this while the button is held (estimated, not measured in Studio)
 pub const UNDERWATER_FOG: [f32; 2] = [1.066, 0.00137]; // camera in terrain water: visibility = clamp(2^(a − k·d) − 1, 0, 1) toward the lit WaterColor (Studio's exp2 fog form, fs FogParams); fitted to Place B's lake (F4, place-b-terrain 22 s: hit distances 63–698 studs, linear-light blue channel, < 0.02 off): clear to 48 studs, gone by 778
-pub const RANDOM_PCG_INC: u64 = 0x69; // Random: PCG32 (multiplier 0x5851f42d4c957f2d) with increment 105, seeded like pcg32_srandom; NextNumber = (second draw << 32 | first) × 2^-64 (), NextNumber(a, b) = min(1 − t) + max·t clamped (); matches Studio's sequences for seeds 0, 1, 1001, 1005, 123456789
+pub const RANDOM_PCG_INC: u64 = 0x69; // Random: PCG32 (multiplier 0x5851f42d4c957f2d) with increment 105, seeded like pcg32_srandom; NextNumber = (second draw << 32 | first) × 2^-64, NextNumber(a, b) = min(1 − t) + max·t clamped; matches Studio's sequences for seeds 0, 1, 1001, 1005, 123456789
 pub const TECHNOLOGY_NO_TONE_CURVE: [u32; 1] = [2]; // Enum.Technology Compatibility only (Studio migrates it on load to Voxel + a ColorGradingEffect TonemapperPreset Retro, roughly sqrt). Measured 2026-11-08 in an offline Studio (~/.cache/rustudio/lightov/tone/REPORT.md): Legacy, Voxel, ShadowMap and Future all draw the Default curve, bit-identical (RMS 1.03 levels on TONE_CURVE); round 21 had Legacy/Voxel curve-free, which only offset the sRGB texel decode fixed in 3f3dffc
 pub const TECHNOLOGY_QUALITY: [u32; 2] = [3, 4]; // Enum.Technology ShadowMap, Future: PrioritizeLightingQuality on when not saved (control place, Future, reads true; Place B, ShadowMap, reads true; Place A, Voxel, false)
 pub const MOVER_HOLDS_CHARACTER_FORCE: f32 = 2000.0; // a Vector LinearVelocity on the HumanoidRootPart with at least this MaxForce carries the character (an R15 weighs ~10 × 196.2 = 1962 force units: below it gravity wins); estimated, round 19 (Place C's ship: 1e7)
@@ -68,20 +68,20 @@ pub const NEAR: f32 = 0.1;
 pub const FAR: f32 = 10_000.0;
 pub const LOOK_DEG_PER_PX: f32 = 0.25;
 // Studio's fly rule, read from Studio: each camera tick moves
-// FLY_BASE_STEP × CAMERA_SPEED studs ( → ); after
+// FLY_BASE_STEP × CAMERA_SPEED studs; after
 // FLY_RAMP_AFTER_TICKS ticks of holding (no Shift) the step becomes
 // min(ticks / FLY_RAMP_TICKS_PER_STUD, FLY_STEP_CAP). Studio ticks once per
 // rendered frame; rustudio uses the rate that matches the offline Studio's measurement.
-pub const CAMERA_SPEED: f32 = 1.5; // "Camera Speed" default, .data  (registered by )
-pub const FLY_BASE_STEP: f32 = 0.5; // .rdata 
-pub const FLY_RAMP_AFTER_TICKS: f32 = 120.0; // .rdata 
-pub const FLY_RAMP_TICKS_PER_STUD: f32 = 240.0; // .rdata 
-pub const FLY_STEP_CAP: f32 = 15.0; // .rdata 
+pub const CAMERA_SPEED: f32 = 1.5; // "Camera Speed" default,
+pub const FLY_BASE_STEP: f32 = 0.5;
+pub const FLY_RAMP_AFTER_TICKS: f32 = 120.0;
+pub const FLY_RAMP_TICKS_PER_STUD: f32 = 240.0;
+pub const FLY_STEP_CAP: f32 = 15.0;
 pub const FLY_TICK_HZ: f32 = 142.7; // camera ticks per second (offline Studio: 107 studs/s ÷ 0.75 studs/tick)
 pub const FLY_SPEED: f32 = FLY_BASE_STEP * CAMERA_SPEED * FLY_TICK_HZ; // 107 studs/s base
-pub const FLY_SHIFT_FACTOR: f32 = 0.2; // "Camera Shift Speed" default, .data  ()
-pub const WHEEL_STEP: f32 = 15.0; // studs per notch: "Camera Mouse Wheel Speed" default, .data  (; used at )
-pub const WHEEL_ZOOM_TO_MOUSE: bool = true; // "Camera Zoom to Mouse Position" default, .data  (checked at )
+pub const FLY_SHIFT_FACTOR: f32 = 0.2; // "Camera Shift Speed" default,
+pub const WHEEL_STEP: f32 = 15.0; // studs per notch: "Camera Mouse Wheel Speed" default,
+pub const WHEEL_ZOOM_TO_MOUSE: bool = true; // "Camera Zoom to Mouse Position" default,
 pub const PAN_FRACTION_PER_PX: f32 = 0.0016; // of the focus distance
 pub const FOCUS_DISTANCE_FACTOR: f32 = 1.6; // F frames the selection at radius * this
 pub const START_CAMERA_POS: [f32; 3] = [0.0, 20.0, 40.0];
@@ -135,33 +135,33 @@ pub const ATMOS_BAND_POW: f32 = 1.61;
 pub const ATMOS_BAND_FLOOR: f32 = 0.0275; // the band's share everywhere, even at Haze 0 (night sky (1,3,6) instead of (1,2,2))
 pub const ATMOS_FOG_K: f32 = 0.149; // objects fade toward the sky behind them: visibility = e^(−k·d), k = this × Density^ATMOS_FOG_POW per stud; fitted before the tone curve to walls at 25–1600 studs: k 0.0001 / 0.00095 / 0.0028 / 0.0185 at Density 0.15 / 0.3 / 0.395 / 0.6 (Offset 0 / 0.2 / 0.6, Haze and Decay changed nothing)
 pub const ATMOS_FOG_POW: f32 = 4.2;
-// Atmosphere from Studio's own code (2026-11-05, docs/STUDIO-SKY-RE.md); these replace the
+// Atmosphere from Studio's own code; these replace the
 // round 26 fits above in the sky (AdvSkyFS) and the part fog.
-pub const ATMOS_HAZE_THRESHOLD: f32 = 1.98; // Atmosphere change hook : A = clamp(Haze − this, ATMOS_A_MIN, 1)
-pub const ATMOS_A_MIN: f32 = 0.02; // (constant )
+pub const ATMOS_HAZE_THRESHOLD: f32 = 1.98; // Atmosphere change: A = clamp(Haze − this, ATMOS_A_MIN, 1)
+pub const ATMOS_A_MIN: f32 = 0.02;
 pub const ATMOS_B_HAZE: f32 = 0.5; // B = Haze × this + (Haze ≠ 0 ? ATMOS_B_ON : 0); AdvSkyFS exponent fogOffset.y = B
 pub const ATMOS_B_ON: f32 = 0.6;
 pub const ATMOS_T_EPS: f32 = 0.001; // AdvSkyFS: t = exp2(fogOffset.x / (this + max(dir.y, 1e-5)^fogOffset.y)), fogOffset.x = −A / ln 2
-pub const ATMOS_DECAY_LIN: f32 = 4.0; // glare exponent per channel = exp2((1 − Decay)² + this·(1 − Decay)) − 1 ()
-pub const ATMOS_FOG_DENSITY_K: f32 = 0.1; // part fog with an Atmosphere (): FogParams.z = −0.14427·clamp(Density,0,1)^4, i.e. visibility = e^(−this·Density⁴·studs)
+pub const ATMOS_DECAY_LIN: f32 = 4.0; // glare exponent per channel = exp2((1 − Decay)² + this·(1 − Decay)) − 1
+pub const ATMOS_FOG_DENSITY_K: f32 = 0.1; // part fog with an Atmosphere: FogParams.z = −0.14427·clamp(Density,0,1)^4, i.e. visibility = e^(−this·Density⁴·studs)
 pub const ATMOS_FOG_DENSITY_POW: f32 = 4.0;
 pub const ATMOS_FOG_MIP: f32 = 5.0; // fog colour = the sky cube along the view ray at mip max(Offset, visibility) × this (DefaultUnified*FS)
 pub const ATMOS_ENV_CUBE_LEVELS: f32 = 8.0; // mips of Studio's prefiltered sky cube the fog reads (estimated: 128 px); rustudio's skybox has more, so the fog lod is offset by the difference
 pub const ENV_PREFILTER_SIZE: u32 = 128; // the face size of that cube (2^(ATMOS_ENV_CUBE_LEVELS − 1)): render::cube_mips GGX-filters the sky's levels below it (Studio's FastConvolutionPS)
 pub const ENV_PREFILTER_SAMPLES: usize = 64; // GGX importance samples per texel of those levels (each reads the box chain at its solid angle)
-pub const ATMOS_HAZE_K: f32 = 2.65; // haze = skybox irradiance(dir) × Color² × mean irradiance × this (structure from AdvSkyFS + ; this factor is Lighting's +0x160/+0x1a0 members, not yet read: measured on two Colors, day and night alike: 2.93-3.12 from the faces in Python, 2.65 once rustudio draws it (its haze read 6 % over Studio at 2.95))
+pub const ATMOS_HAZE_K: f32 = 2.65; // haze = skybox irradiance(dir) × Color² × mean irradiance × this (structure from AdvSkyFS +; this factor is Lighting's members, not yet read: measured on two Colors, day and night alike: 2.93-3.12 from the faces in Python, 2.65 once rustudio draws it (its haze read 6 % over Studio at 2.95))
 pub const TONE_CURVE: [f32; 5] = [6.0402, 0.0064675, 2.41386, 0.656391, 1.157207]; // Default tone curve a..e: y = x(ax+b)/(x(ax+c)+d)·e, fitted to 16 Studio screenshots, RMS 0.38 levels
 pub const LIGHT_INTENSITY: f32 = 1.06; // local light = Color² × Brightness × 1.06 × falloff × N·L (fit over 5 configurations)
-pub const LIGHT_MAX_RANGE: f32 = 120.0; // Range setters clamp to [0, 120]: SpotLight , PointLight/SurfaceLight  (maxss 0, minss [] = 120.0)
-pub const LIGHT_MAX_ANGLE: f32 = 180.0; // SpotLight.Angle  and SurfaceLight.Angle  clamp to [0, 180] ([] = 180.0)
-pub const CLOCK_TIME_MAX: f32 = 24.0; // ClockTime setter  → : clamp to [0, 24] ([]), × 3600 ([]), truncated to whole seconds, stored as µs (× 1 000 000)
+pub const LIGHT_MAX_RANGE: f32 = 120.0; // Range setters clamp to [0, 120]: SpotLight, PointLight/SurfaceLight
+pub const LIGHT_MAX_ANGLE: f32 = 180.0; // SpotLight.Angle and SurfaceLight.Angle clamp to [0, 180]
+pub const CLOCK_TIME_MAX: f32 = 24.0; // ClockTime: clamp to [0, 24], × 3600, truncated to whole seconds, stored as µs (× 1 000 000)
 pub const SECONDS_PER_HOUR: f32 = 3600.0;
-pub const ENV_SCALE_MAX: f32 = 1.0; // EnvironmentDiffuseScale setter  clamps to [0, 1] ([] = 1.0)
-pub const SHADOW_SOFTNESS_MAX: f32 = 1.0; // ShadowSoftness setter  clamps to [0, 1]
+pub const ENV_SCALE_MAX: f32 = 1.0; // EnvironmentDiffuseScale clamps to [0, 1]
+pub const SHADOW_SOFTNESS_MAX: f32 = 1.0; // ShadowSoftness clamps to [0, 1]
 
 /// What Studio's property setters do to a number before storing it, read
 /// from their code (addresses above). None = stored as given (e.g.
-/// Lighting.Brightness  and ExposureCompensation 
+/// Lighting.Brightness and ExposureCompensation
 /// store unclamped).
 pub fn setter_clamp(class: &str, prop: &str, v: f32) -> Option<f32> {
     let light = matches!(class, "PointLight" | "SpotLight" | "SurfaceLight");
@@ -190,11 +190,11 @@ pub const SHADOW_LOD_SCALE: f32 = 2.0; // casters can be this much smaller on sc
 pub const ENV_SPEC_ROUGHNESS: f32 = 0.5; // the roughness of every material for the sky reflection and the sun highlight (Studio: 0.089 + 0.911 × a per-material vertex value, VARYING4.w; the table isn't read yet; estimated from Place B Newer's N1 road)
 pub const ENV_SPEC_LOD_SPAN: f32 = 5.0; // the sky reflection reads the skybox at mip (coarsest − this × (1 − roughness)); Studio's part FS reads its prefiltered cube at roughness × 5 (shaders_glsl3.pack, ShadowMap part FS)
 pub const ENV_DIFFUSE_GAIN: f32 = 1.0; // EnvironmentDiffuseScale × skybox irradiance × this (calibrated against Studio)
-pub const TEXTURE_ANISOTROPY: u16 = 8; // part textures: mipmapped, trilinear, 8× anisotropic, no mip bias. Studio binds material maps with filter 2 (anisotropic: linear min/mag/mip,  → ) and anisotropy 0 = the device default, which a running offline Studio holds at 8 (D3D11 context, vtable , +0x58; GL +0x20 / Vulkan +0x98 in theirs); Vulkan's sampler has mipLodBias 0 ()
+pub const TEXTURE_ANISOTROPY: u16 = 8; // part textures: mipmapped, trilinear, 8× anisotropic, no mip bias. Studio binds material maps with filter 2 and anisotropy 0 = the device default, which a running offline Studio holds at 8; Vulkan's sampler has mipLodBias 0
 pub const LIGHT_TEST_TOLERANCE: u8 = 8; // self-test: lit colours within this many levels (0-255) of Studio's
-// Light grid skylight (lightgrid.rs; docs/STUDIO-SKY-RE.md "Light grid
-// (skylight)"): read from Studio 0.746 and a running Studio.
-pub const LIGHTGRID_CHUNKS: [usize; 3] = [8, 4, 8]; // chunks (32×16×32 voxels of 4 studs) in Studio's grid: 1024×256×1024 studs (LightGridCPU +0x50, read from a running Studio's memory; the same in an empty place and in Place B)
+// Light grid skylight (lightgrid.rs; Studio measurements "Light grid
+// (skylight)"): read from Studio and a running Studio.
+pub const LIGHTGRID_CHUNKS: [usize; 3] = [8, 4, 8]; // chunks (32×16×32 voxels of 4 studs) in Studio's grid: 1024×256×1024 studs
 pub const LIGHTGRID_NORMAL_OFFSET: f32 = 6.0; // studs out along the normal the shaders read the grid (DefaultUnified*VS, SmoothClusterVS: pos + normal × 6)
 pub const LIGHTGRID_BORDER: f32 = 0.4921875; // the shaders take the grid only within this share of its size from its centre, per axis, and open sky beyond (CB0 LightConfig3, read from memory: 0.5 − 1/128)
 pub const LIGHTGRID_MOVES_REFRESH_S: f32 = 1.5; // ...and after parts only moved (characters, enemies) at most this often
@@ -234,8 +234,8 @@ pub const SCREENSHOT_FRAMES: u64 = 120;
 
 // Scripts (Luau runtime)
 /// A resume running longer than this errors "Script timeout: exhausted
-/// allowed execution time" (). Studio's setting
-/// Studio.ScriptTimeoutLength, registered by  ("Lua Debugger");
+/// allowed execution time". Studio's setting
+/// Studio.ScriptTimeoutLength, ("Lua Debugger");
 /// its GlobalSettings_13.xml holds 10. (Was an estimated 3 s.)
 pub const SCRIPT_TIMEOUT_S: f32 = 10.0;
 pub const MAX_DISPATCH_ROUNDS: usize = 64; // chained signal fires handled per frame
@@ -254,20 +254,20 @@ pub const FALLEN_PARTS_HEIGHT: f32 = -500.0; // Workspace.FallenPartsDestroyHeig
 pub const WALK_SPEED: f32 = 16.0; // Humanoid.WalkSpeed default
 pub const JUMP_HEIGHT: f32 = 7.2; // Humanoid.JumpHeight default
 // Round 22: Studio's Humanoid floor finder and controller.
-pub const FLOOR_RAY_SPREAD: f32 = 0.4; // floor rays start at ±0.4 × the root's size (Studio , .rdata ); 0.4 × size.y below its centre
-pub const FLOOR_RAY_MIN_SIZE: f32 = 0.05; // root sizes count at least this (, .rdata )
-pub const FLOOR_RAYS_ALONG: [f32; 5] = [0.0, 1.0, -1.0, 2.0, -2.0]; // first pass: 5 rays along the root's Z at these × 0.4 × size.z (.rdata )
-pub const FLOOR_RAYS_CORNERS: [(f32, f32); 4] = [(1.0, -1.0), (1.0, 1.0), (-1.0, -1.0), (-1.0, 1.0)]; // second pass when none hit: the corners (x, z) × 0.4 × size (.rdata )
-pub const FLOOR_RAY_EXTRA: f32 = 0.3; // ray length += 0.3 × (HipHeight + root size.y): FInt ExtraFloorRaycastDistanceHipHeightPercent = 30 (value .data )
-pub const FLOOR_RAY_HIP_HELD: f32 = 1.5; // ray length += HipHeight × 1.5 while it has a floor (caller , .rdata )
-pub const FLOOR_RAY_HIP_FREE: f32 = 1.1; // … × 1.1 without one (.rdata )
+pub const FLOOR_RAY_SPREAD: f32 = 0.4; // floor rays start at ±0.4 × the root's size; 0.4 × size.y below its centre
+pub const FLOOR_RAY_MIN_SIZE: f32 = 0.05; // root sizes count at least this
+pub const FLOOR_RAYS_ALONG: [f32; 5] = [0.0, 1.0, -1.0, 2.0, -2.0]; // first pass: 5 rays along the root's Z at these × 0.4 × size.z
+pub const FLOOR_RAYS_CORNERS: [(f32, f32); 4] = [(1.0, -1.0), (1.0, 1.0), (-1.0, -1.0), (-1.0, 1.0)]; // second pass when none hit: the corners (x, z) × 0.4 × size
+pub const FLOOR_RAY_EXTRA: f32 = 0.3; // ray length += 0.3 × (HipHeight + root size.y): FInt ExtraFloorRaycastDistanceHipHeightPercent = 30
+pub const FLOOR_RAY_HIP_HELD: f32 = 1.5; // ray length += HipHeight × 1.5 while it has a floor
+pub const FLOOR_RAY_HIP_FREE: f32 = 1.1; // … × 1.1 without one
 pub const HUMANOID_ALTITUDE_GAIN: f32 = 39.0; // below floor + HipHeight + half the root the root rises at 39 × the gap studs/s (fitted to Studio's step-up and landing traces, round 22 movement_probe: 39.5 / 39 / 42 at gaps 0.06 / 0.03 / 0.01); above it gravity alone brings it down
 pub const HUMANOID_BRAKE_BASE: f32 = 0.6; // Fitted base: movement-r6 slippery Studio accelerates/brakes at 7.343 studs/s²; 2.0 overestimated it by 1.4. With no move input on a floor the horizontal velocity closes on the floor's at most BASE + PER × μ studs/s², μ = (f·w + 0.3) / (w + 1) with the character's Plastic (fitted, round 22 movement_probe friction lanes: Studio 8.8 at μ 0.003, 32 at 0.013, 121 at 0.053, a frame or two at ≥ 0.15)
 pub const HUMANOID_BRAKE_PER_FRICTION: f32 = 2270.0; // (same fit; residuals under 1 studs/s²)
 pub const HUMANOID_CEILING_BOUNCE: f32 = 0.5; // the head hitting a ceiling sends the root back down at this × its speed (fitted: Studio's ceiling jump lands 0.11 s after the jump; Plastic elasticity 0.5)
 pub const HUMANOID_WALL_BOUNCE_FRICTION: f32 = 0.8; // on a floor, a body that walked into a wall bounces off it and its slide along it loses this × the wall's friction mix × the speed pushed into it (Plastic: 0.24; fitted, round 25: Studio's wall_slide averages 8.62 instead of 11.31 studs/s at 45°, both rigs; round 22's 0.122 was fitted to wall_slide's peaks). Held flush (pressed in the air, then landing) it loses the full Coulomb mix: Plastic 0.3, R6 wall_jump_diag after landing 2.87 = 7.16 − 0.3 × 14.31, corner 7.92 = 11.31 × 0.7 once settled (round 26: R15's faster ~5 there was the wall's end, not friction). The body also turns flush to the wall
 pub const HUMANOID_BOX_CHAMFER: f32 = 0.3; // the body box's vertical edges are cut this far (at most 0.6 × its smaller half-width): Studio's box pivots round a wall's end and gets free ~0.3 studs sooner (movement-wall wall_jump_diag: R6 starts leaving at x 8.64, a square box at 9.0; R15 ~8.6) and turns away (yaw +0.17 R6, +0.30 R15); the cut edge's slanted normal does both (estimated, round 26)
-pub const HUMANOID_JUMP_WALL_HOLD_S: f32 = 0.03; // jumping while walking into a wall, Studio stays Jumping this long, its step re-applying the take-off speed (Jumping  adds mass × (1.06 × GetJumpVelocity − v·up) each step until that is ≤ 1e-6 (.rdata ), which the wall's friction keeps from happening): movement-wall wall_jump_diag Jumping lasts 0.034–0.048 s in 6 of 6 runs over 3 captures, a free jump 0.007; rustudio's own samples land a frame late, so the measured 0.04 rose too far (fitted, round 26: diagonal rise 8.31 R6 / 8.16 R15 for Studio's 8.0–8.4 / 8.7–9.1)
+pub const HUMANOID_JUMP_WALL_HOLD_S: f32 = 0.03; // jumping while walking into a wall, Studio stays Jumping this long, its step re-applying the take-off speed (Jumping adds mass × (1.06 × GetJumpVelocity − v·up) each step until that is ≤ 1e-6, which the wall's friction keeps from happening): movement-wall wall_jump_diag Jumping lasts 0.034–0.048 s in 6 of 6 runs over 3 captures, a free jump 0.007; rustudio's own samples land a frame late, so the measured 0.04 rose too far (fitted, round 26: diagonal rise 8.31 R6 / 8.16 R15 for Studio's 8.0–8.4 / 8.7–9.1)
 pub const HUMANOID_JUMP_WALL_SLIDE_MIN: f32 = 0.2; // … only when the walk also slides along the wall by more than this × its length: straight in (wall_jump) Studio's Jumping lasts one step (R6 3 of 3 captures, R15 1 of 3; the other two 0.042), at 26.6° (wall_jump_diag, 0.45 of the walk along it) 0.034–0.048 (estimated threshold, round 26)
 pub const HUMANOID_WALL_AIR_GRIP: f32 = 32.0; // after a jump into a wall its friction brakes the rise by this (studs/s²) on top of gravity (fitted, round 26: straight in Studio rises 6.55–6.76 for a free 7.27 (rustudio 6.54); the first frames read 20–90, noisy; then the body has drifted off the wall and falls at g)
 pub const HUMANOID_WALL_AIR_GRIP_S: f32 = 0.1; // … for this long after the take-off (the same lanes: gone by ~0.1 s)
@@ -305,8 +305,8 @@ pub const STARTER_PLAYER_TO_PLAYER: &[(&str, &str)] = &[
     ("HealthDisplayDistance", "HealthDisplayDistance"),
     ("NameDisplayDistance", "NameDisplayDistance"),
 ];
-pub const JUMP_TAKEOFF_FACTOR: f32 = 1.06; // Humanoid jump: commanded speed (JumpPower, or √(2gh)/1.06) leaves at 1.06× (Studio  / , constant .rdata ); an offline Studio: 7.27 studs at JumpPower 50, 28.86 at 100
-pub const JUMP_SPEED_MAX: f32 = 1000.0; // JumpHeight's commanded speed is clamped to [0, 1000] (, .rdata )
+pub const JUMP_TAKEOFF_FACTOR: f32 = 1.06; // Humanoid jump: commanded speed (JumpPower, or √(2gh)/1.06) leaves at 1.06×; an offline Studio: 7.27 studs at JumpPower 50, 28.86 at 100
+pub const JUMP_SPEED_MAX: f32 = 1000.0; // JumpHeight's commanded speed is clamped to [0, 1000]
 pub const WHEEL_INPUT_PER_NOTCH: f32 = 0.5; // the game's wheel input (InputObject.Position.Z, PointerAction) per notch: Studio's camera zoomed 12.5 → 23.375 → 14.917 → 19.146 studs for one Qt wheel event of −3 / +2 / −1 notches (offline Studio), the ZoomController step for 0.5 per notch
 pub const TURN_RATE: f32 = 7.0; // Humanoid turning toward its walking direction: the angle left shrinks as exp(-7 t) (fitted to Studio's turn in an offline Studio: 1.48 rad left → 0.93 / 0.38 / 0.12 after 0.10 / 0.22 / 0.35 s)
 pub const CAMERA_TYPE_CUSTOM: u32 = 5; // Enum.CameraType.Custom: a joining client's camera
@@ -318,40 +318,40 @@ pub const WHEEL_POINTS_PER_NOTCH: f32 = 40.0; // egui's line scroll size
 pub const R15_HIP_HEIGHT: f32 = 2.0; // Humanoid.HipHeight of Studio's default R15 body (content/avatar/characterR15DynamicHeadV2.rbxm)
 #[cfg_attr(not(test), allow(dead_code))] // checked by rig::hip_tests
 pub const R15_PLAY_HIP_HEIGHT: f32 = 2.192423; // HipHeight of Studio's own Play character with default scales (tools/fidelity physics capture, control place); the body file's legs scaled to R15_DEFAULT_PART_SIZES give the same
-pub const WRAP_PUFFINESS_MIN: f32 = -1.0; // WrapLayer.Puffiness setter : maxss with .rdata 
-pub const WRAP_PUFFINESS_MAX: f32 = 1.0; // ... then minss with .rdata 
-pub const WRAP_PUFFINESS_DEFAULT: f32 = 1.0; // FInt WrapPuffinessDefaultPercent = 100 (.data , registered by ) / 100
-pub const COREMESH_V2_SIZE_BYTES: usize = 4; // COREMESH v2: u32 compressed size first; a chunk under 4 bytes is "too small" ( → )
-pub const DRACO_ATTRIBUTES: usize = 5; // Draco attributes Studio requires by unique id 0..4 ( via )
+pub const WRAP_PUFFINESS_MIN: f32 = -1.0; // WrapLayer.Puffiness: maxss with
+pub const WRAP_PUFFINESS_MAX: f32 = 1.0; //... then minss with
+pub const WRAP_PUFFINESS_DEFAULT: f32 = 1.0; // FInt WrapPuffinessDefaultPercent = 100 / 100
+pub const COREMESH_V2_SIZE_BYTES: usize = 4; // COREMESH v2: u32 compressed size first; a chunk under 4 bytes is "too small"
+pub const DRACO_ATTRIBUTES: usize = 5; // Draco attributes Studio requires by unique id 0..4
 pub const DEFAULT_RIG_R15: bool = true; // default character rig when nothing else says (StarterPlayer default)
 pub const JUMP_POWER: f32 = 50.0; // Humanoid.JumpPower default (used when UseJumpPower)
 #[allow(dead_code)] // used by library.luau __rs_seat (same number)
-pub const SEAT_WELD_MIN_ROOT_HEIGHT: f32 = 0.05; // R6 SeatWeld C1.Y = -(max(root.Size.Y, 0.05) × 0.5 + 0.5) (; 0.05 at .rdata , 0.5 at ); R15 from the rig attachments (library.luau __rs_seat)
+pub const SEAT_WELD_MIN_ROOT_HEIGHT: f32 = 0.05; // R6 SeatWeld C1.Y = -(max(root.Size.Y, 0.05) × 0.5 + 0.5); R15 from the rig attachments (library.luau __rs_seat)
 pub const PROJECT_DEBOUNCE_MS: u64 = 150; // a project folder's disk changes are applied once the folder has been quiet this long (well inside the 1 s promise)
 pub const GAMEPAD_SCAN_S: f32 = 1.0; // how often Play looks for plugged / unplugged gamepads (rustudio's own polling)
 pub const SEAT_COOLDOWN_S: f32 = 1.0; // after leaving a seat the humanoid doesn't sit again for this long (estimated; Roblox debounces re-sitting)
-pub const CLIMB_SPEED_FACTOR: f32 = 0.7; // Climbing update : vertical speed = |move velocity| × 0.7 (.rdata ), no sideways velocity
-pub const CLIMB_MIN_INPUT: f32 = 0.1; // : a move speed under 0.1 (.rdata ) climbs at CLIMB_CREEP instead
-pub const CLIMB_CREEP: f32 = 0.01; // : .rdata 
-pub const CLIMB_DOWN_DOT: f32 = -0.2; // : a move direction whose dot with the root's flat look is under -0.2 (.rdata ) climbs down (sign -1, )
+pub const CLIMB_SPEED_FACTOR: f32 = 0.7; // Climbing update: vertical speed = |move velocity| × 0.7, no sideways velocity
+pub const CLIMB_MIN_INPUT: f32 = 0.1; // a move speed under 0.1 climbs at CLIMB_CREEP instead
+pub const CLIMB_CREEP: f32 = 0.01;
+pub const CLIMB_DOWN_DOT: f32 = -0.2; // a move direction whose dot with the root's flat look is under -0.2 climbs down
 pub const CLIMB_REACH: f32 = 0.9; // a TrussPart this far past the capsule's side, in the walking direction, is climbed (estimated)
-pub const SWIM_FORCE_MAX: f32 = 10000.0; // Swimming : the swim force's per-axis limit (X, Z both ways, Y down; .data  10000 / 0 / 10000,  −10000 ×3), × the Humanoid's scale³ (+0x154)
-pub const SWIM_FORCE_UP_MAX: f32 = 1000.0; // the same, upward (.data  = 1000)
-pub const SWIM_GAIN: f32 = 35.0; // Swimming : force = 35 (.rdata ) × mass × (desired − current velocity): the velocity closes on the move vector at 35 /s
-pub const SWIM_FLAT_RATIO: f32 = 2.0; // : a move whose horizontal part exceeds 2 × its vertical (.rdata ) swims flat at the full speed
+pub const SWIM_FORCE_MAX: f32 = 10000.0; // Swimming: the swim force's per-axis limit, × the Humanoid's scale³
+pub const SWIM_FORCE_UP_MAX: f32 = 1000.0; // the same, upward
+pub const SWIM_GAIN: f32 = 35.0; // Swimming: force = 35 × mass × (desired − current velocity): the velocity closes on the move vector at 35 /s
+pub const SWIM_FLAT_RATIO: f32 = 2.0; // a move whose horizontal part exceeds 2 × its vertical swims flat at the full speed
 pub const SWIM_FLOAT_SPEED: f32 = 1.63; // studs/s up while submerged, R15: the humanoid floats to the surface (Studio: 1.63 while swimming forward, round 22 movement_probe water)
 pub const SWIM_FLOAT_SPEED_R6: f32 = 0.446; // the same for R6 (Studio: 0.446 every frame of the water lane's 3 s swim, round 23 movement_probe water; a buoyancy model with R15's fit predicts ~2, so this is measured per rig)
 pub const SWIM_SURFACE_GAP: f32 = 0.19; // the float fades to 0 at the water's surface − this (root centre, studs) …
 pub const SWIM_SURFACE_FADE: f32 = 0.27; // … over this depth (Studio R15 in an 8-deep pool: 1.63 at 7.21, 1.28 at 7.60, 0.26 at 7.77, round 23 movement_probe water; was a step at the capsule centre + 1.5, which stopped at 7.19)
 pub const SWIM_ENTER_WATER: f32 = 0.5; // water occupancy at the root that starts Swimming
-pub const FALLING_DOWN_S: f32 = 3.0; // RBX::HUMAN::FallingDown ctor : timer +0xc = 3.0 (0x40400000); every state's timer starts at 0 otherwise (base ctor )
-pub const RAGDOLL_TIMER_S: f32 = 5.0; // RBX::HUMAN::Ragdoll ctor : timer = FInt RagdollDefaultTimerTenthSecond (50, .data ) / 10 (.rdata )
-pub const RAGDOLL_EARLY_EXIT_S: f32 = 2.0; // Ragdoll exit check : with the humanoid's jump byte +0x1f7, ends once 5.0 − 2.0 s remain (FInt RagdollEarlyExitTimeTenthSecond 20, .data )
-pub const RAGDOLL_SLOW_ENOUGH: f32 = 1.0; // : ends when the root's |linear velocity|² and |angular velocity|² are both under (FInt RagdollSlowEnoughToNotTenth 10 / 10)² (.data )
-pub const GETTING_UP_S: f32 = 0.0; // RBX::HUMAN::GettingUp (vtable , ctor ) has no timed exit: it ends once upright (its update  only acts 3.5–4.5 s in, .rdata  / ); the controller's character is always upright, so one step
-pub const ROOT_PART_FALLBACK_R15: &str = "UpperTorso"; // Humanoid RootPart / Torso getter : R15 (RigType [+0x1dc] ≠ 0) slot +0x5e8 (HumanoidRootPart, index 15 of the R15 name table ), else +0x508 (index 1, "UpperTorso" .rdata )
-pub const ROOT_PART_FALLBACK_R6: &str = "Torso"; // same getter, R6: slot +0x488 (HumanoidRootPart, index 0 of table ), else +0x4e8 (index 6, "Torso" .rdata )
-pub const ATTRIBUTE_NAME_MAX: usize = 100; // Instance:SetAttribute name check : at most 0x64 bytes, [A-Za-z0-9_./-] only, not empty
+pub const FALLING_DOWN_S: f32 = 3.0; // RBX:HUMAN:FallingDown: timer = 3.0 (0x40400000); every state's timer starts at 0 otherwise
+pub const RAGDOLL_TIMER_S: f32 = 5.0; // RBX::HUMAN::Ragdoll: timer = FInt RagdollDefaultTimerTenthSecond / 10
+pub const RAGDOLL_EARLY_EXIT_S: f32 = 2.0; // Ragdoll exit check: with the humanoid's jump byte, ends once 5.0 − 2.0 s remain
+pub const RAGDOLL_SLOW_ENOUGH: f32 = 1.0; // ends when the root's |linear velocity|² and |angular velocity|² are both under (FInt RagdollSlowEnoughToNotTenth 10 / 10)²
+pub const GETTING_UP_S: f32 = 0.0; // RBX::HUMAN::GettingUp has no timed exit: it ends once upright; the controller's character is always upright, so one step
+pub const ROOT_PART_FALLBACK_R15: &str = "UpperTorso"; // Humanoid RootPart / Torso getter: R15 slot, else (index 1, "UpperTorso")
+pub const ROOT_PART_FALLBACK_R6: &str = "Torso"; // same getter, R6: slot, else (index 6, "Torso")
+pub const ATTRIBUTE_NAME_MAX: usize = 100; // Instance:SetAttribute name check: at most 0x64 bytes, [A-Za-z0-9_./-] only, not empty
 pub const BENCH_WARMUP_S: f32 = 3.0; // frames ignored after load / Play start before measuring
 pub const PERF_SECONDS: f32 = 10.0; // --bench default measured time
 pub const SELFTEST_PERF_SECONDS: f32 = 5.0; // the self-test's perf step (round 20: it runs after the 74 s Place A child and the run has 90 s in all)
@@ -463,7 +463,7 @@ pub const GUI_VIEWPORT_MAX_TRIS: usize = 3000; // ViewportFrame meshes are thinn
 pub const GUI_SURFACE_LIFT: f32 = 0.01; // SurfaceGuis sit this far off the face (studs, estimated)
 pub const GUI_SURFACE_AFFINE_ERR_PX: f32 = 0.5; // SurfaceGui triangles whose colour / texture varies are split until screen-space (affine) interpolation is within this many pixels of perspective-correct; flat-colour ones never (projection keeps their edges exact). Round 20: the old fixed 40 px split made 2.1M triangles per Place B frame
 pub const GUI_SCROLL_PX_PER_POINT: f32 = 1.0; // ScrollingFrame: CanvasPosition pixels per pixel of the scroll event
-pub const GUI_SCROLL_PX_PER_NOTCH: f32 = 100.0; // FInt ScrollWheelDeltaAmount default (.data , registered by , used at )
+pub const GUI_SCROLL_PX_PER_NOTCH: f32 = 100.0; // FInt ScrollWheelDeltaAmount default
 pub const QUERY_GRID_CELL: f32 = 16.0; // studs: spatial grid cell for Raycast / GetPartBoundsInBox / GetPartsInPart
 pub const QUERY_GRID_MAX_CELLS: usize = 512; // parts spanning more cells than this are always tested
 pub const QUERY_GRID_SCAN_CELLS: usize = 4096; // queries covering more cells than this scan every part
@@ -521,8 +521,8 @@ pub fn material_albedo(material: u32) -> [f32; 3] {
     }
 }
 // Lighting's time-of-day sky levels (2026-11-05, read from a running Studio's
-// Lighting members +0x160 (c0), +0x1a0 (c1), +0x16c (k) at 1/8 h steps and five
-// EnvironmentDiffuseScale values, an offline Studio 0.746; docs/STUDIO-SKY-RE.md "Environment
+// Lighting members (c0), (c1), (k) at 1/8 h steps and five
+// EnvironmentDiffuseScale values, an offline Studio 0.746; Studio measurements "Environment
 // light and AO"). Keyed on ClockTime only (latitude 0 / 41.7 / 70 alike).
 // Each row: hour, c0 at s=0 (rgb), c0 at s=1, c1 at s=0, c1 at s=1, k0, k1;
 // linear between rows (wrapping at 24 h), c0 / c1 = lerp(s=0, s=1, s) and
@@ -549,7 +549,7 @@ pub const SKY_LEVELS: [f32; 255] = [
     21.0, 0.0, 0.0, 0.0, 0.147059, 0.147059, 0.147059, 0.0, 0.0, 0.0, 0.2, 0.2, 0.2, 0.145455, 0.35,
 ];
 // Part lighting from Studio's HQ part shaders (DefaultUnifiedFlatOpaqueFS /
-// TiledFS variant 3, shaders_glsl3.pack) and the cube build .
+// TiledFS variant 3, shaders_glsl3.pack) and the cube build.
 pub const ENV_ROUGH_BASE: f32 = 0.089; // shader roughness = this + ENV_ROUGH_SCALE × the material's (SpecularMap .y / vertex value)
 pub const ENV_ROUGH_SCALE: f32 = 0.911;
 pub const ENV_SPEC_MIP_PER_ROUGHNESS: f32 = 5.0; // prefiltered env cube read at mip roughness × this
@@ -558,12 +558,12 @@ pub const ENV_INDOOR_FACES: &str = "rbxasset://textures/sky/indoor512_"; // + bk
 pub const ENV_SPEC_FADE: f32 = 0.0008; // the sky reflection fades out with distance: s × clamp(1 − studs × this) (CB0[28].y, RefractionBias_FadeDistance_GlowFactor, read from a running Studio's constant buffer)
 // Screen-space ambient occlusion, as Studio's SSAO passes (shaders_glsl3.pack
 // SSAODepthDownFS, SSAOFS, SSAOBlurX/YFS, SSAOCompositFS; LinearizeDepthFS;
-// setup ). On by default in Studio's edit view (calibration: a white
+// setup). On by default in Studio's edit view (calibration: a white
 // block on a white floor lit by Ambient alone reads 125 at the contact against
 // 140; by the sun alone 177 against 190: it darkens all light).
 pub const SSAO_DEPTH_SCALE: f32 = 0.002; // depth buffer for AO = view depth × this, at most SSAO_DEPTH_MAX; sky = 1 (LinearizeDepthFS)
 pub const SSAO_DEPTH_MAX: f32 = 0.998;
-pub const SSAO_RADIUS_K: f32 = 0.004; // sample radius (uv) = 0.5 × projection diagonal × this ÷ AO depth: 2 studs in the world (SSAOFS, SSAOParams.xy = 0.5·P00 / 0.5·P11 per )
+pub const SSAO_RADIUS_K: f32 = 0.004; // sample radius (uv) = 0.5 × projection diagonal × this ÷ AO depth: 2 studs in the world
 pub const SSAO_RADIUS_MIN_TEXELS: f32 = 10.0; // the radius clamped to this .. SSAO_RADIUS_MAX_TEXELS half-resolution texels
 pub const SSAO_RADIUS_MAX_TEXELS: f32 = 100.0;
 pub const SSAO_SAMPLES: u32 = 8; // sample pairs, at 45° steps, at (i + 1) × 0.1 of the radius
@@ -574,14 +574,14 @@ pub const SSAO_BLUR_DEPTH_MIN: f32 = 0.00008;
 pub const SSAO_BLUR_DEPTH_MAX: f32 = 0.008;
 pub const SSAO_UPSAMPLE_DEPTH: f32 = 0.0008; // composite: neighbours within this AO depth of the pixel's (SSAOCompositFS)
 // The sun / moon (Lamp0) and the back light (Lamp1) as Studio builds them
-// ( → colour mix ; light direction Lighting+0x178).
-pub const LAMP0_GAIN: f32 = 0.9; // Lamp0 = this × Brightness × mix(k², k², ColorShift_Top²) ([]); k = the sky level (SKY_LEVELS)
-pub const LAMP1_GAIN: f32 = 0.36; // Lamp1 = this × Brightness × mix(k², 0, ColorShift_Bottom²) ([]): lights faces turned away from Lamp0
-pub const LAMP_COLOR_MEAN: f32 = 0.3333; // the colour mix's channel mean factor ([])
-pub const LAMP_MOON_BELOW_SUN_Y: f32 = -0.3; // Lamp0 comes from the moon (−sun) once the sun is lower than this (read from Lighting+0x178 at 1/32 h steps: switches between sun.y −0.298 / −0.305, latitude 0 and 41.7 alike)
+//.
+pub const LAMP0_GAIN: f32 = 0.9; // Lamp0 = this × Brightness × mix(k², k², ColorShift_Top²); k = the sky level (SKY_LEVELS)
+pub const LAMP1_GAIN: f32 = 0.36; // Lamp1 = this × Brightness × mix(k², 0, ColorShift_Bottom²): lights faces turned away from Lamp0
+pub const LAMP_COLOR_MEAN: f32 = 0.3333; // the colour mix's channel mean factor
+pub const LAMP_MOON_BELOW_SUN_Y: f32 = -0.3; // Lamp0 comes from the moon (−sun) once the sun is lower than this
 
 // Local light shadows (Future / Realistic), from Studio's own code (2026-11-05;
-// docs/STUDIO-SKY-RE.md "Local light shadows"): DefaultUnifiedTiledFS variant 8
+// Studio measurements "Local light shadows"): DefaultUnifiedTiledFS variant 8
 // (Vulkan pack) and a running Studio's light / shadow buffers.
 pub const LOCAL_LIGHT_DIST: f32 = 580.0; // Globals.localLightDist: lights within this of the camera are shadow-mapped (beyond: Studio's voxel light map)
 pub const HYBRID_LERP_SLOPE: f32 = 0.05; // Globals.hybridLerpSlope: the hand-off from shadowed to voxel light over 1/this studs
@@ -597,11 +597,11 @@ pub const LSHADOW_MAX_LIGHTS: usize = 16; // shadowed lights at once: (2048/192)
 pub const LIGHT_INNER: f32 = 0.71; // light record m1 = Range × 1000 + this: full brightness to this × Range (all lights read)
 
 // Part materials, from Studio's own code and memory (2026-11-05;
-// docs/STUDIO-SKY-RE.md "Part materials"). Per material (Enum.Material order of
+// Studio measurements "Part materials"). Per material (Enum.Material order of
 // matpack's tables): Studio's PartMaterialConsts (the part shaders' CB2),
 // read from its material records in a running offline Studio
-// (: [table][43] × 0x130 bytes, +0x58 shader type, +0x5c the
-// 80-byte constants; filled per table, looked up by ) — and the
+// (: [table][43] × 0x130 bytes, shader type, the
+// 80-byte constants; filled per table, looked up) — and the
 // box faces' studs per texture repeat, measured from the per-instance uvScale
 // (CB1 row 5 of DefaultUnified*VS: uv = TEXCOORD0 × uvScale + uvOffset) of
 // sentinel-sized parts in a clean place with Use2022Materials off and on.
@@ -700,12 +700,12 @@ pub const PART_MATERIAL_2022: [[f32; 6]; 43] = [
     [1.0, 0.0, 0.0, 0.0, 0.0, 8.0], // Rubber (type 4)
 ];
 pub const DETILE_LEVELS: f32 = 8.0; // Detiled FS: k = noise(uv × noiseScale).x × this; copies at uv + sin((3, 7) × floor(k)) and floor(k) + 1, mixed by fract(k)
-pub const DETILE_NOISE: &str = "rbxasset://textures/noise.dds"; // its noise (32², bound at slot 9 with a linear wrap sampler by  for shader types 21–22)
+pub const DETILE_NOISE: &str = "rbxasset://textures/noise.dds"; // its noise
 
-// Studio 0.746:  (index, Use2022Materials), copied by
-//  to +0x58 type and +0x5c PartMaterialConsts. Both 2022
+// Studio 0.746: (index, Use2022Materials), copied by
+// to type and PartMaterialConsts. Both 2022
 // texture resolutions use this same constructor. Columns: shader type, then
-// the 20 floats in PartMaterialConsts (docs/STUDIO-SKY-RE.md).
+// the 20 floats in PartMaterialConsts.
 pub const PART_MATERIAL_FULL_PRE2022: [[f32; 21]; 43] = [
     [0.0, 10.4, 0.6, 0.0, 1.0, 0.5, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0], // Plastic
     [0.0, 0.0, 0.4, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0], // SmoothPlastic
@@ -801,7 +801,7 @@ pub const WANG_CELLS: f32 = 4.0; // WangFS: uv*4, lookup nearest at floor(uv*4) 
 pub const MATERIAL_DIFFUSE_FADE_DEPTH: f32 = 300.0; // all LQ and HQ HideDiffuse/HideAll variants
 pub const MATERIAL_LQ_DIFFUSE_CUTOFF: f32 = 0.6; // LQ hardcodes this instead of farDiffuseCutoff
 
-// , read by ; indexed by pointer FNV bits 3..8 / 9..14.
+// ; indexed by pointer FNV bits 3..8 / 9..14.
 pub const MATERIAL_UV_RANDOM: [f32; 64] = [
     0.8273230195045471, 0.526485025882721, 0.9162539839744568, 0.22542600333690643,
     0.969743013381958, 0.06947600096464157, 0.42392799258232117, 0.794975996017456,
@@ -823,10 +823,10 @@ pub const MATERIAL_UV_RANDOM: [f32; 64] = [
 pub const MATERIAL_UV_FNV_OFFSET: u64 = 0xcbf29ce484222325;
 pub const MATERIAL_UV_FNV_PRIME: u64 = 0x100000001b3;
 
-// Studio Running/Freefall force solvers  / .
-// Velocity error gain getter  -> .rdata .
+// Studio Running/Freefall force solvers.
+// Velocity error gain getter ->.
 pub const HUMANOID_VELOCITY_GAIN: f32 = 150.0;
-// Freefall horizontal acceleration cap (.rdata ).
+// Freefall horizontal acceleration cap.
 pub const HUMANOID_AIR_ACCEL: f32 = 143.0;
 
 // Instance collector (src/runtime.rs Runtime::collect, src/play.rs collect_garbage).

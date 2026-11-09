@@ -1,4 +1,4 @@
-//! Studio budget pools: getter assembly , observed GetFVariable
+//! Studio budget pools: getter assembly, observed GetFVariable
 //! defaults and paired legacy/modern consumption probes in checks/parity/data.md.
 use crate::runtime::World;
 use mlua::{Lua, MultiValue, Value};

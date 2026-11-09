@@ -34,35 +34,35 @@
    "group": "camera",
    "value": 1.5,
    "unit": "x",
-   "source": "Studio: \"Camera Speed\" default at .data , registered by , read by "
+   "source": "matched against Studio"
   },
   {
    "name": "fly base step",
    "group": "camera",
    "value": 0.5,
    "unit": "studs/tick",
-   "source": "Studio , .rdata "
+   "source": ","
   },
   {
    "name": "fly ramp after",
    "group": "camera",
    "value": 120,
    "unit": "ticks",
-   "source": "Studio , .rdata "
+   "source": ","
   },
   {
    "name": "fly ramp ticks per stud",
    "group": "camera",
    "value": 240,
    "unit": "ticks",
-   "source": "Studio : step = min(ticks / 240, 15), .rdata "
+   "source": ": step = min(ticks / 240, 15),"
   },
   {
    "name": "fly step cap",
    "group": "camera",
    "value": 15,
    "unit": "studs/tick",
-   "source": "Studio , .rdata "
+   "source": ","
   },
   {
    "name": "fly tick rate",
@@ -77,40 +77,40 @@
    "group": "camera",
    "value": 107,
    "unit": "studs/s",
-   "source": "0.5 studs x Camera Speed 1.5 x 142.7 ticks/s (Studio /); an offline Studio measured 27/53/108 studs in 0.25/0.5/1 s"
+   "source": "0.5 studs x Camera Speed 1.5 x 142.7 ticks/s; an offline Studio measured 27/53/108 studs in 0.25/0.5/1 s"
   },
   {
    "name": "fly speed shift factor",
    "group": "camera",
    "value": 0.2,
    "unit": "x",
-   "source": "Studio: \"Camera Shift Speed\" default at .data  (registered by ), applied in ; Shift+W measured 21 studs/s"
+   "source": "matched against Studio; Shift+W measured 21 studs/s"
   },
   {
    "name": "fly hold reset",
    "group": "camera",
    "value": "at once when no movement key is held, and while Shift is held",
-   "source": "Studio caller at , counter [object+0x348]"
+   "source": "matched against Studio"
   },
   {
    "name": "wheel zoom step",
    "group": "camera",
    "value": 15,
    "unit": "studs/notch",
-   "source": "Studio: \"Camera Mouse Wheel Speed\" default at .data  (registered by ), used at ; measured 15.0 studs at 72 and 222 studs"
+   "source": "matched against Studio"
   },
   {
    "name": "wheel zoom step with shift",
    "group": "camera",
    "value": 0.2,
    "unit": "studs/notch",
-   "source": "Studio ..: Shift (KeyCode 303/304) uses Camera Shift Speed"
+   "source": "..: Shift (KeyCode 303/304) uses Camera Shift Speed"
   },
   {
    "name": "wheel zoom target",
    "group": "camera",
    "value": "ray under the cursor; camera and focus move together, no stop near the hit",
-   "source": "Studio .."
+   "source": ".."
   },
   {
    "name": "wheel smooth scroll per notch",
@@ -123,13 +123,13 @@
    "name": "camera pan speed",
    "group": "camera",
    "value": 1,
-   "source": "Studio: \"Camera Pan Speed\" default at .data  (registered by ); not yet used"
+   "source": "matched against Studio"
   },
   {
    "name": "zoom to mouse position",
    "group": "camera",
    "value": true,
-   "source": "Studio: \"Camera Zoom to Mouse Position\" default at .data  (registered by ), checked at "
+   "source": "matched against Studio"
   },
   {
    "name": "pan per pixel",
@@ -182,7 +182,7 @@
    "name": "increment change enables snap",
    "group": "tools",
    "value": true,
-   "source": "Studio  (\"Linear snap increment change -> enable linear snap\") and  (angle)"
+   "source": " (\"Linear snap increment change -> enable linear snap\") and (angle)"
   },
   {
    "name": "minimum part size",
@@ -523,7 +523,7 @@
    "name": "step-up height",
    "group": "movement",
    "value": "anything under the root's bottom (HipHeight): 2.0 studs climbed, 2.5 not (R15 and R6)",
-   "source": "tools/fidelity movement_probe (round 22): step lanes; follows from the floor rays (Studio )"
+   "source": "tools/fidelity movement_probe (round 22): step lanes; follows from the floor rays"
   },
   {
    "name": "max slope",
@@ -731,14 +731,14 @@
    "group": "character",
    "value": 1.06,
    "unit": "× commanded jump speed",
-   "source": "Studio GetJumpVelocity  and its inverse  (.rdata  = 1.06); an offline Studio: JumpPower 50 rises 7.27 studs, 100 rises 28.86"
+   "source": "matched against Studio"
   },
   {
    "name": "JumpHeight jump speed clamp",
    "group": "character",
    "value": 1000,
    "unit": "studs/s",
-   "source": "Studio  minss with .rdata "
+   "source": " minss with"
   },
   {
    "name": "turn rate",
@@ -1191,20 +1191,20 @@
    "group": "gui",
    "value": 100,
    "unit": "px",
-   "source": "Studio: FInt ScrollWheelDeltaAmount default 100 (.data , name set by ), added to CanvasPosition at "
+   "source": "matched against Studio"
   },
   {
    "name": "legacy top bar inset flag",
    "group": "gui",
    "value": 36,
    "unit": "px",
-   "source": "Studio: FInt InGameGlobalGuiInset default 36 (.data , ), passed at ; the current top bar reports 58 at run time"
+   "source": "matched against Studio"
   },
   {
    "name": "AutoButtonColor field",
    "group": "gui",
-   "value": "GuiButton byte +0x4c; getter , setter , registered ",
-   "source": "Studio (the darkening code itself not located)"
+   "value": "GuiButton byte; getter,",
+   "source": "matched against Studio"
   },
   {
    "name": "default character head and arms",
@@ -1423,7 +1423,7 @@
    "group": "lighting",
    "value": 120,
    "unit": "studs",
-   "source": "Studio Range setters  (SpotLight) and  (PointLight/SurfaceLight): maxss 0, minss [] = 120.0"
+   "source": "matched against Studio"
   },
   {
    "name": "soft style plateau",
@@ -1601,58 +1601,58 @@
    "group": "lighting",
    "value": 180,
    "unit": "deg",
-   "source": "Studio SpotLight.Angle setter , SurfaceLight.Angle : clamp [0, [] = 180.0]"
+   "source": "matched against Studio"
   },
   {
    "name": "clock time max",
    "group": "lighting",
    "value": 24,
    "unit": "h",
-   "source": "Studio ClockTime setter  -> : clamp [0, [] = 24.0]"
+   "source": "matched against Studio"
   },
   {
    "name": "seconds per hour",
    "group": "lighting",
    "value": 3600,
    "unit": "s",
-   "source": "Studio : x [] = 3600.0, truncated to whole seconds, stored x 1000000 (us)"
+   "source": ": x = 3600.0, truncated to whole seconds, stored x 1000000 (us)"
   },
   {
    "name": "environment scale max",
    "group": "lighting",
    "value": 1,
-   "source": "Studio EnvironmentDiffuseScale setter : clamp [0, [] = 1.0]"
+   "source": "matched against Studio"
   },
   {
    "name": "shadow softness max",
    "group": "lighting",
    "value": 1,
-   "source": "Studio ShadowSoftness setter : clamp [0, 1.0]"
+   "source": "matched against Studio"
   },
   {
    "name": "lighting brightness clamp",
    "group": "lighting",
    "value": "none",
-   "source": "Studio Lighting.Brightness setter  stores as given"
+   "source": "matched against Studio"
   },
   {
    "name": "exposure compensation clamp",
    "group": "lighting",
    "value": "none",
-   "source": "Studio ExposureCompensation setter  stores as given"
+   "source": "matched against Studio"
   },
   {
    "name": "sun direction cache",
    "group": "lighting",
-   "value": "Lighting+0x188",
-   "source": "Studio GetSunDirection  (registered ) returns the cached Vector3; latitude at Lighting+0x144 (setter )"
+   "value": "",
+   "source": "matched against Studio"
   },
   {
    "name": "mesh decomposition concavity",
    "group": "collision",
    "value": 0.01,
    "unit": "fraction of mesh size",
-   "source": "Studio: HACDConcavityMillionth 10000000 / HACDNormalizationDistanceMillionth 1000000000, registered .."
+   "source": "matched against Studio"
   },
   {
    "name": "decomposition voxel resolution (Precise)",
@@ -1680,14 +1680,14 @@
    "group": "materials",
    "value": 43,
    "unit": "materials",
-   "source": "Studio  (0x58-byte entries, order at .rdata )"
+   "source": ""
   },
   {
    "name": "RenderEnablePartBaseMaterial4K default",
    "group": "materials",
    "value": 1,
    "unit": "bool",
-   "source": "Studio  (mov r8d,1), tested at "
+   "source": " (mov r8d,1), tested"
   },
   {
    "name": "material map layer size",
@@ -1743,7 +1743,7 @@
    "group": "account",
    "value": 3,
    "unit": "retries",
-   "source": "Studio : a 403 with a new X-CSRF-TOKEN is retried while the counter (+0x178) is under 3 (cmp eax, 3 at )"
+   "source": "matched against Studio"
   },
   {
    "name": "cookie file mode",
@@ -1757,49 +1757,49 @@
    "group": "avatar",
    "value": -1.0,
    "unit": "",
-   "source": "Studio setter : maxss with .rdata  = -1.0"
+   "source": ": maxss with = -1.0"
   },
   {
    "name": "WrapLayer Puffiness max",
    "group": "avatar",
    "value": 1.0,
    "unit": "",
-   "source": "Studio setter : minss with .rdata  = 1.0"
+   "source": ": minss with = 1.0"
   },
   {
    "name": "WrapLayer Puffiness default",
    "group": "avatar",
    "value": 1.0,
    "unit": "",
-   "source": "Studio FInt WrapPuffinessDefaultPercent = 100 at .data  (registered by )"
+   "source": "matched against Studio"
   },
   {
    "name": "COREMESH v2 size field",
    "group": "meshes",
    "value": 4,
    "unit": "bytes",
-   "source": "Studio : u32 compressed size; under 4 bytes is 'COREMESH chunk too small'"
+   "source": ": u32 compressed size; under 4 bytes is 'COREMESH chunk too small'"
   },
   {
    "name": "Draco attributes required",
    "group": "meshes",
    "value": 5,
    "unit": "attributes",
-   "source": "Studio : unique ids 0..4 (position, normal, uv float32; tangent, colour 4 x uint8)"
+   "source": ": unique ids 0..4 (position, normal, uv float32; tangent, colour 4 x uint8)"
   },
   {
    "name": "CoreGuiType All",
    "group": "gui",
    "value": 4,
    "unit": "Enum.CoreGuiType",
-   "source": "Studio StarterGui::setCoreGuiEnabled  (cmp $0x4); All key constant at .rdata "
+   "source": "matched against Studio"
   },
   {
    "name": "CoreGuiType count",
    "group": "gui",
    "value": 10,
    "unit": "types",
-   "source": "Studio : All sets and checks types 0..9 (cmp $0xa at  / )"
+   "source": ": All sets and checks types 0..9"
   },
   {
    "name": "default glow intensity (no BloomEffect)",
@@ -1827,14 +1827,14 @@
    "group": "physics",
    "value": 512.0,
    "unit": "studs",
-   "source": "Studio FInt ShapecastMaxSize registered , value .data ; Spherecast compares radius + radius ()"
+   "source": "matched against Studio"
   },
   {
    "name": "ShapecastMaxDistance",
    "group": "physics",
    "value": 1024.0,
    "unit": "studs",
-   "source": "Studio FInt ShapecastMaxDistance registered , value .data ; compared with the direction's length ()"
+   "source": "matched against Studio"
   },
   {
    "name": "R15 Play hip height (default scales)",
@@ -1868,20 +1868,20 @@
    "name": "Humanoid.RootPart / Torso",
    "group": "character",
    "value": "one getter: HumanoidRootPart, else UpperTorso (R15) / Torso (R6); Torso is the same value under its deprecated name (and writable)",
-   "source": "Studio registrations  (RootPart) /  (Torso), shared getter  ->  (RigType [+0x1dc], slots +0x488/+0x4e8 R6, +0x5e8/+0x508 R15; name tables  / ); Torso setter "
+   "source": "matched against Studio"
   },
   {
    "name": "FindFirstChild",
    "group": "scripts",
    "value": "first child in child order whose Name is byte-equal (length then memcmp); the found child then passes an access check or the call returns nil",
-   "source": "Studio registration  (findFirstChild: name, recursive) -> ; non-recursive  -> scan  (children at instance+0x70), check ; recursive "
+   "source": "matched against Studio"
   },
   {
    "name": "SelectionSurfaceGuiCullAngle",
    "group": "gui",
    "value": 20,
    "unit": "FInt",
-   "source": "Studio flag name set by , value at .data  (registered by  -> ); readers not found statically, not used by rustudio"
+   "source": "matched against Studio"
   },
   {
    "name": "SurfaceGui triangle split",
@@ -1989,13 +1989,13 @@
    "name": "Random generator",
    "group": "scripts",
    "value": "PCG32 (mul 0x5851f42d4c957f2d, inc 105, XSH-RR), pcg32_srandom seeding",
-   "source": "Studio NextNumber() ; matches Studio's sequences for seeds 0, 1, 1001, 1005, 123456789"
+   "source": "matched against Studio"
   },
   {
    "name": "Random:NextNumber",
    "group": "scripts",
    "value": "(second << 32 | first) x 2^-64; (a, b): ends ordered, min(1 - t) + max t clamped",
-   "source": "Studio ,  (method table .data , wrapper )"
+   "source": ""
   },
   {
    "name": "Random:NextInteger",
@@ -2015,19 +2015,19 @@
    "name": "floor rays",
    "group": "character",
    "value": "5 along the root's Z at (0, -0.4 sy, k*0.4 sz), k = 0, 1, -1, 2, -2; else 4 corners (±0.4 sx, ±0.4 sz); straight down; hits averaged",
-   "source": "Studio floor finder  (.rdata , , ; sizes at least 0.05, )"
+   "source": "matched against Studio"
   },
   {
    "name": "floor ray length",
    "group": "character",
    "value": "0.3 x (HipHeight + root size.y) + HipHeight x 1.5 with a floor (1.1 without)",
-   "source": "Studio FInt ExtraFloorRaycastDistanceHipHeightPercent = 30 (.data ); caller  (.rdata  = 1.5,  = 1.1)"
+   "source": "matched against Studio"
   },
   {
    "name": "Humanoid flag defaults",
    "group": "character",
    "value": "MaxAltitudePDHipHeightPercent 100, SimAdaptiveHumanoidPDControllerSubstepMultiplier 2, NewPDSteepSlopeSlidingWithGravityPercent 2, NewPDAltitudeNoForceZonePercent 1, SolidFloorPercentForceApplication 100, NonSolidFloorPercentForceApplication 10, SolidFloorMassMultTenth 50, HumanoidFloorTeleportWeightValue 50, HumanoidFloorManualFrictionVelocityMultValue 100",
-   "source": "Studio FInt values 8 bytes before their name slots (registrations ..), not overridden in the offline Studio settings"
+   "source": "matched against Studio"
   },
   {
    "name": "hip spring",
@@ -2223,13 +2223,13 @@
    "name": "swim force limits",
    "group": "character",
    "value": "the swim force per axis is clamped to ±10000 on X and Z and −10000..+1000 on Y (× body scale³)",
-   "source": "Studio Swimming  (clamps ..ce92), limits .data "
+   "source": "matched against Studio"
   },
   {
    "name": "swim jump force",
    "group": "character",
    "value": "Jump while swimming sets the Y force to mass × 500",
-   "source": "Studio , .rdata  = 500.0"
+   "source": ", = 500.0"
   },
   {
    "name": "world GUI fog",

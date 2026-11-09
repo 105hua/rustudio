@@ -383,7 +383,7 @@ impl Editor {
 
     /// Studio's snap controls: a check box and an increment for moves, then
     /// for rotations. Studio turns a snap on when its increment is changed to
-    /// more than zero (; angle: ).
+    /// more than zero.
     fn snap_widget(&mut self, ui: &mut egui::Ui) {
         ui.vertical(|ui| {
             ui.add_space(6.0);

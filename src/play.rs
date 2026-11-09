@@ -2097,9 +2097,9 @@ impl Editor {
                 self.owned_humanoid_prop(humanoid, "UseJumpPower"),
                 Some(Variant::Bool(true))
             );
-            // Studio's Humanoid jump speed (): JumpPower with
+            // Studio's Humanoid jump speed: JumpPower with
             // UseJumpPower, else √(2·g·JumpHeight) / 1.06 clamped to [0, 1000];
-            // the jump then leaves at 1.06 × that (its inverse :
+            // the jump then leaves at 1.06 × that (its inverse:
             // height = (1.06·v)² / 2g).
             let commanded = if use_power {
                 self.owned_humanoid_f32(humanoid, "JumpPower", mech::JUMP_POWER)
@@ -2204,7 +2204,7 @@ impl Editor {
                     Some(State::GettingUp) if ch.forced_for >= mech::GETTING_UP_S => {
                         ch.forced = None;
                     }
-                    // Studio's Ragdoll (): over after its 5 s timer,
+                    // Studio's Ragdoll: over after its 5 s timer,
                     // or as soon as the root is slow enough (|v| and |ω| < 1;
                     // the controller's root has no spin, so its velocity decides).
                     Some(State::Ragdoll)
@@ -2229,7 +2229,7 @@ impl Editor {
                 .and_then(|c| c.seat)
                 .and_then(|seat| {
                     // Where the SeatWeld holds the root: seat · C0 · C1⁻¹
-                    // (its C0 / C1 as built by __rs_seat, ).
+                    //.
                     let xf = crate::scene::xform_of(&self.doc, seat)?;
                     let weld = self.doc.find_named(seat, "SeatWeld")?;
                     let cf = |k: &str| match self.doc.prop(weld, k) {
@@ -2425,7 +2425,7 @@ impl Editor {
                 walk = Vec3::new(v.x, 0.0, v.z);
                 char_touches = s.physics.move_character_floating(&mut ch.body, walk, dt, &own);
             } else if in_water {
-                // Studio's Swimming (): a move whose level part is
+                // Studio's Swimming: a move whose level part is
                 // over SWIM_FLAT_RATIO × its vertical swims level at the full
                 // speed; a steeper one (the camera looking down or up) dives
                 // or rises along it.
@@ -2450,7 +2450,7 @@ impl Editor {
                     .water_top(ch.body.pos)
                     .map(|top| ((top - mech::SWIM_SURFACE_GAP - root_y) / mech::SWIM_SURFACE_FADE).clamp(0.0, 1.0))
                     .unwrap_or(0.0);
-                // Studio's Swimming () pulls the velocity toward
+                // Studio's Swimming pulls the velocity toward
                 // the move vector at SWIM_GAIN /s; Jump adds mass × 500 up,
                 // which settles at 500 / 35 studs/s. (The idle float is the
                 // water's buoyancy, still an estimate here.)
@@ -2472,7 +2472,7 @@ impl Editor {
                     mech::SWIM_FLOAT_SPEED * float
                 };
                 // The swim force is clamped per axis (..ce92, limits
-                // .data ): up at most SWIM_FORCE_UP_MAX, down
+                //): up at most SWIM_FORCE_UP_MAX, down
                 // SWIM_FORCE_MAX (× the body scale³, 1 here), so a fall into
                 // water is braked at 1000 / mass, not stopped at once.
                 let dv = (target - ch.body.vel_y) * (1.0 - (-mech::SWIM_GAIN * dt).exp());
@@ -2489,7 +2489,7 @@ impl Editor {
                 swimming_now = walk.length() > mech::CLIMB_MIN_INPUT;
                 char_touches = s.physics.move_character_floating(&mut ch.body, walk, dt, &own);
             } else if on_truss && !wants_jump {
-                // Studio's Climbing (): straight up or down at 0.7 ×
+                // Studio's Climbing: straight up or down at 0.7 ×
                 // the move speed — down when the move points away from where
                 // the root faces (dot < −0.2) — a 0.01 creep under 0.1 of
                 // input, and no sideways velocity.

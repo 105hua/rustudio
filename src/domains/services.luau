@@ -423,8 +423,8 @@ function M.BindToSimulation(self, fn, freq, priority) return bind(self, "sim", "
 function M.BindToAnimation(self, fn, freq, priority) return bind(self, "anim", "BindToAnimation", fn, freq, priority) end
 
 ----------------------------------------------------------- TweenService.SmoothDamp
--- Studio's own (decompiled,  scalar /  vector /
---  CFrame): Unity's critically damped spring, except that an
+-- Studio's own (from Studio, scalar / vector /
+-- CFrame): Unity's critically damped spring, except that an
 -- overshoot lands on the target with zero velocity. smoothTime < 1e-4 gives
 -- (target, zero); dt < 1e-5 gives (current, velocity) unchanged. All in
 -- single precision.

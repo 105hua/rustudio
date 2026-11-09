@@ -18,9 +18,9 @@
 //! - ProjectionType / OrthographicMode / OrthographicSize / ViewStretch:
 //!   kept and read back (defaults Perspective, Vertical, 300, 1;
 //!   OrthographicSize clamped to [0.001, 100000]). Studio gates them on the
-//!   feature flag SupportOrthoCameraApi (setter  asks
-//!   , which refuses anything but Perspective while the flag at
-//!    is off): an offline Studio has it off and ignores
+//! feature flag SupportOrthoCameraApi ( asks
+//! which refuses anything but Perspective while the flag at
+//! is off): an offline Studio has it off and ignores
 //!   the writes; with it on (as live Roblox) the camera renders
 //!   orthographic — rustudio behaves as the flag-on Studio: camera.rs
 //!   (projection, rays), render.rs (no sky), library.luau (rays / points).

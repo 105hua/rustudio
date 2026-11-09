@@ -1,7 +1,7 @@
 //! Read-only DataModel view of a recorded Team Create session.
 //!
 //! Feeds a decrypted, reassembled server->client `rbx-rtcio` stream (from
-//! `tools/tc/rig/quic_decode.py ... OUTDIR`, e.g. `OUTDIR/stream_23.bin`)
+//! a capture script, e.g. `OUTDIR/stream_23.bin`)
 //! through `replicator::Decoder` into `model::LiveModel`, then prints the
 //! instance count, decode errors and the first levels of the tree. No network.
 //!

@@ -1,4 +1,4 @@
-//! The Luau ↔ Instance/Enum bridge as scripts observe it (docs/RE-BRIDGE.md;
+//! The Luau ↔ Instance/Enum bridge as scripts observe it (Studio probes;
 //! src/cmeta.rs): metatables, namecall, method functions, Lua-written
 //! methods that yield, Enum types and the index/newindex errors.
 
@@ -78,7 +78,7 @@ fn run_lib(src: &str, frames: usize) -> Vec<String> {
     run(&format!("{LIB}\n{src}"), frames)
 }
 
-/// docs/RE-BRIDGE.md 1: every bridge object's metatable is locked.
+/// Studio probes 1: every bridge object's metatable is locked.
 #[test]
 fn bridge_metatables_locked() {
     let text = run_lib(
@@ -96,7 +96,7 @@ fn bridge_metatables_locked() {
     }
 }
 
-/// docs/RE-BRIDGE.md 2: the Instance __namecall is its own unnamed C function,
+/// Studio probes 2: the Instance __namecall is its own unnamed C function,
 /// methods only; argument checks as Luau's.
 #[test]
 fn bridge_namecall() {
@@ -134,7 +134,7 @@ fn bridge_namecall() {
     );
 }
 
-/// docs/RE-BRIDGE.md 3: method functions are named vararg C functions, one per
+/// Studio probes 3: method functions are named vararg C functions, one per
 /// descriptor; bad self is "Expected ':' not '.'"; GetService converts.
 #[test]
 fn bridge_method_functions() {
@@ -167,7 +167,7 @@ fn bridge_method_functions() {
     );
 }
 
-/// docs/RE-BRIDGE.md 6: Lua-written methods are named C functions that check
+/// Studio probes 6: Lua-written methods are named C functions that check
 /// self first and still yield, called as methods, as functions, inside
 /// pcall and inside coroutines.
 #[test]
@@ -223,7 +223,7 @@ fn bridge_lua_methods_yield() {
     );
 }
 
-/// docs/RE-BRIDGE.md 5: Enums, Enum and EnumItem.
+/// Studio probes 5: Enums, Enum and EnumItem.
 #[test]
 fn bridge_enums() {
     let text = run_lib(
@@ -263,7 +263,7 @@ fn bridge_enums() {
     );
 }
 
-/// docs/RE-BRIDGE.md 4: index/newindex argument and assignment errors.
+/// Studio probes 4: index/newindex argument and assignment errors.
 #[test]
 fn bridge_index_errors() {
     let text = run_lib(
@@ -335,7 +335,7 @@ fn bridge_lua_method_errors() {
     );
 }
 
-/// RE-DATATYPES RBXScriptSignal.values: every read of an event is a new
+/// Studio probes RBXScriptSignal.values: every read of an event is a new
 /// object (`==`, not rawequal, distinct table keys) and connections made
 /// through any of them work.
 #[test]
@@ -356,7 +356,7 @@ fn bridge_signal_reads_are_fresh() {
     expect(&text, &["sig true false nil false 11"]);
 }
 
-/// RE-DATATYPES RaycastResult rows: read-only userdata, Studio's tostring,
+/// Studio probes RaycastResult rows: read-only userdata, Studio's tostring,
 /// `==` by content.
 #[test]
 fn bridge_raycast_result_userdata() {
@@ -384,7 +384,7 @@ fn bridge_raycast_result_userdata() {
     );
 }
 
-/// RE-GLOBALS misc.stats / misc.UserSettings / misc.DebuggerManager.
+/// Studio probes misc.stats / misc.UserSettings / misc.DebuggerManager.
 #[test]
 fn bridge_settings_globals_are_instances() {
     let text = run(

@@ -1,5 +1,5 @@
 // Studio's light grid skylight and local lights (LightGridCPU, "LightGrid Chunk Skylight 3D"),
-// read from Studio 0.746 (docs/STUDIO-SKY-RE.md "Light grid
+// read from Studio (Studio measurements "Light grid
 // (skylight)") and checked against a running Studio's chunks
 // (/proc/<pid>/mem): parts voxelize bit for bit, the skylight kernel matches
 // to the voxel except where Studio's own chunk-by-chunk update is still
@@ -9,7 +9,7 @@
 //   studs) that follows the camera with a one-chunk hysteresis
 //   (FUN_144cd9980).
 // - Each voxel has three occupancy bytes (FUN_146656750 and the shape
-//   voxelizers at …): the part's cover of the voxel
+// voxelizers…): the part's cover of the voxel
 //   seen along X, along Y and along Z (equal unless the part is thinner
 //   than a voxel), × (1 − Transparency) × 255.5, summed saturating; terrain
 //   adds its occupancy byte (not Air or Water) to all three (FUN_146657c10).
@@ -199,7 +199,7 @@ impl Occupancy {
         self.add_prim_boxes(p, None);
     }
 
-    /// Studio  uses each physics convex piece's local bounds.
+    /// Studio uses each physics convex piece's local bounds.
     pub fn add_prim_boxes(&mut self, p: &Prim, boxes: Option<&[(Vec3, Vec3)]>) {
         if p.transparency >= 1.0 {
             return;
@@ -818,7 +818,7 @@ mod tests {
     }
 
     /// Values read from Studio 0.746's chunks for the same parts
-    /// (docs/STUDIO-SKY-RE.md "Light grid (skylight)", scene1).
+    /// (Studio measurements "Light grid (skylight)", scene1).
     #[test]
     fn matches_studio_occupancy() {
         let (o, _) = grid_with(&[
@@ -929,7 +929,7 @@ mod tests {
         );
     }
 
-    /// Compares against a Studio dump (tools: docs/STUDIO-SKY-RE.md): set
+    /// Compares against a Studio dump: set
     /// RS_LG_DUMP=prefix (prefix.hdr / .occ.bin / .sky.bin) and
     /// RS_LG_PARTS=parts.txt, or RS_LG_PLACE=place.rbxl for parts + terrain.
     /// cargo test --release --bin rustudio lightgrid_vs_studio -- --ignored --nocapture
@@ -1048,8 +1048,8 @@ mod tests {
     }
 }
 
-/// Studio 0.746 CPU local lighting: //,
-/// shadow sweep  and filter/RGB-scale packing .
+/// Studio 0.746 CPU local lighting:,
+/// shadow sweep and filter/RGB-scale packing.
 /// Distances here are in four-stud voxels, independently of surface normals.
 pub fn local_lights(occ: &Occupancy, lights: &[crate::render::LightRaw]) -> Vec<u8> {
     local_lights_dims(occ, lights, dims())

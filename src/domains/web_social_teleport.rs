@@ -1,5 +1,5 @@
-//! Studio local teleport failures. Native failure handler ,
-//! failure event builder . Reservation POST tests use localhost only.
+//! Studio local teleport failures. Native failure handler,
+//! failure event. Reservation POST tests use localhost only.
 use super::*;
 pub fn install(lua: &Lua) -> mlua::Result<()> {
     let ctx = lua.create_table()?;

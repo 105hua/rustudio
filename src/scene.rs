@@ -216,7 +216,7 @@ fn blake3_hex(data: &[u8]) -> String {
     format!("{:016x}{:08x}", h.finish(), data.len())
 }
 
-/// A union's solved geometry (its SolidMeshHolder: docs/STUDIO-SKY-RE.md "Unions"),
+/// A union's solved geometry (its SolidMeshHolder: Studio measurements "Unions"),
 /// registered as generated content under an id from the blob's hash. With
 /// UsePartColor the id ends in `#partcolor` and the loader drops the child
 /// colours, so the union's own Color shows.

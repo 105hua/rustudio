@@ -765,7 +765,7 @@ impl Gui {
             }
         }
         // The wheel over a ScrollingFrame scrolls it: ScrollWheelDeltaAmount
-        // (100) pixels per notch (Studio ).
+        // (100) pixels per notch.
         let wheel: f32 = ctx.input(|i| {
             i.raw
                 .events

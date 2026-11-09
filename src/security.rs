@@ -1,4 +1,4 @@
-//! Thread identity and capabilities, as measured in Studio (docs/RE-SECURITY.md,
+//! Thread identity and capabilities, as measured in Studio (Studio probes,
 //! 2026-11-08).
 //!
 //! Every Luau thread carries an identity in its thread data
@@ -17,7 +17,7 @@
 //! checks the read requirements before the write ones (Instance.UniqueId
 //! write reports RobloxScript, its read tag; RunService.RunState write
 //! reports PluginOrOpenCloud). NotScriptable members stay "not a valid
-//! member". The message is Studio's exe format string :
+//! member". The message is Studio's exe format string:
 //! `The current thread cannot {verb} '{name}' (lacking capability {cap})`.
 //!
 //! rustudio's own Lua (chunks named `rustudio.*` and a few other engine
@@ -36,7 +36,7 @@ pub const GAME: u8 = 2;
 /// The command bar (rustudio's harness).
 pub const COMMAND: u8 = 1;
 
-// Legacy capability bits (Studio's selector ).
+// Legacy capability bits.
 const PLUGIN: u8 = 0x1;
 const LOCAL_USER: u8 = 0x2;
 const WRITE_PLAYER: u8 = 0x4;
@@ -600,7 +600,7 @@ pub fn seal(lua: &Lua) -> mlua::Result<()> {
         checked(lua, r)
     })?;
     g.set("PluginManager", crate::cmeta::wrap(lua, plugin_manager, true)?)?;
-    // DebuggerManager(): Plugin, as settings (RE-GLOBALS misc.DebuggerManager).
+    // DebuggerManager(): Plugin, as settings.
     let debugger_manager = lua.create_function(|lua, ()| {
         let r = check_global(lua, "DebuggerManager").and_then(|_| {
             // (GetService hides it from game scripts; domains/testing_debug.)
@@ -673,7 +673,7 @@ mod tests {
     const DENY_SETTINGS: &str = "The current thread cannot call 'settings' (lacking capability Plugin)";
 
     /// Game script identity 2, Studio's exact messages (no source prefix),
-    /// inherited by every thread the script makes (docs/RE-SECURITY.md §1–3).
+    /// inherited by every thread the script makes.
     #[test]
     fn game_script_identity_and_inheritance() {
         let (rt, s) = client(

@@ -1347,7 +1347,7 @@ impl SelfTest {
                 let base = crate::mech::FLY_SPEED / 60.0;
                 let c = &self.cam;
                 let ramp = c.late / c.early.max(1e-6);
-                // Studio's rule (): base step for 120 ticks, then
+                // Studio's rule: base step for 120 ticks, then
                 // ticks / 240; frame 569 is about 2.5 s into the hold.
                 let held = (569.0 - 417.0) / 60.0;
                 let expect = crate::viewport::fly_boost_at(held);

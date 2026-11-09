@@ -1248,7 +1248,7 @@ impl Walk<'_, '_> {
         );
         let mut ldir = vec3_of(d.prop(r, "LightDirection"))
             .unwrap_or(Vec3::splat(-1.0));
-        // Studio  (LightDirection setter ):
+        // Studio:
         // near-zero directions reset to the default before shading.
         let length2 = ldir.length_squared();
         let tolerance = if (length2.abs() + 1.0).is_infinite() {

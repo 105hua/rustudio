@@ -196,7 +196,7 @@ impl Camera {
         self.focus += delta;
     }
 
-    /// Wheel zoom, Studio's rule (Studio ..):
+    /// Wheel zoom, Studio's rule:
     /// each notch moves the camera and its focus point together by
     /// "Camera Mouse Wheel Speed" (15) studs, or "Camera Shift Speed" (0.2)
     /// with Shift held, along the cursor ray when "Zoom to Mouse Position"
@@ -225,10 +225,10 @@ impl Camera {
             return;
         }
         let speed = mech::FLY_SPEED * boost * if slow { mech::FLY_SHIFT_FACTOR } else { 1.0 };
-        // Studio (, then ): the key vector (A/D x, Q/E
+        // Studio: the key vector (A/D x, Q/E
         // y, W/S z) is normalised, then multiplied by all three columns of
-        // the camera's rotation ([camera+0xe8..0x114], the look column
-        // negated by the sign mask at ): Q / E go along the
+        // the camera's rotation (, the look column
+        // negated by the sign mask): Q / E go along the
         // camera's own up axis, not the world's.
         let key = dir.normalize_or_zero();
         let delta = (self.right() * key.x + self.up() * key.y + self.forward() * key.z)

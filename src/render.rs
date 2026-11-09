@@ -26,7 +26,7 @@ const LSHADOW_FORMAT: wgpu::TextureFormat = wgpu::TextureFormat::Rgba16Float;
 const LSHADOW_FACE_STRIDE: u64 = 256;
 
 /// The local light shadow atlas (Studio's Future path: a cube map per
-/// shadowed light, docs/STUDIO-SKY-RE.md "Local light shadows").
+/// shadowed light, Studio measurements "Local light shadows").
 pub struct LightShadows {
     moments_view: wgpu::TextureView,
     depth_view: wgpu::TextureView,
@@ -162,13 +162,13 @@ pub struct Globals {
     pub lightocc: [f32; 4],
     /// Atmosphere haze toward +X, −X, +Y, −Y, +Z, −Z (AdvSkyFS irradiance × FogColor).
     pub atmos_cube: [[f32; 4]; 6],
-    /// x fogOffset.x, y fogOffset.y, z Glare, w Offset (docs/STUDIO-SKY-RE.md).
+    /// x fogOffset.x, y fogOffset.y, z Glare, w Offset.
     pub atmos_sky: [f32; 4],
     /// xyz the glare's exponents per channel (from Decay).
     pub atmos_glare: [f32; 4],
     /// Studio's indoor environment light (AmbientCube[6..11]): the
     /// irradiance of textures/sky/indoor512 × EnvironmentDiffuseScale,
-    /// +X, −X, +Y, −Y, +Z, −Z (docs/STUDIO-SKY-RE.md "Environment light and AO").
+    /// +X, −X, +Y, −Y, +Z, −Z (Studio measurements "Environment light and AO").
     pub env_indoor: [[f32; 4]; 6],
     /// SkyGradientTop / Bottom (CB0[30] / [31]): the time-of-day sky
     /// levels c0², c1²; w EnvironmentDiffuse / SpecularScale.
@@ -3861,7 +3861,7 @@ impl Renderer {
 /// InstanceRaw.extra.y bit for CastShadow false (vs_shadow drops the part).
 const NO_SHADOW_BIT: u32 = 1 << 19;
 
-//  selects PlasticReflection only for 256/272; tiled
+// selects PlasticReflection only for 256/272; tiled
 // materials (including Metal) keep their texture-driven metalness/roughness.
 pub(crate) fn material_reflectance(material: u32, reflectance: f32) -> f32 {
     match material {
@@ -3998,7 +3998,7 @@ pub fn cube_mips(size: u32, faces: &[Vec<u8>; 6]) -> Vec<u8> {
 /// Studio's PrefilteredEnvTexture: the sky at ENV_PREFILTER_SIZE px, each
 /// mip below it GGX-filtered for roughness mip / ENV_SPEC_MIP_PER_ROUGHNESS
 /// (FastConvolutionPS, Manson & Sloan's fast filtering, run per face and
-/// level by ; the part FS reads it at lod roughness × 5). The
+/// level; the part FS reads it at lod roughness × 5). The
 /// shader reads those levels of the skybox's own chain (lod offset by the
 /// levels above ENV_PREFILTER_SIZE), so they're replaced in place here:
 /// box-filtered levels left rough parts with sharp, glossy sky reflections.

@@ -211,7 +211,7 @@ pub fn effects(d: &Document, cam_obj: Option<Ref>) -> Effects {
 }
 
 /// Lighting.Atmosphere (the first Atmosphere child) as Studio's renderer
-/// turns it into AdvSky props and fog (docs/STUDIO-SKY-RE.md).
+/// turns it into AdvSky props and fog.
 #[derive(Clone, Copy, Debug)]
 pub struct Atmos {
     /// Color² (FogColor before the sky's irradiance).
@@ -228,13 +228,13 @@ pub struct Atmos {
 }
 
 /// The Atmosphere's props as Studio computes them: the change hook at
-///  (A, B from Haze), the Decay transform at  and the
-/// fog setup at .
+/// (A, B from Haze), the Decay transform and the
+/// fog setup.
 pub fn atmosphere(d: &Document) -> Option<Atmos> {
     let l = d.find_child(d.dom.root_ref(), "Lighting")?;
     let a = d.find_child(l, "Atmosphere")?;
     let num = |n: &str, dflt: f32| f32_of(d.prop(a, n)).unwrap_or(dflt);
-    // Defaults: the Atmosphere constructor's (): Density 0.395,
+    // Defaults: the Atmosphere constructor's: Density 0.395,
     // Color (199, 170, 107), Decay (92, 60, 13), the rest 0.
     let density = num("Density", 0.395);
     let haze = num("Haze", 0.0).clamp(0.0, 10.0);
@@ -262,7 +262,7 @@ pub fn atmosphere(d: &Document) -> Option<Atmos> {
 }
 
 /// AdvSkyFS irradiance × FogColor on Studio's desktop renderer. At
-/// , renderer+0x690 → +0x118 → byte +0x90 >= 2 bypasses
+/// → byte >= 2 bypasses
 /// the legacy mean-irradiance/sky-level factor and uploads Color² directly.
 pub fn atmos_haze_cube(a: &Atmos, sky_irr: &[Vec3; 6]) -> [Vec3; 6] {
     sky_irr.map(|e| e * a.color_sq)
@@ -280,7 +280,7 @@ pub struct FrameLighting {
 
 /// Lighting's time-of-day sky levels for a ClockTime and
 /// EnvironmentDiffuseScale `s`: (c0, c1, k) as Studio keeps them in its
-/// Lighting members +0x160 / +0x1a0 / +0x16c (mech::SKY_LEVELS). c0² and c1²
+/// Lighting members (mech:SKY_LEVELS). c0² and c1²
 /// are the shaders' SkyGradientTop / Bottom.
 pub fn sky_levels(clock: f32, s: f32) -> (Vec3, Vec3, f32) {
     let t = mech::SKY_LEVELS;
@@ -334,13 +334,13 @@ pub fn globals(
     let clock = f32_of(get("ClockTime"))
         .or_else(time_of_day)
         .map(mech::clock_time)
-        .unwrap_or(mech::CLOCK_TIME); // clamp + whole seconds ()
+.unwrap_or(mech::CLOCK_TIME); // clamp + whole seconds
     let lat = f32_of(get("GeographicLatitude")).unwrap_or(mech::GEOGRAPHIC_LATITUDE);
     let brightness = f32_of(get("Brightness")).unwrap_or(mech::LIGHT_BRIGHTNESS);
     let exposure = f32_of(get("ExposureCompensation")).unwrap_or(0.0);
     let env_diffuse = f32_of(get("EnvironmentDiffuseScale"))
         .unwrap_or(0.0)
-        .clamp(0.0, mech::ENV_SCALE_MAX); // 
+.clamp(0.0, mech::ENV_SCALE_MAX);
     let env_specular = f32_of(get("EnvironmentSpecularScale"))
         .unwrap_or(0.0)
         .clamp(0.0, mech::ENV_SCALE_MAX);
@@ -360,7 +360,7 @@ pub fn globals(
     let sun = sun_direction(clock, lat);
     let (c0, c1, sky_k) = sky_levels(clock, env_diffuse);
     // The sun / moon (Lamp0) and the back light (Lamp1), as Studio builds
-    // them (, colour mix ): the sky level k² shifted
+    // them: the sky level k² shifted
     // toward ColorShift_Top² / _Bottom² by EnvironmentDiffuseScale, ×
     // Brightness × 0.9 / 0.36. Lamp0 comes from the moon (−sun) once the sun
     // is below LAMP_MOON_BELOW_SUN_Y.
@@ -420,7 +420,7 @@ pub fn globals(
     // the default sky, (62, 77, 108) with a custom one); rustudio keeps the
     // day faces and dims them by sky_tint, so the haze follows sky_tint too.
     let default_sky = sky_faces(d)[0].starts_with("rbxasset://textures/sky/sky512");
-    // AdvSky's irradiance stays in the source sky frame ().
+    // AdvSky's irradiance stays in the source sky frame.
     // Re-express the ambient cube supplied by the rotated reflection sky.
     // Axis-aligned rotations are exact; general rotations use the same
     // squared-axis reconstruction as AdvSkyFS.
@@ -508,7 +508,7 @@ pub fn globals(
             },
             0.0,
         ],
-        // AmbientCube[0..5] + [6..11] as Studio builds them ():
+        // AmbientCube[0..5] + [6..11] as Studio builds them:
         // the sky's irradiance per axis × EnvironmentDiffuseScale × the sky
         // level (+Y c0², −Y c1², sides their mean); the shader blends it
         // with the indoor cube by skylight.
@@ -749,7 +749,7 @@ impl LightCache {
             // Realistic (Future): Studio's light record holds Color^2.2 ×
             // Brightness (read from its light buffer to 4 digits).
             let color = if soft {
-                // : round(Color * 256), saturate to a byte,
+                // round(Color * 256), saturate to a byte,
                 // then square byte/255 before accumulating voxel radiance.
                 let c = match source_color {
                     Some(Variant::Color3(c)) => Vec3::new(c.r, c.g, c.b),
@@ -772,7 +772,7 @@ impl LightCache {
             let cutoff = |angle: f32| {
                 if soft {
                     // CPU voxel writer's approximation to 1-cos(Angle/2),
-                    // coefficients at , full angle in degrees.
+                    // coefficients, full angle in degrees.
                     let a = angle * angle;
                     1.0 - ((3.8077018e-5 - (2.4119384e-10 - a * 5.733313e-16) * a) * a + 1e-15)
                 } else { (angle.to_radians() * 0.5).cos() }

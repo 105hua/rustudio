@@ -97,7 +97,7 @@ impl ExplorerState {
 
 /// Studio's sibling order: ReflectionMetadata ExplorerOrder (an int on
 /// ReflectionMetadataClass, category "Reflection", registered by
-/// ), then the name A–Z (measured in an offline Studio).
+///), then the name A–Z (measured in an offline Studio).
 fn sorted_children(doc: &Document, r: Ref) -> Vec<Ref> {
     let Some(inst) = doc.dom.get_by_ref(r) else {
         return Vec::new();

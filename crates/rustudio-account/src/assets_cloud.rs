@@ -44,7 +44,7 @@ impl Read {
     }
 }
 
-// : 202 is pending; 200 decodes result.assetId,
+// 202 is pending; 200 decodes result.assetId,
 // result.isApproved, result.operationError into UploadCaptureResult + asset ID.
 fn capture_status(status:u16,body:&str)->Result<Value>{
     let result=if status==202 {(6,0)} else {

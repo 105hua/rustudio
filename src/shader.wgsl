@@ -57,7 +57,7 @@ struct Light {
 @group(0) @binding(4) var shadow_tex: texture_depth_2d;
 @group(0) @binding(5) var shadow_sampler: sampler_comparison;
 @group(0) @binding(11) var lightgrid_tex: texture_3d<f32>;
-// Local light shadows (Studio's Future path, docs/STUDIO-SKY-RE.md "Local light
+// Local light shadows (Studio's Future path, Studio measurements "Local light
 // shadows"): EVSM moments per cube face, packed in one atlas.
 struct ShadowSlot {
     vp: array<mat4x4<f32>, 6>, // per face (+X, −X, +Y, −Y, +Z, −Z): view-projection
@@ -159,7 +159,7 @@ fn light_falloff(d: f32, r: f32) -> f32 {
     return window * LIGHT_FALLOFF_K / (LIGHT_FALLOFF_K + x * x);
 }
 
-// Atmosphere: Studio's AdvSkyFS (shaders_glsl3.pack; docs/STUDIO-SKY-RE.md). The
+// Atmosphere: Studio's AdvSkyFS. The
 // sky shows through the haze by t = exp2(fogOffset.x / (0.001 +
 // max(dir.y, 1e-5)^fogOffset.y)); the haze is the skybox's irradiance cube
 // times FogColor, plus the sun's glare; sky = mix(haze, skybox, t).
@@ -413,7 +413,7 @@ fn part_out(v: PartIn) -> PartOut {
     o.local = v.pos * v.size.xyz;
     o.uv = v.uv * v.uvt.xy + v.uvt.zw;
     if (v.uvt.w < 0.0) {
-        // CSGMDL plane IDs: Studio . Tag zero preserves UVs.
+        // CSGMDL plane IDs: Studio. Tag zero preserves UVs.
         // MeshParts without TextureID share the normal-selected stud projection below.
         // Loaded positions are centered and divided by decoded extent.
         // o.local restores studs (normalized position * current Size).
@@ -482,7 +482,7 @@ fn sun_shadow(world: vec3<f32>, n: vec3<f32>) -> f32 {
     return lit / 9.0;
 }
 
-/// Studio's light grid skylight (lightgrid.rs; docs/STUDIO-SKY-RE.md "Light grid
+/// Studio's light grid skylight (lightgrid.rs; Studio measurements "Light grid
 /// (skylight)"): LightGridSkylight .x, read trilinearly at the point moved
 /// LIGHTGRID_NORMAL_OFFSET studs out along `n` (DefaultUnified*VS,
 /// SmoothClusterVS: pos + normal × 6). As Studio's FS, open sky (1) beyond
@@ -518,7 +518,7 @@ fn light_grid_sun(world: vec3<f32>, n: vec3<f32>) -> f32 {
 /// cubes, AmbientCube[0..5] (the sky's irradiance x the time-of-day sky
 /// level) blended with AmbientCube[6..11] (the indoor environment) by the
 /// skylight, each weighted by the normal's positive / negative parts squared
-/// (DefaultUnified*FS HQ, docs/STUDIO-SKY-RE.md "Environment light and AO").
+/// (DefaultUnified*FS HQ, Studio measurements "Environment light and AO").
 fn env_cube(n: vec3<f32>, sky: f32) -> vec3<f32> {
     let w = n * n;
     let x = select(1, 0, n.x > 0.0);
@@ -901,7 +901,7 @@ fn fs_part(in: PartOut, @builtin(front_facing) front: bool) -> @location(0) vec4
     var glass_alpha = alpha;
     var glass_scene_alpha = -1.0;
     if (mode == 0u && layer >= 0) {
-        // Studio's part shaders (docs/STUDIO-SKY-RE.md "Part materials").
+        // Studio's part shaders (Studio measurements "Part materials").
         var mp0 = vec4<f32>(-1.0, 0.0, 0.0, 1.0);
         var mp1 = vec4<f32>(0.0);
         var mf = vec4<f32>(1.0, 1.0, 1.0, 0.0);
@@ -1067,7 +1067,7 @@ fn fs_part(in: PartOut, @builtin(front_facing) front: bool) -> @location(0) vec4
         let sv = light_grid(in.world, n);
         let is_glass = kind > 2.5 && kind < 3.5;
         // Studio's HQ part FS (DefaultUnifiedFlatOpaqueFS / TiledFS /
-        // PlasticReflectionFS variant 3, docs/STUDIO-SKY-RE.md "Environment light
+        // PlasticReflectionFS variant 3, Studio measurements "Environment light
         // and AO"). s = EnvironmentSpecularScale, fading out with distance;
         // ShadowMap / Future only (env_spec.z).
         let v = normalize(g.cam_pos.xyz - in.world);
@@ -1938,7 +1938,7 @@ fn fs_post(in: PostOut) -> @location(0) vec4<f32> {
 
 // ------------------------------------------------------------------ SSAO
 // Studio's screen-space ambient occlusion (SSAODepthDownFS, SSAOFS,
-// SSAOBlurX/YFS, SSAOCompositFS; docs/STUDIO-SKY-RE.md "Environment light and
+// SSAOBlurX/YFS, SSAOCompositFS; Studio measurements "Environment light and
 // AO"), at half resolution; the result multiplies the HDR scene
 // (SSAOApply). g.ssao: x, y half the projection diagonal, z near plane,
 // w on.

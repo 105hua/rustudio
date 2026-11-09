@@ -1,4 +1,4 @@
-//! OpenShop/, ShopEntrypoint and InExperienceShop.
+//! OpenShop, ShopEntrypoint and InExperienceShop.
 //! Current Studio blocks Robux tile clicks; launchRobuxPackagePurchase also
 //! returns before any payment request when IsStudio(). Virtual items use the
 //! existing Studio test-purchase controller. Development never accepts a prompt.

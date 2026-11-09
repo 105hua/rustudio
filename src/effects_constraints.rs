@@ -2,8 +2,8 @@
 //! catenary; cross-section shading remains a camera-facing strip.
 use super::*;
 
-/// Studio : 64 uniform horizontal catenary intervals.
-///  trims vertical ends when horizontal span / length < .05.
+/// Studio: 64 uniform horizontal catenary intervals.
+/// trims vertical ends when horizontal span / length <.05.
 fn rope_points(a: Vec3, b: Vec3, length: f32) -> Vec<Vec3> {
     let distance = a.distance(b);
     if !length.is_finite() || length <= distance { return vec![a, b]; }
@@ -30,7 +30,7 @@ fn rope_points(a: Vec3, b: Vec3, length: f32) -> Vec<Vec3> {
         points.push((start+end)*0.5);
     } else {
         // Solve sinh(u)/u = sqrt(L²-dy²)/h. Studio uses a
-        // three-step approximation (); bisection is stable here.
+        // three-step approximation; bisection is stable here.
         let v = (end.y-start.y) as f64;
         let l = remaining as f64;
         let h64 = h as f64;

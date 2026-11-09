@@ -2866,13 +2866,13 @@ pub struct HumMove {
 }
 
 impl Physics {
-    /// Studio's floor finder (Studio , called by
-    /// ): straight down from the root's local
-    /// (0, −0.4·size.y, k·0.4·size.z), k = 0, 1, −1, 2, −2 (.rdata
-    /// ); if none hits, from the corners (±0.4·size.x,
-    /// ±0.4·size.z) (). Length 0.3 × (HipHeight + size.y)
+    /// Studio's floor finder (, called by
+    ///): straight down from the root's local
+    /// (0, −0.4·size.y, k·0.4·size.z), k = 0, 1, −1, 2, −2 (
+    ///); if none hits, from the corners (±0.4·size.x,
+    /// ±0.4·size.z). Length 0.3 × (HipHeight + size.y)
     /// (FInt ExtraFloorRaycastDistanceHipHeightPercent = 30) + HipHeight ×
-    /// 1.5 with a floor already, 1.1 without ( / ).
+    /// 1.5 with a floor already, 1.1 without.
     /// Sizes count at least 0.05. The hits are averaged. A ray that starts
     /// inside a part doesn't hit that part (Roblox raycasts).
     pub fn find_floor(&self, root: Vec3, rot: Quat, sh: &HumShape, had_floor: bool, own: &HashSet<Ref>) -> Option<HumFloor> {
@@ -3149,7 +3149,7 @@ impl Physics {
                 _ if pressed => want,
                 // Freefall applies a bounded force to close velocity error,
                 // rather than replacing horizontal velocity each substep.
-                // ; gain getter  = 150, cap = 143.
+                // gain getter = 150, cap = 143.
                 _ => {
                     let acceleration = ((want - cur) * mech::HUMANOID_VELOCITY_GAIN)
                         .clamp_length_max(mech::HUMANOID_AIR_ACCEL);

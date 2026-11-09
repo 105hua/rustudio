@@ -31,9 +31,7 @@ endpoint above serves the same bytes anonymously.
 
 ## Two hops, not one
 
-The ids in `PartMaterialInfos2022` / the pre-2022 table (128 of them, extracted
-from `Studio`) are **pack descriptors**, not images. Each body is
-XML:
+The ids in `PartMaterialInfos2022` / the pre-2022 table (128 of them, extracted from `Studio`) are **pack descriptors**, not images. Each body is XML:
 
 ```xml
 <roblox>
@@ -81,12 +79,4 @@ error.
 
 ## Status
 
-Implemented (round 9, `src/matpack.rs`): the three material tables are read
-from Studio (pre-2022, 2022 and 4K 2022; ids and colours with
-their addresses in `MECHANICS.md`), packs and maps come from the endpoint
-above and are cached by id, the maps are decoded into texture arrays and
-drawn repeating every 8 studs, as Studio's part shader does. Not drawn yet:
-the second (detail normal) pack, and roughness / metalness / height in the
-lighting. The self-test step "material-packs" checks Brick, Wood, Concrete,
-Metal, Grass, Slate and Fabric. Plastic's 2022 detail pack (9475422736)
-answers 401 without a login.
+Implemented (round 9, `src/matpack.rs`): the three material tables are read from Studio (pre-2022, 2022 and 4K 2022; ids and colours with their addresses in `MECHANICS.md`), packs and maps come from the endpoint above and are cached by id, the maps are decoded into texture arrays and drawn repeating every 8 studs, as Studio's part shader does. Not drawn yet: the second (detail normal) pack, and roughness / metalness / height in the lighting. The self-test step "material-packs" checks Brick, Wood, Concrete, Metal, Grass, Slate and Fabric. Plastic's 2022 detail pack (9475422736) answers 401 without a login. 

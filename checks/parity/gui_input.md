@@ -145,9 +145,6 @@ ParticleEmitter2D / UIBlur (src/gui_fx.rs)
   follows the properties (ParticleEmitter's rules in 2D; a 12-tap disc blur
   of the 3D view and the GUI drawn before it, Light 4 / Medium 8 / Heavy 16
   px). Probe: gui_input/fx.luau (blurred stripes and studs, sparkles).
-- Flag variables found by xref: UIParticles  (registered at
-  ), UIBlur  (), UIBoundsTracking
-  ; render-side checks at , , .
 
 Handle adornments (gui_input.luau, src/gui_adorn.rs)
 - an offline Studio, Play: BoxHandleAdornment MouseEnter → MouseButton1Down →
@@ -173,14 +170,7 @@ Dialog (Studio's MainBotChatScript2 with stand-ins)
 - The NPC's speech bubbles (Chat:Chat) are the chat domain's.
 
 TextGenerator:GenerateTextAsync
-- POST https://apis.roblox.com/user/cloud/v2/universes/{GameId}:generateText
-  with the session (CSRF), body userPrompt / systemPrompt / temperature
-  (+ contextToken, maxTokens, responseFormatType JSON_SCHEMA + jsonSchemaStr);
-  reply generatedText / contextToken / model → GeneratedText / ContextToken /
-  Model. Checks and errors from Studio's strings. Tested with
-  3 calls on the scratch place (two generations, one using the context
-  token). That run's game.GameId read 0 (the harness started Play before the
-  opened place arrived) and the endpoint still answered.
+- POST https://apis.roblox.com/user/cloud/v2/universes/{GameId}:generateText   with the session (CSRF), body userPrompt / systemPrompt / temperature   (+ contextToken, maxTokens, responseFormatType JSON_SCHEMA + jsonSchemaStr);   reply generatedText / contextToken / model → GeneratedText / ContextToken /   Model. Checks and errors from Studio strings. Tested with   3 calls on the scratch place (two generations, one using the context   token). That run's game.GameId read 0 (the harness started Play before the   opened place arrived) and the endpoint still answered.
 
 Inspect menu (src/game_menu.rs)
 - an offline Studio, Play: InspectPlayerFromUserId opens Studio's InspectAndBuy panel

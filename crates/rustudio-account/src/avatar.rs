@@ -44,7 +44,7 @@ fn hex(v: Option<&serde_json::Value>) -> Option<[u8; 3]> {
 pub fn parse_avatar(user_id: u64, v: &serde_json::Value) -> AvatarInfo {
     // Studio's avatar-fetch reply names the rig Roblox resolved for the
     // place as resolvedAvatarType ("R6" / "R15"; AvatarFetchParser::parseUseR15
-    // at ); the other avatar endpoints say playerAvatarType.
+    //); the other avatar endpoints say playerAvatarType.
     let r15 = match v
         .get("resolvedAvatarType")
         .or_else(|| v.get("playerAvatarType"))

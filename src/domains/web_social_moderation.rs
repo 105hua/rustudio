@@ -1,4 +1,4 @@
-//! Internal review action traced from/. It does not
+//! Internal review action traced. It does not
 //! create or upload content. Development sends this action only to localhost.
 use super::*;
 pub fn install(lua: &Lua) -> mlua::Result<()> {

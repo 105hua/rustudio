@@ -1,6 +1,6 @@
 //! Self-test step for Sound behaviour: a non-looped sound
 //! ends once, never wraps and then reads IsPaused true (Studio's IsPaused is
-//! `not Playing`, decompiled); a looped one fires DidLoop per wrap and keeps
+//! `not Playing`, from Studio); a looped one fires DidLoop per wrap and keeps
 //! playing; `Playing = true` twice starts it once, `Play()` twice restarts
 //! it; a missing asset is warned once and not fetched again; a clip picked
 //! with PlaybackRegion ends at the region's end, not the file's (Place A's
@@ -141,7 +141,7 @@ impl SelfTest {
             .nth(1)
             .and_then(|r| r.split_whitespace().next())
             .and_then(|v| v.parse::<f32>().ok());
-        // (Studio's IsPaused is `not Playing`, : true once ended.)
+
         let ok = line.contains("once ended=1 wrapped=false playing=false paused=true")
             && line.contains("playing=true paused=false | region")
             && line

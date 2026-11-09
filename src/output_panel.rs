@@ -5,13 +5,13 @@
 //!
 //!   [bar] [HH:MM:SS.mmm  ]message - Script:line
 //!
-//! Colours as Studio picks them (Studio , see
+//! Colours as Studio picks them (, see
 //! docs/MECHANICS.md): a table of theme colours indexed by message type — Log
 //! MainText (188, 190, 200), Information InfoText (143, 180, 255), Warning
 //! WarningText (245, 118, 48), Error ErrorText (231, 87, 80), System
 //! SensitiveText (223, 106, 247) — with types above Information DemiBold
 //! (Builder Mono has no semi-bold face: Bold). The context bar
-//! () is one &nbsp; on #00CC67 (server) or #349AD5 (client),
+//! is one &nbsp; on #00CC67 (server) or #349AD5 (client),
 //! then one more &nbsp;; lines 15 px apart. Log lines keep rustudio's
 //! stored form ("[Server] msg  —  Path.To.Script:12", which the harnesses
 //! read); this only draws them.
@@ -400,7 +400,7 @@ pub fn log_view(ui: &mut egui::Ui, st: &mut OutputState, log: &[LogLine]) -> usi
                 let s = parse(l);
                 let galley = ui.fonts_mut(|f| f.layout_job(line_job(st, l, &s)));
                 let top = content.min.y + tops[k];
-                // One monospace space wide, then one more space ().
+                // One monospace space wide, then one more space.
                 let bar = egui::Rect::from_min_size(egui::pos2(content.min.x, top), Vec2::new(space, LINE_H));
                 let bar_color = match s.context {
                     Context::Server => Some(SERVER_BAR),

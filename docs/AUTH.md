@@ -84,10 +84,10 @@ forces R15, of scale-aware body parts.
 A state-changing POST is answered `403` with an `x-csrf-token` header;
 rustudio repeats the same request with that value in `X-CSRF-TOKEN` and
 keeps the token for the session (`Session::post_csrf`), by Studio's own rule
-(Studio ): only for methods other than GET, HEAD,
+: only for methods other than GET, HEAD,
 OPTIONS and TRACE, only when the new token is non-empty and differs from the
 one sent, at most 3 times. Studio also treats `.ROBLOSECURITY`,
-`.RBXIDCHECK` and `.RBXID` as secret cookie names (); rustudio
+`.RBXIDCHECK` and `.RBXID` as secret cookie names; rustudio
 never shows any of them. Verified on every
 self-test run with a POST to `Upload.ashx?assetid=0` (no asset 0 exists, so
 nothing can be written).
@@ -103,12 +103,7 @@ then downloaded once more and compared.
   token is accepted, then the endpoint answers `307` to
   `www.roblox.com/request-error?code=404` (also for `assetid=0`, and with
   `&type=Place`). The legacy upload endpoint no longer takes place uploads.
-- `POST www.roblox.com/ide/publish/UploadExistingAsset?assetId=…&isAppCreation=true`
-  (the route Studio builds, strings `/ide/publish/UploadExistingAsset`
-  and `assetId=%s&isAppCreation=true`): `404 {"errors":[{"code":0,"message":""}]}`
-  for the account's own place as for asset 0. Studio authenticates that call
-  with its own sign-in, not the web cookie, and rustudio doesn't pretend to
-  be Studio.
+- `POST www.roblox.com/ide/publish/UploadExistingAsset?assetId=…&isAppCreation=true`   (the route Studio builds, strings `/ide/publish/UploadExistingAsset`   and `assetId=%s&isAppCreation=true`): `404 {"errors":[{"code":0,"message":""}]}`   for the account's own place as for asset 0. Studio authenticates that call   with its own sign-in, not the web cookie, and rustudio doesn't pretend to   be Studio.
 - After both, the place's bytes were identical to before (367 380 bytes):
   nothing was written.
 

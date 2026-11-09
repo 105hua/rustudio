@@ -17,7 +17,7 @@
 //!   Backspace) on the client; ButtonChanged fires when a bound button's
 //!   state changes.
 //! - SkateboardPlatform mounting (server; Studio 0.744 measured, mount at
-//!   ): a Humanoid standing on a platform takes it —
+//!): a Humanoid standing on a platform takes it —
 //!   ControllingHumanoid is set and the Humanoid goes PlatformStand — and,
 //!   when the Humanoid and the platform are both direct children of one
 //!   Model, a SkateboardController is made (Controller) and Equipped

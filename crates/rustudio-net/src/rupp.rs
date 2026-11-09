@@ -1,5 +1,5 @@
 //! RUPP: the relay header Roblox's UDMUX puts in front of every RbxTransport
-//! datagram (docs/PROTOCOL.md §2, "RUPP header").
+//! datagram (docs/TEAMCREATE.md §2, "RUPP header").
 //!
 //! Wire form [verified: capture + live 2026-11-05]:
 //!
