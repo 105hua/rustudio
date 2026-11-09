@@ -4,7 +4,7 @@
 
 <h1 align="center">rustudio</h1>
 
-**A native Linux Roblox Studio, written in Rust.** Open, edit and save
+**A native Linux/Windows Roblox Studio, written in Rust.** Open, edit and save
 Roblox places, press Play and run them with real Luau, physics, characters
 and GUIs, without Wine.
 
@@ -46,6 +46,9 @@ cargo build --release
 ./target/release/rustudio my_place.rbxl    # open a place
 ```
 
+On Windows (MSVC toolchain), run `.\target\release\rustudio.exe` instead,
+and see the Windows notes under [Platforms](#platforms).
+
 On first launch rustudio downloads Roblox Studio's built-in content
 (default characters, camera and control scripts, fonts, textures, sounds;
 about 60 MB) from Roblox's own CDN into `~/.local/share/rustudio/studio`.
@@ -66,7 +69,19 @@ export RUSTUDIO_STUDIO_DIR=~/.var/app/org.vinegarhq.Vinegar/data/vinegar/version
 | Linux x86_64 (Wayland or X11) | Supported, and the only one tested |
 | Linux ARM64 | Should build; untested |
 | macOS | Not supported yet (untested, likely needs small fixes) |
-| Windows | Not supported yet (doesn't compile: uses Unix-only APIs) |
+| Windows x86_64 (MSVC) | Builds and runs (tested on Windows 11); see below |
+
+CI checks every push on Linux and Windows.
+
+Windows is new, so a few things don't work there yet:
+
+- rustudio still keeps its data under `$HOME`, which Windows doesn't set, so
+  it falls back to the current folder. Until that's fixed, set it first in
+  PowerShell: `$env:HOME = $env:USERPROFILE`.
+- Signing in is untested (the session cookie still goes through
+  `secret-tool`).
+- Video playback is off (libvpx/libopus are loaded only on Linux), and a
+  native crash doesn't write a crash report (panics still do).
 
 ## Signing in
 

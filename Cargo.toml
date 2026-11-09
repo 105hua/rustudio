@@ -9,7 +9,7 @@ version = "0.1.0"
 
 [package]
 name = "rustudio"
-description = "A native Linux game editor for Roblox place and model files"
+description = "A native Linux/Windows game editor for Roblox place and model files"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
