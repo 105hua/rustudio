@@ -29,14 +29,14 @@ fn main() {
     describe(&v, 0);
     if let Some(out) = a.get(2) {
         use std::io::Write;
-        use std::os::unix::fs::OpenOptionsExt;
-        let mut f = std::fs::OpenOptions::new()
-            .write(true)
-            .create(true)
-            .truncate(true)
-            .mode(0o600)
-            .open(out)
-            .unwrap();
+        let mut options = std::fs::OpenOptions::new();
+        options.write(true).create(true).truncate(true);
+        #[cfg(unix)]
+        {
+            use std::os::unix::fs::OpenOptionsExt;
+            options.mode(0o600);
+        }
+        let mut f = options.open(out).unwrap();
         f.write_all(r.raw.expose().as_bytes()).unwrap();
         println!("wrote the join script (0600)");
     }

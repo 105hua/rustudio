@@ -281,15 +281,18 @@ mod tests {
             assert!(d.conflict(1));
             assert!(d.commit_text(1, false).is_err());
             d.flush().unwrap();
-            use std::os::unix::fs::PermissionsExt;
-            assert_eq!(
-                std::fs::metadata(root.join("abc-123.json"))
-                    .unwrap()
-                    .permissions()
-                    .mode()
-                    & 0o777,
-                0o600
-            );
+            #[cfg(unix)]
+            {
+                use std::os::unix::fs::PermissionsExt;
+                assert_eq!(
+                    std::fs::metadata(root.join("abc-123.json"))
+                        .unwrap()
+                        .permissions()
+                        .mode()
+                        & 0o777,
+                    0o600
+                );
+            }
         }
         {
             let mut d = DraftStore::new(root.clone());

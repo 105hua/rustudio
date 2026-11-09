@@ -98,9 +98,15 @@ fn main() {
                     let mut model = rustudio_net::model::LiveModel::new();
                     let mut capture = if ch == CH_REPLICATION && tag == lane_tag(1) {
                         std::env::var("RUSTUDIO_PROBE_STREAM_OUT").ok().map(|path| {
-                            use std::os::unix::fs::OpenOptionsExt;
                             use std::io::Write;
-                            let mut f = std::fs::OpenOptions::new().write(true).create(true).truncate(true).mode(0o600).open(path).unwrap();
+                            let mut options = std::fs::OpenOptions::new();
+                            options.write(true).create(true).truncate(true);
+                            #[cfg(unix)]
+                            {
+                                use std::os::unix::fs::OpenOptionsExt;
+                                options.mode(0o600);
+                            }
+                            let mut f = options.open(path).unwrap();
                             f.write_all(&[6, 1, ch, tag[0], tag[1], tag[2], tag[3]]).unwrap();
                             f
                         })
