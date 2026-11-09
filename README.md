@@ -66,7 +66,7 @@ export RUSTUDIO_STUDIO_DIR=~/.var/app/org.vinegarhq.Vinegar/data/vinegar/version
 | macOS | Not supported yet (untested, likely needs small fixes) |
 | Windows | Not supported yet (doesn't compile: uses Unix-only APIs) |
 
-## Signing in (optional)
+## Signing in
 
 Everything above works signed out. To open your own places or load private
 assets, sign in with your Roblox session: use the account button at the top
