@@ -4,6 +4,10 @@
 
 <h1 align="center">rustudio</h1>
 
+<p align="center">
+  <a href="https://discord.gg/pdVZpADpWr"><img src="https://img.shields.io/badge/Discord-join%20the%20server-5865F2?logo=discord&logoColor=white" alt="Join the rustudio Discord"></a>
+</p>
+
 **A native Linux/Windows Roblox Studio, written in Rust.** Open, edit and save
 Roblox places, press Play and run them with real Luau, physics, characters
 and GUIs, without Wine.
@@ -15,7 +19,7 @@ quite yet.
 
 ![The rustudio home screen](docs/images/home.png)
 
-> This project is still early, so please please help!! Contributions are super welcome
+> This project is still early, so please please help!! Contributions are super welcome. Come hang out, ask for help or report bugs on the [Discord](https://discord.gg/pdVZpADpWr).
 
 ## Features
 
