@@ -53,6 +53,17 @@ cargo build --release
 On Windows (MSVC toolchain), run `.\target\release\rustudio.exe` instead,
 and see the Windows notes under [Platforms](#platforms).
 
+On Linux you can install it for your user instead, so it shows up in your
+app launcher and runs as `rustudio` from anywhere:
+
+```sh
+./install.sh                # build, then install into ~/.local
+./install.sh --uninstall    # remove it again
+```
+
+The install keeps working if you move or delete the cloned folder.
+`./install.sh --help` lists the other options (`--prefix`, `--no-build`).
+
 On first launch rustudio downloads Roblox Studio's built-in content
 (default characters, camera and control scripts, fonts, textures, sounds;
 about 60 MB) from Roblox's own CDN into `~/.local/share/rustudio/studio`

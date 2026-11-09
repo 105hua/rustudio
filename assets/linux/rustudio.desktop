@@ -1,0 +1,16 @@
+[Desktop Entry]
+Type=Application
+Name=rustudio
+GenericName=Roblox Studio
+Comment=Edit and play Roblox places natively
+Exec=rustudio %f
+Icon=rustudio
+Terminal=false
+Categories=Development;IDE;
+Keywords=roblox;studio;luau;rbxl;rbxm;
+StartupWMClass=rustudio
+Actions=demo;
+
+[Desktop Action demo]
+Name=Open demo scene
+Exec=rustudio --demo
