@@ -252,7 +252,7 @@ mod tests {
         assert_eq!(v, vec![0xfe, 0x03]);
         let mut v = vec![];
         put_varint(&mut v, zigzag(10000000001));
-        assert_eq!(v, vec![0xa6, 0x80, 0xbc, 0xe4, 0x58]);
+        assert_eq!(v, vec![0x82, 0x90, 0xdf, 0xc0, 0x4a]);
     }
 
     #[test]
