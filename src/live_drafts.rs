@@ -196,12 +196,14 @@ impl DraftStore {
         if self.dirty.is_empty() {
             return Ok(());
         }
-        use std::{
-            io::Write,
-            os::unix::fs::{DirBuilderExt, OpenOptionsExt},
-        };
+        use std::io::Write;
         let mut builder = std::fs::DirBuilder::new();
-        builder.recursive(true).mode(0o700);
+        builder.recursive(true);
+        #[cfg(unix)]
+        {
+            use std::os::unix::fs::DirBuilderExt;
+            builder.mode(0o700);
+        }
         builder
             .create(&self.root)
             .map_err(|_| "Could not create the private script draft folder")?;
@@ -213,11 +215,14 @@ impl DraftStore {
                 let temp = path.with_extension("json.tmp");
                 let data =
                     serde_json::to_vec(draft).map_err(|_| "Could not encode a script draft")?;
-                let mut file = std::fs::OpenOptions::new()
-                    .create(true)
-                    .truncate(true)
-                    .write(true)
-                    .mode(0o600)
+                let mut options = std::fs::OpenOptions::new();
+                options.create(true).truncate(true).write(true);
+                #[cfg(unix)]
+                {
+                    use std::os::unix::fs::OpenOptionsExt;
+                    options.mode(0o600);
+                }
+                let mut file = options
                     .open(&temp)
                     .map_err(|_| "Could not write a script draft")?;
                 file.write_all(&data)
@@ -276,15 +281,18 @@ mod tests {
             assert!(d.conflict(1));
             assert!(d.commit_text(1, false).is_err());
             d.flush().unwrap();
-            use std::os::unix::fs::PermissionsExt;
-            assert_eq!(
-                std::fs::metadata(root.join("abc-123.json"))
-                    .unwrap()
-                    .permissions()
-                    .mode()
-                    & 0o777,
-                0o600
-            );
+            #[cfg(unix)]
+            {
+                use std::os::unix::fs::PermissionsExt;
+                assert_eq!(
+                    std::fs::metadata(root.join("abc-123.json"))
+                        .unwrap()
+                        .permissions()
+                        .mode()
+                        & 0o777,
+                    0o600
+                );
+            }
         }
         {
             let mut d = DraftStore::new(root.clone());

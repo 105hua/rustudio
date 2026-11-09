@@ -508,12 +508,10 @@ fn timestamp() -> String {
         .duration_since(std::time::UNIX_EPOCH)
         .map(|d| d.as_millis() as u64)
         .unwrap_or(0);
-    let secs = (ms / 1000) as libc::time_t;
-    // SAFETY: localtime_r only writes the tm we hand it.
-    let offset = unsafe {
-        let mut tm: libc::tm = std::mem::zeroed();
-        if libc::localtime_r(&secs, &mut tm).is_null() { 0 } else { tm.tm_gmtoff }
-    };
+    let secs = (ms / 1000) as i64;
+    let offset = chrono::DateTime::from_timestamp(secs, 0)
+        .map(|t| t.with_timezone(&chrono::Local).offset().local_minus_utc())
+        .unwrap_or(0);
     let s = ((ms / 1000) as i64 + offset as i64).rem_euclid(86_400) as u64;
     format!("{:02}:{:02}:{:02}.{:03}", s / 3600, (s / 60) % 60, s % 60, ms % 1000)
 }

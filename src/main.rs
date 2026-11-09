@@ -137,6 +137,7 @@ usage: rustudio [FILE] [--demo] [--play] [--screenshot OUT.png] [--self-test OUT
 /// Test runs (--screenshot / --self-test) re-launch themselves inside a headless
 /// gamescope so they never open a window on the user's screen.
 /// RUSTUDIO_VISIBLE_TESTS=1 keeps them on screen.
+#[cfg(target_os = "linux")]
 fn rerun_headless() -> Option<i32> {
     use std::os::unix::fs::OpenOptionsExt;
     let argv: Vec<String> = std::env::args().collect();
@@ -256,8 +257,14 @@ fn rerun_headless() -> Option<i32> {
     Some(status.code().unwrap_or(1))
 }
 
+#[cfg(not(target_os = "linux"))]
+fn rerun_headless() -> Option<i32> {
+    None
+}
+
 /// Inside the headless gamescope: write to the launching process's stdout /
 /// stderr (FIFOs it copies from, RUSTUDIO_PARENT_OUT / _ERR), not gamescope's.
+#[cfg(target_os = "linux")]
 fn restore_parent_fds() {
     for (var, to) in [("RUSTUDIO_PARENT_OUT", 1), ("RUSTUDIO_PARENT_ERR", 2)] {
         let Some(p) = std::env::var_os(var) else { continue };
@@ -274,6 +281,9 @@ fn restore_parent_fds() {
         }
     }
 }
+
+#[cfg(not(target_os = "linux"))]
+fn restore_parent_fds() {}
 
 fn window_arg(argv: &[String]) -> Option<(u32, u32)> {
     let i = argv.iter().position(|a| a == "--window")?;
