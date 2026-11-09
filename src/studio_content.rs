@@ -53,8 +53,7 @@ pub fn install_dir() -> PathBuf {
             return PathBuf::from(p);
         }
     }
-    let home = std::env::var("HOME").unwrap_or_else(|_| ".".into());
-    PathBuf::from(home).join(".local/share/rustudio/studio")
+    crate::paths::data().join("rustudio/studio")
 }
 
 /// The downloaded Studio root, when a complete download is there.

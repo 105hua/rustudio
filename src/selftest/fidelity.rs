@@ -54,7 +54,7 @@ fn corpus_place_a() -> Option<(PathBuf, f64)> {
     let place_a = v.get("place_a")?;
     let path = place_a.get("path")?.as_str()?;
     let path = match path.strip_prefix("~/") {
-        Some(rest) => PathBuf::from(std::env::var_os("HOME")?).join(rest),
+        Some(rest) => crate::paths::home().join(rest),
         None => PathBuf::from(path),
     };
     Some((path, place_a.get("max_mae")?.as_f64()?))

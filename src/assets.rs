@@ -60,8 +60,7 @@ pub fn content_dir() -> PathBuf {
             return PathBuf::from(p);
         }
     }
-    let home = std::env::var("HOME").unwrap_or_else(|_| ".".into());
-    let link = PathBuf::from(home).join(".local/share/rustudio/content");
+    let link = crate::paths::data().join("rustudio/content");
     if !link.exists() {
         // No link to a Studio install: the copy rustudio downloaded.
         if let Some(d) = crate::studio_content::installed() {
@@ -78,8 +77,7 @@ pub fn cache_dir() -> PathBuf {
             return PathBuf::from(p);
         }
     }
-    let home = std::env::var("HOME").unwrap_or_else(|_| ".".into());
-    PathBuf::from(home).join(".cache/rustudio")
+    crate::paths::cache().join("rustudio")
 }
 
 /// A local asset store: `<id>` or `<id>.<ext>` files, e.g. the one the
@@ -88,8 +86,7 @@ pub fn local_assets_dir() -> Option<PathBuf> {
     if let Ok(p) = std::env::var("RUSTUDIO_LOCAL_ASSETS") {
         return (!p.is_empty()).then(|| PathBuf::from(p));
     }
-    let home = std::env::var("HOME").ok()?;
-    let p = PathBuf::from(home).join(".local/share/rustudio/assets");
+    let p = crate::paths::data().join("rustudio/assets");
     p.is_dir().then_some(p)
 }
 
@@ -135,13 +132,13 @@ pub fn local_asset_path(id: u64) -> Option<PathBuf> {
 /// a collaborator's session (a live Team Create join), so the place's own
 /// InsertService:LoadAsset packs can only come from disk.
 fn ledger_path(id: u64) -> Option<PathBuf> {
-    let home = PathBuf::from(std::env::var("HOME").unwrap_or_default());
+    let data = crate::paths::data();
     let ledger = std::env::var("RUSTUDIO_ASSET_LEDGER")
         .map(PathBuf::from)
-        .unwrap_or_else(|_| home.join(".local/share/rbxasset/ledger.json"));
+        .unwrap_or_else(|_| data.join("rbxasset/ledger.json"));
     let sources = std::env::var("RUSTUDIO_ASSET_SOURCES")
         .map(PathBuf::from)
-        .unwrap_or_else(|_| home.join(".local/share/rustudio/asset-sources.json"));
+        .unwrap_or_else(|_| data.join("rustudio/asset-sources.json"));
     static LEDGER: Mutex<Option<(std::time::SystemTime, HashMap<u64, PathBuf>)>> = Mutex::new(None);
     static SOURCES: Mutex<Option<(std::time::SystemTime, HashMap<u64, PathBuf>)>> = Mutex::new(None);
     path_map(&LEDGER, &ledger, id)

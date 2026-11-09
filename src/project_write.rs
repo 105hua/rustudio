@@ -175,10 +175,9 @@ impl ProjectState {
             }
             return;
         }
-        let home = std::env::var_os("HOME").map(PathBuf::from).unwrap_or_default();
         let base = std::env::var_os("XDG_DATA_HOME")
             .map(PathBuf::from)
-            .unwrap_or_else(|| home.join(".local/share"))
+            .unwrap_or_else(crate::paths::data)
             .join("Trash");
         let (files, info) = (base.join("files"), base.join("info"));
         let _ = std::fs::create_dir_all(&files);

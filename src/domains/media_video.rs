@@ -629,7 +629,6 @@ mod tests {
     }
 
     fn dirs_assets() -> Option<std::path::PathBuf> {
-        let home = std::env::var_os("HOME")?;
-        Some(std::path::PathBuf::from(home).join(".local/share/rustudio/assets"))
+        Some(crate::paths::data().join("rustudio/assets"))
     }
 }

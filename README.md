@@ -51,7 +51,8 @@ and see the Windows notes under [Platforms](#platforms).
 
 On first launch rustudio downloads Roblox Studio's built-in content
 (default characters, camera and control scripts, fonts, textures, sounds;
-about 60 MB) from Roblox's own CDN into `~/.local/share/rustudio/studio`.
+about 60 MB) from Roblox's own CDN into `~/.local/share/rustudio/studio`
+(`%LOCALAPPDATA%\rustudio\studio` on Windows).
 To get it ahead of time, or update it, run
 `rustudio --install-studio-content`.
 
@@ -75,9 +76,9 @@ CI checks every push on Linux and Windows.
 
 Windows is new, so a few things don't work there yet:
 
-- rustudio still keeps its data under `$HOME`, which Windows doesn't set, so
-  it falls back to the current folder. Until that's fixed, set it first in
-  PowerShell: `$env:HOME = $env:USERPROFILE`.
+- Paths in this README are the Linux ones. On Windows, data and caches go
+  in `%LOCALAPPDATA%\rustudio` (e.g. the Studio content download in
+  `%LOCALAPPDATA%\rustudio\studio`) and settings in `%APPDATA%\rustudio`.
 - Signing in is untested (the session cookie still goes through
   `secret-tool`).
 - Video playback is off (libvpx/libopus are loaded only on Linux), and a

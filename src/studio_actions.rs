@@ -2,7 +2,6 @@
 //! is available (src/studio_ui.rs lists them). Anything rustudio can't do
 //! yet is disabled rather than faked.
 
-use std::path::PathBuf;
 
 use egui::{Rect, RichText, Sense, Vec2};
 use rbx_dom_weak::types::{Ref, Variant};
@@ -287,7 +286,7 @@ impl Editor {
             "grid_16" => self.ui.grid_size = 16.0,
             "show_ui" => self.ui.show_gui = !self.ui.show_gui,
             "screenshot" => {
-                let dir = PathBuf::from(std::env::var("HOME").unwrap_or_default()).join("Pictures");
+                let dir = crate::paths::pictures();
                 let _ = std::fs::create_dir_all(&dir);
                 let secs = std::time::SystemTime::now()
                     .duration_since(std::time::UNIX_EPOCH)

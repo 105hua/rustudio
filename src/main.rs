@@ -4,6 +4,7 @@ mod account_ui;
 mod ribbon_quick;
 mod cmeta;
 mod studio_content;
+mod paths;
 mod dtmeta;
 mod cloud_ui;
 mod join_ui;

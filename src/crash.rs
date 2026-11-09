@@ -13,11 +13,7 @@ use std::sync::atomic::{AtomicBool, Ordering};
 
 /// Where reports go.
 pub fn dir() -> PathBuf {
-    let base = std::env::var_os("XDG_CACHE_HOME")
-        .map(PathBuf::from)
-        .or_else(|| std::env::var_os("HOME").map(|h| PathBuf::from(h).join(".cache")))
-        .unwrap_or_else(|| PathBuf::from("/tmp"));
-    base.join("rustudio").join("crash")
+    crate::paths::cache().join("rustudio").join("crash")
 }
 
 /// The report file named for this process (made at install, so the signal

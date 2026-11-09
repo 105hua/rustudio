@@ -45,8 +45,7 @@ impl Editor {
             .as_ref()
             .and_then(|p| p.parent())
             .map(PathBuf::from)
-            .or_else(|| std::env::var_os("HOME").map(PathBuf::from))
-            .unwrap_or_default();
+            .unwrap_or_else(crate::paths::home);
         self.project_export = Some(ExportDialog {
             opts: ExportOptions { name: safe_name(&name), ..Default::default() },
             parent: parent.display().to_string(),

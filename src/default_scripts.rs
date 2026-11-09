@@ -38,9 +38,8 @@ pub fn studio_dir() -> Option<PathBuf> {
         let p = PathBuf::from(p);
         return has(&p).then_some(p);
     }
-    let home = PathBuf::from(std::env::var("HOME").unwrap_or_else(|_| ".".into()));
     // The person's content link usually points at Studio's own content/.
-    if let Ok(target) = std::fs::canonicalize(home.join(".local/share/rustudio/content")) {
+    if let Ok(target) = std::fs::canonicalize(crate::paths::data().join("rustudio/content")) {
         if let Some(root) = target.parent() {
             if has(root) {
                 return Some(root.to_path_buf());
@@ -53,7 +52,7 @@ pub fn studio_dir() -> Option<PathBuf> {
             return Some(d);
         }
     }
-    let fallback = home.join(".local/share/rustudio/studio");
+    let fallback = crate::paths::data().join("rustudio/studio");
     has(&fallback).then_some(fallback)
 }
 

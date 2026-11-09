@@ -27,14 +27,7 @@ pub struct DraftStore {
 
 impl DraftStore {
     pub fn for_place(place: u64) -> Self {
-        let base = std::env::var_os("XDG_STATE_HOME")
-            .map(PathBuf::from)
-            .unwrap_or_else(|| {
-                std::env::var_os("HOME")
-                    .map(PathBuf::from)
-                    .unwrap_or_else(std::env::temp_dir)
-                    .join(".local/state")
-            });
+        let base = crate::paths::state();
         Self::new(base.join("rustudio/script-drafts").join(place.to_string()))
     }
     fn new(root: PathBuf) -> Self {

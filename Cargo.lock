@@ -4061,6 +4061,7 @@ dependencies = [
  "blake3",
  "bytemuck",
  "chrono",
+ "dirs",
  "draco-core",
  "eframe",
  "egui",

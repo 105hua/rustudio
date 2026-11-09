@@ -87,9 +87,7 @@ pub struct Layout {
 }
 
 fn path() -> PathBuf {
-    let base = std::env::var_os("XDG_CONFIG_HOME")
-        .map(PathBuf::from)
-        .unwrap_or_else(|| PathBuf::from(std::env::var("HOME").unwrap_or_default()).join(".config"));
+    let base = crate::paths::config();
     base.join("rustudio").join("layout.json")
 }
 

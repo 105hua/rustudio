@@ -801,7 +801,7 @@ mod tests {
     /// says which side is right.)
     #[test]
     fn place_a_all_gun_packs() {
-        let home = std::path::PathBuf::from(std::env::var("HOME").unwrap_or_default());
+        let home = crate::paths::home();
         let root = home.join("games/place-a");
         let Ok(spec) = std::fs::read_to_string(root.join("src/Shared/GunMeshes.luau")) else {
             return;
@@ -855,7 +855,7 @@ mod tests {
     /// pieces match the centres and sizes its generator recorded.
     #[test]
     fn place_a_argus_pack() {
-        let path = std::path::PathBuf::from(std::env::var("HOME").unwrap_or_default())
+        let path = crate::paths::home()
             .join("games/place-a/tools/guns/out/gun_mesh/fbx/pack_argus.fbx");
         let Ok(bytes) = std::fs::read(&path) else {
             return;
