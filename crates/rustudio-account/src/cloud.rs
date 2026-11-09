@@ -722,6 +722,9 @@ pub fn parse_place_ref(input: &str) -> std::result::Result<PlaceRef, String> {
         .strip_prefix("https://")
         .or_else(|| s.strip_prefix("http://"))
         .unwrap_or(s);
+    // A `#fragment` is never part of the path or query (the game page's
+    // tabs add `#!/about`, `#!/store`, ...).
+    let rest = rest.split_once('#').map_or(rest, |(r, _)| r);
     let (host, path) = rest.split_once('/').unwrap_or((rest, ""));
     let host = host.to_ascii_lowercase();
     if !(host == "roblox.com" || host.ends_with(".roblox.com")) {
@@ -946,6 +949,19 @@ mod tests {
         assert!(p("https://example.com/games/1").is_err());
         assert!(p("https://www.roblox.com/catalog").is_err());
         assert!(p("Baseplate").is_err());
+    }
+
+    #[test]
+    fn place_links_ignore_the_fragment() {
+        let p = |s: &str| parse_place_ref(s).map(|r| (r.place_id, r.universe_id));
+        // The game page's tabs (About, Store, Servers) put `#!/...` in the URL.
+        assert_eq!(p("https://www.roblox.com/games/95206881#!/about"), Ok((95206881, None)));
+        assert_eq!(p("https://www.roblox.com/games/95206881/Baseplate#!/game-instances"), Ok((95206881, None)));
+        assert_eq!(p("https://www.roblox.com/games/start?placeId=95206881#top"), Ok((95206881, None)));
+        assert_eq!(
+            p("https://create.roblox.com/dashboard/creations/experiences/28220420/places/95206881#versions"),
+            Ok((95206881, Some(28220420)))
+        );
     }
 
     fn tmp(name: &str) -> PathBuf {
