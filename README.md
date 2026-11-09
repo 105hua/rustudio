@@ -15,7 +15,7 @@ and GUIs, without Wine.
 Rustudio is very much a beta/prototype, I wouldn't call it a studio replacement
 quite yet.
 
-![Playing a game in rustudio](docs/images/play.png)
+![Playing a test place in rustudio](docs/images/play.png)
 
 ![The rustudio home screen](docs/images/home.png)
 
