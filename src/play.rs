@@ -1955,6 +1955,8 @@ impl Editor {
         // Keys: character movement and UserInputService (client side).
         // A focused TextBox has the keys: the character doesn't hear them, but
         // UserInputService still does, with gameProcessedEvent true (chat typing).
+        // The key positions are physical, like Roblox's KeyCodes: WASD moves
+        // from the keys labelled ZQSD on AZERTY (src/keys.rs).
         let textbox = self.gui.focus.is_some();
         let blocked = ctx.egui_wants_keyboard_input()
             || self.play.as_ref().is_some_and(|s| s.game.menu_open);
@@ -1962,25 +1964,24 @@ impl Editor {
         let raw_keys: HashSet<String> = if blocked {
             HashSet::new()
         } else {
-            ctx.input(|i| {
-                let mut k: HashSet<String> = i
-                    .keys_down
-                    .iter()
-                    .filter_map(|k| key_name(*k))
-                    .map(String::from)
-                    .collect();
-                // egui reports modifiers apart from keys (shift-lock is LeftShift).
-                for (on, name) in [
-                    (i.modifiers.shift || self.harness.shift, "LeftShift"),
-                    (i.modifiers.ctrl, "LeftControl"),
-                    (i.modifiers.alt, "LeftAlt"),
-                ] {
-                    if on {
-                        k.insert(name.to_string());
-                    }
+            let mut k: HashSet<String> = self
+                .phys
+                .iter()
+                .filter_map(|k| key_name(k))
+                .map(String::from)
+                .collect();
+            // egui reports modifiers apart from keys (shift-lock is LeftShift).
+            let mods = ctx.input(|i| i.modifiers);
+            for (on, name) in [
+                (mods.shift || self.harness.shift, "LeftShift"),
+                (mods.ctrl, "LeftControl"),
+                (mods.alt, "LeftAlt"),
+            ] {
+                if on {
+                    k.insert(name.to_string());
                 }
-                k
-            })
+            }
+            k
         };
         let keys: HashSet<String> = if typing { HashSet::new() } else { raw_keys.clone() };
         // (name, gameProcessedEvent)

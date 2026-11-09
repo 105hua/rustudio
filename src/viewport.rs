@@ -1700,27 +1700,25 @@ impl Editor {
         let mut moving = false;
         if keyboard_ok {
             let mut dir = Vec3::ZERO;
-            ctx.input(|i| {
-                use egui::Key;
-                if i.key_down(Key::W) {
-                    dir.z += 1.0;
-                }
-                if i.key_down(Key::S) {
-                    dir.z -= 1.0;
-                }
-                if i.key_down(Key::D) {
-                    dir.x += 1.0;
-                }
-                if i.key_down(Key::A) {
-                    dir.x -= 1.0;
-                }
-                if i.key_down(Key::E) {
-                    dir.y += 1.0;
-                }
-                if i.key_down(Key::Q) {
-                    dir.y -= 1.0;
-                }
-            });
+            use egui::Key;
+            if self.phys.down(Key::W) {
+                dir.z += 1.0;
+            }
+            if self.phys.down(Key::S) {
+                dir.z -= 1.0;
+            }
+            if self.phys.down(Key::D) {
+                dir.x += 1.0;
+            }
+            if self.phys.down(Key::A) {
+                dir.x -= 1.0;
+            }
+            if self.phys.down(Key::E) {
+                dir.y += 1.0;
+            }
+            if self.phys.down(Key::Q) {
+                dir.y -= 1.0;
+            }
             if dir != Vec3::ZERO {
                 moving = true;
                 self.cam.fly(dir, dt, shift, self.fly_boost());

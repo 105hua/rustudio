@@ -244,6 +244,7 @@ pub struct Editor {
     /// have changed: drawn next frame without decoding the grid.
     pub terrain_brushed: Option<(crate::terrain::Voxels, Vec<[i32; 3]>, bool)>,
     /// Seconds the fly keys have been held / released (speed ramp).
+    pub phys: crate::keys::PhysicalKeys,
     pub fly_held: f32,
     pub fly_idle: f32,
     /// Last wheel zoom: (cursor ray direction, hit distance) for the self-test.
@@ -392,6 +393,7 @@ impl RustudioApp {
             water_waves: Default::default(),
             terrain_ed: Default::default(),
             terrain_brushed: None,
+            phys: Default::default(),
             fly_held: 0.0,
             fly_idle: 0.0,
             last_zoom: None,
@@ -1186,16 +1188,21 @@ impl Editor {
                 self.toggle_game_menu();
             }
             // Presses this frame: a tap pressed and released within one frame
-            // never shows in keys_down, yet scripts must see it.
+            // never shows in keys_down, yet scripts must see it. The key
+            // positions are physical, like Roblox's KeyCodes (src/keys.rs).
             // (Escape belongs to the Roblox menu: games never hear it.)
             let taps: Vec<Key> = ctx.input(|i| {
                 i.events
                     .iter()
                     .filter_map(|e| match e {
-                        egui::Event::Key { key, pressed: true, repeat: false, .. }
-                            if *key != Key::Escape =>
-                        {
-                            Some(*key)
+                        egui::Event::Key {
+                            key,
+                            physical_key,
+                            pressed: true,
+                            repeat: false,
+                            ..
+                        } if physical_key.unwrap_or(*key) != Key::Escape => {
+                            Some(physical_key.unwrap_or(*key))
                         }
                         _ => None,
                     })
@@ -1568,6 +1575,7 @@ impl eframe::App for RustudioApp {
         if let Some(u) = self.ed.harness.ui_shots.as_mut() {
             u.inject(raw);
         }
+        self.ed.phys.ingest(raw);
     }
 
     fn ui(&mut self, ui: &mut egui::Ui, _frame: &mut eframe::Frame) {

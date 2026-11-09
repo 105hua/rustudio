@@ -44,6 +44,7 @@ mod live_drafts;
 mod layout_store;
 mod lighting;
 mod lightgrid;
+mod keys;
 mod lightocc;
 mod ltypes;
 mod math;
