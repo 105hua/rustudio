@@ -139,9 +139,31 @@ unsafe fn fail(l: *mut ffi::lua_State, errtext: c_int) -> ! {
 
 /// Upvalues: 1 the implementation, 2 the error-to-string function,
 /// 3 whether the implementation answers `(ok, ...)` (rustudio's
-/// `checked`) instead of raising, 4 the `Spec` (light userdata) or nil.
+/// `checked`) instead of raising, 4 the `Spec` (light userdata) or nil,
+/// 5 whether to pass the key's atom after the arguments, 6 a `Fast`
+/// (light userdata) or nil.
 unsafe extern "C-unwind" fn meta_trampoline(l: *mut ffi::lua_State) -> c_int {
     unsafe {
+        // Upvalue 6: a fast path that answers by the key's atom without
+        // the protected call (`Fast`), or declines with -1. It checks self
+        // itself (exactly the bridge's own userdata, which the checks below
+        // would pass), so it goes first.
+        if ffi::lua_type(l, ffi::lua_upvalueindex(6)) == ffi::LUA_TLIGHTUSERDATA && ffi::lua_type(l, 2) == ffi::LUA_TSTRING {
+            let mut atom: c_int = -1;
+            ffi::lua_tostringatom(l, 2, &mut atom);
+            // (A key with no atom, a child's name, goes too: the fast path
+            // reads the key itself or declines.)
+            {
+                let fast: Fast = std::mem::transmute(ffi::lua_touserdata(l, ffi::lua_upvalueindex(6)));
+                let r = fast(l, atom);
+                if r >= 0 {
+                    return r;
+                }
+                if r == -2 {
+                    fail(l, ffi::lua_upvalueindex(2));
+                }
+            }
+        }
         let spec = ffi::lua_touserdata(l, ffi::lua_upvalueindex(4)) as *const Spec;
         if let Some(spec) = spec.as_ref() {
             if spec.key_first {
@@ -152,7 +174,17 @@ unsafe extern "C-unwind" fn meta_trampoline(l: *mut ffi::lua_State) -> c_int {
                 check_key(l);
             }
         }
-        let n = ffi::lua_gettop(l);
+        let mut n = ffi::lua_gettop(l);
+        // Upvalue 5 set: the implementation also takes the key's Luau atom
+        // (src/runtime_routes.rs), read as Studio's bridge does.
+        if ffi::lua_toboolean(l, ffi::lua_upvalueindex(5)) != 0 {
+            let mut atom: c_int = -1;
+            if ffi::lua_tostringatom(l, 2, &mut atom).is_null() {
+                atom = -1;
+            }
+            ffi::lua_pushinteger(l, atom as _);
+            n += 1;
+        }
         ffi::lua_pushvalue(l, ffi::lua_upvalueindex(1));
         ffi::lua_insert(l, 1);
         if ffi::lua_pcall(l, n, ffi::LUA_MULTRET, 0) != 0 {
@@ -193,19 +225,73 @@ fn error_text(lua: &Lua) -> mlua::Result<Function> {
 pub fn wrap(lua: &Lua, inner: Function, checked: bool) -> mlua::Result<Function> {
     let errtext = error_text(lua)?;
     unsafe {
-        lua.exec_raw::<Function>((inner, errtext, checked, Value::Nil), |l| {
-            ffi::lua_pushcclosurek(l, meta_trampoline, std::ptr::null(), 4, None);
-        })
+        lua.exec_raw::<Function>(
+            (inner, errtext, checked, Value::Nil, false, Value::Nil, Value::Nil, Value::Nil, Value::Nil, Value::Nil),
+            |l| {
+                ffi::lua_pushcclosurek(l, meta_trampoline, std::ptr::null(), 10, None);
+            },
+        )
     }
 }
 
 /// A metamethod: `wrap`, after `spec`'s argument checks.
 pub fn wrap_meta(lua: &Lua, inner: Function, checked: bool, spec: &'static Spec) -> mlua::Result<Function> {
+    wrap_meta_with(lua, inner, checked, spec, false, None)
+}
+
+/// A fast path for a metamethod, run after the argument checks with the
+/// key's atom (>= 0): pushes its results and returns how many; or pushes
+/// a failure message and returns -2 (raised as the implementation's are);
+/// or returns -1 having left the stack as it was, and the implementation
+/// runs as usual. It must not raise itself. Its data (`Fast`'s second
+/// half) is in upvalues 7 to 10.
+pub type Fast = unsafe fn(*mut ffi::lua_State, c_int) -> c_int;
+
+/// `wrap_meta` whose implementation also takes the key's atom (an
+/// integer after the other arguments; negative: the key has none), tried
+/// first by `fast` if given.
+pub fn wrap_meta_atom(
+    lua: &Lua,
+    inner: Function,
+    checked: bool,
+    spec: &'static Spec,
+    fast: Option<(Fast, [Value; 4])>,
+) -> mlua::Result<Function> {
+    wrap_meta_with(lua, inner, checked, spec, true, fast)
+}
+
+/// Gives `f` (made by `wrap_meta_atom`) its fast path afterwards: the
+/// fast path's probe needs the bridge objects, which need `f` first.
+pub fn set_fast(lua: &Lua, f: &Function, fast: Fast, data: [Value; 4]) -> mlua::Result<()> {
+    let [d1, d2, d3, d4] = data;
+    let fast = Value::LightUserData(mlua::LightUserData(fast as *mut std::ffi::c_void));
+    unsafe {
+        lua.exec_raw::<()>((f, fast, d1, d2, d3, d4), |l| {
+            for i in (6..=10).rev() {
+                ffi::lua_setupvalue(l, 1, i);
+            }
+            ffi::lua_settop(l, 0);
+        })
+    }
+}
+
+fn wrap_meta_with(
+    lua: &Lua,
+    inner: Function,
+    checked: bool,
+    spec: &'static Spec,
+    atom: bool,
+    fast: Option<(Fast, [Value; 4])>,
+) -> mlua::Result<Function> {
     let errtext = error_text(lua)?;
     let spec = mlua::LightUserData(spec as *const Spec as *mut std::ffi::c_void);
+    let (fast, [d1, d2, d3, d4]) = match fast {
+        Some((f, data)) => (Value::LightUserData(mlua::LightUserData(f as *mut std::ffi::c_void)), data),
+        None => (Value::Nil, [Value::Nil, Value::Nil, Value::Nil, Value::Nil]),
+    };
     unsafe {
-        lua.exec_raw::<Function>((inner, errtext, checked, spec), |l| {
-            ffi::lua_pushcclosurek(l, meta_trampoline, std::ptr::null(), 4, None);
+        lua.exec_raw::<Function>((inner, errtext, checked, spec, atom, fast, d1, d2, d3, d4), |l| {
+            ffi::lua_pushcclosurek(l, meta_trampoline, std::ptr::null(), 10, None);
         })
     }
 }
@@ -245,28 +331,52 @@ unsafe fn call_lua(l: *mut ffi::lua_State, n: c_int) -> c_int {
     unsafe { ffi::lua_pcallyieldable(l, n, ffi::LUA_MULTRET, 0) }
 }
 
-/// Instance `__namecall`. Upvalues: 1 the dispatcher, called as
-/// `(name, self, ...)` with the name as a light userdata (a C string that
-/// lives while the call's bytecode does; read it before anything else
-/// runs) and answering `(true, ...)`, `(false, message)` or a function to
+/// Instance `__namecall`. Upvalues (3 to 6: see `set_fast_call`): 1 the dispatcher, called as
+/// `(name, atom, self, ...)` with the name as a light userdata (a C string
+/// that lives while the call's bytecode does; read it before anything else
+/// runs) and its Luau atom (runtime_routes.rs; negative: none) and answering `(true, ...)`, `(false, message)` or a function to
 /// call with the original arguments; 2 the error-to-string function.
 unsafe extern "C-unwind" fn namecall_fn(l: *mut ffi::lua_State) -> c_int {
     unsafe {
-        let name = ffi::lua_namecallatom(l, std::ptr::null_mut());
-        check_self(l, INSTANCE.self_types);
+        let mut atom: c_int = -1;
+        let name = ffi::lua_namecallatom(l, &mut atom);
+        let n = ffi::lua_gettop(l);
+        // Upvalue 3: a `FastCall` answering as the dispatcher would (it
+        // checks self itself), pushing its results after the arguments, or
+        // declining (-1).
+        let mut handled = false;
+        if !name.is_null() && atom >= 0 && ffi::lua_type(l, ffi::lua_upvalueindex(3)) == ffi::LUA_TLIGHTUSERDATA {
+            ffi::luaL_checkstack(l, n + 4, std::ptr::null());
+            let fast: FastCall = std::mem::transmute(ffi::lua_touserdata(l, ffi::lua_upvalueindex(3)));
+            // Not yieldable while the fast path runs: this closure has a
+            // continuation, so Luau would count a `lua_pcall` the fast
+            // path makes (a Lua-written member, a signal handler) as a
+            // yieldable call, and a script `pcall` inside it would be
+            // scheduled for reentry instead of running nested, breaking
+            // the stack (the anim curve tests). The dispatcher path runs
+            // in an mlua callback's frame, which never counts.
+            lua_hostcall(l, 1);
+            handled = fast(l, name, atom, n) >= 0;
+            lua_hostcall(l, -1);
+        }
+        if !handled {
+            check_self(l, INSTANCE.self_types);
+        }
         if name.is_null() {
             ffi::lua_pushstring(l, c"attempt to call a nil value".as_ptr());
             fail(l, ffi::lua_upvalueindex(2));
         }
-        let n = ffi::lua_gettop(l);
-        ffi::luaL_checkstack(l, n + 3, std::ptr::null());
-        ffi::lua_pushvalue(l, ffi::lua_upvalueindex(1));
-        ffi::lua_pushlightuserdata(l, name as *mut std::ffi::c_void);
-        for i in 1..=n {
-            ffi::lua_pushvalue(l, i);
-        }
-        if ffi::lua_pcall(l, n + 1, ffi::LUA_MULTRET, 0) != 0 {
-            fail(l, ffi::lua_upvalueindex(2));
+        ffi::luaL_checkstack(l, n + 4, std::ptr::null());
+        if !handled {
+            ffi::lua_pushvalue(l, ffi::lua_upvalueindex(1));
+            ffi::lua_pushlightuserdata(l, name as *mut std::ffi::c_void);
+            ffi::lua_pushinteger(l, atom as _);
+            for i in 1..=n {
+                ffi::lua_pushvalue(l, i);
+            }
+            if ffi::lua_pcall(l, n + 2, ffi::LUA_MULTRET, 0) != 0 {
+                fail(l, ffi::lua_upvalueindex(2));
+            }
         }
         let first = n + 1;
         match ffi::lua_type(l, first) {
@@ -284,12 +394,39 @@ unsafe extern "C-unwind" fn namecall_fn(l: *mut ffi::lua_State) -> c_int {
     }
 }
 
+unsafe extern "C-unwind" {
+    /// vendor/luau0-src (rustudio): enter (1) / leave (-1) a stretch of
+    /// host code in which Lua calls are never yieldable.
+    fn lua_hostcall(l: *mut ffi::lua_State, delta: c_int);
+}
+
+/// The dispatcher run directly (no protected call) for a method name with
+/// an atom: `(l, name, atom, n)` with the `n` arguments at 1..=n; pushes
+/// the dispatcher's answer after them and returns >= 0, or returns -1
+/// having pushed nothing. It must not raise.
+pub type FastCall = unsafe fn(*mut ffi::lua_State, *const c_char, c_int, c_int) -> c_int;
+
 /// The Instance `__namecall` over `dispatch` (see `namecall_fn`).
 pub fn namecall(lua: &Lua, dispatch: Function) -> mlua::Result<Function> {
     let errtext = error_text(lua)?;
     unsafe {
-        lua.exec_raw::<Function>((dispatch, errtext), |l| {
-            ffi::lua_pushcclosurek(l, namecall_fn, std::ptr::null(), 2, Some(call_cont));
+        lua.exec_raw::<Function>((dispatch, errtext, Value::Nil, Value::Nil, Value::Nil, Value::Nil, Value::Nil), |l| {
+            ffi::lua_pushcclosurek(l, namecall_fn, std::ptr::null(), 7, Some(call_cont));
+        })
+    }
+}
+
+/// Gives the `namecall` function `f` its `FastCall` afterwards, with its
+/// data in upvalues 4 to 7 (as a `Fast`'s in 7 to 10).
+pub fn set_fast_call(lua: &Lua, f: &Function, fast: FastCall, data: [Value; 4]) -> mlua::Result<()> {
+    let [d1, d2, d3, d4] = data;
+    let fast = Value::LightUserData(mlua::LightUserData(fast as *mut std::ffi::c_void));
+    unsafe {
+        lua.exec_raw::<()>((f, fast, d1, d2, d3, d4), |l| {
+            for i in (3..=7).rev() {
+                ffi::lua_setupvalue(l, 1, i);
+            }
+            ffi::lua_settop(l, 0);
         })
     }
 }

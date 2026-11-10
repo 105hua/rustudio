@@ -89,6 +89,8 @@ pub enum Reader {
     Media = 12,
     /// Motors and IKControls (src/domains/anim.rs).
     Anim = 13,
+    /// GUI boxes scripts listen to (runtime_ext::fire_layout_changes).
+    Layout = 14,
 }
 
 /// What a reader gets back: everything changed (rebuild), or the new marks.
@@ -103,7 +105,7 @@ struct Journal {
     base: u64,
     marks: Vec<Mark>,
     /// Next sequence number each reader wants; None = hasn't read yet.
-    read: [Option<u64>; 14],
+    read: [Option<u64>; 15],
     /// The joint graph's position (src/domains/world_part.rs), read through
     /// `&self`: 0 = not reading, else the next sequence number + 1.
     graph_pos: std::sync::atomic::AtomicU64,
@@ -236,12 +238,17 @@ pub fn is_a(class: &str, base: &str) -> bool {
     if class == base {
         return true;
     }
-    // Memoized: engine code asks this per part per frame in places.
+    // Memoized: engine code asks this per part per frame in places, and
+    // every script property read or method call asks it many times (each
+    // engine domain checks the class). Keyed by the strings themselves,
+    // base first: interning both names for the key (two locked, hashed
+    // lookups in the global string table) was the single largest cost of
+    // a property read from Luau (Ustr::from: 10-14 % of a Play frame).
     thread_local! {
-        static CACHE: std::cell::RefCell<rustc_hash::FxHashMap<(Ustr, Ustr), bool>> = Default::default();
+        static CACHE: std::cell::RefCell<rustc_hash::FxHashMap<Box<str>, rustc_hash::FxHashMap<Box<str>, bool>>> =
+            Default::default();
     }
-    let key = (ustr(class), ustr(base));
-    if let Some(v) = CACHE.with(|c| c.borrow().get(&key).copied()) {
+    if let Some(v) = CACHE.with(|c| c.borrow().get(base).and_then(|m| m.get(class).copied())) {
         return v;
     }
     let db = db();
@@ -251,7 +258,7 @@ pub fn is_a(class: &str, base: &str) -> bool {
         // ParticleEmitter2D…): the API dump's hierarchy.
         None => crate::api::get().is_some_and(|a| a.is_a(class, base)),
     };
-    CACHE.with(|c| c.borrow_mut().insert(key, v));
+    CACHE.with(|c| c.borrow_mut().entry(base.into()).or_default().insert(class.into(), v));
     v
 }
 
@@ -326,7 +333,7 @@ impl Document {
             journal: Journal {
                 base: 0,
                 marks: Vec::new(),
-                read: [None; 14],
+                read: [None; 15],
                 graph_pos: std::sync::atomic::AtomicU64::new(0),
             },
         }
@@ -768,8 +775,13 @@ impl Document {
 
     /// Reads a property, falling back to the class default.
     pub fn prop(&self, r: Ref, name: &str) -> Option<Variant> {
+        self.prop_key(r, ustr(name))
+    }
+
+    /// `prop` by an already interned name (the runtime's member routes).
+    pub fn prop_key(&self, r: Ref, key: rbx_dom_weak::Ustr) -> Option<Variant> {
+        let name = key.as_str();
         let inst = self.dom.get_by_ref(r)?;
-        let key = ustr(name);
         if let Some(v) = inst.properties.get(&key) {
             return Some(v.clone());
         }

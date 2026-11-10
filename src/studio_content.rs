@@ -45,6 +45,8 @@ const SINGLE_FILES: &[(&str, &str)] = &[("RobloxStudio.zip", "ReflectionMetadata
 const VERSION_URL: &str = "https://clientsettingscdn.roblox.com/v2/client-version/WindowsStudio64";
 const CDN: &str = "https://setup.rbxcdn.com";
 const MARKER: &str = ".rustudio-studio-version";
+// Bump when the installed content layout changes, even within one CDN version.
+const CONTENT_REVISION: &str = "legacy-textures-1";
 
 /// Where the downloaded content lives.
 pub fn install_dir() -> PathBuf {
@@ -143,7 +145,7 @@ pub fn install(progress: &dyn Fn(&str)) -> Result<String, String> {
     progress(&format!("Studio {} ({version})", v["version"].as_str().unwrap_or("?")));
 
     let dest = install_dir();
-    if std::fs::read_to_string(dest.join(MARKER)).is_ok_and(|s| s.trim() == version) {
+    if std::fs::read_to_string(dest.join(MARKER)).is_ok_and(|s| s.trim() == format!("{version} {CONTENT_REVISION}")) {
         progress("already installed");
         return Ok(version);
     }
@@ -166,13 +168,30 @@ pub fn install(progress: &dyn Fn(&str)) -> Result<String, String> {
                 write_file(&partial.join(sub), &e.name, &data)?;
             }
         }
+        // Studio resolves retired rbxasset paths through LegacyContentTable,
+        // not another deployment zip. Materialize its missing textures too so
+        // a downloaded content tree is usable by file-based consumers.
+        for line in include_str!("../assets/legacy-content.tsv").lines() {
+            let Some((path, id)) = line.split_once('\t') else { continue };
+            if !path.starts_with("textures/") || partial.join("content").join(path).is_file() {
+                continue;
+            }
+            let id: u64 = id.trim().parse().map_err(|e| format!("legacy texture {path}: {e}"))?;
+            progress(&format!("fetching legacy {path}"));
+            match crate::assets::remote_cached(id) {
+                Ok(bytes) => write_file(&partial.join("content"), path, &bytes)?,
+                // Some retired entries have also been removed from asset
+                // delivery. They must not prevent installing current content.
+                Err(e) => progress(&format!("legacy {path} unavailable: {e}")),
+            }
+        }
         for (pkg, file) in SINGLE_FILES {
             progress(&format!("fetching {file} from {pkg}"));
             let url = format!("{CDN}/{version}-{pkg}");
             let data = fetch_one(&agent, &url, file)?;
             write_file(&partial, file, &data)?;
         }
-        std::fs::write(partial.join(MARKER), format!("{version}\n")).map_err(|e| e.to_string())
+        std::fs::write(partial.join(MARKER), format!("{version} {CONTENT_REVISION}\n")).map_err(|e| e.to_string())
     })();
     if let Err(e) = result {
         let _ = std::fs::remove_dir_all(&partial);

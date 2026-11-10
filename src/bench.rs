@@ -13,18 +13,63 @@ thread_local! {
 pub struct Scope {
     name: &'static str,
     t0: Instant,
+    i0: u64,
 }
 
 pub fn scope(name: &'static str) -> Scope {
     Scope {
         name,
         t0: Instant::now(),
+        i0: if instr_on() { instructions() } else { 0 },
     }
+}
+
+/// RUSTUDIO_BENCH_INSTR=1: sections count the thread's user-space
+/// instructions (millions) instead of milliseconds: a measure of work that
+/// a loaded machine doesn't move (comparing builds while other jobs run).
+fn instr_on() -> bool {
+    static ON: std::sync::OnceLock<bool> = std::sync::OnceLock::new();
+    *ON.get_or_init(|| std::env::var_os("RUSTUDIO_BENCH_INSTR").is_some())
+}
+
+/// This thread's user-space instructions retired so far (perf_event_open
+/// on itself; 0 if unavailable).
+#[cfg(target_os = "linux")]
+fn instructions() -> u64 {
+    thread_local! {
+        static FD: i32 = unsafe {
+            // struct perf_event_attr: type, size, config, …, flags.
+            let mut attr = [0u64; 16];
+            let a = attr.as_mut_ptr() as *mut u32;
+            *a = 0; // PERF_TYPE_HARDWARE
+            *a.add(1) = 128; // size
+            attr[1] = 1; // PERF_COUNT_HW_INSTRUCTIONS
+            attr[5] = (1 << 5) | (1 << 6); // exclude_kernel | exclude_hv
+            libc::syscall(libc::SYS_perf_event_open, attr.as_ptr(), 0, -1, -1, 0) as i32
+        };
+    }
+    FD.with(|fd| {
+        if *fd < 0 {
+            return 0;
+        }
+        let mut v = 0u64;
+        unsafe { libc::read(*fd, &mut v as *mut u64 as *mut libc::c_void, 8) };
+        v
+    })
+}
+
+#[cfg(not(target_os = "linux"))]
+fn instructions() -> u64 {
+    0
 }
 
 impl Drop for Scope {
     fn drop(&mut self) {
-        let ms = self.t0.elapsed().as_secs_f64() * 1000.0;
+        let ms = if instr_on() {
+            instructions().saturating_sub(self.i0) as f64 / 1e6
+        } else {
+            self.t0.elapsed().as_secs_f64() * 1000.0
+        };
         SECTIONS.with(|s| {
             let mut s = s.borrow_mut();
             match s.iter_mut().find(|e| std::ptr::eq(e.0, self.name) || e.0 == self.name) {
@@ -77,6 +122,13 @@ pub fn lua_timed<R>(key: usize, label: impl FnOnce() -> String, f: impl FnOnce()
         });
     }
     r
+}
+
+/// Whether an engine call has per-call diagnostics to keep (RUSTUDIO_HITCH,
+/// RUSTUDIO_API_TOTALS, RUSTUDIO_API_SITES): the runtime's fast member
+/// reads (runtime_routes.rs) leave those calls to the full path.
+pub fn call_probes_on() -> bool {
+    hitch_on() || totals_on() || sites_on()
 }
 
 /// RUSTUDIO_API_TOTALS=1: every engine call's time, summed per thread and
@@ -185,6 +237,78 @@ pub fn api_timed<R>(kind: &'static str, name: &str, f: impl FnOnce() -> R) -> R 
     r
 }
 
+thread_local! {
+    /// RUSTUDIO_API_SITES: "kind member @ chunk:line" → calls, while a bench measures.
+    static SITES: RefCell<std::collections::HashMap<String, u64>> =
+        RefCell::new(std::collections::HashMap::new());
+}
+
+/// RUSTUDIO_API_SITES=FILE: with `--bench`, counts every engine call by the
+/// script line that made it (the nearest Lua frame, and the nearest game
+/// frame when that one is rustudio's own library), written to FILE (one file
+/// per Luau state: FILE.<thread name>.<n>) when the measurement ends. Slow
+/// (walks the Lua stack on every call): for finding who calls what, not timing.
+pub fn sites_on() -> bool {
+    static ON: std::sync::OnceLock<bool> = std::sync::OnceLock::new();
+    *ON.get_or_init(|| std::env::var_os("RUSTUDIO_API_SITES").is_some())
+}
+
+/// Counts one engine call from `lua`'s running code (see `sites_on`).
+pub fn site(lua: &mlua::Lua, kind: &'static str, name: &str) {
+    if !sites_on() || !lua_prof_on() {
+        return;
+    }
+    let frame = |level: usize| {
+        lua.inspect_stack(level, |d| {
+            let src = d
+                .source()
+                .short_src
+                .map(|s| s.trim_start_matches(['=', '@']).to_string())
+                .unwrap_or_default();
+            (src, d.current_line().unwrap_or(0))
+        })
+    };
+    let mut near: Option<(String, usize)> = None;
+    let mut game: Option<(String, usize)> = None;
+    for level in 0..24 {
+        let Some((src, line)) = frame(level) else { break };
+        if src.is_empty() || src == "[C]" {
+            continue;
+        }
+        if near.is_none() {
+            near = Some((src.clone(), line as usize));
+        }
+        if !src.starts_with("rustudio.") {
+            game = Some((src, line as usize));
+            break;
+        }
+    }
+    let fmt = |f: &Option<(String, usize)>| match f {
+        Some((s, l)) => format!("{s}:{l}"),
+        None => "(engine)".to_string(),
+    };
+    let key = if near == game {
+        format!("{kind} {name} @ {}", fmt(&near))
+    } else {
+        format!("{kind} {name} @ {} <- {}", fmt(&near), fmt(&game))
+    };
+    SITES.with(|m| *m.borrow_mut().entry(key).or_insert(0) += 1);
+}
+
+fn write_sites(frames: usize) {
+    let Some(base) = std::env::var_os("RUSTUDIO_API_SITES") else { return };
+    static N: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
+    let mut v: Vec<(String, u64)> = SITES.with(|m| std::mem::take(&mut *m.borrow_mut())).into_iter().collect();
+    if v.is_empty() {
+        return;
+    }
+    v.sort_by(|a, b| b.1.cmp(&a.1));
+    let frames = frames.max(1) as f64;
+    let text: String = v.iter().map(|(k, n)| format!("{n:9} {:9.2}/f  {k}\n", *n as f64 / frames)).collect();
+    let n = N.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+    let _ = std::fs::write(format!("{}.{n}", base.to_string_lossy()), text);
+}
+
 fn take_api() -> Vec<(String, f64, u64)> {
     let mut v: Vec<(String, f64, u64)> = API.with(|m| std::mem::take(&mut *m.borrow_mut())).into_values().collect();
     v.sort_by(|a, b| b.1.total_cmp(&a.1));
@@ -232,6 +356,20 @@ fn take_sections() -> Vec<(&'static str, f64, u64)> {
     SECTIONS.with(|s| std::mem::take(&mut *s.borrow_mut()))
 }
 
+/// CPU time this thread has used, in ms (not the time it waited for a core:
+/// on a busy machine frame times stretch, this much less so).
+fn thread_cpu_ms() -> f64 {
+    #[cfg(unix)]
+    {
+        let mut ts = libc::timespec { tv_sec: 0, tv_nsec: 0 };
+        // SAFETY: a valid timespec out-pointer and a clock id the OS defines.
+        if unsafe { libc::clock_gettime(libc::CLOCK_THREAD_CPUTIME_ID, &mut ts) } == 0 {
+            return ts.tv_sec as f64 * 1000.0 + ts.tv_nsec as f64 / 1e6;
+        }
+    }
+    0.0
+}
+
 /// Collects frame intervals for a fixed time after a warm-up.
 pub struct Bench {
     pub out: Option<PathBuf>,
@@ -253,6 +391,9 @@ pub struct Bench {
     lua: Vec<(String, f64, u64)>,
     /// Engine API time by member over the measured frames.
     api: Vec<(String, f64, u64)>,
+    /// The main thread's CPU time when measuring began, and over the window.
+    cpu0: f64,
+    cpu_ms: f64,
 }
 
 impl Bench {
@@ -276,6 +417,8 @@ impl Bench {
             done: false,
             lua: Vec::new(),
             api: Vec::new(),
+            cpu0: 0.0,
+            cpu_ms: 0.0,
         }
     }
 
@@ -294,6 +437,7 @@ impl Bench {
             take_lua();
             take_api();
             LUA_ON.with(|c| c.set(true));
+            self.cpu0 = thread_cpu_ms();
             self.measuring = Some(now);
             self.last = Some(now);
             return false;
@@ -326,9 +470,11 @@ impl Bench {
         self.last = Some(now);
         if now.duration_since(self.measuring.unwrap()).as_secs_f32() >= self.seconds {
             self.done = true;
+            self.cpu_ms = thread_cpu_ms() - self.cpu0;
             LUA_ON.with(|c| c.set(false));
             self.lua = take_lua();
             self.api = take_api();
+            write_sites(self.intervals.len());
         }
         self.done
     }
@@ -364,6 +510,9 @@ impl Bench {
             "avg_fps": if avg > 0.0 { 1000.0 / avg } else { 0.0 },
             "low1_fps": if low > 0.0 { 1000.0 / low } else { 0.0 },
             "avg_work_ms": wavg,
+            // The main thread's CPU time per frame: steadier than the wall
+            // times above when other programs compete for the cores.
+            "avg_cpu_ms": self.cpu_ms / frames,
             "low1_work_ms": wlow,
             "sections": sections,
             // Slowest Lua: "chunk:line event" per connection, "chunk:line"

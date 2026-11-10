@@ -895,6 +895,15 @@ pub fn newindex(lua: &Lua, r: Ref, class: &str, key: &str, value: &Value) -> mlu
         _ if doc::is_a(class, "PVInstance") && matches!(key, "Origin" | "Pivot Offset") => {
             Err(not_member(lua, r, class, key)?)
         }
+        // The simulation takes the new spin; the property is stored as
+        // well (falls through: an anchored part's spin moves what touches it).
+        _ if doc::is_a(class, "BasePart") && matches!(key, "AssemblyAngularVelocity" | "RotVelocity") => {
+            if let Some(v) = ud::<LVector3>(value) {
+                let id = world(lua)?.d().id;
+                crate::physics::live::queue_spin_set(id, r, v.0);
+            }
+            Ok(false)
+        }
         _ => Ok(false),
     }
 }

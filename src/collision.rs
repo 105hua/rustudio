@@ -351,6 +351,46 @@ pub fn shape_from_hulls(hulls: &[Vec<Vec3>], size: Vec3) -> Option<rp::SharedSha
     }
 }
 
+/// A convex hull reduced to its extreme points along 50 fixed directions
+/// (the 26 of a cube's faces, edges and corners plus 24 between them): the
+/// touch shape of a moving non-colliding mesh, which is re-bounded every
+/// step. Hulls with few points are returned as they are.
+pub fn touch_hull(s: &rp::SharedShape) -> rp::SharedShape {
+    let Some(c) = s.as_convex_polyhedron() else { return s.clone() };
+    let pts = c.points();
+    if pts.len() <= 50 {
+        return s.clone();
+    }
+    let mut dirs: Vec<rp::Vector> = Vec::new();
+    for x in -1i32..=1 {
+        for y in -1i32..=1 {
+            for z in -1i32..=1 {
+                if (x, y, z) != (0, 0, 0) {
+                    dirs.push(rp::Vector::new(x as f32, y as f32, z as f32));
+                }
+            }
+        }
+    }
+    for (a, b) in [(1.0f32, 0.5f32), (0.5, 1.0)] {
+        for sx in [-1.0f32, 1.0] {
+            for sy in [-1.0f32, 1.0] {
+                dirs.push(rp::Vector::new(sx * a, sy * b, 0.0));
+                dirs.push(rp::Vector::new(0.0, sx * a, sy * b));
+                dirs.push(rp::Vector::new(sy * b, 0.0, sx * a));
+            }
+        }
+    }
+    let mut keep: Vec<rp::Vector> = Vec::new();
+    for d in dirs {
+        if let Some(p) = pts.iter().copied().max_by(|a, b| a.dot(d).total_cmp(&b.dot(d))) {
+            if !keep.iter().any(|k| (*k - p).length_squared() < 1e-8) {
+                keep.push(p);
+            }
+        }
+    }
+    rp::SharedShape::convex_hull(&keep).unwrap_or_else(|| s.clone())
+}
+
 /// The mesh's own triangles stretched to a part's size (an anchored part's
 /// shape while its decomposition is being computed).
 pub fn trimesh(id: &str, size: Vec3) -> Option<rp::SharedShape> {
@@ -407,6 +447,32 @@ pub fn l_prism_obj() -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// A moving sensor's touch hull: at most 50 points, the same extent
+    /// along the axes, and inside the full hull.
+    #[test]
+    fn touch_hull_keeps_the_extremes_with_few_points() {
+        let mut pts = Vec::new();
+        let mut s: u32 = 12345;
+        for _ in 0..400 {
+            let mut r = || { s ^= s << 13; s ^= s >> 17; s ^= s << 5; (s % 10000) as f32 / 10000.0 - 0.5 };
+            let v = rp::Vector::new(r(), r(), r());
+            pts.push(v.normalize() * 5.5);
+        }
+        let full = rp::SharedShape::convex_hull(&pts).unwrap();
+        let n_full = full.as_convex_polyhedron().unwrap().points().len();
+        assert!(n_full > 50, "{n_full}");
+        let t = touch_hull(&full);
+        let c = t.as_convex_polyhedron().unwrap();
+        assert!(c.points().len() <= 50, "{}", c.points().len());
+        let ext = |pts: &[rp::Vector], d: rp::Vector| pts.iter().map(|p| p.dot(d)).fold(f32::MIN, f32::max);
+        for d in [rp::Vector::X, rp::Vector::NEG_X, rp::Vector::Y, rp::Vector::NEG_Y, rp::Vector::Z, rp::Vector::NEG_Z] {
+            assert!((ext(c.points(), d) - ext(&pts, d)).abs() < 1e-4, "extent along {d:?}");
+        }
+        // A sphere-ish hull loses at most a little volume.
+        let v = |s: &rp::SharedShape| s.mass_properties(1.0).mass();
+        assert!(v(&t) > 0.8 * v(&full) && v(&t) <= v(&full) + 1e-3, "{} vs {}", v(&t), v(&full));
+    }
 
     #[test]
     fn hull_and_decomposition_of_an_l_shape() {

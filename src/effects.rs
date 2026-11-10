@@ -2,11 +2,14 @@
 //! frame and drawn as extra triangles in the world GUI pass (world_gui.rs),
 //! so the scene's depth hides them and LightInfluence / Brightness, the
 //! scene's tone curve and its fog apply as in Studio's ParticleCustomFS and
-//! TrailFSLight (shaders_glsl3.pack; docs/MECHANICS.md "Round 25").
+//! TrailFSLight (docs/MECHANICS.md "Round 25").
 //!
-//! Vertices are handed over in clip space (`GuiVertex::clip_w`), so the GPU
-//! clips them at the near plane and interpolates their UVs
-//! perspective-correctly. Colours are premultiplied and gamma-space like
+//! As in Studio, the CPU simulates and writes one record per particle (its
+//! ParticleCustomVS makes the quad from it) and world-space strip vertices
+//! for beams and trails (TrailVSLightUnified); the GPU projects and lights
+//! them (world_gui.rs `fx_scene`: the light grid, the local lights and the
+//! sun, the terms of `SceneLight::at`, which stays as the reference and for
+//! RUSTUDIO_FX_LIGHT_CHECK). Colours are premultiplied and gamma-space like
 //! egui's; LightEmission keeps the colour and scales the alpha by
 //! (1 − LightEmission), which under premultiplied blending is Studio's
 //! "additive" blend.
@@ -25,7 +28,7 @@ use crate::doc::{self, Document};
 use crate::math::Xform;
 use crate::mech;
 use crate::scene::{content_string, enum_u32, f32_of, vec3_of, xform_of};
-use crate::world_gui::{GuiBatch, GuiVertex};
+use crate::world_gui::{FxFrame, FxLook, FxParticle, FxVertex};
 
 #[path = "effects_constraints.rs"]
 mod constraints;
@@ -84,8 +87,10 @@ pub fn set_texture_offset(doc_id: u64, beam: Ref, offset: f32) {
 /// (ParticleLightingVS / FS: min(LightMap + Ambient + SkyAmbient ×
 /// skylight, cap) + Lamp0 × sun visibility, no N·L), and trails / beams per
 /// pixel at the point (TrailFSLight: the same, the sun also × the shadow
-/// map). rustudio reads the same terms on the CPU, per particle and per
-/// strip vertex: Ambient, OutdoorAmbient × the roof map × the terrain's
+/// map). rustudio reads the same terms on the GPU (world_gui.rs fx_scene,
+/// from these values, the light-grid texture and the lights buffer; this
+/// CPU copy is the reference for tests and RUSTUDIO_FX_LIGHT_CHECK), per
+/// particle and per strip row: Ambient, OutdoorAmbient × the roof map × the terrain's
 /// light grid, the sun × the roof map × the light grid (the voxel sun
 /// visibility Studio keeps in LightGridSkylight.y, estimated by the roof
 /// map; no shadow map on the CPU), the skybox's diffuse light × the light
@@ -187,20 +192,18 @@ impl SceneLight {
 
     /// The light at `p` (linear RGB), from `lights` (`near`'s list).
     /// ParticleLightingFS: min(the grid's light + ambient + sky, cap) +
-    /// the sun. The cap holds the luminance to 1 (calibration q: a white
-    /// light reads 0.99 near a Range 30 PointLight while an orange one's
-    /// red reads 1.58 at luminance 0.85).
+    /// the sun. The shader caps each RGB channel separately; the sun is
+    /// added after that cap.
     fn at(&self, p: Vec3, lights: &[&crate::render::LightRaw]) -> Vec3 {
         let sky = self.grid(p, 0);
         let mut c = self.ambient + self.outdoor * sky + self.env * sky;
         for l in lights {
             c += self.local(l, p);
         }
-        let lum = c.dot(Vec3::new(0.299, 0.587, 0.114));
-        if lum > mech::FX_LIGHT_CAP {
-            c *= mech::FX_LIGHT_CAP / lum;
-        }
-        c + self.sun * self.grid(p, 1)
+        // ParticleLightingFS uses a component-wise min before adding Lamp0.
+        // A luminance rescale preserves overbright coloured channels and
+        // incorrectly reduces the other channels of a coloured local light.
+        c.min(Vec3::splat(mech::FX_LIGHT_CAP)) + self.sun * self.grid(p, 1)
     }
 }
 
@@ -249,18 +252,22 @@ impl Glass {
 /// The see-through parts that may lie between the camera and an effect
 /// (centre `c`, radius `r`), drawn after it in Studio's order: nearer the
 /// camera than the effect, and not the effect's own host.
+#[cfg(test)]
 fn glass_between<'a>(glass: &'a [Glass], cam: Vec3, c: Vec3, r: f32, host: Option<Ref>) -> Vec<&'a Glass> {
-    if glass.is_empty() {
-        return Vec::new();
-    }
+    glass_in_front(glass, cam, c, r, host).map(|i| &glass[i]).collect()
+}
+
+/// `glass_between` as indices into `glass`.
+fn glass_in_front(glass: &[Glass], cam: Vec3, c: Vec3, r: f32, host: Option<Ref>) -> impl Iterator<Item = usize> + '_ {
     let seg = c - cam;
     let len = seg.length();
     let d = seg / len.max(1e-6);
     // (`glass` is nearest first: what lies past the effect can stop)
     glass
         .iter()
-        .take_while(|g| g.dist < len)
-        .filter(|g| {
+        .enumerate()
+        .take_while(move |(_, g)| g.dist < len)
+        .filter(move |(_, g)| {
             if Some(g.part) == host {
                 return false;
             }
@@ -268,12 +275,14 @@ fn glass_between<'a>(glass: &'a [Glass], cam: Vec3, c: Vec3, r: f32, host: Optio
             let t = (g.centre - cam).dot(d).clamp(0.0, len);
             (cam + d * t - g.centre).length() < g.radius + r
         })
-        .collect()
+        .map(|(i, _)| i)
 }
 
 /// The glass in front of one effect (`glass_between`), binned into screen
 /// tiles when there's much of it (Place B's Snowfall box spans hundreds of
-/// see-through parts), so each particle tests only what covers it.
+/// see-through parts), so each particle tests only what covers it. The
+/// CPU reference of the GPU's test (world_gui.rs fx_transmit).
+#[cfg(test)]
 struct GlassSet<'a> {
     list: Vec<&'a Glass>,
     /// GLASS_TILES² lists of indices into `list`, by NDC tile.
@@ -281,14 +290,18 @@ struct GlassSet<'a> {
     vp: Mat4,
 }
 
+#[cfg(test)]
 const GLASS_TILES: usize = 16;
 /// More candidates than this get tiles.
+#[cfg(test)]
 const GLASS_TILE_MIN: usize = 8;
 
+#[cfg(test)]
 fn tile_of(ndc: f32) -> usize {
     (((ndc * 0.5 + 0.5) * GLASS_TILES as f32).floor().max(0.0) as usize).min(GLASS_TILES - 1)
 }
 
+#[cfg(test)]
 impl<'a> GlassSet<'a> {
     fn new(list: Vec<&'a Glass>, vp: Mat4, cam: Vec3) -> GlassSet<'a> {
         let tiles = (list.len() > GLASS_TILE_MIN).then(|| {
@@ -488,6 +501,59 @@ fn attachment_world(d: &Document, a: Ref) -> Option<Xform> {
     crate::attachment::world(d, a, true)
 }
 
+/// What an attachment's world frame reads (attachment::world): it, and
+/// its ancestors up to and including the first BasePart.
+fn chain_of(d: &Document, a: Ref, out: &mut Vec<Ref>) {
+    let mut cur = a;
+    for _ in 0..64 {
+        let Some(i) = d.dom.get_by_ref(cur) else { return };
+        out.push(cur);
+        if cur != a && doc::is_a(&i.class, "BasePart") {
+            return;
+        }
+        cur = i.parent();
+    }
+}
+
+impl Pose {
+    fn same(&self, o: &Pose) -> bool {
+        let x = |a: &Option<Xform>, b: &Option<Xform>| match (a, b) {
+            (Some(a), Some(b)) => a.pos == b.pos && a.rot == b.rot,
+            (None, None) => true,
+            _ => false,
+        };
+        match (self, o) {
+            (Pose::Ends(a0, a1), Pose::Ends(b0, b1)) => x(a0, b0) && x(a1, b1),
+            (Pose::Host(a, va), Pose::Host(b, vb)) => {
+                va == vb
+                    && match (a, b) {
+                        (Some(a), Some(b)) => a.1 == b.1 && x(&Some(a.0), &Some(b.0)),
+                        (None, None) => true,
+                        _ => false,
+                    }
+            }
+            _ => false,
+        }
+    }
+}
+
+/// RUSTUDIO_FX_POSE_CHECK: every kept pose is read again and compared.
+fn pose_check() -> bool {
+    static ON: std::sync::OnceLock<bool> = std::sync::OnceLock::new();
+    *ON.get_or_init(|| std::env::var_os("RUSTUDIO_FX_POSE_CHECK").is_some())
+}
+
+/// Where an effect is (read through the document's properties), kept until
+/// the journal marks it or something it hangs from (`Effects::pose`).
+#[derive(Clone, Copy)]
+enum Pose {
+    /// A beam's or trail's attachments.
+    Ends(Option<Xform>, Option<Xform>),
+    /// An emitter's host frame and size, and an anchored host's set
+    /// velocity.
+    Host(Option<(Xform, Vec3)>, Option<Vec3>),
+}
+
 /// The world transform and box size an effect emits from.
 fn host_xform(d: &Document, h: Host) -> Option<(Xform, Vec3)> {
     match h {
@@ -519,6 +585,15 @@ impl Look {
     /// Whether the scene's light matters (LightInfluence above 0).
     fn lit(&self) -> bool {
         self.influence > 0.0
+    }
+
+    /// For the GPU (world_gui::FxLook): `light`'s two weights, the mode
+    /// (0 unlit, 1 lit, 2 lit with the beam's per-pixel sun shadow) and
+    /// 1 − LightEmission.
+    fn gpu(&self, beam_shadow: bool) -> FxLook {
+        let w = self.influence.sqrt();
+        let mode = if !self.lit() { 0.0 } else if beam_shadow { 2.0 } else { 1.0 };
+        [self.brightness * (1.0 - w), if self.lit() { w } else { 0.0 }, mode, 1.0 - self.emission]
     }
 }
 
@@ -978,33 +1053,47 @@ struct View<'a> {
     light: &'a SceneLight,
     /// See-through parts this frame (dimming what's behind them).
     glass: &'a [Glass],
+    /// RUSTUDIO_FX_LIGHT_CHECK: the CPU's light goes along for comparison.
+    check: bool,
+    /// The frame's lists of glass in front of each effect (indices into
+    /// `glass`), for the GPU (FxFrame::glass_idx).
+    glass_idx: std::cell::RefCell<Vec<u32>>,
 }
 
 impl View<'_> {
-    /// A vertex at world point `p`, its depth taken `zoffset` studs toward
-    /// the camera (ParticleCustomVS: ZOffset moves the depth only), lit by
-    /// `light` (linear RGB, `Look::light`).
-    fn vertex(&self, p: Vec3, zoffset: f32, uv: [f32; 2], color: [u8; 4], light: [f32; 3], look: &Look) -> GuiVertex {
-        let c = self.vp * p.extend(1.0);
-        let mut z = c.z;
-        if zoffset != 0.0 {
-            let q = p + (self.pos - p).normalize_or_zero() * zoffset;
-            let cz = self.vp * q.extend(1.0);
-            if cz.w.abs() > 1e-6 {
-                z = cz.z * c.w / cz.w;
+    /// The see-through parts in front of an effect (centre `c`, radius
+    /// `r`, `glass_between`), listed for the GPU: (first, count) in
+    /// FxFrame::glass_idx. The vertex shader dims the effect by each one
+    /// its point lies behind (world_gui.rs fx_transmit, as Glass::hit).
+    fn glass_ids(&self, c: Vec3, r: f32, host: Option<Ref>) -> [u32; 2] {
+        if self.glass.is_empty() {
+            return [0, 0];
+        }
+        let mut idx = self.glass_idx.borrow_mut();
+        let first = idx.len();
+        idx.extend(glass_in_front(self.glass, self.pos, c, r, host).map(|i| i as u32));
+        let n = idx.len() - first;
+        if n == 0 {
+            return [0, 0];
+        }
+        [first as u32, n as u32]
+    }
+
+    /// RUSTUDIO_FX_LIGHT_CHECK: the CPU's light × what shows through the
+    /// glass in `list` (`glass_ids`), as the GPU should have it.
+    fn check(&self, light: [f32; 3], list: [u32; 2], p: Vec3) -> [f32; 3] {
+        let idx = self.glass_idx.borrow();
+        let seg = p - self.pos;
+        let len = seg.length();
+        let d = seg / len.max(1e-6);
+        let mut t = 1.0;
+        for &i in &idx[list[0] as usize..(list[0] + list[1]) as usize] {
+            let g = &self.glass[i as usize];
+            if g.hit(self.pos, d, len) {
+                t *= 1.0 - g.alpha;
             }
         }
-        GuiVertex {
-            ndc: [c.x, c.y],
-            depth: z,
-            uv,
-            color,
-            light,
-            dist: (p - self.pos).length(),
-            clip_w: if c.w == 0.0 { -1e-6 } else { c.w },
-            alpha_mul: 1.0 - look.emission,
-            ..Default::default()
-        }
+        light.map(|c| c * t)
     }
 
     /// The light an effect takes at `p` (Brightness alone when
@@ -1024,13 +1113,66 @@ fn premul(rgb: Vec3, a: f32) -> [u8; 4] {
     [c.x as u8, c.y as u8, c.z as u8, (a * 255.0).round() as u8]
 }
 
-/// One effect's triangles, drawn far to near with the others.
+/// One effect's geometry, drawn far to near with the others.
 struct Draw {
     dist: f32,
     texture: TextureId,
     wrap: bool,
-    vertices: Vec<GuiVertex>,
+    geom: Geom,
+}
+
+enum Geom {
+    Strip(Vec<FxVertex>, Vec<u32>),
+    Particles(Vec<FxParticle>),
+    /// A beam's kept strip (`Effects::kept`).
+    Kept(Ref),
+}
+
+/// A beam's strip kept from frame to frame: with the light and the glass on
+/// the GPU, a beam that doesn't face the camera or scroll its texture
+/// doesn't change until it, its attachments or its parts do (Studio's
+/// BeamNode rebuilds on change). The glass list in front of it is redone
+/// each frame.
+struct Kept {
+    tex: (TextureId, bool),
+    vertices: Vec<FxVertex>,
     indices: Vec<u32>,
+    /// Bounding sphere (the glass in front is picked by it).
+    centre: Vec3,
+    radius: f32,
+}
+
+impl Kept {
+    fn new(tex: (TextureId, bool), vertices: Vec<FxVertex>, indices: Vec<u32>) -> Kept {
+        // (as `strip`: a FaceCamera row reaches its half width every way)
+        let mut lo = Vec3::splat(f32::MAX);
+        let mut hi = Vec3::splat(f32::MIN);
+        for v in &vertices {
+            let reach = Vec3::splat(v.face[3].abs());
+            lo = lo.min(Vec3::from(v.pos) - reach);
+            hi = hi.max(Vec3::from(v.pos) + reach);
+        }
+        Kept { tex, vertices, indices, centre: (lo + hi) * 0.5, radius: (hi - lo).length() * 0.5 }
+    }
+
+    /// This frame's glass list and texture scroll, and how far it is
+    /// (`strip`'s `far`).
+    fn frame(&mut self, view: &View, scroll: f32) -> f32 {
+        let glass = view.glass_ids(self.centre, self.radius, None);
+        let scroll = if self.tex.1 { scroll } else { 0.0 };
+        let mut far = 0.0f32;
+        for v in self.vertices.iter_mut() {
+            v.glass = glass;
+            v.scroll = scroll;
+        }
+        // (a row's two vertices share its centre)
+        for v in self.vertices.iter().step_by(2) {
+            let p = Vec3::from(v.at);
+            let shifted = if v.zoff != 0.0 { p + (view.pos - p).normalize_or_zero() * v.zoff } else { p };
+            far = far.max((shifted - view.pos).dot(view.forward));
+        }
+        far
+    }
 }
 
 /// The texture's id (white when the effect has none); None while loading
@@ -1075,22 +1217,19 @@ fn particles_draw(
     let max_size = c.size.0.iter().map(|k| (k.1 + k.2.abs()) * mech::FX_PARTICLE_HALF_SIZE).fold(0.0f32, f32::max);
     let centre = (lo + hi) * 0.5;
     let radius = (hi - lo).length() * 0.5 + max_size;
-    let lights = if c.look.lit() {
+    // (RUSTUDIO_FX_LIGHT_CHECK: the lights the CPU reference reads)
+    let lights = if view.check && c.look.lit() {
         view.light.near(centre, radius + mech::FX_LIGHT_TOWARD_CAMERA)
     } else {
         Vec::new()
     };
+    let look = c.look.gpu(false);
     let host = match c.host {
         Host::Part(p) => Some(p),
         _ => None,
     };
-    let glass = GlassSet::new(
-        glass_between(view.glass, view.pos, xf.pos, radius + (xf.pos - centre).length(), host),
-        view.vp,
-        view.pos,
-    );
-    let mut vertices = Vec::with_capacity(order.len().min(*budget) * 4);
-    let mut indices = Vec::with_capacity(order.len().min(*budget) * 6);
+    let glass = view.glass_ids(xf.pos, radius + (xf.pos - centre).length(), host);
+    let mut out = Vec::with_capacity(order.len().min(*budget));
     let mut far = 0.0f32;
     for (depth, i, center) in order {
         if *budget == 0 {
@@ -1107,18 +1246,19 @@ fn particles_draw(
         if depth < -half * 2.0 || (depth > 0.0 && half * 2.0 * view.px_per_stud / depth < mech::FX_MIN_PIXELS) {
             continue;
         }
-        let alpha = (1.0 - c.transparency.at(t, p.env[1])).clamp(0.0, 1.0) * c.look.alpha * glass.transmit(view.pos, center);
+        // (the glass in front dims it on the GPU, at the centre)
+        let alpha = (1.0 - c.transparency.at(t, p.env[1])).clamp(0.0, 1.0) * c.look.alpha;
         if alpha <= 0.0 {
             continue;
         }
         let color = premul(c.color.at(t), alpha);
         // Lit once per particle, FX_LIGHT_TOWARD_CAMERA toward the camera
-        // (ParticleLightingVS).
-        let light = if c.look.lit() {
+        // (ParticleLightingVS), on the GPU; the CPU's for the check.
+        let check = if view.check {
             let at = center + (view.pos - center).normalize_or_zero() * mech::FX_LIGHT_TOWARD_CAMERA;
-            view.light_at(&c.look, at, &lights)
+            view.check(view.light_at(&c.look, at, &lights), glass, center)
         } else {
-            c.look.light(Vec3::ZERO)
+            [0.0; 3]
         };
         // Squash: x × 1/(1+s), y × (1+s) for s > 0, the inverse below (area
         // kept), then the rotation (ParticleCustomVS).
@@ -1194,37 +1334,44 @@ fn particles_draw(
         let cell = Vec2::new(1.0 / cols as f32, 1.0 / rows as f32);
         let origin = Vec2::new((frame % cols) as f32, (frame / cols) as f32) * cell;
         let origin2 = Vec2::new((next % cols) as f32, (next / cols) as f32) * cell;
+        let (uv0, uv1, cell) = if tex.1 {
+            (origin.to_array(), origin2.to_array(), cell.to_array())
+        } else {
+            ([white.x, white.y], [white.x, white.y], [0.0, 0.0])
+        };
         // Soft particles: only the camera-facing ones (ParticleCustomFS_Soft
         // tests the orientation for 0), faded over their half size.
-        let soft = if c.orientation == 0 { [1.0 / half.max(1e-3), c.zoffset] } else { [0.0, 0.0] };
-        let base = vertices.len() as u32;
-        for (cx, cy) in [(-1.0f32, -1.0f32), (1.0, -1.0), (1.0, 1.0), (-1.0, 1.0)] {
-            let off = ax * (cx * m[0] + cy * m[1]) + ay * (cx * m[2] + cy * m[3]);
-            let corner = Vec2::new((cx + 1.0) * 0.5, 1.0 - (cy + 1.0) * 0.5) * cell;
-            let (uv, uv2) = if tex.1 {
-                let (q, q2) = (origin + corner, origin2 + corner);
-                ([q.x, q.y], [q2.x, q2.y])
-            } else {
-                ([white.x, white.y], [white.x, white.y])
-            };
-            let mut v = view.vertex(center + off, c.zoffset, uv, color, light, &c.look);
-            v.uv2 = uv2;
-            v.blend = blend;
-            v.soft = soft;
-            vertices.push(v);
-        }
-        indices.extend_from_slice(&[base, base + 1, base + 2, base, base + 2, base + 3]);
+        let soft = if c.orientation == 0 { 1.0 / half.max(1e-3) } else { 0.0 };
+        // The quad's corners: centre ± e1 ± e2 (ParticleCustomVS).
+        out.push(FxParticle {
+            centre: center.to_array(),
+            zoffset: c.zoffset,
+            e1: (ax * m[0] + ay * m[2]).to_array(),
+            soft,
+            e2: (ax * m[1] + ay * m[3]).to_array(),
+            blend,
+            uv0,
+            uv1,
+            cell,
+            color,
+            look,
+            check,
+            glass,
+        });
         far = far.max(depth);
         *budget -= 1;
     }
-    if indices.is_empty() {
+    if out.is_empty() {
         return None;
     }
-    Some(Draw { dist: far, texture: tex.0, wrap: false, vertices, indices })
+    Some(Draw { dist: far, texture: tex.0, wrap: false, geom: Geom::Particles(out) })
 }
 
 /// A strip of (point, side half-vector, t along, u) rows as triangles;
 /// Transparency is read `fade_back` earlier along than Color (trails).
+/// `face`: per row the (tangent, half width) of a FaceCamera beam, whose
+/// side the GPU makes across the camera (the rows' side unused); `scroll`
+/// is taken off every u on the GPU (Beam.TextureSpeed).
 #[allow(clippy::too_many_arguments)]
 fn strip(
     rows: &[(Vec3, Vec3, f32, f32)],
@@ -1233,6 +1380,9 @@ fn strip(
     fade_back: f32,
     look: &Look,
     zoffset_pos: f32,
+    beam_shadow: bool,
+    face: &[(Vec3, f32)],
+    scroll: f32,
     view: &View,
     tex: (TextureId, bool),
 ) -> Option<Draw> {
@@ -1240,37 +1390,60 @@ fn strip(
         return None;
     }
     let white = egui::epaint::WHITE_UV;
-    // Bounds: lights and glass are picked per strip.
+    let face = (face.len() == rows.len()).then_some(face);
+    // Bounds: lights and glass are picked per strip (`Kept::bounds`).
     let mut lo = Vec3::splat(f32::MAX);
     let mut hi = Vec3::splat(f32::MIN);
-    for r in rows {
-        lo = lo.min(r.0 - r.1.abs());
-        hi = hi.max(r.0 + r.1.abs());
+    for (i, r) in rows.iter().enumerate() {
+        let reach = match face {
+            Some(f) => Vec3::splat(f[i].1.abs()),
+            None => r.1.abs(),
+        };
+        lo = lo.min(r.0 - reach);
+        hi = hi.max(r.0 + reach);
     }
     let centre = (lo + hi) * 0.5;
     let radius = (hi - lo).length() * 0.5;
-    let lights = if look.lit() { view.light.near(centre, radius) } else { Vec::new() };
-    let glass = GlassSet::new(glass_between(view.glass, view.pos, centre, radius, None), view.vp, view.pos);
+    let lights = if view.check && look.lit() { view.light.near(centre, radius) } else { Vec::new() };
+    let glass = view.glass_ids(centre, radius, None);
+    let gpu = look.gpu(beam_shadow);
     let mut vertices = Vec::with_capacity(rows.len() * 2);
     let mut indices = Vec::with_capacity((rows.len() - 1) * 6);
     let mut far = 0.0f32;
     for (i, &(p, side, t, u)) in rows.iter().enumerate() {
-        // Beams: ZOffset moves the whole beam toward the camera (TrailVS).
-        let p = if zoffset_pos != 0.0 { p + (view.pos - p).normalize_or_zero() * zoffset_pos } else { p };
-        let alpha = (1.0 - transparency.at((t - fade_back).max(0.0), 0.0)).clamp(0.0, 1.0)
-            * look.alpha
-            * glass.transmit(view.pos, p);
+        // Beams: ZOffset moves the whole beam toward the camera (TrailVS;
+        // the GPU moves the row, as here).
+        let shifted = if zoffset_pos != 0.0 { p + (view.pos - p).normalize_or_zero() * zoffset_pos } else { p };
+        // (the glass in front dims it on the GPU, at the row's centre)
+        let alpha = (1.0 - transparency.at((t - fade_back).max(0.0), 0.0)).clamp(0.0, 1.0) * look.alpha;
         let col = premul(color.at(t), alpha);
-        // Lit at the point itself (TrailFSLight reads the grid at the
-        // pixel; here per row).
-        let light = view.light_at(look, p, &lights);
+        // Lit at the row's centre (TrailFSLight reads the grid at the
+        // pixel; here per row), on the GPU; the CPU's for the check.
+        let check = if view.check { view.check(view.light_at(look, shifted, &lights), glass, shifted) } else { [0.0; 3] };
         // The image runs with its Y along the strip (Y 0 at Attachment0 /
         // the head) and its X across, X 0 on the +side edge (effects place:
         // the arrow cursor on a flat beam lies on its side in Studio).
         let (uv0, uv1) = if tex.1 { ([0.0, u], [1.0, u]) } else { ([white.x, white.y], [white.x, white.y]) };
-        vertices.push(view.vertex(p + side, 0.0, uv0, col, light, look));
-        vertices.push(view.vertex(p - side, 0.0, uv1, col, light, look));
-        far = far.max((p - view.pos).dot(view.forward));
+        let scroll = if tex.1 { scroll } else { 0.0 };
+        for (sign, uv) in [(1.0f32, uv0), (-1.0, uv1)] {
+            let (pos, face) = match face {
+                Some(f) => (p, [f[i].0.x, f[i].0.y, f[i].0.z, sign * f[i].1]),
+                None => (p + side * sign, [0.0; 4]),
+            };
+            vertices.push(FxVertex {
+                pos: pos.to_array(),
+                zoff: zoffset_pos,
+                at: p.to_array(),
+                color: col,
+                uv,
+                look: gpu,
+                check,
+                glass,
+                face,
+                scroll,
+            });
+        }
+        far = far.max((shifted - view.pos).dot(view.forward));
         if i > 0 {
             let b = (i as u32 - 1) * 2;
             indices.extend_from_slice(&[b, b + 1, b + 3, b, b + 3, b + 2]);
@@ -1278,7 +1451,7 @@ fn strip(
     }
     // (clamped when untextured: repeat would filter egui's white texel at
     // the atlas corner with the far edges' empty ones)
-    Some(Draw { dist: far, texture: tex.0, wrap: tex.1, vertices, indices })
+    Some(Draw { dist: far, texture: tex.0, wrap: tex.1, geom: Geom::Strip(vertices, indices) })
 }
 
 fn bezier(p: [Vec3; 4], t: f32) -> (Vec3, Vec3) {
@@ -1294,9 +1467,17 @@ fn beam_tangent(ctrl: [Vec3; 4], t: f32, tan: Vec3, fallback: Vec3) -> Vec3 {
     tan.normalize_or(limit.normalize_or((ctrl[3] - ctrl[0]).normalize_or(fallback)))
 }
 
-fn beam_draw(c: &BeamCfg, d: &Document, view: &View, time: f64, tex: (TextureId, bool), phase: Option<(f32, f64)>) -> Option<Draw> {
-    let x0 = attachment_world(d, c.a0?)?;
-    let x1 = attachment_world(d, c.a1?)?;
+/// How far a beam's texture has scrolled toward Attachment1 (TextureSpeed).
+fn beam_scroll(c: &BeamCfg, time: f64, phase: Option<(f32, f64)>) -> f32 {
+    match phase {
+        // SetTextureOffset: the cycle restarts from −offset then scrolls on.
+        Some((o, at)) => ((time - at) * c.tex_speed as f64 - o as f64).rem_euclid(1024.0) as f32,
+        None => (time * c.tex_speed as f64).rem_euclid(1024.0) as f32,
+    }
+}
+
+fn beam_draw(c: &BeamCfg, ends: (Option<Xform>, Option<Xform>), view: &View, time: f64, tex: (TextureId, bool), phase: Option<(f32, f64)>) -> Option<Draw> {
+    let (x0, x1) = (ends.0?, ends.1?);
     // Attachment.Axis (X) is the curve's direction at each end; CurveSize
     // places the bezier's control points along it.
     let ctrl = [
@@ -1316,11 +1497,8 @@ fn beam_draw(c: &BeamCfg, d: &Document, view: &View, time: f64, tex: (TextureId,
         }
         pts.push((p, tan, t, len));
     }
-    let scroll = match phase {
-        // SetTextureOffset: the cycle restarts from −offset then scrolls on.
-        Some((o, at)) => ((time - at) * c.tex_speed as f64 - o as f64).rem_euclid(1024.0) as f32,
-        None => (time * c.tex_speed as f64).rem_euclid(1024.0) as f32,
-    };
+    let scroll = beam_scroll(c, time, phase);
+    let mut face = Vec::new();
     let rows: Vec<(Vec3, Vec3, f32, f32)> = pts
         .iter()
         .map(|&(p, tan, t_curve, s)| {
@@ -1336,27 +1514,30 @@ fn beam_draw(c: &BeamCfg, d: &Document, view: &View, time: f64, tex: (TextureId,
             // attachments' SecondaryAxis (Y), blended along the beam and
             // squared to the curve (Place B's flat conveyor and waterfall
             // beams lie along their attachments' Y).
+            // (FaceCamera: tan × (camera − p), made on the GPU: vs_strip)
+            let w = c.width.0 + (c.width.1 - c.width.0) * t;
             let side = if c.face_camera {
-                tan.cross(view.pos - p).normalize_or(view.right)
+                face.push((tan, w * 0.5));
+                Vec3::ZERO
             } else {
                 let y = x0.rot.y_axis.lerp(x1.rot.y_axis, t);
                 (y - tan * y.dot(tan)).normalize_or(y.normalize_or(Vec3::Y))
             };
-            let w = c.width.0 + (c.width.1 - c.width.0) * t;
             // TextureMode: Stretch (TextureLength copies over the beam),
             // Wrap and Static (one every TextureLength studs from
             // Attachment0: effects-lanes, a 15-stud beam at TextureLength 4
             // cuts its fourth arrow at Attachment1 in both, at Width 2 and
             // 4); TextureSpeed scrolls it toward Attachment1.
             let tl = c.tex_length.max(1e-3);
+            // (the scroll is taken off on the GPU)
             let u = match c.tex_mode {
                 1 | 2 => s / tl,
                 _ => t * c.tex_length,
-            } - scroll;
+            };
             (p, side * (w * 0.5), t, u)
         })
         .collect();
-    strip(&rows, &c.color, &c.transparency, 0.0, &c.look, c.zoffset, view, tex)
+    strip(&rows, &c.color, &c.transparency, 0.0, &c.look, c.zoffset, true, &face, scroll, view, tex)
 }
 
 /// Where a trail point of this age reads its Color (and WidthScale and a
@@ -1439,7 +1620,7 @@ impl TrailState {
             .collect();
         // (Transparency leads by FX_TRAIL_FADE_LEAD, not FX_TRAIL_AGE_LEAD)
         let fade_back = (mech::FX_TRAIL_AGE_LEAD - mech::FX_TRAIL_FADE_LEAD) / c.life;
-        strip(&rows, &c.color, &c.transparency, fade_back, &c.look, 0.0, view, tex)
+        strip(&rows, &c.color, &c.transparency, fade_back, &c.look, 0.0, false, &[], 0.0, view, tex)
     }
 }
 
@@ -1462,10 +1643,27 @@ pub struct Effects {
     /// (document, revision, part count) they were found for.
     glass_parts: Vec<usize>,
     glass_key: Option<(u64, u64, usize)>,
+    /// The last frame's geometry for the GPU, and whether `drawn` has not
+    /// handed it out yet.
+    out: FxFrame,
+    fresh: bool,
+    /// Where each effect is, and per instance the effects whose pose reads
+    /// it (dropped when the journal marks it).
+    poses: HashMap<Ref, Pose>,
+    pose_deps: HashMap<Ref, Vec<Ref>>,
+    /// Beams' kept strips (dropped with their pose).
+    kept: HashMap<Ref, Kept>,
 }
 
 fn is_effect(d: &Document, r: Ref) -> bool {
     d.dom.get_by_ref(r).is_some_and(|i| CLASSES.contains(&i.class.as_str()))
+}
+
+/// RUSTUDIO_FX_LIGHT_CHECK: the CPU lights the effects too and the GPU
+/// paints magenta where its light differs (world_gui.rs fx_checked).
+fn light_check() -> bool {
+    static ON: std::sync::OnceLock<bool> = std::sync::OnceLock::new();
+    *ON.get_or_init(|| std::env::var_os("RUSTUDIO_FX_LIGHT_CHECK").is_some())
 }
 
 /// What a frame needs from the viewport.
@@ -1530,9 +1728,94 @@ impl Effects {
         out
     }
 
+    /// This frame's effects for the world GUI pass (once per `frame`).
+    pub fn drawn(&mut self) -> Option<&FxFrame> {
+        std::mem::take(&mut self.fresh).then_some(&self.out)
+    }
+
     /// No effects under Workspace (as of the last frame).
     pub fn is_empty(&self) -> bool {
         self.list.is_empty()
+    }
+
+    /// `r` changed: the poses of the effects that read it (and its own)
+    /// are read again.
+    fn unpose(&mut self, r: Ref) {
+        self.poses.remove(&r);
+        self.kept.remove(&r);
+        if let Some(list) = self.pose_deps.remove(&r) {
+            for e in list {
+                self.poses.remove(&e);
+                self.kept.remove(&e);
+            }
+        }
+    }
+
+    /// Effect `r`'s pose, read from the document when not kept.
+    fn pose(poses: &mut HashMap<Ref, Pose>, pose_deps: &mut HashMap<Ref, Vec<Ref>>, d: &Document, r: Ref, cfg: &Cfg) -> Pose {
+        if let Some(p) = poses.get(&r) {
+            if pose_check() {
+                // (RUSTUDIO_FX_POSE_CHECK: the kept pose against a fresh read)
+                let kept = *p;
+                poses.remove(&r);
+                let fresh = Self::pose(poses, pose_deps, d, r, cfg);
+                if !kept.same(&fresh) {
+                    let name = d.dom.get_by_ref(r).map(|i| i.name.clone()).unwrap_or_default();
+                    eprintln!("[fx pose check] {name} {r:?} kept a stale pose");
+                }
+                return fresh;
+            }
+            return *p;
+        }
+        let mut deps = Vec::new();
+        let pose = match cfg {
+            Cfg::Beam(c) => {
+                let mut end = |a: Option<Ref>| {
+                    let a = a?;
+                    chain_of(d, a, &mut deps);
+                    attachment_world(d, a)
+                };
+                Pose::Ends(end(c.a0), end(c.a1))
+            }
+            Cfg::Trail(c) => {
+                let mut end = |a: Option<Ref>| {
+                    let a = a?;
+                    chain_of(d, a, &mut deps);
+                    attachment_world(d, a)
+                };
+                Pose::Ends(end(c.a0), end(c.a1))
+            }
+            Cfg::Emitter(c) => {
+                // (an anchored host's velocity is its set one)
+                let body = match c.host {
+                    Host::Part(p) => {
+                        deps.push(p);
+                        Some(p)
+                    }
+                    Host::Attachment(a) => {
+                        chain_of(d, a, &mut deps);
+                        d.dom.get_by_ref(a).map(|i| i.parent())
+                    }
+                    Host::None => None,
+                };
+                if let Some(b) = body {
+                    deps.push(b);
+                }
+                let moving = body
+                    .filter(|&p| flag(d, p, "Anchored", false))
+                    .map(|p| vec3_of(d.prop(p, "AssemblyLinearVelocity")).unwrap_or(Vec3::ZERO));
+                Pose::Host(host_xform(d, c.host), moving)
+            }
+            Cfg::Constraint(_) => Pose::Ends(None, None),
+        };
+        for dep in deps {
+            let list = pose_deps.entry(dep).or_default();
+            if !list.contains(&r) {
+                list.push(r);
+            }
+        }
+        poses.insert(r, pose);
+        pose
     }
 
     fn refresh(&mut self, d: &mut Document) {
@@ -1544,7 +1827,9 @@ impl Effects {
                 for m in marks {
                     match m {
                         doc::Mark::Tree(t) => {
+                            self.unpose(t);
                             for r in d.subtree(t) {
+                                self.unpose(r);
                                 let keep = is_effect(d, r) && ws.is_some_and(|w| d.is_ancestor(w, r));
                                 self.cfg.remove(&r);
                                 if keep && self.set.insert(r) {
@@ -1555,6 +1840,7 @@ impl Effects {
                             }
                         }
                         doc::Mark::Prop(r, _) => {
+                            self.unpose(r);
                             if self.set.contains(&r) {
                                 self.cfg.remove(&r);
                             }
@@ -1563,6 +1849,7 @@ impl Effects {
                 }
                 if removed {
                     let set = &self.set;
+                    self.kept.retain(|r, _| set.contains(r));
                     self.list.retain(|r| set.contains(r));
                     self.emitters.retain(|r, _| set.contains(r));
                     self.trails.retain(|r, _| set.contains(r));
@@ -1582,13 +1869,17 @@ impl Effects {
         };
         self.set = self.list.iter().copied().collect();
         self.cfg.clear();
+        self.poses.clear();
+        self.pose_deps.clear();
+        self.kept.clear();
         self.emitters.clear();
         self.trails.clear();
     }
 
-    /// Steps every effect by `dt` and appends its triangles to `out`, far
-    /// to near. True while something is moving (keep repainting).
-    pub fn frame(&mut self, f: FrameIn<'_>, out: &mut Vec<GuiBatch>) -> bool {
+    /// Steps every effect by `dt` and lays out its geometry for the GPU
+    /// (`drawn`), far to near. True while something is moving (keep
+    /// repainting).
+    pub fn frame(&mut self, f: FrameIn<'_>) -> bool {
         let _p = crate::bench::scope("fx");
         self.refresh(f.doc);
         let d: &Document = f.doc;
@@ -1625,6 +1916,7 @@ impl Effects {
                     }
                     Req::Offset(o) => {
                         self.beam_phase.insert(*r, (*o, now));
+                        self.kept.remove(r);
                     }
                 }
                 false
@@ -1641,12 +1933,17 @@ impl Effects {
             up: cam.up(),
             forward: cam.forward(),
             px_per_stud: f.rect.height() / (2.0 * (cam.fov_deg.to_radians() * 0.5).tan()),
+            check: light_check(),
+            glass_idx: std::cell::RefCell::new(std::mem::take(&mut self.out.glass_idx)),
         };
+        view.glass_idx.borrow_mut().clear();
 
         let wind = d.workspace().and_then(|w| vec3_of(d.prop(w, "GlobalWind"))).unwrap_or(Vec3::ZERO);
         let mut draws: Vec<Draw> = Vec::new();
         let mut live = false;
         let mut n_particles = 0usize;
+        let (mut t_sim, mut t_strip) = (0.0f64, 0.0f64);
+        let (mut n_beams, mut n_kept) = (0u64, 0u64);
         // Emitters nearest first get the particle budget.
         let mut emitters: Vec<(f32, Ref, Xform, Vec3)> = Vec::new();
         for &r in &self.list {
@@ -1661,6 +1958,7 @@ impl Effects {
                     _ => Cfg::Trail(Box::new(trail_cfg(d, r))),
                 }
             });
+            let pose = Self::pose(&mut self.poses, &mut self.pose_deps, d, r, cfg);
             match cfg {
                 Cfg::Constraint(r) => {
                     if let Some(dr) = constraints::draw(d, *r, &view) {
@@ -1668,7 +1966,7 @@ impl Effects {
                     }
                 }
                 Cfg::Emitter(c) => {
-                    let Some((xf, size)) = host_xform(d, c.host) else { continue };
+                    let Pose::Host(Some((xf, size)), moving) = pose else { continue };
                     let dist = (xf.pos - view.pos).length() - size.length() * 0.5;
                     if dist > mech::FX_MAX_DIST {
                         // (out of range: nothing kept, as if not streamed in)
@@ -1678,17 +1976,10 @@ impl Effects {
                         }
                         continue;
                     }
-                    // (an anchored host's velocity is its set one)
-                    let body = match c.host {
-                        Host::Part(p) => Some(p),
-                        Host::Attachment(a) => d.dom.get_by_ref(a).map(|i| i.parent()),
-                        Host::None => None,
-                    };
-                    let moving = body.filter(|&p| flag(d, p, "Anchored", false)).map(|p| {
-                        vec3_of(d.prop(p, "AssemblyLinearVelocity")).unwrap_or(Vec3::ZERO)
-                    });
                     let st = self.emitters.entry(r).or_default();
+                    let t0 = std::time::Instant::now();
                     st.step(c, r, &xf, size, dt, emits.remove(&r).unwrap_or(0), moving, wind);
+                    t_sim += t0.elapsed().as_secs_f64();
                     if !st.particles.is_empty() {
                         live = true;
                         emitters.push((dist, r, xf, size));
@@ -1702,17 +1993,58 @@ impl Effects {
                     if c.tex_speed != 0.0 {
                         live = true;
                     }
-                    if let Some(dr) = beam_draw(c, d, &view, now, tex, self.beam_phase.get(&r).copied()) {
+                    let t0 = std::time::Instant::now();
+                    let Pose::Ends(x0, x1) = pose else { continue };
+                    // (kept while nothing it reads changes: the light, the
+                    // glass, FaceCamera's side and the scroll are the GPU's)
+                    let keep = !view.check;
+                    n_beams += 1;
+                    if let Some(k) = self.kept.get_mut(&r).filter(|k| keep && k.tex == tex) {
+                        let far = k.frame(&view, beam_scroll(c, now, self.beam_phase.get(&r).copied()));
+                        n_kept += 1;
+                        if pose_check() {
+                            // (the kept strip against a fresh one, glass aside)
+                            let fresh = beam_draw(c, (x0, x1), &view, now, tex, self.beam_phase.get(&r).copied());
+                            let same = match fresh.map(|d| d.geom) {
+                                Some(Geom::Strip(v, i)) => {
+                                    i == k.indices
+                                        && v.len() == k.vertices.len()
+                                        && v.iter().zip(&k.vertices).all(|(a, b)| {
+                                            let mut a = *a;
+                                            a.glass = b.glass;
+                                            a.scroll = b.scroll;
+                                            bytemuck::bytes_of(&a) == bytemuck::bytes_of(b)
+                                        })
+                                }
+                                _ => false,
+                            };
+                            if !same {
+                                eprintln!("[fx pose check] beam {r:?} kept a stale strip");
+                            }
+                        }
+                        t_strip += t0.elapsed().as_secs_f64();
+                        if far < mech::FX_MAX_DIST {
+                            draws.push(Draw { dist: far, texture: tex.0, wrap: tex.1, geom: Geom::Kept(r) });
+                        }
+                        continue;
+                    }
+                    let mut dr = beam_draw(c, (x0, x1), &view, now, tex, self.beam_phase.get(&r).copied());
+                    if keep {
+                        if let Some(Draw { geom, .. }) = dr.as_mut() {
+                            if let Geom::Strip(v, i) = std::mem::replace(geom, Geom::Kept(r)) {
+                                self.kept.insert(r, Kept::new(tex, v, i));
+                            }
+                        }
+                    }
+                    t_strip += t0.elapsed().as_secs_f64();
+                    if let Some(dr) = dr {
                         if dr.dist < mech::FX_MAX_DIST {
                             draws.push(dr);
                         }
                     }
                 }
                 Cfg::Trail(c) => {
-                    let (Some(a0), Some(a1)) = (c.a0, c.a1) else { continue };
-                    let (Some(x0), Some(x1)) = (attachment_world(d, a0), attachment_world(d, a1)) else {
-                        continue;
-                    };
+                    let Pose::Ends(Some(x0), Some(x1)) = pose else { continue };
                     let st = self.trails.entry(r).or_default();
                     st.step(c, x0.pos, x1.pos, now);
                     if st.points.len() < 2 && !c.enabled {
@@ -1730,6 +2062,10 @@ impl Effects {
                 }
             }
         }
+        crate::bench::add("fx_sim", t_sim * 1e3, 1);
+        crate::bench::add("fx_beams", t_strip * 1e3, n_beams);
+        crate::bench::add("fx_beams_kept", 0.0, n_kept);
+        let _pd = crate::bench::scope("fx_pdraw");
         emitters.sort_by(|a, b| a.0.total_cmp(&b.0));
         let mut budget = mech::FX_PARTICLES_MAX;
         for (_, r, xf, _) in emitters {
@@ -1748,11 +2084,39 @@ impl Effects {
             }
         }
         crate::bench::add("fx_particles", 0.0, n_particles as u64);
+        drop(_pd);
+        let _push = crate::bench::scope("fx_push");
         // Far to near, so nearer effects blend over farther ones.
         draws.sort_by(|a, b| b.dist.total_cmp(&a.dist));
+        let out = &mut self.out;
+        out.clear();
+        out.glass_idx = view.glass_idx.take();
+        out.glass.extend(view.glass.iter().map(|g| {
+            let (r, h) = (g.xf.rot, g.half);
+            crate::world_gui::FxGlass {
+                x: [r.x_axis.x, r.x_axis.y, r.x_axis.z, h.x],
+                y: [r.y_axis.x, r.y_axis.y, r.y_axis.z, h.y],
+                z: [r.z_axis.x, r.z_axis.y, r.z_axis.z, h.z],
+                pos: [g.xf.pos.x, g.xf.pos.y, g.xf.pos.z, g.alpha],
+            }
+        }));
+        out.vp = view.vp.to_cols_array_2d();
+        out.cam = [view.pos.x, view.pos.y, view.pos.z, if view.check { 1.0 } else { 0.0 }];
+        out.right = [view.right.x, view.right.y, view.right.z, 0.0];
+        let l = f.light;
+        out.light = [l.ambient, l.outdoor, l.sun, l.env].map(|v| [v.x, v.y, v.z, 0.0]);
         for dr in draws {
-            crate::world_gui::push_wrap(out, dr.texture, dr.wrap, dr.vertices, &dr.indices);
+            match dr.geom {
+                Geom::Strip(v, i) => out.push_strip(dr.texture, dr.wrap, &v, &i),
+                Geom::Particles(p) => out.push_particles(dr.texture, &p),
+                Geom::Kept(r) => {
+                    if let Some(k) = self.kept.get(&r) {
+                        out.push_strip(dr.texture, dr.wrap, &k.vertices, &k.indices);
+                    }
+                }
+            }
         }
+        self.fresh = true;
         live
     }
 }

@@ -1,6 +1,6 @@
 //! IKControl: inverse kinematics on Motor6D chains, run every frame after
-//! the Animator's tracks have written their Transforms (library.luau's
-//! step_tracks calls `__rs_anim_after`). Measured in Studio 0.746 through
+//! the Animator's tracks have written their Transforms (the Animator frame
+//! hook runs them after the tracks, anim.rs `animate`). Measured in Studio 0.746 through
 //! an offline Studio (R15 right arm, ChainRoot RightUpperArm, EndEffector RightHand):
 //!
 //! - The chain is the joints from the ChainRoot's joint down to the

@@ -38,7 +38,7 @@ mod adorn;
 
 /// Where a GuiObject ended up (the values scripts read as AbsolutePosition /
 /// AbsoluteSize / AbsoluteRotation), plus its text's size (TextBounds).
-#[derive(Debug, Clone, Copy, Default)]
+#[derive(Debug, Clone, Copy, Default, PartialEq)]
 pub struct GuiBox {
     pub pos: [f32; 2],
     pub size: [f32; 2],
@@ -173,8 +173,13 @@ pub struct Gui {
     /// ViewportFrame meshes: fit mode + content id → centered triangles.
     vf_meshes: HashMap<String, Option<Arc<Vec<[(Vec3, glam::Vec2, Vec3); 3]>>>>,
     hits: Vec<Hit>,
-    /// Layout of everything drawn last frame.
+    /// Layout of everything drawn last frame. Kept from frame to frame: a
+    /// GUI walked again replaces its own entries (`layout_from`), one no
+    /// longer drawn takes them away; `layout_changed` tells the game.
     pub layout: HashMap<Ref, GuiBox>,
+    layout_from: HashMap<Ref, Vec<Ref>>,
+    layout_roots: Vec<Ref>,
+    layout_changed: bool,
     hovered: HashSet<Ref>,
     pressed: Option<(Ref, u8)>,
     /// The object being dragged with the left button.
@@ -195,11 +200,54 @@ pub struct Gui {
     world_roots_set: HashSet<Ref>,
     /// Handle adornments under Workspace (gui_adorn.rs).
     adorn_roots: HashSet<Ref>,
+    /// Adornments under the LocalPlayer's PlayerGui (`adorn_pg_of`), kept
+    /// from the journal; their tree order once asked for (None: stale).
+    adorn_pg: HashSet<Ref>,
+    adorn_pg_of: Option<Ref>,
+    adorn_pg_order: Option<Vec<Ref>>,
     roots_doc: u64,
     /// face_file per (family, weight, italic), with when it was looked up.
     faces: HashMap<(String, u32, bool), (Option<String>, std::time::Instant)>,
     /// Each GUI root's layout from its last walk (for frames it is skipped).
     root_boxes: HashMap<Ref, Vec<(Ref, GuiBox)>>,
+    /// ScreenGuis drawn as they were last frame (gui_input.rs `RootCache`).
+    cache: HashMap<Ref, input::RootCache>,
+    /// What a cached ScreenGui's walk read → that ScreenGui: instances whose
+    /// properties it read (`cache_owner`) and whose children it listed
+    /// (`cache_kids`); per ScreenGui, both lists, to drop them again. A
+    /// hidden menu's own changes (Place E animates its hidden Index menu every
+    /// frame) touch nothing a walk read, so they leave the cache alone.
+    /// (`cache_owner`: read instance → its GUI and the object whose walk
+    /// read it.)
+    cache_owner: rustc_hash::FxHashMap<Ref, (Ref, Ref, u32)>,
+    /// Bumped per `cache_own`: which walk last read an instance.
+    own_gen: u32,
+    cache_kids: rustc_hash::FxHashMap<Ref, Ref>,
+    cache_owned: HashMap<Ref, (Vec<(Ref, Ref)>, Vec<Ref>)>,
+    /// The current walk's reads (see `cache_owner`): (instance, reader).
+    walk_reads: Vec<(Ref, Ref)>,
+    walk_kids: Vec<Ref>,
+    /// Each drawn GuiObject's output from its last walk (gui_walk.rs
+    /// `Memo`), replayed while its inputs are the same and no mark touched
+    /// it or anything under it: Studio's per-node LayoutDirty /
+    /// ViewportDirty bits.
+    memo: rustc_hash::FxHashMap<Ref, walk::Memo>,
+    memo_frames: u32,
+    /// RUSTUDIO_GUI_CACHE_VERIFY's second walk: no memo is used.
+    memo_off: bool,
+    /// This frame's objects drawn from memos / walked (bench).
+    memo_hits: u64,
+    memo_walks: u64,
+    /// What the cached outputs were drawn with besides the document.
+    cache_with: input::CacheWith,
+    /// Set while walking when something drawn depends on more than the
+    /// document (an image still loading, a caret, particles, the 3D view
+    /// behind a UIBlur…): that GUI is walked again next frame.
+    no_cache: Option<&'static str>,
+    /// RUSTUDIO_GUI_CACHE_WHY: the mark that dropped a kept GUI.
+    cache_why: HashMap<Ref, String>,
+    /// ViewportFrames the current walk drew.
+    walk_vfs: Vec<Ref>,
 }
 
 /// Everything a draw needs from the editor.
@@ -883,11 +931,14 @@ impl Gui {
             }
         };
         let Some(path) = path else {
+            // (looked for again in a second)
+            self.no_cache = Some("font face missing");
             return FontFamily::Proportional;
         };
         if let Some(name) = self.fonts.get(&path) {
             let fam = FontFamily::Name(name.clone().into());
             let ready = ctx.fonts(|f| f.definitions().families.contains_key(&fam));
+            if !ready { self.no_cache = Some("font not ready"); }
             return if ready { fam } else { FontFamily::Proportional };
         }
         if self.fonts_failed.contains(&path) {
@@ -895,7 +946,10 @@ impl Gui {
         }
         let bytes = match store.content(&path, None) {
             Fetch::Ready(b) => b,
-            Fetch::Pending => return FontFamily::Proportional,
+            Fetch::Pending => {
+                self.no_cache = Some("font loading");
+                return FontFamily::Proportional;
+            }
             Fetch::Unavailable(_) => {
                 self.fonts_failed.insert(path);
                 return FontFamily::Proportional;
@@ -926,6 +980,8 @@ impl Gui {
             ));
         }
         self.fonts.insert(path, name);
+        // (the face is used from the next frame)
+        self.no_cache = Some("font added");
         FontFamily::Proportional
     }
 
@@ -972,6 +1028,8 @@ impl Gui {
         id: &str,
     ) -> Option<(egui::TextureId, [usize; 2])> {
         if let Some((base, gen)) = crate::runtime::editable::image_key(id) {
+            // (EditableImage pixels change without a document mark)
+            self.no_cache = Some("editable image");
             if self.editable_gens.get(base).is_some_and(|h| *h >= gen) {
                 if let Some(Img::Ready(h, s)) = self.images.get(base) {
                     return Some((h.id(), *s));
@@ -1005,7 +1063,10 @@ impl Gui {
         }
         let mut bytes = match store.content(id, doc_dir) {
             Fetch::Ready(b) => b,
-            Fetch::Pending => return None,
+            Fetch::Pending => {
+                self.no_cache = Some("image loading");
+                return None;
+            }
             Fetch::Unavailable(_) => {
                 self.images.insert(id.to_string(), Img::Failed);
                 return None;
@@ -1024,7 +1085,10 @@ impl Gui {
             });
             match inner.map(|i| store.content(&i, doc_dir)) {
                 Some(Fetch::Ready(b)) => bytes = b,
-                Some(Fetch::Pending) => return None,
+                Some(Fetch::Pending) => {
+                    self.no_cache = Some("decal image loading");
+                    return None;
+                }
                 _ => {
                     self.images.insert(id.to_string(), Img::Failed);
                     return None;

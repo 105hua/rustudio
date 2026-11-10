@@ -38,6 +38,7 @@ mod query_shapes;
 mod fidelity;
 mod telemetry;
 mod gui;
+mod gui_modal;
 mod gui_viewport;
 mod icons;
 mod live_drafts;
@@ -67,7 +68,9 @@ mod project_sync;
 mod project_values;
 mod properties;
 mod render;
+mod sun_shadow;
 mod replicate;
+mod anim_replicate;
 mod rig;
 mod runtime;
 mod globals_parity;
@@ -123,6 +126,7 @@ usage: rustudio [FILE] [--demo] [--play] [--screenshot OUT.png] [--self-test OUT
   --dump-scripts PLACE DIR  write every script's source under DIR
   --log FILE           with --screenshot: write the Output lines to FILE
   --key NAME@S[:HOLD]  press a key at S seconds (held HOLD seconds)
+  --move X,Y@S         move the pointer to view position X,Y (hover)
   --wheel N@S[:X,Y]    turn the mouse wheel N notches over the 3D view's centre
                        (or at view position X,Y)
   --type TEXT@S        type TEXT at S seconds (into a focused TextBox)
@@ -497,6 +501,20 @@ fn main() -> eframe::Result<()> {
                 match app::HarnessAction::parse(&v, a == "--click") {
                     Some(x) => actions.extend(x),
                     None => eprintln!("{a}: can't read {v:?}"),
+                }
+            }
+            "--move" => {
+                // The pointer to view position X,Y at S (hover, no buttons).
+                let v = args.next().unwrap_or_default();
+                match v.split_once('@').and_then(|(xy, at)| {
+                    let (x, y) = xy.split_once(',')?;
+                    Some((
+                        at.trim().parse::<f32>().ok()?,
+                        app::HarnessAction::PointerAt(x.trim().parse().ok()?, y.trim().parse().ok()?),
+                    ))
+                }) {
+                    Some(x) => actions.push(x),
+                    None => eprintln!("--move: can't read {v:?} (X,Y@SECONDS)"),
                 }
             }
             "--wheel" => {

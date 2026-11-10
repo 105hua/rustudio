@@ -50,6 +50,9 @@ pub struct MenuState {
     pub lua: Vec<String>,
     /// The Volume slider's level before the first change (MasterVolume × 10).
     volume: Option<u32>,
+    /// The view has let go of the cursor for this opening of the menu
+    /// (viewport.rs: free_cursor_for_menu); false again once it closes.
+    pub cursor_freed: bool,
 }
 
 // ---------------------------------------------------------------- theme
@@ -393,6 +396,8 @@ impl Editor {
         let mut asked = Asked::default();
         let mut rects: HashMap<&'static str, Rect> = HashMap::new();
         let interactive = open && k > 0.5;
+        // (the self-test sweeps the pointer over these)
+        rects.insert("container", container);
         if confirm {
             self.menu_confirm(ui, &painter, inner, page, interactive, &mut asked, &mut rects);
         } else {
@@ -403,6 +408,7 @@ impl Editor {
                 Pos2::new(inner.min.x, bar.max.y + 1.0),
                 Vec2::new(inner.width(), page_h - 1.0),
             );
+            rects.insert("page", view);
             self.menu_page(ui, &painter, view, page, interactive, &mut asked, &mut rects);
             let bottom = Rect::from_min_size(
                 Pos2::new(inner.min.x, view.max.y),

@@ -30,13 +30,13 @@ Every number that shapes how the editor feels. The code reads them from `src/mec
 | Turning with the camera | each step the Humanoid sets its "face the camera" flag = AutoRotate && UserGameSettings.RotationType is CameraRelative; the Running state reads it. rustudio faces the camera only then. The turn toward MoveDirection itself sits in split state code the lifter can't follow: rustudio keeps the measured exp(−7 t) |, reader |
 | Default character scripts | a new character's Animate: R6 → avatar/scripts/humanoidAnimatePlayEmote.rbxm; R15 → avatar/scripts/humanoidAnimateR15_DEPRECATED_20260813.rbxm unless the flag picks the Lua / server-authority Animate (off in this build: Studio offline inserted the.rbxm); Health from avatar/scripts/humanoidHealthRegenScript.rbxmx through the content-model loader | |
 | Default player scripts | StarterPlayerScripts' children are compared by name with "PlayerScriptsLoader", "PlayerModule" and "RbxCharacterSounds"; only the missing ones are inserted (a place's own of the same name wins) | |
-| Legacy surfaces | the part shader (glsl3 pack): VARYING1 = (uv.x · 4, uv.y, surface − 1) from the vertex (surface code in NORMAL.w); texel = StudsMapTexture((u, (fract(v) + band) · 0.25)).r; colour × texel × 2, then squared. With the vertex stud coordinates that is 2 studs across and 8 per band. rustudio: the same, red channel only | shaders_glsl3.pack (StudsMapTexture fragment and vertex shaders); texture bound |
+| Legacy surfaces | the part shader: VARYING1 = (uv.x · 4, uv.y, surface − 1) from the vertex (surface code in NORMAL.w); texel = StudsMapTexture((u, (fract(v) + band) · 0.25)).r; colour × texel × 2, then squared. With the vertex stud coordinates that is 2 studs across and 8 per band. rustudio: the same, red channel only | Studio's shaders (StudsMapTexture fragment and vertex shaders); texture bound |
 | Wheel input | no conversion constant for the game's wheel input (120 / 240 next to an int-to-float) was found: the 0.5 per notch stays measured | searched .text for cvtsi2ss + mulss/divss by 120, 240, 1/120, 1/240 |
 | FBX | Studio's only FBX code is the rig / animation importer (ImportFbxRig, ImportFbxAnimation, FbxMemoryAllocator); FBX model uploads are converted by Roblox's servers, not by Studio, so rustudio's import rules come from Place A' records of what its uploads became (FBX section below) | strings… |
 | Mesh collision decomposition | Studio decomposes Default / PreciseConvexDecomposition MeshParts with HACD tuned by fast-ints: HACDConcavityMillionth 10 000 000 over HACDNormalizationDistanceMillionth 1 000 000 000 (concavity 1% of the mesh size), HACDQuantizationDistanceMillionth 100 000, HACDSpatialGridSizeTenths 1000, HACDPointSampleDistApartTenths 300, HACDPreprocessNaiveMultiplierTenth 5, HACDNumPreprocessSteps 4, HACDMaximumQuickhullReprocessAttempts 2. rustudio decomposes with V-HACD at concavity 0.01 | registrations.. |
 | Part material tables | one function builds three tables of 43 entries (0x58 bytes each): PartMaterialInfosPre2022, then — when the bool RenderEnablePartBaseMaterial4K (default 1) is set — the 4K 2022 table, else the plain 2022 table. Each entry: texture pack id string, detail (normal-only) pack id string, average colour 0xAABBGGRR, one 16-bit word. Slot order is the Enum.Material list (Plastic, SmoothPlastic, Snow, Sandstone, Neon, Wood, …, Rubber). Ids and colours in matpack.rs |..; id strings.. |
 | Material colour | the table colour is the material's average: pre-2022 Fabric 0x666869 against its colour map's mean 101, 100, 98; squared, the pre-2022 colours equal the darkening measured on offline Studio's flat materials within 0.013 (CorrodedMetal 0.39 / 0.22 / 0.14 vs 0.38 / 0.22 / 0.14). rustudio draws it when a material's maps aren't loaded | colour map 7547100606 measured; matcal.json |
-| Material texture coordinate | every part shader samples the material maps at TEXCOORD0, the same vertex coordinate the studs use at × 4 with 2-stud stud tiles, i.e. studs ÷ 8: a material repeats every 8 studs (× the pack's tiling). The 2022 shader: albedo = (DiffuseMap × colour)², normal from NormalMap .wy (x, y; z rebuilt), SpecularMap .x metalness and .y roughness (0.089 + 0.911 r) | shaders_glsl3.pack (part vertex shaders: VARYING0 = TEXCOORD0; PBR fragment shaders) |
+| Material texture coordinate | every part shader samples the material maps at TEXCOORD0, the same vertex coordinate the studs use at × 4 with 2-stud stud tiles, i.e. studs ÷ 8: a material repeats every 8 studs (× the pack's tiling). The 2022 shader: albedo = (DiffuseMap × colour)², normal from NormalMap .wy (x, y; z rebuilt), SpecularMap .x metalness and .y roughness (0.089 + 0.911 r) | Studio's shaders (part vertex shaders: VARYING0 = TEXCOORD0; PBR fragment shaders) |
 | WrapLayer.Puffiness / ShrinkFactor | The default puffiness is FInt WrapPuffinessDefaultPercent = 100 (%). rustudio clamps Puffiness the same way (its fitting multiplies the garment's height above the inner cage by it); ShrinkFactor is read but not used | setters, flag name set, |
 | Mesh 7.00 COREMESH v2 | the chunk must hold at least 4 bytes (else "COREMESH chunk too small to hold the compressed mesh data size"); a u32 compressed size follows, which must fit in the rest (else "Compressed mesh data size exceeds COREMESH chunk size"); the Draco stream is decoded into the same 40-byte vertices and 12-byte faces as COREMESH v1 | |
 | Draco attributes |  | |
@@ -330,8 +330,8 @@ by id.
 Every number here was measured in the offline Studio copy of Roblox Studio
 (Technology Future, an 863×675 view from (4, 9, 22) toward (4, 2, 0), FOV 70,
 test places in /tmp/rs-light/places), reading screenshot pixels with
-/tmp/rs-light/sample.py, or read from Studio's own shader pack (glsl3 / Vulkan
-"RBXS" packs in the Studio folder; Globals constant buffer CB0[13..31]:
+/tmp/rs-light/sample.py, or read from a running Studio's Globals constant
+buffer (CB0[13..31]:
 AmbientColor, SkyAmbient, Lamp0Color/Dir, FogParams, FogColor, Exposure,
 LightConfig, SkyGradient/Env scales). "Display" values are 0–255 screen
 levels; "linear" is light before the tone curve.
@@ -1291,8 +1291,8 @@ Place B from an empty cache: images 83 → 354 loaded, meshes 187 → 386; 7 + 7
 
 ### Water (HQ shader)
 
-Read from Studio's `shaders_glsl3.pack` (SmoothWaterFS with GBufferColor /
-GBufferDepth, source 477; SmoothWaterVS, source 473). `water.rs`, `fs_water`.
+As Studio's water shaders (SmoothWaterFS with GBufferColor /
+GBufferDepth; SmoothWaterVS). `water.rs`, `fs_water`.
 
 | What | Studio | rustudio |
 |---|---|---|
@@ -1512,8 +1512,8 @@ free-angle rotation.
 
 ## Round 25: terrain light grid, LOD
 
-Read from Studio's shader pack (`shaders_glsl3.pack`: SmoothCluster VS / FS
-HQ, SmoothWater FS HQ, source 477) and compared with the saved an offline Studio
+As Studio's terrain shaders (SmoothCluster VS / FS
+HQ, SmoothWater FS HQ) and compared with the saved an offline Studio
 captures (`terrain`, `place-b-terrain`, `place-c-terrain`; no new Studio runs).
 
 ### Light grid (skylight)
@@ -1614,7 +1614,7 @@ depth, lights them, and applies the tone curve and fog. Measured in the new
 `effects` place (make_effects_place.py, Studio captured once) and on
 Place B from fixed cameras (`place-b-fx`, place_b_fx.luau).
 
-### Studio's shaders (shaders_glsl3.pack)
+### Studio's shaders
 
 The pack's index (see Round 23) names them: ParticleCustomVS (sources 2593 /
 2594), ParticleCustomFS (74), ParticleLightingVS / FS (76 / 77), TrailVS /
@@ -1756,7 +1756,7 @@ lines were lost on the way, not by an error: fidelity.py now keeps each
 script's answer in studio/luau-results.txt); the fourth kept them and the
 harness scores it. The shots below were read with small scripts.
 
-### Shaders read (shaders_glsl3.pack and the D3D11 / Vulkan packs)
+### Studio's shaders (GLSL3, D3D11 and Vulkan)
 
 The pack's 64-byte source records hold the blob of the *next* record's
 name: the source listed as ParticleLightingFS is a generic VS, and
@@ -1765,7 +1765,7 @@ ParticleLightingVS's is the lighting FS. Read by contents.
 | What | Studio's shader | rustudio |
 |---|---|---|
 | Flipbook blend | ParticleCustomFS: mix(t0.rgb × t0.a, t1.rgb × t1.a, f) and mix(t0.a, t1.a, f); ParticleCustomVS: TEXCOORD7 = (frame, next frame, f), both frames' UVs from the same corner | `GuiVertex::uv2` / `blend`: both frames sampled, egui's premultiplied texels mixed. FlipbookBlendFrames on: Loop / PingPong blend toward the next frame, OneShot toward the next until the last; Random doesn't |
-| Soft particles | Only in the D3D11 and Vulkan packs (the offline Studio's Studio runs D3D11: FFlagDebugGraphicsPreferD3D11). ParticleCustomVS_Soft: VARYING3 = (screen uv, min(w − ZOffset, 500 − fade), 1 / fade), fade = TEXCOORD5.x, the particle's half size. ParticleCustomFS_Soft: only when Orientation is 0 (FacingCamera), alpha × clamp(|depth × 500 − z| / fade); the depth texture holds view depth / 500 | `GuiVertex::soft` (1 / half size, ZOffset) for FacingCamera particles; world_gui.rs reads the scene's depth as view depth (near / reverse-Z depth), capped at 500 |
+| Soft particles | Only in Studio's D3D11 and Vulkan shaders (the offline Studio's Studio runs D3D11: FFlagDebugGraphicsPreferD3D11). ParticleCustomVS_Soft: VARYING3 = (screen uv, min(w − ZOffset, 500 − fade), 1 / fade), fade = TEXCOORD5.x, the particle's half size. ParticleCustomFS_Soft: only when Orientation is 0 (FacingCamera), alpha × clamp(|depth × 500 − z| / fade); the depth texture holds view depth / 500 | `GuiVertex::soft` (1 / half size, ZOffset) for FacingCamera particles; world_gui.rs reads the scene's depth as view depth (near / reverse-Z depth), capped at 500 |
 | Particle light | ParticleLightingFS: min(LightMap × 120 a + Ambient + SkyAmbient × skylight.x, cap) + Lamp0 × skylight.y, at the centre + 6 studs toward the camera (ParticleLightingVS) | `SceneLight::at` per particle, on the CPU, at the same point |
 | Trail light | TrailFSLight: the same at the pixel, Lamp0 × (1 − shadow) × skylight.y | per strip vertex |
 
@@ -2008,7 +2008,7 @@ ColorMap, the look online.
 
 ### Sun highlight and sky reflection (ShadowMap / Future parts)
 
-Studio's ShadowMap / Future part FS (shaders_glsl3.pack) adds to every
+Studio's ShadowMap / Future part FS adds to every
 opaque part, with roughness r = 0.089 + 0.911 × a per-material value:
 
 - the sun's GGX highlight, F · (a + a²) / (d² (3 L·H + 0.5)(0.75 N·H +
@@ -2101,7 +2101,7 @@ and three stacked at 0.86.
 
 | What | Studio (measured) | rustudio before → now | Where |
 |---|---|---|---|
-| N3: the Dome (two shells, 1.7 studs apart) | outer: 352 Bright red SmoothPlastic panes, Transparency 0, **Reflectance 0.2**, on Bright red Marble frames; inner: Lily white SmoothPlastic panes T 0.3, R 0.2 on grey Marble frames (the same in Studio's client and rustudio's, probe_dome.luau). Studio's part shaders: light × mix(albedo, the sky map in the mirror direction (blurred by roughness, tinted by the sky gradient), Reflectance) (shaders_glsl3.pack, e.g. the studs variant: `mix(albedo, PrefilteredEnvTexture(reflect) × mix(CB0[31], CB0[30], …), VARYING7.w)`): the sky in the red reads pink | Reflectance was ignored: opaque red → the same mix, the tint taken as 1 (N3 MAE 14.45 → 10.2). The map is the skybox indoors as well (a first try that went white under a roof lit Place A's chapel: render 81.7 → 77.3) | `fs_part` (Reflectance in the instance's extra.z, + 2 when hovered); `scene.rs` |
+| N3: the Dome (two shells, 1.7 studs apart) | outer: 352 Bright red SmoothPlastic panes, Transparency 0, **Reflectance 0.2**, on Bright red Marble frames; inner: Lily white SmoothPlastic panes T 0.3, R 0.2 on grey Marble frames (the same in Studio's client and rustudio's, probe_dome.luau). Studio's part shaders: light × mix(albedo, the sky map in the mirror direction (blurred by roughness, tinted by the sky gradient), Reflectance) (Studio's part shaders, e.g. the studs variant: `mix(albedo, PrefilteredEnvTexture(reflect) × mix(CB0[31], CB0[30], …), VARYING7.w)`): the sky in the red reads pink | Reflectance was ignored: opaque red → the same mix, the tint taken as 1 (N3 MAE 14.45 → 10.2). The map is the skybox indoors as well (a first try that went white under a roof lit Place A's chapel: render 81.7 → 77.3) | `fs_part` (Reflectance in the instance's extra.z, + 2 when hovered); `scene.rs` |
 | N4: lights through walls | **Shadows on**: Realistic blocks hard (lightwall-real: every wall leaves the floor behind it at the ambient 31, RoomS 31 around, a 0.2-stud wall 30); Soft blocks through its 4-stud voxels: a closed room keeps the light in (floor 3 studs out 49 vs RoomN's 175, its wall 59 vs 186) but light gets round an open wall (floor in front of the 1 / 0.2 / 4-stud walls 180 / 184 / 135 vs 183 with Shadows off). Shadows off goes through everything in both | lights went through everything → a grid of how much of each voxel the built-in parts fill (`lightocc.rs`: 128 × 48 × 128 voxels, 4 studs Soft / 2 Realistic, centred 0.6 half-widths ahead of the camera, snapped to 8 voxels, filled on a worker, rebuilt at most every 0.5 s while parts change); the part and terrain shaders march each Shadows light from a voxel out along the normal to half a voxel short of the light (≤ 24 nearest samples, exp(−20 × studs of solid)); Soft also takes the way 8 studs over the light and the surface. lightwall-soft MAE 10.65 → 9.21, lightwall-real 5.22 → 2.99; N4's blobs are gone (Studio keeps faint ones, +6 levels on its 52). Left out: parts more than half see-through, the lights' own parts, and MeshParts / unions (their box is no guide to their shape: as boxes Place A's chapel went dark, 81.7 → 77.3). Place B Play: `lightocc` 0.01 ms/frame | `lightocc.rs`, `light_occlusion` / `local_lights` in shader.wgsl, `sync_lightocc` in viewport.rs, `mech::LIGHTOCC_*` |
 | Soft lights and Camera.Focus | lightfocus-soft: with the Focus 400 studs away the lights still shine, 1500 away every local light is out; a Scriptable camera whose CFrame is set without a Focus gets Focus = CFrame × 20 studs ahead (place_d-probe and lightfocus' last phase print it each second) | not modelled: rustudio lights all lights in range wherever the Focus is, and keeps an untouched Focus where it was (Place D's spawn). The harness views always have the Focus near the camera in Studio, so nothing in the corpus depends on it yet | probe_focus.luau |
 | See-through Neon | adds a glow over what's behind without hiding it: red stays the floor's 31, green = blue 231 / 114 / 175 at T 0.5 / 0.86 / three stacked 0.86 (Soft and Realistic alike) | alpha-blended (hid the floor, added red) → glow max(4 × colour² − 1, 0), at most 1.2 per channel, × (1 − Transparency), premultiplied blending with cover 0: 200 / 121 / 164; with fog the glow fades instead of turning fog-coloured (Studio's DefaultUnifiedNeonFS covers by 1 − visibility × alpha) | `fs_part`, `mech::NEON_SEE_THROUGH_*`; the see-through pipelines blend premultiplied |
@@ -2754,7 +2754,7 @@ Linear, Cubic with explicit tangent, XYZ/ZYX, fractional Pose.Weight,
 two/three-track rotation mixing, keyframe rotation interpolation, and an
 exact-tick reverse boundary regression. Release build succeeds with existing
 unrelated warnings. movement-r15 smoke reports Animation1 Length 3.766667,
-weight 1. Live live joined read-only using HANDOFF's Round 27 command; the first
+weight 1. Live live joined read-only using the Round 27 command; the first
 run reached Map 1 but a parry3d convex-hull collision worker panicked, the
 character died, and the Animator-waiting probe did not report. A second probe
 uses optional lookups so a missing Animator cannot stall the report. These
@@ -3137,3 +3137,54 @@ Sky-hole display RGB without post effects: (19.15,32.21,32.05) → (35.92,63.68,
 Final release self-test: 62/64, only the baseline perf and fidelity-place_a
 enemy-count failures. The first concurrent run's blank union-density
 capture passed on the isolated rerun.
+
+## Sun shadow cascades (2026-11-09)
+
+The sun's shadow in Realistic (and ShadowMap / Future) is four orthographic
+cascades of EVSM moments in the shadow atlas the local lights share,
+measured against a running Studio (a test place, ShadowSoftness 0.2).
+
+**Cascades**:
+- Cascade i spans view depths `[1e-5, 20, 45, 140, 600][i..i+1]`. Its
+  sphere is centred on the far plane's centre and reaches the farther of
+  the slice's far and near corners: radius R = far × √(tan²x + tan²y) in
+  every case seen.
+- Cascade 0's centre is then `camera + look × (R − blur)`: it starts at the
+  camera and follows it every frame. Cascades 1..3 snap each light-space
+  coordinate of their centre to the nearest multiple of `2R / 8`, so they
+  hold still while the camera moves.
+- `blur = ShadowSoftness × 1.71 + 0.05` studs. The shaders' spheres
+  (centre + radius²) use `R − blur`.
+- Light space: look-at along the light's travel, up +Y, or +Z once
+  |travel.y| ≥ 0.7. The box is R across and `2R + 64` deep, starting 64
+  studs sunward of the sphere (Studio's matrices are 109.43 / 166.22 /
+  382.00 / 1426.87 deep). Casters nearer the sun are pancaked.
+- Tiles: 384 / 768 / 1024 / 2048 texels. So texels are 0.118 / 0.133 /
+  0.31 / 0.67 studs in a 70° view of aspect 1.28. Studio's atlas is
+  4096 × 7680.
+
+**Blur**: level `k = clamp(int(tile × blur / R + 0.5), 1, 24)`; in that
+place: 7 / 6 / 3 / 1. The across pass reads depth, warps `z = 2d − 1` to
+`(e^{5.54z}, e^{2·5.54z}, −e^{−5.54z}, e^{−2·5.54z})` and sums 2k+1 texels
+with near-binomial weights of order 2k; the down pass sums with bilinear tap
+pairs into the atlas tile. This blur of about 0.4 studs is the soft edge of
+Studio's sun shadows.
+
+**Test** (parts and beams): the first cascade whose sphere holds the world
+position (no normal offset), else cascade 3; `world × matrix` gives atlas
+UV and depth; Chebyshev on both warps with minimum variance
+`(5.54 × 0.0075 × e^{±5.54z})²`, cut `(p − 0.2) × 1.25`, the lesser; then
+the mix to the voxel sun over 580..600 studs.
+
+rustudio: `sun_shadow.rs` (cascade maths with a test against the measured
+values, the kernel tables, the depth → across → down passes into a
+3200 × 2048 RGBA16F atlas), `shader.wgsl` `sun_shadow_map` /
+`evsm_visibility`, `world_gui.rs` `beam_light`. Cascade 0 is redrawn every
+frame; 1..3 when they move or the static scene changes, and in turn (every
+2nd / 4th / 8th frame) while parts move.
+
+Not ported / not known: Studio's depth-pass raster bias (none in rustudio);
+its tiled depth cache and scrolling for cascades 1..3 and its update
+divisor, for which rustudio has its own redraw schedule; the atlas format
+(rustudio: RGBA16F). Outside the chosen tile rustudio falls back to the
+voxel sun; Studio reads whatever the atlas holds there.

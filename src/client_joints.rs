@@ -197,6 +197,11 @@ impl ClientJoints {
             let Some(model) = cd.dom.get_by_ref(root).map(|i| i.parent()) else {
                 continue;
             };
+            // (A root left unparented when its character was destroyed:
+            // the rig list is refreshed only every 60 frames.)
+            if cd.dom.get_by_ref(model).is_none() {
+                continue;
+            }
             let Some(at) = cframe(cd, root, "CFrame") else { continue };
             let mut edges: Vec<(Ref, Ref, Xform, Xform)> = Vec::new();
             for i in cd.dom.descendants_of(model) {

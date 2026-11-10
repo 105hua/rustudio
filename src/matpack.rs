@@ -558,7 +558,10 @@ fn build(pack_id: u64, color: u32) -> Result<Maps, String> {
     }
     Ok(Maps {
         pack: pack_id,
-        tiling: if pack.tiling > 0.0 { pack.tiling } else { 1.0 },
+        // Texture-pack <tiling> is a 0..2 layout enum, not a UV scale
+        // (as Studio reads it). In particular legacy Wang packs use 2.
+        // Repeat density comes from uvScale and PartMaterialConsts instead.
+        tiling: 1.0,
         albedo: mip_chain(&albedo, true),
         surface: mip_chain(&surface, false),
         emissive: mip_chain(&emissive, false).into_iter().step_by(4).collect(),
@@ -619,7 +622,7 @@ mod tests {
 
     #[test]
     fn tables_follow_studio() {
-        // Brick (848) in each table, from the exe's table builder.
+        // Brick (848) in each table, as Studio's tables have it.
         assert_eq!(entry(848, false).unwrap().pack, 7546650097);
         assert_eq!(table(true)[11].material, 848);
         assert_eq!(Y2022[11].pack, 9920482992);

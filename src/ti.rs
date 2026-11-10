@@ -33,8 +33,39 @@ fn filled() -> &'static HashMap<&'static str, char> {
     T.get_or_init(|| table(include_str!("../assets/tabler/codepoints-filled.txt")))
 }
 
+/// rustudio's own drawn icons (not glyphs). `rs-model`: three coloured
+/// shapes in a triangle (pink triangle on top, blue circle bottom left,
+/// amber square bottom right), Roblox's colourful Model idea with
+/// rustudio's own shapes.
+const DRAWN: &[&str] = &["rs-model"];
+
+fn paint_model(p: &Painter, r: Rect) {
+    use egui::{pos2, Pos2, Shape, Stroke};
+    let n = r.width().min(r.height());
+    let o = r.center() - egui::vec2(n, n) / 2.0;
+    let pad = n * 0.06;
+    let c = (n - 2.0 * pad) / 2.0;
+    let g = n * 0.10;
+    let h = c - g / 2.0;
+    let (x0, y0) = (o.x + pad, o.y + pad);
+    let (x1, y1) = (x0 + c + g / 2.0, y0 + c + g / 2.0);
+    let cx = o.x + n / 2.0;
+    let rgb = Color32::from_rgb;
+    let tri: Vec<Pos2> = vec![pos2(cx, y0), pos2(cx + h / 2.0, y0 + h), pos2(cx - h / 2.0, y0 + h)];
+    p.add(Shape::convex_polygon(tri, rgb(255, 95, 150), Stroke::NONE));
+    p.circle_filled(pos2(x0 + h / 2.0, y1 + h / 2.0), h / 2.0, rgb(80, 170, 255));
+    p.rect_filled(
+        Rect::from_min_size(pos2(x1, y1), egui::vec2(h, h)),
+        egui::CornerRadius::same((h * 0.22).round() as u8),
+        rgb(255, 184, 60),
+    );
+}
+
 /// Whether the set has an icon of that name (`-filled` suffix: the filled one).
 pub fn has(name: &str) -> bool {
+    if DRAWN.contains(&name) {
+        return true;
+    }
     match name.strip_suffix("-filled") {
         Some(n) => filled().contains_key(n),
         None => outline().contains_key(name),
@@ -55,6 +86,12 @@ pub fn glyph(name: &str) -> Option<(char, FontFamily)> {
 
 /// Paints icon `name` centred in `r`, sized to fit.
 pub fn paint(p: &Painter, r: Rect, name: &str, color: Color32) {
+    if name == "rs-model" {
+        // its own colours, whatever the caller's tint
+        let _ = color;
+        paint_model(p, r);
+        return;
+    }
     let name = if has(name) { name } else { "square" };
     let Some((c, family)) = glyph(name) else {
         return;

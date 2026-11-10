@@ -24,7 +24,7 @@ impl Physics {
         // Drop ropes destroyed or moved out of Workspace since they were seen.
         self.ropes.retain(|&r| {
             let Some(i) = doc.dom.get_by_ref(r) else { return false };
-            if i.class != "RopeConstraint" { return false; }
+            if i.class != "RopeConstraint" && i.class != "RodConstraint" { return false; }
             let mut p = i.parent();
             while let Some(a) = doc.dom.get_by_ref(p) {
                 if p == ws { return true; }
@@ -39,6 +39,13 @@ impl Physics {
             let Some((h0, p0)) = get("Attachment0").and_then(|a| self.rope_endpoint(doc, a)) else { continue; };
             let Some((h1, p1)) = get("Attachment1").and_then(|a| self.rope_endpoint(doc, a)) else { continue; };
             if h0 == h1 { continue; }
+            // A body asleep on its rope has no gravity to hold: leave it
+            // asleep (a taut rope's impulse woke it every step, so nothing
+            // hanging on a rope ever slept).
+            let awake = |h: Option<rp::RigidBodyHandle>| {
+                h.and_then(|h| self.world.bodies.get(h)).is_some_and(|b| b.is_dynamic() && !b.is_sleeping())
+            };
+            if !awake(h0) && !awake(h1) { continue; }
             let delta = p1 - p0;
             let distance = delta.length();
             if distance < 1e-6 { continue; }
@@ -64,6 +71,18 @@ impl Physics {
             separating += gravity_velocity;
             let length = num(doc, r, "Length", 5.0).max(0.0);
             let error = distance - length;
+            // A RodConstraint holds its length both ways (pushes too).
+            if doc.class_of(r).is_some_and(|c| c == "RodConstraint") {
+                let impulse = (separating + 0.2 * error / dt) / inverse_mass;
+                if impulse.is_finite() && impulse != 0.0 {
+                    for (h, p, sign) in [(h0, p0, 1.0), (h1, p1, -1.0)] {
+                        if let Some(b) = h.and_then(|h| self.world.bodies.get_mut(h)) {
+                            b.apply_impulse_at_point(n * (sign * impulse), rv(p), true);
+                        }
+                    }
+                }
+                continue;
+            }
             // A slack rope permits separation until it reaches its limit.
             let restitution = num(doc, r, "Restitution", 0.0).clamp(0.0, 1.0);
             let desired = if error < 0.0 { -error / dt } else { -0.2 * error / dt };

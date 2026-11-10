@@ -53,6 +53,7 @@ fn with<R>(f: impl FnOnce(&mut State) -> R) -> Option<R> {
     let s = g.get_or_insert_with(|| {
         let path = std::env::var_os("RUSTUDIO_GAPS").map(std::path::PathBuf::from);
         ON.store(path.is_some(), std::sync::atomic::Ordering::Relaxed);
+        INIT.store(true, std::sync::atomic::Ordering::Relaxed);
         State {
             on: path.is_some(),
             path,
@@ -62,10 +63,17 @@ fn with<R>(f: impl FnOnce(&mut State) -> R) -> Option<R> {
     Some(f(s))
 }
 
-/// Telemetry is collecting (cheap check for hot paths).
+/// Telemetry is collecting (cheap check for hot paths: once the state
+/// exists, `ON` mirrors it and no lock is taken).
 pub fn on() -> bool {
+    if INIT.load(std::sync::atomic::Ordering::Relaxed) {
+        return ON.load(std::sync::atomic::Ordering::Relaxed);
+    }
     with(|s| s.on).unwrap_or(false)
 }
+
+/// Whether `STATE` has been made (and `ON` mirrors it).
+static INIT: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::new(false);
 
 /// Turns collection on without a file (the coverage probe reads it back).
 pub fn enable() {
@@ -79,7 +87,10 @@ pub fn touch(class: &str, member: &str) {
     if !ON.load(std::sync::atomic::Ordering::Relaxed) {
         // (The first call reads RUSTUDIO_GAPS; after that, off costs one
         // atomic load per member access.)
-        if CHECKED.swap(true, std::sync::atomic::Ordering::Relaxed) || !on() {
+        if CHECKED.load(std::sync::atomic::Ordering::Relaxed)
+            || CHECKED.swap(true, std::sync::atomic::Ordering::Relaxed)
+            || !on()
+        {
             return;
         }
     }

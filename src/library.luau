@@ -103,6 +103,11 @@ local ugs_values = {
 -- before the runtime has a document).
 local user_settings, user_game_settings
 local function make_user_settings()
+    -- Made again if the first one went away (destroyed or collected while
+    -- unparented): UserSettings() always answers a live object.
+    if user_settings ~= nil and not pcall(function() return user_settings.Name end) then
+        user_settings = nil
+    end
     if user_settings == nil then
         user_settings = create("UserSettings")
         user_settings.Name = "GlobalBasicSettings"
@@ -209,51 +214,16 @@ local function ease(alpha, style, direction)
     return 1 - f(1 - alpha) -- Out (the default)
 end
 
-local function lerp(a, b, t)
-    local ta = typeof(a)
-    if ta == "number" and type(b) == "number" then return a + (b - a) * t end
-    if ta == "UDim" then
-        return UDim.new(a.Scale + (b.Scale - a.Scale) * t, a.Offset + (b.Offset - a.Offset) * t)
-    end
-    if ta == "Vector3" or ta == "Vector2" or ta == "CFrame" or ta == "Color3" or ta == "UDim2" then
-        local ok, v = pcall(function() return a:Lerp(b, t) end)
-        if ok then return v end
-        ok, v = pcall(function() return a + (b - a) * t end)
-        if ok then return v end
-    end
-    -- Booleans, enums and anything else switch at the end.
-    if t >= 1 then return b end
-    return a
-end
-
-local tweens = setmetatable({}, { __mode = "k" })
-local function enum_name(v, default)
-    if typeof(v) == "EnumItem" then return v.Name end
-    return default
-end
-
-function M.GetValue(self, alpha, style, direction)
-    return ease(alpha, enum_name(style, "Quad"), enum_name(direction, "Out"))
-end
-
+-- TweenService runs natively (src/domains/anim_tween.rs): Create, Play /
+-- Pause / Cancel, PlaybackState / Instance / TweenInfo, the frame step.
+-- `ease` above stays for pose easing (its Elastic period is 0.3).
+M.GetValue = function(self, alpha, style, direction) return __rs_tween_ease(alpha, style, direction) end
 function M.Create(self, inst, info, goals)
     if typeof(inst) ~= "Instance" then error("TweenService:Create: Unable to cast value to Object", 2) end
     if type(goals) ~= "table" then error("TweenService:Create: property table expected", 2) end
-    local tw = create("Tween")
-    tweens[tw] = { inst = inst, info = info, goals = goals, gen = 0, state = "Begin" }
-    return tw
-end
--- Tween.Instance / Tween.TweenInfo (read-only, from Create) and
--- TweenBase.PlaybackState (Begin, Delayed, Playing, Paused, Completed,
--- Cancelled: where the tween's run is).
-function __rs_tween_get(tw, key)
-    local st = tweens[tw]
-    if key == "PlaybackState" then return Enum.PlaybackState[st and st.state or "Begin"] end
-    if not st then return nil end
-    if key == "Instance" then return st.inst
-    elseif key == "TweenInfo" then return st.info or TweenInfo.new()
-    end
-    return nil
+    -- Frame events (and with them the tween step) go to RunService.
+    game:GetService("RunService")
+    return __rs_tween_create(inst, info, goals)
 end
 
 -- GuiObject:TweenPosition / TweenSize / TweenSizeAndPosition (Roblox docs):
@@ -354,64 +324,6 @@ end
 if not task.synchronize then function task.synchronize() end end
 if not task.desynchronize then function task.desynchronize() end end
 
-local function heartbeat()
-    return game:GetService("RunService").Heartbeat:Wait()
-end
-
-local function run_tween(tw, st)
-    st.gen += 1
-    local gen = st.gen
-    st.state = "Playing"
-    local info = st.info
-    local duration = info and tonumber(info.Time) or 1
-    local style = info and enum_name(info.EasingStyle, "Quad") or "Quad"
-    local dir = info and enum_name(info.EasingDirection, "Out") or "Out"
-    local repeats = info and tonumber(info.RepeatCount) or 0
-    local reverses = info and info.Reverses == true
-    local delay_time = info and tonumber(info.DelayTime) or 0
-    if delay_time > 0 then st.state = "Delayed" end
-    task.spawn(function()
-        if delay_time > 0 then task.wait(delay_time) end
-        if st.gen ~= gen then return end
-        st.state = "Playing"
-        local start = {}
-        for prop in pairs(st.goals) do
-            local ok, v = pcall(function() return st.inst[prop] end)
-            if ok then start[prop] = v end
-        end
-        local function apply(k)
-            for prop, goal in pairs(st.goals) do
-                if start[prop] ~= nil then
-                    pcall(function() st.inst[prop] = lerp(start[prop], goal, k) end)
-                end
-            end
-        end
-        local count = 0
-        while true do
-            for pass = 1, reverses and 2 or 1 do
-                local e = 0
-                if duration <= 0 then
-                    apply(pass == 2 and 0 or 1)
-                else
-                    while e < duration do
-                        local dt = heartbeat()
-                        if st.gen ~= gen then return end
-                        e += dt
-                        local k = ease(e / duration, style, dir)
-                        if pass == 2 then k = 1 - k end
-                        apply(k)
-                    end
-                end
-            end
-            count += 1
-            if repeats >= 0 and count > repeats then break end
-        end
-        if st.gen ~= gen then return end
-        st.state = "Completed"
-        fire(tw, "Completed", Enum.PlaybackState.Completed)
-    end)
-end
-
 ------------------------------------------------------------ AnimationTrack
 -- Tracks play KeyframeSequences (registered with KeyframeSequenceProvider,
 -- or an animation asset: the local asset store, the cache, else public asset
@@ -422,9 +334,6 @@ end
 -- it). Play / Stop / AdjustWeight fade over fadeTime (0.1 s default). A
 -- track whose asset is still downloading has Length 0 and starts once it
 -- arrives; one that can't be loaded stays at Length 0 and moves nothing.
-local tracks = setmetatable({}, { __mode = "k" })
-__rs_tracks = tracks
-local active_tracks = {} -- Animator retains playing and fading tracks, even after Destroy.
 local registered, reg_seq = {}, 0 -- "rbxtemp://kfs/n" → KeyframeSequence
 local sequences = {} -- AnimationId → parsed sequence, or false
 
@@ -448,7 +357,7 @@ function M.RegisterAnimationClip(self, clip)
 end
 M.RegisterActiveKeyframeSequence = M.RegisterKeyframeSequence
 -- The anim domain (src/domains/anim_lib.luau) registers and looks up ids too.
-function __rs_anim_register(id, clip) registered[id] = clip; sequences[id] = nil end
+function __rs_anim_register(id, clip) registered[id] = clip; sequences[id] = nil; __rs_anim_forget(id) end
 function __rs_anim_registered(id) return registered[id] end
 
 -- FloatCurve's version-2 wire records: u16 mode, f32 value/left/right;
@@ -585,78 +494,23 @@ local function load_sequence(id)
     return seq or nil
 end
 
--- Studio 0.746 measurements: only legacy Cubic reverses In / Out.
-local function pose_alpha(a, style, dir)
-    if style == "Constant" then
-        return if dir == "In" then 1 elseif dir == "InOut" and a >= 0.5 then 1 else 0
-    end
-    if style == "Linear" then return a end
-    if style == "Cubic" then
-        dir = if dir == "In" then "Out" elseif dir == "Out" then "In" else dir
-    elseif style == "CubicV2" then style = "Cubic"
-    elseif style == "Elastic" and dir == "InOut" then
-        if a == 0 or a == 1 then return a end
-        local t = a * 2 - 1
-        if t < 0 then return -0.5 * 2 ^ (10 * t) * math.sin((t - 0.1125) * 2 * PI / 0.45) end
-        return 1 + 0.5 * 2 ^ (-10 * t) * math.sin((t - 0.1125) * 2 * PI / 0.45)
-    end
-    return ease(a, style, dir)
-end
-
-local function fade_track(st, target, duration)
-    st.target = target
-    st.fade = math.max(0, duration)
-    st.fade_start = st.weight
-    st.fade_elapsed = 0
-end
-
--- Keyframe pose rotations use normalized linear quaternion interpolation,
--- unlike the spherical interpolation used for the track's residual weight.
-local function pose_lerp(a, b, t)
-    local ax, aa = a:ToAxisAngle()
-    local bx, ba = b:ToAxisAngle()
-    local av, aw = ax * math.sin(aa/2), math.cos(aa/2)
-    local bv, bw = bx * math.sin(ba/2), math.cos(ba/2)
-    if av:Dot(bv) + aw*bw < 0 then bv = -bv; bw = -bw end
-    local v, w = av*(1-t)+bv*t, aw*(1-t)+bw*t
-    local mag = v.Magnitude
-    local rotation = if mag > 1e-8 then CFrame.fromAxisAngle(v/mag, 2*math.atan2(mag,w)) else CFrame.new()
-    return CFrame.new(a.Position:Lerp(b.Position,t)) * rotation
-end
-
--- A joint's pose at time t (between its keyframes): the earlier keyframe's
--- easing carries it to the next.
-local function sample(list, t)
-    if list.curves then
-        local position, rotation = Vector3.zero, CFrame.new()
-        for name, c in list.curves do
-            if c.quat then
-                if name == "Rotation" then rotation = __rs_anim_rotation_value(c.quat, t) or rotation end
-                continue
-            end
-            local a = c.axes
-            local x, y, z = curve_value(a.X or {}, t), curve_value(a.Y or {}, t), curve_value(a.Z or {}, t)
-            if name == "Position" then position = Vector3.new(x, y, z)
-            elseif name == "Rotation" and c.rotation then rotation = CFrame.fromEulerAngles(x, y, z, c.order) end
+-- The track step, poses, blending and events run natively
+-- (src/domains/anim_tracks.rs); it loads sequences through `__rs_anim_load`
+-- and samples CurveAnimation joints through `__rs_anim_sample`.
+__rs_anim_load = load_sequence
+function __rs_anim_sample(list, t)
+    local position, rotation = Vector3.zero, CFrame.new()
+    for name, c in list.curves do
+        if c.quat then
+            if name == "Rotation" then rotation = __rs_anim_rotation_value(c.quat, t) or rotation end
+            continue
         end
-        return CFrame.new(position) * rotation
+        local a = c.axes
+        local x, y, z = curve_value(a.X or {}, t), curve_value(a.Y or {}, t), curve_value(a.Z or {}, t)
+        if name == "Position" then position = Vector3.new(x, y, z)
+        elseif name == "Rotation" and c.rotation then rotation = CFrame.fromEulerAngles(x, y, z, c.order) end
     end
-    local n = #list
-    if n == 0 then return nil end
-    if t <= list[1].t then return list[1].cf end
-    for i = 1, n - 1 do
-        local a, b = list[i], list[i + 1]
-        if t < b.t then
-            if b.t <= a.t then return a.cf end
-            return pose_lerp(a.cf, b.cf, pose_alpha((t - a.t) / (b.t - a.t), a.style, a.dir))
-        end
-    end
-    return list[n].cf
-end
-
-local function rank(priority)
-    if typeof(priority) ~= "EnumItem" or priority.Name == "Core" then return -1 end
-    return priority.Value
+    return CFrame.new(position) * rotation
 end
 
 -- The model a Humanoid / Animator / AnimationController animates.
@@ -664,188 +518,6 @@ local function rig_of(owner)
     local p = owner.Parent
     if owner:IsA("Animator") and p and (p:IsA("Humanoid") or p:IsA("AnimationController")) then p = p.Parent end
     return p
-end
-
-local animated = setmetatable({}, { __mode = "k" }) -- rig → {Part1 name → Motor6D}
-local function motors_of(rig)
-    local m = {}
-    for _, d in rig:GetDescendants() do
-        -- AnimationConstraint: Studio's upgraded avatar joint (anim domain).
-        if (d:IsA("Motor6D") or d:IsA("AnimationConstraint")) and d.Part1 then m[d.Part1.Name] = d end
-    end
-    return m
-end
-
--- Signal delivery is queued by the runtime. Release Animator ownership after
--- Ended handlers have run, allowing a handler to replay the same track.
-local function end_track(track, st)
-    st.ended = true
-    fire(track, "Ended")
-    task.defer(function()
-        task.defer(function()
-            if st.ended and not st.playing then
-                st.active = false
-                active_tracks[track] = nil
-            end
-        end)
-    end)
-end
-
-local driver
-local function step_tracks(dt)
-    local by_rig = {}
-    for track, st in tracks do
-        if st.pending then
-            local seq, still = load_sequence(st.pending)
-            if seq then
-                st.seq = seq
-                if not st.looped_set then st.looped = seq.loop end
-                if not st.priority_set then st.priority = seq.priority end
-            end
-            if seq or not still then st.pending = nil end
-        end
-        if st.active then
-            local seq = st.seq
-            local length = seq and seq.length or 0
-            if length > 0 then
-                local before = st.time
-                local after = before + dt * st.speed
-                local crossed, loops = {}, 0
-                local function events(lo, hi, reverse, include_start)
-                    for j = 1, #seq.frames do
-                        local k = seq.frames[if reverse then #seq.frames - j + 1 else j]
-                        local hit = if reverse then k.t >= lo and (k.t < hi or include_start and k.t == hi)
-                            else (k.t > lo or include_start and k.t == lo) and k.t <= hi
-                        if hit then table.insert(crossed, k) end
-                    end
-                end
-                if st.looped then
-                    st.time = after % length
-                    if st.speed >= 0 then
-                        local lo = before
-                        for _ = 1, math.floor(after / length) do
-                            events(lo, length, false, st.first_step)
-                            st.first_step = true
-                            lo = 0
-                            loops += 1
-                        end
-                        events(lo, st.time, false, st.first_step)
-                    else
-                        local hi = before
-                        for _ = 1, -math.floor(after / length) do
-                            events(0, hi, true, st.first_step or hi == length)
-                            hi = length
-                            loops += 1
-                        end
-                        events(st.time, hi, true, hi == length or st.first_step)
-                    end
-                else
-                    st.time = math.clamp(after, 0, length)
-                    events(math.min(before, st.time), math.max(before, st.time), st.speed < 0, st.first_step)
-                    if st.playing and (after >= length and st.speed > 0 or after <= 0 and st.speed < 0) then
-                        st.playing = false
-                        fade_track(st, 0, st.fade)
-                        fire(track, "Stopped")
-                    end
-                end
-                -- Studio dispatches markers first, then named keyframes, then
-                -- DidLoop; a wrap's terminal and initial keys share the batch.
-                for _, k in crossed do
-                    for _, mk in k.markers do fire(track, "MarkerReached:" .. mk[1], mk[2]) end
-                end
-                for _, k in crossed do
-                    if k.name ~= "Keyframe" then fire(track, "KeyframeReached", k.name) end
-                end
-                for _ = 1, loops do fire(track, "DidLoop") end
-                st.first_step = false
-                -- Linear interpolation over the requested duration, independent of
-                -- the size of the weight change. Unloaded tracks do not advance.
-                st.fade_elapsed += dt
-                local alpha = if st.fade > 0 then math.min(st.fade_elapsed / st.fade, 1) else 1
-                st.weight = st.fade_start + (st.target - st.fade_start) * alpha
-                if st.weight <= 0 and not st.playing and not st.ended then
-                    end_track(track, st)
-                end
-            elseif not st.playing and st.fade <= 0 then
-                -- A failed/unloaded clip with a positive fade never evaluates
-                -- that fade in Studio. Stop(0) still releases it next update.
-                st.weight = 0
-                end_track(track, st)
-            end
-            local rig = st.rig
-            if seq and rig and rig.Parent and st.weight > 0 then
-                by_rig[rig] = by_rig[rig] or {}
-                table.insert(by_rig[rig], st)
-            end
-        end
-    end
-    for rig, list in by_rig do
-        local motors = animated[rig]
-        if not motors then motors = motors_of(rig); animated[rig] = motors end
-        for name, motor in motors do
-            -- This joint's poses by priority, layered from the lowest up.
-            local levels, order = {}, {}
-            for _, st in list do
-                local poses = st.seq.joints[name]
-                if poses then
-                    local r = rank(st.priority)
-                    if not levels[r] then levels[r] = {}; table.insert(order, r) end
-                    table.insert(levels[r], { cf = sample(poses, st.time), w = st.weight })
-                end
-            end
-            table.sort(order, function(a, b) return a > b end)
-            local remaining, used = 1, 0
-            local position, vector, scalar = Vector3.zero, Vector3.zero, 0
-            local reference
-            for _, r in order do
-                local total = 0
-                for _, p in levels[r] do total += p.w end
-                local take = math.min(total, remaining)
-                if take > 0 then
-                    for _, p in levels[r] do
-                        local w = p.w * take / total
-                        local axis, angle = p.cf:ToAxisAngle()
-                        local v, q = axis * math.sin(angle / 2), math.cos(angle / 2)
-                        if not reference then reference = {v, q} end
-                        if reference[1]:Dot(v) + reference[2] * q < 0 then v = -v; q = -q end
-                        position += p.cf.Position * w
-                        vector += v * w
-                        scalar += q * w
-                    end
-                    used += take
-                    remaining -= take
-                end
-            end
-            local norm = math.sqrt(vector:Dot(vector) + scalar * scalar)
-            local rotation = CFrame.new()
-            if norm > 1e-8 then
-                local mag = vector.Magnitude
-                if mag > 1e-8 then
-                    rotation = CFrame.fromAxisAngle(vector / mag, 2 * math.atan2(mag, scalar))
-                end
-            end
-            if motor.Parent then
-                motor.Transform = CFrame.new(position) * CFrame.new():Lerp(rotation, used)
-            end
-        end
-    end
-    -- Rigs whose tracks all faded out go back to their rest pose once.
-    for rig, motors in animated do
-        if not by_rig[rig] then
-            for _, motor in motors do
-                if motor.Parent then motor.Transform = CFrame.new() end
-            end
-            animated[rig] = nil
-        end
-    end
-    -- IKControls solve on top of the tracks' pose (anim domain, anim_ik.rs).
-    if __rs_anim_after then __rs_anim_after(dt) end
-end
--- The anim domain connects this step when IKControls exist before any track.
-function __rs_anim_drive()
-    if not driver then
-        driver = game:GetService("RunService").PreAnimation:Connect(step_tracks)
-    end
 end
 
 -- Humanoid / AnimationController:LoadAnimation go through their Animator,
@@ -865,134 +537,43 @@ function M.LoadAnimation(self, anim)
         error("LoadAnimation requires an Animation object", 2)
     end
     local animator = animator_of(self)
+    -- Frame events (and with them the Animator step) go to RunService.
+    game:GetService("RunService")
     local track = create("AnimationTrack")
     track.Name = anim.Name
-    local id = anim.AnimationId
-    local seq, pending = load_sequence(id)
-    tracks[track] = {
-        anim = anim, owner = animator, rig = rig_of(animator), seq = seq, pending = pending and id or nil,
-        playing = false, active = false, speed = 1, weight = 0, target = 0, fade = 0.1, time = 0,
-        fade_start = 0, fade_elapsed = 0,
-        looped = seq and seq.loop or false, priority = seq and seq.priority or Enum.AnimationPriority.Core,
-    }
-    if not driver then
-        driver = game:GetService("RunService").PreAnimation:Connect(step_tracks)
-    end
+    __rs_track_new(track, anim, animator, rig_of(animator), anim.AnimationId)
     return track
-end
-
--- AnimationTrack properties the engine reads from / writes to the track's state.
-function __rs_track_get(track, key)
-    local st = tracks[track]
-    if not st then return nil end
-    if key == "Length" then return st.seq and st.seq.length or 0
-    elseif key == "TimePosition" then return st.time
-    elseif key == "IsPlaying" then return st.playing
-    elseif key == "Speed" then return st.speed
-    elseif key == "WeightCurrent" then return st.weight
-    elseif key == "WeightTarget" then return st.target
-    elseif key == "Looped" then return st.looped
-    elseif key == "Priority" then return st.priority
-    elseif key == "Animation" then return st.anim
-    end
-    return nil
-end
-function __rs_track_set(track, key, value)
-    local st = tracks[track]
-    if not st then return false end
-    if key == "Looped" then st.looped = value == true; st.looped_set = true
-    elseif key == "Priority" then st.priority = value; st.priority_set = true
-    elseif key == "TimePosition" then
-        local length = st.seq and st.seq.length or 0
-        local t = tonumber(value) or 0
-        st.time = if length <= 0 then 0 elseif st.looped then t % length else math.clamp(t, 0, length)
-        st.first_step = false
-    else return false end
-    return true
 end
 
 function M.GetPlayingAnimationTracks(self)
     local owner = if self:IsA("Animator") then self else self:FindFirstChildOfClass("Animator")
-    local out = {}
-    for track, st in pairs(tracks) do
-        if owner and st.owner == owner and st.active then table.insert(out, track) end
-    end
-    return out
+    if not owner then return {} end
+    return __rs_track_playing(owner)
 end
 
 -- Play / Pause / Cancel / Stop are shared by Tweens and AnimationTracks.
 function M.Play(self, fade, weight, speed)
-    local tw = tweens[self]
-    if tw then run_tween(self, tw); return end
-    local tr = tracks[self]
-    if tr then
-        if not tr.playing then tr.time = 0 end
-        tr.playing = true
-        tr.ended = false
-        tr.first_step = true
-        fade_track(tr, tonumber(weight) or 1, tonumber(fade) or 0.1)
-        if not tr.active then
-            local count = 0
-            for t in active_tracks do if tracks[t].owner == tr.owner then count += 1 end end
-            -- Studio's insertion checks count > the configured limit (257 slots).
-            if count > 256 then
-                warn(string.format("Failed to play animation: %s. AnimationTrack limit of 256 tracks exceeded for '%s', new animations will not be played.", tr.anim.AnimationId, tr.rig and tr.rig.Name or ""))
-                return
-            end
-            tr.active = true
-            active_tracks[self] = true
-        end
-        tr.speed = tonumber(speed) or 1
-        -- AnimationPlayed fires on the Animator and on its Humanoid /
-        -- AnimationController.
-        if tr.owner and tr.owner.Parent then
-            pcall(fire, tr.owner, "AnimationPlayed", self)
-            pcall(fire, tr.owner.Parent, "AnimationPlayed", self)
-        end
+    if __rs_tween_play(self) then return end
+    local ok, anim, rig = __rs_track_play(self, tonumber(fade), tonumber(weight), tonumber(speed))
+    if not ok then
+        warn(string.format("Failed to play animation: %s. AnimationTrack limit of 256 tracks exceeded for '%s', new animations will not be played.", anim.AnimationId, rig and rig.Name or ""))
     end
 end
 
-function M.Pause(self)
-    local tw = tweens[self]
-    if tw then tw.gen += 1; tw.state = "Paused" end
-end
+function M.Pause(self) __rs_tween_pause(self) end
 
-function M.Cancel(self)
-    local tw = tweens[self]
-    if tw then
-        tw.gen += 1
-        tw.state = "Cancelled"
-        fire(self, "Completed", Enum.PlaybackState.Cancelled)
-    end
-end
+function M.Cancel(self) __rs_tween_cancel(self) end
 
-function M.Stop(self, fade)
-    local tr = tracks[self]
-    if tr and tr.playing then
-        tr.playing = false
-        fade_track(tr, 0, tonumber(fade) or 0.1)
-        fire(self, "Stopped")
-    end
-end
+function M.Stop(self, fade) __rs_track_stop(self, tonumber(fade)) end
 
-function M.AdjustSpeed(self, speed)
-    local tr = tracks[self]
-    if tr then tr.speed = tonumber(speed) or 1 end
-end
-function M.AdjustWeight(self, weight, fade)
-    local tr = tracks[self]
-    if tr then
-        fade_track(tr, tonumber(weight) or 1, tonumber(fade) or 0.1)
-    end
-end
+function M.AdjustSpeed(self, speed) __rs_track_speed(self, tonumber(speed)) end
+function M.AdjustWeight(self, weight, fade) __rs_track_weight(self, tonumber(weight), tonumber(fade)) end
 function M.GetMarkerReachedSignal(self, name)
     return __rs_new_signal(self, "MarkerReached:" .. tostring(name))
 end
 function M.GetTimeOfKeyframe(self, name)
-    local st = tracks[self]
-    for _, k in st and st.seq and st.seq.frames or {} do
-        if k.name == name then return k.t end
-    end
+    local t = __rs_track_keyframe_time(self, tostring(name))
+    if t then return t end
     error("GetTimeOfKeyframe: no keyframe named " .. tostring(name), 2)
 end
 

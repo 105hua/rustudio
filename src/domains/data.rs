@@ -161,9 +161,36 @@ pub fn newindex(_: &Lua, _: Ref, _: &str, _: &str, _: &Value) -> mlua::Result<bo
 pub fn write_acts(_: &str, _: &str) -> bool {
     false
 }
+/// Universe of the place being played (0 for a local file), set by Play
+/// before its runtimes install this domain.
+pub static PLAY_UNIVERSE: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(0);
+/// A scratch experience of your own where Play may write cloud data:
+/// `RUSTUDIO_SCRATCH_UNIVERSE=<universe id>` (unset or 0: none).
+pub fn scratch_universe() -> u64 {
+    std::env::var("RUSTUDIO_SCRATCH_UNIVERSE")
+        .ok()
+        .and_then(|v| v.trim().parse().ok())
+        .unwrap_or(0)
+}
+
+/// Whether this Play keeps DataStores, MemoryStores and Messaging in memory.
+/// A published place other than the scratch experience does, unless the
+/// user opts in with RUSTUDIO_LIVE_DATA=1: a Play of a live game must never
+/// read-modify-write real players' saves (the local player's own save
+/// included) or publish to its live servers.
+pub fn local_mode_for(universe: u64) -> bool {
+    if std::env::var("RUSTUDIO_LOCAL_DATASTORE").as_deref() == Ok("1") {
+        return true;
+    }
+    let scratch = scratch_universe();
+    universe != 0
+        && (scratch == 0 || universe != scratch)
+        && std::env::var("RUSTUDIO_LIVE_DATA").as_deref() != Ok("1")
+}
+
 pub fn install(lua: &Lua) -> mlua::Result<()> {
-    let local_mode = std::env::var("RUSTUDIO_LOCAL_DATASTORE").as_deref() == Ok("1");
-    install_mode(lua, local_mode)
+    let universe = PLAY_UNIVERSE.load(std::sync::atomic::Ordering::Relaxed);
+    install_mode(lua, local_mode_for(universe))
 }
 fn install_mode(lua: &Lua, local_mode: bool) -> mlua::Result<()> {
     lua.set_app_data(State::default());

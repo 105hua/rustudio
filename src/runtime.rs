@@ -43,6 +43,8 @@ pub mod editable;
 pub mod domains;
 #[path = "security.rs"]
 pub mod security;
+#[path = "runtime_routes.rs"]
+mod routes;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum RunMode {
@@ -77,6 +79,9 @@ pub enum RepOp {
     /// Physics moved a part: its CFrame is copied without Changed events
     /// (Roblox doesn't fire Changed for physics movement).
     Moved(Ref),
+    /// Instance:Destroy() of the instance and its subtree, sent once (Studio's
+    /// DestroyInstance item); the client destroys its copy.
+    Destroy(Ref),
 }
 
 /// A Lua value that can cross between the server and client VMs (functions
@@ -183,7 +188,10 @@ pub struct World {
     pub avatar: Option<crate::avatar::AvatarLook>,
     pub avatar_descs: HashSet<Ref>,
     /// Instances with at least one connection or waiter (fires on others are dropped early).
-    pub listening: HashSet<Ref>,
+    pub listening: rustc_hash::FxHashSet<Ref>,
+    /// Native class filters on game.DescendantAdded / DescendantRemoving
+    /// for engine domains (`class_signals`): (classes, class -> matches).
+    pub class_watches: Vec<(Vec<String>, HashMap<rbx_dom_weak::Ustr, bool>)>,
     /// Engine requests scripts made this frame, handled by the play session.
     pub requests: ext::Requests,
     /// What the play session tells scripts about the mouse, sounds, etc.
@@ -206,6 +214,15 @@ pub struct World {
     /// with.
     pub abs_seen: HashMap<Ref, ext::AbsBox>,
     pub viewport_seen: Option<[f32; 2]>,
+    /// Instances that joined `listening` since `ext::fire_layout_changes`
+    /// last ran, and the listened GUI objects that were drawn then.
+    pub listen_new: Vec<Ref>,
+    pub abs_laid: HashSet<Ref>,
+    /// The collector (`Runtime::collect`): how many unparented instances
+    /// were left watched after its last pass, and whether that pass saw new
+    /// ones or freed any (`Runtime::gc_step` works faster then).
+    pub orphans_seen: usize,
+    pub gc_busy: bool,
 }
 
 impl World {
@@ -323,6 +340,10 @@ struct Signals {
     conns: HashMap<(Ref, String), Vec<Conn>>,
     waiters: HashMap<(Ref, String), Vec<(u64, Thread)>>,
     next_id: u64,
+    /// The signal names each instance has (or had) connections under in
+    /// `conns`, so Destroy drops an instance's connections without a walk
+    /// of every connection there is.
+    conn_names: HashMap<Ref, Vec<String>>,
 }
 
 #[derive(Default)]
@@ -331,7 +352,7 @@ struct Cache {
     /// table with weak values, so an instance's Lua value is collected once
     /// no script can reach it (a strong map here kept every instance ever
     /// touched alive: the power-up weapon's tracers grew RSS without bound).
-    slots: HashMap<Ref, i64>,
+    slots: rustc_hash::FxHashMap<Ref, i64>,
     next_slot: i64,
     weak: Option<Table>,
     /// Instances given a new Lua value since the last `collect`.
@@ -433,7 +454,7 @@ mod interrupt_watchdog {
 
 // ------------------------------------------------------------- utilities
 
-fn world(lua: &Lua) -> mlua::Result<mlua::AppDataRefMut<'_, World>> {
+pub(crate) fn world(lua: &Lua) -> mlua::Result<mlua::AppDataRefMut<'_, World>> {
     lua.app_data_mut::<World>()
         .ok_or_else(|| rt_err("the play session has ended"))
 }
@@ -484,9 +505,14 @@ impl World {
             groups: crate::collision_groups::shared(),
             avatar: None,
             avatar_descs: HashSet::new(),
-            listening: HashSet::new(),
+            listening: Default::default(),
+            class_watches: Vec::new(),
             abs_seen: HashMap::new(),
             viewport_seen: None,
+            listen_new: Vec::new(),
+            abs_laid: HashSet::new(),
+            orphans_seen: 0,
+            gc_busy: true,
             requests: Default::default(),
             input: Default::default(),
             started: HashSet::new(),
@@ -529,6 +555,17 @@ impl World {
             self.events.push((r, name.to_string(), args, self.conn_seq, self.defer_depth));
         } else {
             self.now.push((r, name.to_string(), args, self.conn_seq));
+        }
+    }
+
+    /// Queues a native frame hook right behind the frame event `after`, in
+    /// the same queue (immediate or deferred) whether or not anything
+    /// listens; `signal_timing` runs it at that point.
+    pub fn queue_hook(&mut self, r: Ref, after: &str, hook: &str, dt: Value) {
+        if self.signal_mode.defers(after, &[]) {
+            self.events.push((r, hook.to_string(), vec![dt], self.conn_seq, self.defer_depth));
+        } else {
+            self.now.push((r, hook.to_string(), vec![dt], self.conn_seq));
         }
     }
 
@@ -1198,6 +1235,7 @@ fn method_fn(lua: &Lua, name: &'static str, base: &'static str) -> mlua::Result<
         return Ok(f);
     }
     let raw = lua.create_function(move |lua, args: MultiValue| {
+        crate::bench::site(lua, "call", name);
         let r = crate::bench::api_timed("call", name, || {
             checked(lua, member_self(lua, &args, base, name).and_then(|_| call_method(lua, name, args)))
         });
@@ -1257,24 +1295,32 @@ fn not_member(lua: &Lua, r: Ref, class: &str, key: &str) -> mlua::Error {
 /// method's results, or the Lua function to call for a Lua-written one.
 /// Only methods are callable: properties, events, children and unknown
 /// names are `not a valid member`.
-fn namecall(lua: &Lua, name: &str, args: MultiValue) -> mlua::Result<MultiValue> {
+fn namecall(lua: &Lua, name: &str, atom: i32, args: MultiValue) -> mlua::Result<MultiValue> {
     let this = opt_inst(&arg(&args, 0)).ok_or_else(|| rt_err("Instance expected"))?;
     let class_u = inst_class(lua, this)?.0;
     crate::telemetry::touch(class_u.as_str(), name);
+    let rt = routes::route(class_u, name, atom);
     // Capability gates (security.rs) answer for restricted members first,
     // as they do for reads.
-    match security::index_hook(lua, this, name) {
-        Ok(None) => {}
-        Ok(Some(Value::Function(f))) => return Ok(MultiValue::from_iter([Value::Function(f)])),
-        Ok(Some(_)) => return checked(lua, Err(not_member(lua, this, class_u.as_str(), name))),
-        Err(e) => return checked(lua, Err(e)),
+    if rt.restricted {
+        match security::index_hook(lua, this, name) {
+            Ok(None) => {}
+            Ok(Some(Value::Function(f))) => return Ok(MultiValue::from_iter([Value::Function(f)])),
+            Ok(Some(_)) => return checked(lua, Err(not_member(lua, this, class_u.as_str(), name))),
+            Err(e) => return checked(lua, Err(e)),
+        }
     }
-    match disp(class_u, name) {
+    match rt.disp {
         Disp::Method(m, _) => {
-            if let Some(f) = cache(lua)?.overrides.get(m) {
-                return Ok(MultiValue::from_iter([Value::Function(f.clone())]));
+            if rt.overridable {
+                if let Some(f) = cache(lua)?.overrides.get(m) {
+                    return Ok(MultiValue::from_iter([Value::Function(f.clone())]));
+                }
             }
-            let r = crate::bench::api_timed("call", m, || checked(lua, call_method(lua, m, args)));
+            crate::bench::site(lua, "call", m);
+            let r = crate::bench::api_timed("call", m, || {
+                checked(lua, call_method_routed(lua, m, args, this, class_u, &rt.method))
+            });
             signal_timing::flush_immediate(lua);
             r
         }
@@ -1327,6 +1373,15 @@ fn raw_error_message(e: &mlua::Error) -> String {
 }
 
 /// `(true, results...)` or `(false, message)` for the Lua shims to rethrow.
+/// `checked` for one result, without building a MultiValue (the bridge's
+/// hot paths: Instance __index / __newindex).
+fn checked1(lua: &Lua, r: mlua::Result<Value>) -> mlua::Result<(bool, Value)> {
+    Ok(match r {
+        Ok(v) => (true, v),
+        Err(e) => (false, Value::String(lua.create_string(raw_error_message(&e))?)),
+    })
+}
+
 fn checked(lua: &Lua, r: mlua::Result<MultiValue>) -> mlua::Result<MultiValue> {
     let mut out = MultiValue::new();
     match r {
@@ -1340,6 +1395,48 @@ fn checked(lua: &Lua, r: mlua::Result<MultiValue>) -> mlua::Result<MultiValue> {
         }
     }
     Ok(out)
+}
+
+/// For engine domains that keep up with a few classes in the DataModel:
+/// signals on `game` that fire like DescendantAdded / DescendantRemoving,
+/// but only for instances that are one of `classes` (IsA), decided here
+/// instead of in a Lua handler per instance (a 20k-part model arriving ran
+/// four such handlers 20k times each: most of a client bulk reparent).
+pub fn class_signals(lua: &Lua, classes: Vec<String>) -> mlua::Result<(Value, Value)> {
+    let (root, id) = {
+        let mut w = world(lua)?;
+        w.class_watches.push((classes, HashMap::new()));
+        (w.d().dom.root_ref(), w.class_watches.len() - 1)
+    };
+    Ok((
+        signal(lua, root, &format!("ClassAdded:{id}"))?,
+        signal(lua, root, &format!("ClassRemoving:{id}"))?,
+    ))
+}
+
+/// Whether `r` has a connection or a waiter on `event` (true when the
+/// signal tables are busy: then the fire is made and sorted out later).
+fn hears(lua: &Lua, r: Ref, event: &str) -> bool {
+    let Ok(Some(s)) = lua.try_app_data_ref::<Signals>() else {
+        return true;
+    };
+    let key = (r, event.to_string());
+    s.conns.get(&key).is_some_and(|v| !v.is_empty()) || s.waiters.get(&key).is_some_and(|v| !v.is_empty())
+}
+
+/// The class watches (`class_signals`) that instance `d` is one of.
+fn class_watch_hits(w: &mut World, d: Ref) -> Vec<usize> {
+    let Some(class) = w.d().class_of(d) else { return Vec::new() };
+    let mut out = Vec::new();
+    for (i, (classes, cache)) in w.class_watches.iter_mut().enumerate() {
+        let hit = *cache
+            .entry(class)
+            .or_insert_with(|| classes.iter().any(|c| doc::is_a(&class, c)));
+        if hit {
+            out.push(i);
+        }
+    }
+    out
 }
 
 fn signal(lua: &Lua, r: Ref, name: &str) -> mlua::Result<Value> {
@@ -1373,25 +1470,318 @@ fn signal(lua: &Lua, r: Ref, name: &str) -> mlua::Result<Value> {
     Ok(Value::UserData(t))
 }
 
+/// `inst.key` from a script (the Instance `__index`): the capability
+/// gates first (security.rs), for members a rule names, then `index`.
+fn index_entry(lua: &Lua, r: Ref, key: &str, atom: i32) -> mlua::Result<Value> {
+    let (class_u, parent) = inst_class(lua, r)?;
+    let rt = routes::route(class_u, key, atom);
+    if rt.restricted {
+        if let Some(v) = security::index_hook(lua, r, key)? {
+            return Ok(v);
+        }
+    }
+    index_routed(lua, r, key, class_u, parent, rt)
+}
+
+/// `index_entry` for the C `__index` (runtime_routes.rs `fast_index`):
+/// a plain member (name, class name, parent, a stored reflected property
+/// no handler computes) is read in one borrow. Also says whether the read
+/// was quiet (no handler ran: no signal flush needed).
+/// A fast read's answer: a value, or an instance (pushed from the
+/// instance cache without an mlua value when it has one).
+pub(crate) enum Fv {
+    V(Value),
+    Inst(Ref),
+    /// A new array of these instances (GetChildren).
+    Insts(Vec<Ref>),
+    /// A string, pushed as is.
+    Str(String),
+    Static(&'static str),
+}
+
+fn index_entry_fast(lua: &Lua, r: Ref, key: &str, atom: i32) -> (mlua::Result<Fv>, bool) {
+    enum Got {
+        Name,
+        Class,
+        Parent(Ref),
+        Stored(Variant, Option<&'static str>),
+        Default(Variant, Option<&'static str>, rbx_dom_weak::Ustr),
+        Full(Ref),
+    }
+    let got = (|| -> mlua::Result<(rbx_dom_weak::Ustr, routes::Route, Got)> {
+        let w = world(lua)?;
+        let i = w
+            .d()
+            .dom
+            .get_by_ref(r)
+            .ok_or_else(|| rt_err("attempt to use an Instance that no longer exists"))?;
+        let class_u = i.class;
+        let rt = routes::route(class_u, key, atom);
+        let got = if rt.child_only {
+            // `inst.Child` (Studio: FindFirstChild after the
+            // member lookup misses): a stored non-reflected property of that
+            // name still wins, as in prop_get_plain; big child lists use
+            // the child index (find_named_child).
+            let stored = rbx_dom_weak::Ustr::from_existing(key).is_some_and(|k| i.properties.contains_key(&k));
+            if stored || i.children().len() >= CHILD_INDEX_MIN {
+                Got::Full(i.parent())
+            } else {
+                let d = w.d();
+                match i.children().iter().copied().find(|c| d.dom.get_by_ref(*c).is_some_and(|c| c.name == key)) {
+                    Some(c) => Got::Parent(c),
+                    None => Got::Full(i.parent()),
+                }
+            }
+        } else if !rt.plain {
+            Got::Full(i.parent())
+        } else {
+            match rt.special {
+                routes::Special::Name => Got::Name,
+                routes::Special::ClassName => Got::Class,
+                routes::Special::Parent => Got::Parent(i.parent()),
+                _ => match rt.prop {
+                    Some(p) => match i.properties.get(&p.canon) {
+                        // An unset object property yields to a same-named
+                        // child (prop_get_plain): the full path.
+                        Some(Variant::Ref(x)) if x.is_none() => Got::Full(i.parent()),
+                        Some(Variant::Ref(x)) => Got::Parent(*x),
+                        Some(v) => Got::Stored(v.clone(), p.enum_name),
+                        // The class default (prop_get_plain's answer when it
+                        // isn't an object property, which may yield to a
+                        // child of the same name).
+                        None => match w.d().prop_key(r, p.canon) {
+                            Some(v) if !matches!(v, Variant::Ref(_)) => Got::Default(v, p.enum_name, p.canon),
+                            _ => Got::Full(i.parent()),
+                        },
+                    },
+                    None => Got::Full(i.parent()),
+                },
+            }
+        };
+        Ok((class_u, rt, got))
+    })();
+    let (class_u, rt, got) = match got {
+        Ok(x) => x,
+        Err(e) => return (Err(e), false),
+    };
+    let quiet = rt.quiet;
+    let v = match got {
+        Got::Full(parent) => {
+            if rt.restricted {
+                match security::index_hook(lua, r, key) {
+                    Ok(Some(v)) => return (Ok(Fv::V(v)), false),
+                    Ok(None) => {}
+                    Err(e) => return (Err(e), false),
+                }
+            }
+            return (index_routed(lua, r, key, class_u, parent, rt).map(Fv::V), quiet);
+        }
+        Got::Name => {
+            crate::telemetry::touch(class_u.as_str(), key);
+            let name = world(lua).map(|w| w.d().dom.get_by_ref(r).map(|i| i.name.clone()).unwrap_or_default());
+            return (name.map(Fv::Str), quiet);
+        }
+        Got::Class => {
+            crate::telemetry::touch(class_u.as_str(), key);
+            return (Ok(Fv::Static(class_u.as_str())), quiet);
+        }
+        Got::Stored(Variant::String(s), _) => {
+            crate::telemetry::touch(class_u.as_str(), key);
+            return (Ok(Fv::Str(s)), quiet);
+        }
+        Got::Parent(p) => {
+            crate::telemetry::touch(class_u.as_str(), key);
+            return (Ok(Fv::Inst(p)), quiet);
+        }
+        Got::Stored(v, en) => {
+            crate::telemetry::touch(class_u.as_str(), key);
+            variant_to_lua(lua, &v, en)
+        }
+        Got::Default(v, en, canon) => {
+            crate::telemetry::touch(class_u.as_str(), key);
+            crate::telemetry::default_read(lua, class_u.as_str(), canon.as_str());
+            variant_to_lua(lua, &v, en)
+        }
+    };
+    (v.map(Fv::V), quiet)
+}
+
+/// The cached userdata of instance `r` (the instance cache's weak table
+/// slot), if it has one and access isn't blocked (else None: `inst_value`).
+pub(crate) fn cached_inst_slot(lua: &Lua, r: Ref) -> Option<i64> {
+    if domains::assets_cloud::scene::access_blocked(lua, r) {
+        return None;
+    }
+    lua.app_data_ref::<Cache>()?.slots.get(&r).copied()
+}
+
+/// An argument of a native method, read off the Lua stack.
+pub(crate) enum NArg<'a> {
+    Nil,
+    Bool(bool),
+    Str(&'a str),
+    Inst(Ref),
+    /// Anything else (the general dispatcher converts it).
+    Other,
+}
+
+/// Studio-style typed thunks for the hottest core methods, called from the
+/// C `__namecall` with their arguments straight off the stack
+/// (runtime_routes.rs `fast_namecall`): only when the method's route shows
+/// the core implementation answers (no domain, no override, no gate) and
+/// the arguments are the plain types it takes; else None, and the general
+/// dispatcher runs. Answers as `call_method` would, and whether it was
+/// quiet (nothing fired).
+pub(crate) fn native_call(lua: &Lua, r: Ref, name: &str, atom: i32, args: &[NArg]) -> Option<mlua::Result<(Fv, bool)>> {
+    let class_u = {
+        let w = world(lua).ok()?;
+        w.d().dom.get_by_ref(r)?.class
+    };
+    let rt = routes::route(class_u, name, atom);
+    let Disp::Method(m, _) = rt.disp else { return None };
+    if rt.restricted || rt.overridable || !rt.method.core || rt.method.domains != 0 {
+        return None;
+    }
+    let class = class_u.as_str();
+    let str1 = || match args.first() {
+        Some(NArg::Str(s)) => Some(*s),
+        _ => None,
+    };
+    let out = match m {
+        "IsA" => {
+            let c = str1()?;
+            Ok((Fv::V(Value::Boolean(doc::is_a(class, c))), true))
+        }
+        "FindFirstChild" => {
+            let n = str1()?;
+            let rec = match args.get(1) {
+                None | Some(NArg::Nil) => false,
+                Some(NArg::Bool(b)) => *b,
+                _ => return None,
+            };
+            let found = if rec {
+                find_child(lua, r, |i| i.name == n, true)
+            } else {
+                find_named_child(lua, r, n)
+            };
+            found.map(|f| (Fv::Inst(f.unwrap_or_else(Ref::none)), true))
+        }
+        "FindFirstChildOfClass" => {
+            let c = str1()?;
+            find_child(lua, r, |i| i.class == c, false).map(|f| (Fv::Inst(f.unwrap_or_else(Ref::none)), true))
+        }
+        "GetAttribute" => {
+            let n = str1()?;
+            static ATTRS: std::sync::LazyLock<rbx_dom_weak::Ustr> = std::sync::LazyLock::new(|| ustr("Attributes"));
+            let v = {
+                let w = world(lua).ok()?;
+                match w.d().dom.get_by_ref(r).and_then(|i| i.properties.get(&*ATTRS)) {
+                    Some(Variant::Attributes(a)) => a.get(n).cloned(),
+                    _ => None,
+                }
+            };
+            match v {
+                Some(v) => variant_to_lua(lua, &v, None).map(|v| (Fv::V(v), true)),
+                None => Ok((Fv::V(Value::Nil), true)),
+            }
+        }
+        "GetChildren" if args.is_empty() || matches!(args, [NArg::Nil]) => {
+            children_of(lua, r).map(|k| (Fv::Insts(k), true))
+        }
+        "IsDescendantOf" => {
+            let other = match args.first() {
+                None | Some(NArg::Nil) => None,
+                Some(NArg::Inst(o)) => Some(*o),
+                _ => return None,
+            };
+            let w = world(lua).ok()?;
+            Ok((Fv::V(Value::Boolean(other.is_some_and(|o| w.d().is_ancestor(o, r)))), true))
+        }
+        "GetService" | "FindService" => {
+            let c = str1()?;
+            if security::service_hidden(lua, c) {
+                Ok((Fv::V(Value::Nil), true))
+            } else {
+                get_service(lua, c, m == "GetService").map(|f| (Fv::Inst(f.unwrap_or_else(Ref::none)), false))
+            }
+        }
+        _ => return None,
+    };
+    crate::telemetry::touch(class, name);
+    Some(out)
+}
+
+/// `inst.Parent = p` from the C `__newindex` when no domain or
+/// runtime_ext takes Parent for the class (else None: the full path):
+/// assigning the parent it has is a no-op, answered in one borrow.
+/// Returns whether the write was quiet (nothing changed or fired).
+fn parent_write(lua: &Lua, r: Ref, key: &str, atom: i32, p: Ref) -> Option<mlua::Result<bool>> {
+    let (class_u, same) = {
+        let w = world(lua).ok()?;
+        let i = w.d().dom.get_by_ref(r)?;
+        (i.class, i.parent() == p)
+    };
+    let rt = routes::route(class_u, key, atom);
+    if !rt.plain_parent_write {
+        return None;
+    }
+    crate::telemetry::touch(class_u.as_str(), key);
+    // Domains whose newindex names Parent (testing's debugger objects) are
+    // asked first, as in `newindex_routed`.
+    if rt.ni_domains != 0 {
+        let class = class_u.as_str();
+        let taken = inst_value(lua, p)
+            .and_then(|v| domains::newindex_masked(lua, r, class, key, &v, rt.ni_domains));
+        match taken {
+            Ok(false) => {}
+            Ok(true) => return Some(Ok(false)),
+            Err(e) => return Some(Err(e)),
+        }
+    }
+    if same {
+        return Some(Ok(true));
+    }
+    Some(set_parent(lua, r, p).map(|_| false))
+}
+
+/// `inst.key = value` from a script (the Instance `__newindex`): the
+/// capability gates for members a rule names, then `newindex`.
+fn newindex_entry(lua: &Lua, r: Ref, key: &str, value: Value, atom: i32) -> mlua::Result<()> {
+    let (class_u, _) = inst_class(lua, r)?;
+    let rt = routes::route(class_u, key, atom);
+    if rt.restricted {
+        security::newindex_hook(lua, r, key)?;
+    }
+    newindex_routed(lua, r, key, value, class_u, rt)
+}
+
 fn index(lua: &Lua, r: Ref, key: &str) -> mlua::Result<Value> {
     let (class_u, parent) = inst_class(lua, r)?;
+    index_routed(lua, r, key, class_u, parent, routes::route(class_u, key, -1))
+}
+
+fn index_routed(
+    lua: &Lua,
+    r: Ref,
+    key: &str,
+    class_u: rbx_dom_weak::Ustr,
+    parent: Ref,
+    rt: routes::Route,
+) -> mlua::Result<Value> {
     let class: &str = class_u.as_str();
     crate::telemetry::touch(class, key);
-    match key {
-        "Name" | "name" => {
+    match rt.special {
+        routes::Special::None => {}
+        routes::Special::Name => {
             let w = world(lua)?;
             let name = w.d().dom.get_by_ref(r).map(|i| i.name.as_str()).unwrap_or("");
             return Ok(Value::String(lua.create_string(name)?));
         }
-        "ClassName" | "className" => return Ok(Value::String(lua.create_string(class)?)),
-        "Parent" | "parent" => return inst_value(lua, parent),
-        // A script's Enabled is the saved Disabled turned round (round 26).
-        "Enabled" if matches!(class, "Script" | "LocalScript") => {
-            return Ok(Value::Boolean(script_enabled_here(lua, r)?))
-        }
-        _ => {}
+        routes::Special::ClassName => return Ok(Value::String(lua.create_string(class)?)),
+        routes::Special::Parent => return inst_value(lua, parent),
+        routes::Special::ScriptEnabled => return Ok(Value::Boolean(script_enabled_here(lua, r)?)),
     }
-    match disp(class_u, key) {
+    match rt.disp {
         // Callbacks can only be set: Studio's __index (Luau bridge,
         //) refuses to read one, set or not.
         Disp::Callback => {
@@ -1407,14 +1797,22 @@ fn index(lua: &Lua, r: Ref, key: &str) -> mlua::Result<Value> {
         }
         Disp::Other => {}
     }
-    let class = class.to_string();
-    if let Some(v) = domains::prop_get(lua, r, &class, key)? {
-        return Ok(v);
+    // Only the handlers that can answer this member (runtime_routes.rs).
+    if rt.domains != 0 || domains::route_check_on() {
+        if let Some(v) = domains::prop_get_masked(lua, r, class, key, rt.domains)? {
+            return Ok(v);
+        }
     }
-    if let Some(v) = ext::prop_get(lua, r, &class, key)? {
-        return Ok(v);
+    if rt.ext {
+        if let Some(v) = ext::prop_get(lua, r, class, key)? {
+            return Ok(v);
+        }
+    } else if domains::route_check_on() {
+        if let Ok(Some(_)) | Err(_) = ext::prop_get(lua, r, class, key) {
+            eprintln!("ROUTE MISS ext answers {class}.{key}");
+        }
     }
-    if let Some(v) = prop_get(lua, r, &class, key)? {
+    if let Some(v) = prop_get_routed(lua, r, class, key, rt.core_special, rt.prop)? {
         return Ok(v);
     }
     // Old lowercase spellings (sound:play, player:isFriendsWith) reach the
@@ -1502,6 +1900,29 @@ fn compose(a: &Xform, b: &Xform) -> Xform {
 }
 
 fn prop_get(lua: &Lua, r: Ref, class: &str, key: &str) -> mlua::Result<Option<Value>> {
+    let rt = routes::route(ustr(class), key, -1);
+    prop_get_routed(lua, r, class, key, rt.core_special, rt.prop)
+}
+
+/// The core read: computed frames and the like (`special`), else the
+/// stored or default value of the reflected property `prop`.
+fn prop_get_routed(
+    lua: &Lua,
+    r: Ref,
+    class: &str,
+    key: &str,
+    special: bool,
+    prop: Option<routes::PropInfo>,
+) -> mlua::Result<Option<Value>> {
+    if special {
+        if let Some(v) = prop_get_special(lua, r, class, key)? {
+            return Ok(Some(v));
+        }
+    }
+    prop_get_plain(lua, r, class, key, prop)
+}
+
+fn prop_get_special(lua: &Lua, r: Ref, class: &str, key: &str) -> mlua::Result<Option<Value>> {
     if class == "Bone" && matches!(key, "TransformedCFrame" | "TransformedWorldCFrame") {
         let d = world(lua)?;
         let xf = if key == "TransformedCFrame" { crate::attachment::local(d.d(), r, true) }
@@ -1569,32 +1990,42 @@ fn prop_get(lua: &Lua, r: Ref, class: &str, key: &str) -> mlua::Result<Option<Va
             _ => {}
         }
     }
-    if let Some(f) = cache(lua)?.callbacks.get(&(r, key.to_string())) {
-        return Ok(Some(Value::Function(f.clone())));
+    Ok(None)
+}
+
+fn prop_get_plain(
+    lua: &Lua,
+    r: Ref,
+    class: &str,
+    key: &str,
+    prop: Option<routes::PropInfo>,
+) -> mlua::Result<Option<Value>> {
+    // (set_callback keeps only these)
+    if matches!(key, "OnInvoke" | "OnServerInvoke" | "OnClientInvoke") {
+        if let Some(f) = cache(lua)?.callbacks.get(&(r, key.to_string())) {
+            return Ok(Some(Value::Function(f.clone())));
+        }
     }
-    let (enum_name, value, defaulted) = match prop_desc(class, key) {
-        Some((canon, dt, _)) => {
-            let enum_name = match &dt {
-                DataType::Enum(e) => Some(e.to_string()),
-                _ => None,
-            };
+    let (enum_name, value, defaulted) = match prop {
+        Some(p) => {
             let (stored, v) = {
                 let w = world(lua)?;
                 let d = w.d();
-                let stored = d
-                    .dom
-                    .get_by_ref(r)
-                    .is_some_and(|i| i.properties.contains_key(&ustr(canon)));
-                (stored, d.prop(r, canon))
+                match d.dom.get_by_ref(r).and_then(|i| i.properties.get(&p.canon)) {
+                    Some(v) => (true, Some(v.clone())),
+                    None => (false, d.prop_key(r, p.canon)),
+                }
             };
-            (enum_name, v, (!stored).then_some(canon))
+            (p.enum_name, v, (!stored).then_some(p.canon.as_str()))
         }
         None => {
             let v = world(lua)?
                 .d()
                 .dom
                 .get_by_ref(r)
-                .and_then(|i| i.properties.get(&ustr(key)).cloned());
+                // (A name never interned is no instance's property: don't
+                // intern every child name a script indexes.)
+                .and_then(|i| i.properties.get(&rbx_dom_weak::Ustr::from_existing(key)?).cloned());
             match v {
                 Some(v) => (None, Some(v), None),
                 None => return Ok(None),
@@ -1629,7 +2060,7 @@ fn prop_get(lua: &Lua, r: Ref, class: &str, key: &str) -> mlua::Result<Option<Va
         crate::telemetry::default_read(lua, class, canon);
     }
     match value {
-        Some(v) => Ok(Some(variant_to_lua(lua, &v, enum_name.as_deref())?)),
+        Some(v) => Ok(Some(variant_to_lua(lua, &v, enum_name)?)),
         // Known to the reflection database but with no default there: the
         // stub's typed default (false, 0, Enum.X.Default…) rather than nil.
         // (An unset object property is nil in Roblox too: not a stub.)
@@ -1759,12 +2190,19 @@ fn set_parent(lua: &Lua, r: Ref, new_parent: Ref) -> mlua::Result<()> {
         values.insert(d, v.clone());
         Ok(v)
     };
-    let listening = |chain: &[Ref]| -> mlua::Result<Vec<Ref>> {
+    // Only ancestors with a connection or waiter on that very event: `game`
+    // always has some (engine domains), and a 20k-part model made 20k
+    // DescendantRemoving fires there for nobody.
+    let listening = |chain: &[Ref], event: &str| -> mlua::Result<Vec<Ref>> {
         let w = world(lua)?;
-        Ok(chain.iter().copied().filter(|a| w.listening.contains(a)).collect())
+        Ok(chain
+            .iter()
+            .copied()
+            .filter(|a| w.listening.contains(a) && hears(lua, *a, event))
+            .collect())
     };
-    let old_listen = listening(&old_chain)?;
-    let new_listen = listening(&new_chain)?;
+    let old_listen = listening(&old_chain, "DescendantRemoving")?;
+    let new_listen = listening(&new_chain, "DescendantAdded")?;
     let mut fires: Vec<(Ref, &'static str, Value)> = Vec::new();
     for a in &old_listen {
         for d in &descendants {
@@ -1786,17 +2224,42 @@ fn set_parent(lua: &Lua, r: Ref, new_parent: Ref) -> mlua::Result<()> {
             }
         }
     }
+    // Class watches (`class_signals`): DescendantRemoving / Added on game
+    // for the instances of the watched classes only.
+    let mut watch_out: Vec<(Ref, String, Value)> = Vec::new();
+    let mut watch_in: Vec<(Ref, String, Value)> = Vec::new();
+    let watched = !world(lua)?.class_watches.is_empty();
+    if watched && (was_in || now_in) {
+        let root = world(lua)?.d().dom.root_ref();
+        for d in &descendants {
+            let hits = class_watch_hits(&mut *world(lua)?, *d);
+            for i in hits {
+                if was_in {
+                    watch_out.push((root, format!("ClassRemoving:{i}"), value_of(*d)?));
+                }
+                if now_in {
+                    watch_in.push((root, format!("ClassAdded:{i}"), value_of(*d)?));
+                }
+            }
+        }
+    }
     let mut w = world(lua)?;
     if old.is_some() {
         w.fire(old, "ChildRemoved", vec![me.clone()]);
         for (a, name, v) in fires {
             w.fire(a, name, vec![v]);
         }
+        for (a, name, v) in watch_out {
+            w.fire(a, &name, vec![v]);
+        }
     }
     if new_parent.is_some() {
         w.fire(new_parent, "ChildAdded", vec![me.clone()]);
         for (a, name, v) in add_fires {
             w.fire(a, name, vec![v]);
+        }
+        for (a, name, v) in watch_in {
+            w.fire(a, &name, vec![v]);
         }
     }
     for (cs, name, v) in tag_fires {
@@ -1811,19 +2274,18 @@ fn set_parent(lua: &Lua, r: Ref, new_parent: Ref) -> mlua::Result<()> {
 }
 
 fn store_prop(lua: &Lua, r: Ref, name: &str, v: Variant) -> mlua::Result<()> {
-    let value_changed = name == "Value" && world(lua)?.d().class_of(r)
-        .is_some_and(|class| doc::is_a(&class, "ValueBase"));
-    let pname = if value_changed {
-        variant_to_lua(lua, &v, None)?
-    } else {
-        Value::String(lua.create_string(name)?)
-    };
+    store_prop_key(lua, r, ustr(name), v)
+}
+
+/// `store_prop` by an interned name.
+fn store_prop_key(lua: &Lua, r: Ref, key: rbx_dom_weak::Ustr, v: Variant) -> mlua::Result<()> {
+    let name = key.as_str();
     let mut w = world(lua)?;
     let changed = {
         let Some(inst) = w.dm().dom.get_by_ref_mut(r) else {
             return Err(rt_err("the Instance no longer exists"));
         };
-        let old = inst.properties.insert(ustr(name), v.clone());
+        let old = inst.properties.insert(key, v.clone());
         // A legacy asset id and its Content twin are one property in Roblox
         // (Texture / TextureContent …): keep the twin in step, or readers that
         // take the twin first see a stale value or the class default (every
@@ -1845,12 +2307,27 @@ fn store_prop(lua: &Lua, r: Ref, name: &str, v: Variant) -> mlua::Result<()> {
         old.as_ref() != Some(&v)
     };
     if changed {
-        w.dm().mark_prop(r, ustr(name));
+        w.dm().mark_prop(r, key);
         w.record(RepOp::Prop(r, name.to_string()));
-        let is_part = w.d().class_of(r).is_some_and(|c| doc::is_a(&c, "BasePart"));
-        if physics_prop(name) && is_part {
+        let class = w.d().class_of(r);
+        if physics_prop(name) && class.is_some_and(|c| doc::is_a(&c, "BasePart")) {
             w.dirty.insert(r);
         }
+        // Nobody listening to this instance or the DataModel (services'
+        // on_fire), telemetry off: both fires below would do nothing.
+        let root = w.d().dom.root_ref();
+        if !w.listening.contains(&r) && !w.listening.contains(&root) && !crate::telemetry::on() {
+            return Ok(());
+        }
+        // Changed's argument: the property name, or a ValueBase's new value.
+        let value_changed = name == "Value" && class.is_some_and(|c| doc::is_a(&c, "ValueBase"));
+        drop(w);
+        let pname = if value_changed {
+            variant_to_lua(lua, &v, None)?
+        } else {
+            Value::String(lua.create_string(name)?)
+        };
+        let mut w = world(lua)?;
         w.fire(r, "Changed", vec![pname]);
         w.fire(r, &format!("Changed:{name}"), vec![]);
     }
@@ -1871,17 +2348,36 @@ fn set_callback(lua: &Lua, r: Ref, key: &str, value: Value) -> mlua::Result<()> 
 }
 
 fn newindex(lua: &Lua, r: Ref, key: &str, value: Value) -> mlua::Result<()> {
-    let (class, _, _) = inst_meta(lua, r)?;
-    crate::telemetry::touch(&class, key);
-    if domains::newindex(lua, r, &class, key, &value)? {
+    let (class_u, _) = inst_class(lua, r)?;
+    newindex_routed(lua, r, key, value, class_u, routes::route(class_u, key, -1))
+}
+
+/// `inst.key = value` with the member's route (runtime_routes.rs): only
+/// the domains that can take the write are asked.
+fn newindex_routed(
+    lua: &Lua,
+    r: Ref,
+    key: &str,
+    value: Value,
+    class_u: rbx_dom_weak::Ustr,
+    rt: routes::Route,
+) -> mlua::Result<()> {
+    let class: &str = class_u.as_str();
+    crate::telemetry::touch(class, key);
+    if (rt.ni_domains != 0 || domains::route_check_on())
+        && domains::newindex_masked(lua, r, class, key, &value, rt.ni_domains)?
+    {
         return Ok(());
     }
-    if ext::newindex(lua, r, &class, key, &value)? {
+    if (rt.ni_ext || domains::route_check_on()) && ext::newindex(lua, r, class, key, &value)? {
+        if !rt.ni_ext {
+            eprintln!("ROUTE MISS ext takes {class}.{key} =");
+        }
         return Ok(());
     }
     // The old FontSize enum ("Size28", Enum.FontSize.Size28) is TextSize in
     // Roblox: setting one sets the other.
-    if key == "FontSize" && matches!(class.as_str(), "TextLabel" | "TextButton" | "TextBox") {
+    if key == "FontSize" && matches!(class, "TextLabel" | "TextButton" | "TextBox") {
         let name = match &value {
             Value::String(s) => s.to_str()?.to_string(),
             v => opt_ud::<LEnumItem>(v)
@@ -1938,7 +2434,7 @@ fn newindex(lua: &Lua, r: Ref, key: &str, value: Value) -> mlua::Result<()> {
         // MusicSystemInitializer parents ModernMusicGui and then sets its
         // Handler's Enabled (saved Disabled); rustudio kept that in a stub
         // and the Handler never ran.
-        "Enabled" if matches!(class.as_str(), "Script" | "LocalScript") => {
+        "Enabled" if matches!(class, "Script" | "LocalScript") => {
             let on = !matches!(value, Value::Nil | Value::Boolean(false));
             store_prop(lua, r, "Disabled", Variant::Bool(!on))?;
             {
@@ -1958,12 +2454,7 @@ fn newindex(lua: &Lua, r: Ref, key: &str, value: Value) -> mlua::Result<()> {
     }
     // Attachment world placement: stored as CFrame relative to the part (or
     // as given while it isn't on a part, like Roblox).
-    if doc::is_a(&class, "Attachment")
-        && matches!(
-            key,
-            "WorldCFrame" | "WorldPosition" | "WorldOrientation" | "Position" | "Orientation"
-        )
-    {
+    if rt.set_attachment {
         let (local, part) = attachment_frames(lua, r)?;
         let worldf = compose(&part, &local);
         let new_local = match key {
@@ -2002,7 +2493,7 @@ fn newindex(lua: &Lua, r: Ref, key: &str, value: Value) -> mlua::Result<()> {
         w.fire(r, &format!("Changed:{key}"), vec![]);
         return Ok(());
     }
-    if doc::is_a(&class, "BasePart") {
+    if rt.set_part {
         match key {
             "Position" | "Orientation" | "Rotation" => {
                 let v =
@@ -2037,41 +2528,43 @@ fn newindex(lua: &Lua, r: Ref, key: &str, value: Value) -> mlua::Result<()> {
             _ => {}
         }
     }
-    if prop_desc(&class, key).is_none() {
+    let Some(info) = rt.set else {
         if let Some(cap) = capitalized(key)
-            .filter(|c| prop_desc(&class, c).is_some() || c == "Parent" || c == "Name")
+            .filter(|c| prop_desc(class, c).is_some() || c == "Parent" || c == "Name")
         {
             return newindex(lua, r, &cap, value);
         }
-    }
-    let Some((canon, dt, read_only)) = prop_desc(&class, key) else {
-        if stubs::assign(lua, r, &class, key, &value)? {
+        if stubs::assign(lua, r, class, key, &value)? {
             return Ok(());
         }
-        crate::telemetry::gap(lua, "missing", &class, key);
+        crate::telemetry::gap(lua, "missing", class, key);
         let full = world(lua)?.full_name(r);
         return Err(rt_err(format!(
             "{key} is not a valid member of {class} \"{full}\""
         )));
     };
-    if read_only {
+    let canon = info.canon.as_str();
+    if info.read_only {
         return Err(rt_err(format!(
             "Unable to assign property {key}. Property is read only"
         )));
     }
-    if !ext::write_acts(&class, canon) && !domains::write_acts(&class, canon) {
-        crate::telemetry::plain_write(lua, &class, canon);
+    if !info.acts {
+        crate::telemetry::plain_write(lua, class, canon);
     }
-    let existing = world(lua)?.d().prop(r, canon);
-    let (ty, enum_name) = match &dt {
-        DataType::Value(t) => (*t, None),
-        DataType::Enum(e) => (VariantType::Enum, Some(e.to_string())),
-        _ => return Err(rt_err(format!("Unable to assign property {key}"))),
+    let Some((ty, enum_name)) = info.ty else {
+        return Err(rt_err(format!("Unable to assign property {key}")));
     };
-    let mut v = lua_to_variant(key, &value, ty, enum_name.as_deref(), existing.as_ref())?;
+    // (Only a Color3 conversion looks at what is stored now.)
+    let existing = if matches!(ty, VariantType::Color3 | VariantType::Color3uint8) {
+        world(lua)?.d().prop_key(r, info.canon)
+    } else {
+        None
+    };
+    let mut v = lua_to_variant(key, &value, ty, enum_name, existing.as_ref())?;
     // Studio's own setters clamp these (mech::setter_clamp, with addresses).
     if let Variant::Float32(f) = v {
-        if let Some(c) = mech::setter_clamp(&class, canon, f) {
+        if let Some(c) = mech::setter_clamp(class, canon, f) {
             v = Variant::Float32(c);
         }
     }
@@ -2099,8 +2592,8 @@ fn newindex(lua: &Lua, r: Ref, key: &str, value: Value) -> mlua::Result<()> {
     }
     let enabling = canon == "Disabled"
         && matches!(v, Variant::Bool(false))
-        && matches!(class.as_str(), "Script" | "LocalScript");
-    store_prop(lua, r, canon, v)?;
+        && matches!(class, "Script" | "LocalScript");
+    store_prop_key(lua, r, info.canon, v)?;
     if enabling {
         start_if_enabled(lua, r)?;
     }
@@ -2447,7 +2940,14 @@ fn pivot_to(lua: &Lua, r: Ref, target: Xform) -> mlua::Result<()> {
     Ok(())
 }
 
-/// Instance:Destroy(): unparents, locks Parent and drops the connections.
+/// Instance:Destroy(), as Studio's `Instance::destroy`: the
+/// instance's Parent goes nil (and locks), then each descendant's in turn,
+/// a parent before its children, then the connections go. Studio walks the
+/// tree one `setParent(nil)` at a time; once the root is out of the
+/// DataModel each of those only notifies the (destroyed) parent, so here
+/// the subtree is cut loose in one pass and the per-descendant events are
+/// made only for instances something listens to (round 2, bulk: a 20k-part
+/// model took 111-117 ms, Studio 23).
 fn destroy_inst(lua: &Lua, r: Ref) -> mlua::Result<()> {
     if r == world(lua)?.d().dom.root_ref() {
         return Err(rt_err("game cannot be destroyed"));
@@ -2458,25 +2958,145 @@ fn destroy_inst(lua: &Lua, r: Ref) -> mlua::Result<()> {
     if world(lua)?.destroyed.contains(&r) {
         return Ok(());
     }
-    world(lua)?.fire(r, "Destroying", vec![]);
-    set_parent(lua, r, Ref::none())?;
-    let refs: HashSet<Ref> = world(lua)?
-        .d()
-        .dom
-        .descendants_of(r)
-        .map(|i| i.referent())
-        .collect();
-    // Destroy recursively unparents children as well. Keeping their old
-    // parent links made stripped ViewportFrame book parts remain descendants
-    // and made later cleanup's Parent=nil hit the destroyed lock.
-    for child in refs.iter().copied().filter(|child| *child != r) {
-        set_parent(lua, child, Ref::none())?;
+    {
+        let mut w = world(lua)?;
+        w.fire(r, "Destroying", vec![]);
+        // One replicated op for the subtree: Studio's server sends one
+        // DestroyInstance item and the client runs Destroy on its copy
+        // (DeserializedDestroyInstanceItem),
+        // not an unparent per descendant. Recorded before the Parent op so
+        // the client still has the pair when it gets here.
+        w.record(RepOp::Destroy(r));
     }
-    world(lua)?.destroyed.extend(refs.iter().copied());
-    signals(lua)?
-        .conns
-        .retain(|(owner, name), _| !refs.contains(owner) || name == "Destroying");
+    set_parent(lua, r, Ref::none())?;
+    let order = detach_descendants(lua, r)?;
+    // Connections go only when something in the subtree has any (a walk of
+    // every connection in the DataModel otherwise: 125 us per Destroy in
+    // Place E, 1.6 ms in a live Place A match, whose effect parts and
+    // tracers have none).
+    let listened: Vec<Ref> = {
+        let mut w = world(lua)?;
+        w.destroyed.insert(r);
+        w.destroyed.extend(order.iter().map(|x| x.0));
+        std::iter::once(r)
+            .chain(order.iter().map(|x| x.0))
+            .filter(|x| w.listening.contains(x))
+            .collect()
+    };
+    if !listened.is_empty() {
+        let mut s = signals(lua)?;
+        let Signals { conns, conn_names, .. } = &mut *s;
+        for x in &listened {
+            let Some(names) = conn_names.get_mut(x) else { continue };
+            for name in names.drain(..).collect::<Vec<_>>() {
+                if name == "Destroying" {
+                    names.push(name);
+                } else {
+                    conns.remove(&(*x, name));
+                }
+            }
+            if names.is_empty() {
+                conn_names.remove(x);
+            }
+        }
+    }
     Ok(())
+}
+
+/// Cuts every descendant of the (already unparented) `r` loose, as
+/// Studio's destroy does one `setParent(nil)` at a time, parent before
+/// children: each one's ChildRemoved / DescendantRemoving go to its old
+/// parent only (already out of the tree), its Changed("Parent") and the
+/// AncestryChanged of it and everything under it to themselves. Fires are
+/// made only where someone listens (or, for Changed, game.ItemChanged
+/// does). Returns the descendants in pre-order with their old parents.
+fn detach_descendants(lua: &Lua, r: Ref) -> mlua::Result<Vec<(Ref, Ref)>> {
+    let (order, listens, item_changed) = {
+        let mut w = world(lua)?;
+        let order = w.dm().dom.detach_descendants(r);
+        for (d, _) in &order {
+            w.orphans.insert(*d);
+            // Each one is a root of its own now: readers (scene, physics,
+            // GUI) see it leave through its own mark.
+            w.dm().mark_tree(*d);
+        }
+        if !order.is_empty() {
+            w.structure_changed = true;
+        }
+        let listens: Vec<bool> = order
+            .iter()
+            .map(|(d, p)| w.listening.contains(d) || w.listening.contains(p))
+            .collect();
+        let item_changed = w.listening.contains(&w.d().dom.root_ref());
+        (order, listens, item_changed)
+    };
+    if !item_changed && !listens.iter().any(|x| *x) {
+        return Ok(order);
+    }
+    // Pre-order: each subtree is a contiguous run order[i..end[i]].
+    let n = order.len();
+    let mut end = vec![n; n];
+    {
+        let mut stack: Vec<usize> = Vec::new();
+        for (i, (_, p)) in order.iter().enumerate() {
+            while let Some(&top) = stack.last() {
+                if order[top].0 == *p {
+                    break;
+                }
+                end[top] = i;
+                stack.pop();
+            }
+            stack.push(i);
+        }
+    }
+    // Listened instances before index i, to skip quiet subtrees fast.
+    let mut heard = vec![0usize; n + 1];
+    for i in 0..n {
+        heard[i + 1] = heard[i] + usize::from(world(lua)?.listening.contains(&order[i].0));
+    }
+    let pname = Value::String(lua.create_string("Parent")?);
+    let mut values: HashMap<Ref, Value> = HashMap::new();
+    let mut value_of = |d: Ref| -> mlua::Result<Value> {
+        if let Some(v) = values.get(&d) {
+            return Ok(v.clone());
+        }
+        let v = inst_value(lua, d)?;
+        values.insert(d, v.clone());
+        Ok(v)
+    };
+    for i in 0..n {
+        let (d, p) = order[i];
+        if !listens[i] && !item_changed && heard[end[i]] == heard[i] {
+            continue;
+        }
+        let (p_hears, d_hears) = {
+            let w = world(lua)?;
+            (w.listening.contains(&p), w.listening.contains(&d))
+        };
+        if p_hears {
+            let me = value_of(d)?;
+            let subtree: Vec<Value> = (i..end[i]).map(|j| value_of(order[j].0)).collect::<mlua::Result<_>>()?;
+            let mut w = world(lua)?;
+            w.fire(p, "ChildRemoved", vec![me]);
+            for v in subtree {
+                w.fire(p, "DescendantRemoving", vec![v]);
+            }
+        }
+        let mut w = world(lua)?;
+        if d_hears || item_changed {
+            w.fire(d, "Changed", vec![pname.clone()]);
+            w.fire(d, "Changed:Parent", vec![]);
+        }
+        if heard[end[i]] > heard[i] {
+            for j in i..end[i] {
+                let e = order[j].0;
+                if w.listening.contains(&e) {
+                    w.fire(e, "AncestryChanged", vec![]);
+                }
+            }
+        }
+    }
+    Ok(order)
 }
 
 fn part_size(lua: &Lua, r: Ref) -> mlua::Result<Vec3> {
@@ -2560,10 +3180,23 @@ fn call_method(lua: &Lua, name: &str, args: MultiValue) -> mlua::Result<MultiVal
             "Expected ':' not '.' calling member function {name}"
         ))
     })?;
-    // Same name, different class (Team:GetPlayers, Humanoid:MoveTo…): the extension handles it.
     let class_u = inst_class(lua, this)?.0;
-    let (core, extended) = method_owner(class_u, name);
-    let class = class_u.to_string();
+    let m = routes::method_route(class_u, name);
+    call_method_routed(lua, name, args, this, class_u, &m)
+}
+
+/// `call_method` with the method's route worked out (runtime_routes.rs).
+fn call_method_routed(
+    lua: &Lua,
+    name: &str,
+    args: MultiValue,
+    this: Ref,
+    class_u: rbx_dom_weak::Ustr,
+    m: &routes::MethodRoute,
+) -> mlua::Result<MultiValue> {
+    // Same name, different class (Team:GetPlayers, Humanoid:MoveTo…): the extension handles it.
+    let (core, extended) = (m.core, m.extended);
+    let class: &str = class_u.as_str();
     // A method taken from one class and called on an instance that hasn't
     // it fails as in Roblox (an admin script's anti-kick check calls
     // `Player.Kick(workspace, …)` and expects exactly this message).
@@ -2573,14 +3206,14 @@ fn call_method(lua: &Lua, name: &str, args: MultiValue) -> mlua::Result<MultiVal
         )));
     }
     // Domains (src/domains) may take over a core method too.
-    if core {
-        if let Some(r) = domains::call(lua, name, this, &args) {
+    if core && (m.domains != 0 || domains::route_check_on()) {
+        if let Some(r) = domains::call_masked_check(lua, name, this, &args, m.domains, m.shadowed) {
             return r;
         }
     }
     if !core && extended {
-        return ext::call(lua, name, this, &args)
-            .unwrap_or_else(|| stubs::unimplemented_call(lua, this, &class, name));
+        return Some(ext::call_routed(lua, name, this, &args, m.domains))
+            .unwrap_or_else(|| stubs::unimplemented_call(lua, this, class, name));
     }
     let one = |v: Value| -> mlua::Result<MultiValue> { Ok(MultiValue::from_iter([v])) };
     let none = || -> mlua::Result<MultiValue> { Ok(MultiValue::new()) };
@@ -2646,7 +3279,6 @@ fn call_method(lua: &Lua, name: &str, args: MultiValue) -> mlua::Result<MultiVal
         }
         "IsA" => {
             let c = arg_str(&args, 1, "string")?;
-            let (class, _, _) = inst_meta(lua, this)?;
             one(Value::Boolean(doc::is_a(&class, &c)))
         }
         "IsDescendantOf" => {
@@ -2707,7 +3339,10 @@ fn call_method(lua: &Lua, name: &str, args: MultiValue) -> mlua::Result<MultiVal
             none()
         }
         "ClearAllChildren" => {
-            for c in children_of(lua, this)? {
+            // Studio's Instance::clearAllChildren destroys the
+            // last child until none is left: ChildRemoved comes newest first,
+            // and each child leaves from the end of the list (no shift).
+            for c in children_of(lua, this)?.into_iter().rev() {
                 destroy_inst(lua, c)?;
             }
             none()
@@ -2944,8 +3579,7 @@ fn call_method(lua: &Lua, name: &str, args: MultiValue) -> mlua::Result<MultiVal
                 .ok_or_else(|| rt_err("Enum.KeyCode expected"))?;
             one(Value::Boolean(world(lua)?.keys_down.contains(&k.name)))
         }
-        _ => ext::call(lua, name, this, &args)
-            .unwrap_or_else(|| stubs::unimplemented_call(lua, this, &class, name)),
+        _ => ext::call_routed(lua, name, this, &args, m.domains),
     }
 }
 
@@ -3297,10 +3931,22 @@ impl Runtime {
     pub fn new() -> Result<Self, String> {
         luau_flags();
         let lua = Lua::new();
+        routes::install_atoms(&lua);
         crate::globals_parity::init_vm(&lua);
         // Studio compiles scripts at Luau -O1 (no inlining), so Output stacks
         // keep every frame; -O2 inlined local functions out of error stacks.
-        lua.set_compiler(mlua::chunk::Compiler::new().set_optimization_level(1).set_debug_level(1));
+        // Studio's other compile options:
+        // `Vector3.new` is Luau's vector constructor (the LBF_VECTOR fastcall:
+        // no call into the engine for `Vector3.new(x, y, z)` with numbers),
+        // and these globals stay mutable (not cached as imports).
+        lua.set_compiler(
+            mlua::chunk::Compiler::new()
+                .set_optimization_level(1)
+                .set_debug_level(1)
+                .set_vector_ctor("Vector3.new")
+                .set_vector_type("Vector3")
+                .set_mutable_globals(["Game", "Workspace", "game", "plugin", "script", "shared", "workspace"]),
+        );
         lua.set_app_data(Sched::default());
         lua.set_app_data(Signals::default());
         lua.set_app_data(signal_timing::Reentry::default());
@@ -3505,7 +4151,9 @@ impl Runtime {
                 };
                 let mut w = world(lua)?;
                 w.conn_seq = id;
-                w.listening.insert(inst.0);
+                if w.listening.insert(inst.0) && w.side == Side::Client {
+                    w.listen_new.push(inst.0);
+                }
                 Ok(())
             })?;
         let rs_output = lua.create_function(
@@ -3532,15 +4180,22 @@ impl Runtime {
                     let mut s = signals(lua)?;
                     s.next_id += 1;
                     let id = s.next_id;
-                    s.conns
-                        .entry((inst.0, name.clone()))
-                        .or_default()
-                        .push(Conn { id, func: f, once, ident: security::current(lua) });
+                    let list = s.conns.entry((inst.0, name.clone())).or_default();
+                    let first = list.is_empty();
+                    list.push(Conn { id, func: f, once, ident: security::current(lua) });
+                    if first {
+                        let names = s.conn_names.entry(inst.0).or_default();
+                        if !names.contains(&name) {
+                            names.push(name.clone());
+                        }
+                    }
                     id
                 };
                 if let Some(mut w) = lua.app_data_mut::<World>() {
                     w.conn_seq = id;
-                    w.listening.insert(inst.0);
+                    if w.listening.insert(inst.0) && w.side == Side::Client {
+                        w.listen_new.push(inst.0);
+                    }
                 }
                 Ok(LConn {
                     key: (inst.0, name),
@@ -3552,31 +4207,22 @@ impl Runtime {
             let shared: Table = lua.named_registry_value("rustudio_shared")?;
             compile_script(lua, m.0, &shared)
         })?;
-        let rs_index = lua.create_function(|lua, (this, key): (LInst, mlua::String)| {
+        let rs_index = lua.create_function(|lua, (this, key, atom): (LInst, mlua::LuaString, Option<i32>)| {
             let key = key.to_str()?;
             let key: &str = &key;
+            crate::bench::site(lua, "index", key);
             crate::bench::api_timed("index", key, || {
-                checked(
-                    lua,
-                    match security::index_hook(lua, this.0, key) {
-                        Ok(Some(v)) => Ok(v),
-                        Ok(None) => index(lua, this.0, key),
-                        Err(e) => Err(e),
-                    }
-                    .map(|v| MultiValue::from_iter([v])),
-                )
+                checked1(lua, index_entry(lua, this.0, key, atom.unwrap_or(-1)))
             })
             .inspect(|_| signal_timing::flush_immediate(lua))
         })?;
         let rs_newindex =
-            lua.create_function(|lua, (this, key, value): (LInst, String, Value)| {
-                crate::bench::api_timed("newindex", &key, || {
-                    checked(
-                        lua,
-                        security::newindex_hook(lua, this.0, &key)
-                            .and_then(|_| newindex(lua, this.0, &key, value))
-                            .map(|_| MultiValue::new()),
-                    )
+            lua.create_function(|lua, (this, key, value, atom): (LInst, mlua::LuaString, Value, Option<i32>)| {
+                let key = key.to_str()?;
+                let key: &str = &key;
+                crate::bench::site(lua, "newindex", key);
+                crate::bench::api_timed("newindex", key, || {
+                    checked1(lua, newindex_entry(lua, this.0, key, value, atom.unwrap_or(-1)).map(|_| Value::Nil))
                 })
                 .inspect(|_| signal_timing::flush_immediate(lua))
             })?;
@@ -3598,9 +4244,12 @@ impl Runtime {
         // prelude's Lua shims stay for anything that calls them directly.
         let _ = (inst_index, inst_newindex);
         let _ = wrap;
-        use crate::cmeta::{wrap_meta, INSTANCE};
-        lua.set_named_registry_value("rs_inst_index", wrap_meta(lua, rs_index_raw, true, &INSTANCE)?)?;
-        lua.set_named_registry_value("rs_inst_newindex", wrap_meta(lua, rs_newindex_raw, true, &INSTANCE)?)?;
+        use crate::cmeta::INSTANCE;
+        lua.set_named_registry_value(
+            "rs_inst_index",
+            crate::cmeta::wrap_meta_atom(lua, rs_index_raw, true, &INSTANCE, None)?,
+        )?;
+        lua.set_named_registry_value("rs_inst_newindex", crate::cmeta::wrap_meta_atom(lua, rs_newindex_raw, true, &INSTANCE, None)?)?;
         let rs_namecall = lua.create_function(|lua, mut args: MultiValue| {
             // The method name: a C string from lua_namecallatom, read now
             // (cmeta::namecall_fn), before anything else can run.
@@ -3610,12 +4259,30 @@ impl Runtime {
                 }
                 _ => return checked(lua, Err(rt_err("attempt to call a nil value"))),
             };
+            let atom = match args.pop_front() {
+                Some(Value::Integer(a)) => a as i32,
+                _ => -1,
+            };
             let name = name.to_str().unwrap_or("");
-            namecall(lua, name, args)
+            namecall(lua, name, atom, args)
         })?;
         lua.set_named_registry_value("rs_inst_namecall", crate::cmeta::namecall(lua, rs_namecall)?)?;
         lua.set_named_registry_value("rs_lua_methods", lua.globals().get::<Table>("__rs_lua_methods")?)?;
         lock_bridge(lua)?;
+        // Studio's fast member reads (runtime_routes.rs), once the bridge
+        // objects exist.
+        if let Some((fast, data)) = routes::fast_index_fn(lua) {
+            let f: Function = lua.named_registry_value("rs_inst_index")?;
+            crate::cmeta::set_fast(lua, &f, fast, data)?;
+        }
+        if let Some((fast, data)) = routes::fast_newindex_fn(lua) {
+            let f: Function = lua.named_registry_value("rs_inst_newindex")?;
+            crate::cmeta::set_fast(lua, &f, fast, data)?;
+        }
+        if let Some((fast, data)) = routes::fast_namecall_fn(lua) {
+            let f: Function = lua.named_registry_value("rs_inst_namecall")?;
+            crate::cmeta::set_fast_call(lua, &f, fast, data)?;
+        }
 
         // Engine services written in Lua (TweenService, Debris, DataStores…).
         let rs_create = lua.create_function(|lua, class: String| {
@@ -3991,7 +4658,15 @@ impl Runtime {
         // it advances inside a frame. Frozen at the frame's time(), Place A's
         // time-sliced map loader never yielded and hit the script timeout.)
         let offset: std::cell::Cell<Option<f64>> = std::cell::Cell::new(None);
+        // RUSTUDIO_CPU_CLOCK=1 (benchmarks only): the calling thread's CPU
+        // time instead, so per-call costs can be timed on a loaded machine.
+        let cpu_clock = std::env::var_os("RUSTUDIO_CPU_CLOCK").is_some();
         let clock = lua.create_function(move |lua, ()| {
+            if cpu_clock {
+                let mut ts = libc::timespec { tv_sec: 0, tv_nsec: 0 };
+                unsafe { libc::clock_gettime(libc::CLOCK_THREAD_CPUTIME_ID, &mut ts) };
+                return Ok(ts.tv_sec as f64 + ts.tv_nsec as f64 * 1e-9);
+            }
             let now = since.elapsed().as_secs_f64();
             Ok(match base {
                 Some(b) => {
@@ -4067,7 +4742,13 @@ impl Runtime {
 
     pub fn fire(&self, r: Ref, name: &str, args: Vec<Value>) {
         if let Some(mut w) = self.lua.app_data_mut::<World>() {
+            // A native frame step that follows this RunService event
+            // (TweenService, Animator: domains::anim::hook_after).
+            let hook = domains::anim::hook_after(w.side, name).map(|h| (h, args.first().cloned()));
             w.fire(r, name, args);
+            if let Some((h, dt)) = hook {
+                w.queue_hook(r, name, h, dt.unwrap_or(Value::Nil));
+            }
         }
     }
 
@@ -4085,11 +4766,18 @@ impl Runtime {
             w.time += dt;
             (w.time, w.realtime)
         };
-        let _ = domains::step(lua, dt);
+        {
+            let _s = crate::bench::scope("rt_domains_step");
+            let _ = domains::step(lua, dt);
+        }
         // Frame signals (including the camera's RenderStepped callback) must
         // run before task.wait resumes at Heartbeat. Otherwise a script can
         // switch Custom back to Scriptable before the camera gets its frame.
-        self.dispatch();
+        {
+            let _s = crate::bench::scope("rt_dispatch1");
+            self.dispatch();
+        }
+        let _st = crate::bench::scope("rt_timers");
         let mut due: Vec<Timer> = {
             let Ok(mut s) = sched(lua) else { return };
             let (due, keep): (Vec<Timer>, Vec<Timer>) = std::mem::take(&mut s.timers)
@@ -4123,7 +4811,10 @@ impl Runtime {
                 s.timers.extend(rest);
             }
         }
+        drop(_st);
+        let _s2 = crate::bench::scope("rt_dispatch2");
         self.dispatch();
+        drop(_s2);
         ext::flush_terrain(lua);
     }
 
@@ -4153,23 +4844,15 @@ impl Runtime {
                 w.orphans.insert(r);
             }
         }
+        // Many new unparented instances since the last pass: garbage is
+        // being made, so the Luau collector is stepped at the fast rate
+        // (`gc_step`). A trickle (a GUI script swapping a few labels) isn't.
+        let arrived = w.orphans.len().saturating_sub(w.orphans_seen) >= mech::GC_BUSY_ORPHANS;
         if w.orphans.is_empty() {
+            w.orphans_seen = 0;
+            w.gc_busy = false;
             return Vec::new();
         }
-        // Roblox's collector runs all the time; Luau's runs as scripts
-        // allocate, so a quiet script could keep dead values (and the
-        // instances behind them) for long. Step it along by a share of the
-        // heap, so a cycle (and with it the weak cache's dead entries)
-        // finishes within a few passes whatever the heap's size: a fixed
-        // count of basic steps stopped finishing cycles once the engine's
-        // own Luau libraries grew, and nothing unparented was freed.
-        let kb = (lua.used_memory() / 1024 / mech::GC_CYCLE_PASSES)
-            .clamp(mech::GC_STEP_MIN_KB, mech::GC_STEP_MAX_KB);
-        let _ = unsafe {
-            lua.exec_raw::<()>((), |state| {
-                mlua::ffi::lua_gc(state, mlua::ffi::LUA_GCSTEP, kb as std::ffi::c_int);
-            })
-        };
         let root = w.d().dom.root_ref();
         let candidates: Vec<Ref> = w.orphans.iter().copied().collect();
         let mut looked = 0usize;
@@ -4188,17 +4871,30 @@ impl Runtime {
                 w.orphans.remove(&r);
                 continue;
             }
-            let subtree: Vec<Ref> = d.dom.descendants_of(r).map(|i| i.referent()).collect();
-            looked += subtree.len();
-            let alive = subtree.iter().any(|x| {
-                pinned(*x)
-                    || c.slots.get(x).is_some_and(|slot| {
+            // Stops at the first instance something still holds: usually
+            // the root itself (a template a script keeps unparented), so a
+            // held subtree costs one lookup, not a walk of all of it. A
+            // live Place A match keeps whole map pieces this way: walking them
+            // every pass was 45-70 ms twice a second.
+            let held = |x: Ref| {
+                pinned(x)
+                    || c.slots.get(&x).is_some_and(|slot| {
                         c.weak
                             .as_ref()
                             .and_then(|t| t.raw_get::<Value>(*slot).ok())
                             .is_some_and(|v| !matches!(v, Value::Nil))
                     })
-            });
+            };
+            let mut subtree: Vec<Ref> = Vec::new();
+            let mut alive = false;
+            for x in d.dom.descendants_of(r).map(|i| i.referent()) {
+                looked += 1;
+                if held(x) {
+                    alive = true;
+                    break;
+                }
+                subtree.push(x);
+            }
             if alive {
                 continue;
             }
@@ -4231,6 +4927,8 @@ impl Runtime {
             }
             freed.extend(subtree);
         }
+        w.orphans_seen = w.orphans.len();
+        w.gc_busy = arrived || freed.len() >= mech::GC_BUSY_ORPHANS;
         if freed.is_empty() {
             return freed;
         }
@@ -4242,12 +4940,52 @@ impl Runtime {
         drop(w);
         if let Some(mut s) = lua.app_data_mut::<Signals>() {
             s.conns.retain(|(r, _), _| !gone.contains(r));
+            s.conn_names.retain(|r, _| !gone.contains(r));
             s.waiters.retain(|(r, _), _| !gone.contains(r));
         }
         if let Some(mut ix) = lua.app_data_mut::<ChildIndex>() {
             ix.by_parent.retain(|r, _| !gone.contains(r));
         }
         freed
+    }
+
+    /// Steps the Luau collector by this frame's share of a cycle. Roblox's
+    /// collector runs all the time; Luau's runs as scripts allocate, so a
+    /// quiet script could keep dead values (and the unparented instances
+    /// behind them, which `collect` frees) for long. While many unparented
+    /// instances keep arriving or going (`World::gc_busy`), a cycle (and
+    /// with it the weak cache's dead entries) takes GC_CYCLE_PASSES
+    /// collector intervals whatever the heap's size; while the only ones
+    /// watched are those scripts still hold (cached templates: nothing to
+    /// free), GC_IDLE_CYCLE_S. The work is spread over the frames, and no
+    /// frame does more than Studio's LuauGc job does in one
+    /// (GC_FRAME_MAX_KB; a huge heap's cycle takes longer instead): one
+    /// step of heap / 2 (up to 16 MB) per pass was a 10-14 ms frame twice a
+    /// second in Place E, 16 ms (89 ms at worst) in a Place A match.
+    /// Nothing to do while no unparented instance is watched.
+    pub fn gc_step(&self, dt: f64) {
+        let lua = &self.lua;
+        let Some(busy) = lua
+            .app_data_ref::<World>()
+            .filter(|w| w.doc.is_some() && !w.orphans.is_empty())
+            .map(|w| w.gc_busy)
+        else {
+            return;
+        };
+        let heap_kb = (lua.used_memory() / 1024) as f64;
+        let kb = if busy {
+            let pass_kb = (heap_kb / mech::GC_CYCLE_PASSES as f64)
+                .clamp(mech::GC_STEP_MIN_KB as f64, mech::GC_STEP_MAX_KB as f64);
+            pass_kb * (dt / mech::GC_INTERVAL).clamp(0.0, 1.0)
+        } else {
+            heap_kb * (dt / mech::GC_IDLE_CYCLE_S).clamp(0.0, 1.0)
+        };
+        let kb = kb.ceil().clamp(1.0, mech::GC_FRAME_MAX_KB);
+        let _ = unsafe {
+            lua.exec_raw::<()>((), |state| {
+                mlua::ffi::lua_gc(state, mlua::ffi::LUA_GCSTEP, kb as std::ffi::c_int);
+            })
+        };
     }
 
     /// Instances with a slot in the Lua value cache (bounded by the ones
@@ -4302,6 +5040,7 @@ impl Runtime {
                 .app_data_mut::<World>()
                 .map(|mut w| std::mem::take(&mut w.to_start))
                 .unwrap_or_default();
+            let _sc = crate::bench::scope("dis_start");
             for s in starting {
                 let still = world(lua).map(|w| w.runs_here(s)).unwrap_or(false);
                 if still {
@@ -4321,10 +5060,18 @@ impl Runtime {
             if deferred.is_empty() && events.is_empty() {
                 return;
             }
+            drop(_sc);
+            let _sc = crate::bench::scope("dis_deferred");
             for (th, args) in deferred {
                 resume_thread_timed(lua, &th, args);
             }
+            drop(_sc);
+            let _sc = crate::bench::scope("dis_events");
             for (r, name, args, seq, depth) in events {
+                if name.starts_with('\0') {
+                    domains::anim::run_hook(lua, &name, &args);
+                    continue;
+                }
                 signal_timing::deliver_deferred(lua, r, name, args, seq, depth);
             }
         }
@@ -5007,6 +5754,15 @@ impl Runtime {
             report(&self.lua, &e);
         }
     }
+
+    /// Replication: the server destroyed `r` (Destroying fires here too,
+    /// Parent locks, connections go), as Studio's client does on a
+    /// DestroyInstance item.
+    pub fn apply_destroy(&self, r: Ref) {
+        if let Err(e) = destroy_inst(&self.lua, r) {
+            report(&self.lua, &e);
+        }
+    }
 }
 
 /// Compile-only check for the script editor: (line, message) of the first
@@ -5646,6 +6402,57 @@ mod legacy_tests {
             "{text:?}"
         );
     }
+    /// ClearAllChildren destroys the last child first, as Studio's
+    /// Instance::clearAllChildren; Destroy cuts the whole
+    /// subtree loose, parent before children, and locks every Parent.
+    #[test]
+    fn clear_all_children_last_first_and_destroy_detaches_all() {
+        let out = run("local f = Instance.new('Folder', workspace)\n\
+            for _, n in {'A', 'B', 'C'} do local x = Instance.new('Folder') x.Name = n x.Parent = f end\n\
+            local order = {}\n\
+            workspace.DescendantRemoving:Connect(function(d) table.insert(order, d.Name) end)\n\
+            f:ClearAllChildren()\n\
+            task.wait()\n\
+            print('order', table.concat(order, ','))\n\
+            local m = Instance.new('Model')\n\
+            local a = Instance.new('Folder', m) local b = Instance.new('Folder', a) local c = Instance.new('Part', b)\n\
+            for i = 1, 50 do Instance.new('Part', m) end\n\
+            m.Parent = workspace\n\
+            m:Destroy()\n\
+            print('detached', m.Parent == nil, a.Parent == nil, b.Parent == nil, c.Parent == nil, #m:GetChildren(), #a:GetChildren(), #b:GetChildren())\n\
+            print('locked', pcall(function() c.Parent = workspace end))\n\
+            print('again', pcall(function() b:Destroy() end))\n");
+        assert!(out.iter().any(|(_, t)| t.starts_with("order C,B,A")), "{out:?}");
+        assert!(out.iter().any(|(_, t)| t.starts_with("detached true true true true 0 0 0")), "{out:?}");
+        assert!(out.iter().any(|(_, t)| t.starts_with("locked false")), "{out:?}");
+        assert!(out.iter().any(|(_, t)| t.starts_with("again true")), "{out:?}");
+    }
+
+    /// class_signals: DescendantAdded / Removing on game for the watched
+    /// classes only (IsA), on parenting in, reparenting and Destroy.
+    #[test]
+    fn class_signals_fire_only_for_watched_classes() {
+        let rt = Runtime::new().unwrap();
+        rt.enter(World::new(Document::new_place(), RunMode::Run));
+        rt.bind_globals().unwrap();
+        let (added, removing) = class_signals(&rt.lua, vec!["ProximityPrompt".into(), "HandleAdornment".into()]).unwrap();
+        rt.lua.globals().set("added_sig", added).unwrap();
+        rt.lua.globals().set("removing_sig", removing).unwrap();
+        rt.lua.load("_G.log = {}\n\
+            added_sig:Connect(function(i) table.insert(_G.log, '+' .. i.Name) end)\n\
+            removing_sig:Connect(function(i) table.insert(_G.log, '-' .. i.Name) end)\n\
+            local m = Instance.new('Model') m.Name = 'M'\n\
+            for i = 1, 20 do Instance.new('Part', m) end\n\
+            local pp = Instance.new('ProximityPrompt') pp.Name = 'PP' pp.Parent = m.Part\n\
+            local box = Instance.new('BoxHandleAdornment') box.Name = 'Box' box.Parent = m\n\
+            m.Parent = workspace\n\
+            local f = Instance.new('Folder', workspace) m.Parent = f\n\
+            f:Destroy()").exec().unwrap();
+        rt.step(1.0 / 60.0);
+        let log: String = rt.lua.load("table.sort(_G.log) return table.concat(_G.log, ',')").eval().unwrap();
+        assert_eq!(log, "+Box,+Box,+PP,+PP,-Box,-Box,-PP,-PP");
+    }
+
     #[test]
     fn destroyed_parent_nil_is_idempotent() {
         let out = run("local root = Instance.new('Folder', workspace)\n\

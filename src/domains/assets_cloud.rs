@@ -82,6 +82,8 @@ struct State {
     providers: HashMap<String, Ref>,
     watched: HashMap<String, (Ref,u8)>,
     failure_seq: u64,
+    /// `assets::content_status_generation` when `watched` was last compared.
+    status_gen: u64,
 }
 pub const METHODS: &[(&str, &str)] = &[
     ("GetBaseMaterialOverride", "MaterialService"),
@@ -139,7 +141,11 @@ pub fn call(
             };
             return one(if name.ends_with("Signal") {
                 let current=crate::assets::content_fetch_status(&id);
-                lua.app_data_mut::<State>().unwrap().watched.entry(id.clone()).or_insert((this,current));
+                {
+                    let mut s=lua.app_data_mut::<State>().unwrap();
+                    s.watched.entry(id.clone()).or_insert((this,current));
+                    s.status_gen=0;
+                }
                 signal(lua, this, &format!("AssetFetchStatus:{id}"))?
             } else {
                 status(lua, &id)?
@@ -277,6 +283,7 @@ pub fn install(lua: &Lua) -> mlua::Result<()> {
                 s.statuses.insert(id.clone(), "Loading".into());
                 s.providers.insert(id.clone(), r);
                 s.watched.insert(id.clone(),(r,1));
+                s.status_gen=0;
                 let v = Value::UserData(lua.create_userdata(
                     LEnumItem::from_name("AssetFetchStatus", "Loading").unwrap(),
                 )?);
@@ -348,14 +355,20 @@ pub fn step(lua: &Lua, _: f64) -> mlua::Result<()> {
                 .insert(id.clone(), if ok { "Success" } else { "Failure" }.into());
             let provider=s.providers.remove(&id).unwrap();
             s.watched.insert(id.clone(),(provider,if ok{2}else{3}));
+            s.status_gen=0;
             provider
         };
         let v = status(lua, &id)?;
         let mut w = world(lua)?;
         w.fire(provider, &format!("AssetFetchStatus:{id}"), vec![v]);
     }
-    let changes: Vec<_> = {
-        let s=lua.app_data_ref::<State>().unwrap();
+    // Only when some content's status changed (or a new id is watched):
+    // asking for every watched id's status each frame was 0.85 ms a frame
+    // in a live Place A match (a lock, a canonical key and a lookup per id).
+    let generation=crate::assets::content_status_generation();
+    let changes: Vec<_> = if lua.app_data_ref::<State>().unwrap().status_gen==generation {Vec::new()} else {
+        let mut s=lua.app_data_mut::<State>().unwrap();
+        s.status_gen=generation;
         s.watched.iter().filter_map(|(id,(r,old))| {
             let current=crate::assets::content_fetch_status(id);
             (current!=*old).then(||(id.clone(),*r,current))

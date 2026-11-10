@@ -541,11 +541,7 @@ local ANIM = {}
 -- The track for an AnimationId among the tracks this Animator has played
 -- and not yet let go (a loaded track that never played isn't found).
 function ANIM.GetTrackByAnimationId(self, id)
-    id = tostring(id)
-    for track, st in __rs_tracks do
-        if st.owner == self and st.active and st.anim and st.anim.AnimationId == id then return track end
-    end
-    return nil
+    return __rs_track_by_id(self, tostring(id))
 end
 function ANIM.StepAnimations() return nil end
 function ANIM.ApplyJointVelocities() return nil end

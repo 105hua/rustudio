@@ -59,6 +59,8 @@ pub struct DecalDesc {
     /// Linear RGB tint (Color3).
     pub color: [f32; 3],
     pub transparency: f32,
+    /// Generated base material layers inherit the host opacity; authored decals do not.
+    pub base_surface: bool,
     /// Texture tiling: studs per tile (u, v) and offset studs (u, v).
     pub tiling: Option<[f32; 4]>,
 }
@@ -160,6 +162,7 @@ fn surface_details(
                     id,
                     color: tint,
                     transparency: f32_of(doc.prop(*c, "Transparency")).unwrap_or(0.0),
+                    base_surface: false,
                     tiling,
                 });
             }
@@ -758,12 +761,15 @@ pub(crate) fn part_draw(doc: &Document, inst: &Instance) -> Option<ScenePart> {
             srgb_to_linear(rgb[1]),
             srgb_to_linear(rgb[2]),
         ];
+        // The variant is the base surface. Authored Decals/Textures must
+        // follow it in the decal pass (e.g. SpawnLocation's star over Grid).
         for face in 0..6 {
-            decals.push(DecalDesc {
+            decals.insert(face as usize, DecalDesc {
                 face,
                 id: map.clone(),
                 color: tint,
                 transparency: 0.0,
+                base_surface: true,
                 tiling: Some([studs, studs, 0.0, 0.0]),
             });
         }
@@ -797,6 +803,7 @@ pub(crate) fn part_draw(doc: &Document, inst: &Instance) -> Option<ScenePart> {
             id: g,
             color: [1.0, 1.0, 1.0],
             transparency: 0.0,
+            base_surface: false,
             tiling: None,
         });
     }

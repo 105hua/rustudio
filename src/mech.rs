@@ -157,10 +157,11 @@ pub const LIGHT_MAX_ANGLE: f32 = 180.0; // SpotLight.Angle and SurfaceLight.Angl
 pub const CLOCK_TIME_MAX: f32 = 24.0; // ClockTime: clamp to [0, 24], × 3600, truncated to whole seconds, stored as µs (× 1 000 000)
 pub const SECONDS_PER_HOUR: f32 = 3600.0;
 pub const ENV_SCALE_MAX: f32 = 1.0; // EnvironmentDiffuseScale clamps to [0, 1]
+pub const SHADOW_SOFTNESS: f32 = 0.2; // Lighting.ShadowSoftness when a place saves none (the API's default)
 pub const SHADOW_SOFTNESS_MAX: f32 = 1.0; // ShadowSoftness clamps to [0, 1]
 
 /// What Studio's property setters do to a number before storing it, read
-/// from their code (addresses above). None = stored as given (e.g.
+/// as Studio does. None = stored as given (e.g.
 /// Lighting.Brightness and ExposureCompensation
 /// store unclamped).
 pub fn setter_clamp(class: &str, prop: &str, v: f32) -> Option<f32> {
@@ -182,13 +183,10 @@ pub fn clock_time(v: f32) -> f32 {
     (v.clamp(0.0, CLOCK_TIME_MAX) * SECONDS_PER_HOUR).trunc() / SECONDS_PER_HOUR
 }
 pub const MAX_LIGHTS: usize = 256; // nearest lights drawn per frame
-pub const SHADOW_MAP_TEXELS: u32 = 2048;
-pub const SHADOW_EXTENT: f32 = 128.0; // studs: half-width of the sun's shadow box
-pub const SHADOW_DEPTH: f32 = 600.0; // studs: shadow box depth either side of its centre
-pub const SHADOW_PCF_TEXELS: f32 = 1.0; // shadow filter spacing (3×3 taps)
+pub const SHADOW_MAP_TEXELS: u32 = 2048; // the depth map the sun's cascades are drawn into one at a time: the largest tile (SUN_CASCADE_TILES)
 pub const SHADOW_LOD_SCALE: f32 = 2.0; // casters can be this much smaller on screen than drawn parts before they're skipped
 pub const ENV_SPEC_ROUGHNESS: f32 = 0.5; // the roughness of every material for the sky reflection and the sun highlight (Studio: 0.089 + 0.911 × a per-material vertex value, VARYING4.w; the table isn't read yet; estimated from Place B Newer's N1 road)
-pub const ENV_SPEC_LOD_SPAN: f32 = 5.0; // the sky reflection reads the skybox at mip (coarsest − this × (1 − roughness)); Studio's part FS reads its prefiltered cube at roughness × 5 (shaders_glsl3.pack, ShadowMap part FS)
+pub const ENV_SPEC_LOD_SPAN: f32 = 5.0; // the sky reflection reads the skybox at mip (coarsest − this × (1 − roughness)); Studio's part FS reads its prefiltered cube at roughness × 5 (ShadowMap part FS)
 pub const ENV_DIFFUSE_GAIN: f32 = 1.0; // EnvironmentDiffuseScale × skybox irradiance × this (calibrated against Studio)
 pub const TEXTURE_ANISOTROPY: u16 = 8; // part textures: mipmapped, trilinear, 8× anisotropic, no mip bias. Studio binds material maps with filter 2 and anisotropy 0 = the device default, which a running offline Studio holds at 8; Vulkan's sampler has mipLodBias 0
 pub const LIGHT_TEST_TOLERANCE: u8 = 8; // self-test: lit colours within this many levels (0-255) of Studio's
@@ -386,7 +384,7 @@ pub const WATER_COLOR_DEFAULT: [u8; 3] = [12, 84, 92]; // Terrain.WaterColor def
 pub const WATER_TRANSPARENCY_DEFAULT: f32 = 0.3; // Terrain.WaterTransparency default
 pub const WATER_REFLECTANCE_DEFAULT: f32 = 1.0; // Terrain.WaterReflectance default
 // Round 24 water (water.rs, after Studio's SmoothWater FS / VS HQ). The
-// shader's forms are read from shaders_glsl3.pack; these rates and scales
+// shader's forms follow Studio's; these rates and scales
 // feed its CB3 constants, which the engine sets, and are estimated.
 pub const WATER_WAVE_SIZE_DEFAULT: f32 = 0.15; // Terrain.WaterWaveSize default
 pub const WATER_WAVE_SPEED_DEFAULT: f32 = 10.0; // Terrain.WaterWaveSpeed default
@@ -549,14 +547,14 @@ pub const SKY_LEVELS: [f32; 255] = [
     21.0, 0.0, 0.0, 0.0, 0.147059, 0.147059, 0.147059, 0.0, 0.0, 0.0, 0.2, 0.2, 0.2, 0.145455, 0.35,
 ];
 // Part lighting from Studio's HQ part shaders (DefaultUnifiedFlatOpaqueFS /
-// TiledFS variant 3, shaders_glsl3.pack) and the cube build.
+// TiledFS variant 3) and the cube build.
 pub const ENV_ROUGH_BASE: f32 = 0.089; // shader roughness = this + ENV_ROUGH_SCALE × the material's (SpecularMap .y / vertex value)
 pub const ENV_ROUGH_SCALE: f32 = 0.911;
 pub const ENV_SPEC_MIP_PER_ROUGHNESS: f32 = 5.0; // prefiltered env cube read at mip roughness × this
 pub const ENV_REFLECT_UP_GAIN: f32 = 1.588235; // spec env × mix(SkyGradientBottom, Top, clamp(R.y × this, 0, 1))
 pub const ENV_INDOOR_FACES: &str = "rbxasset://textures/sky/indoor512_"; // + bk/dn/ft/lf/rt/up .tex: the indoor environment (PrefilteredEnvIndoorTexture; its irradiance × EnvironmentDiffuseScale is AmbientCube[6..11])
 pub const ENV_SPEC_FADE: f32 = 0.0008; // the sky reflection fades out with distance: s × clamp(1 − studs × this) (CB0[28].y, RefractionBias_FadeDistance_GlowFactor, read from a running Studio's constant buffer)
-// Screen-space ambient occlusion, as Studio's SSAO passes (shaders_glsl3.pack
+// Screen-space ambient occlusion, as Studio's SSAO passes (
 // SSAODepthDownFS, SSAOFS, SSAOBlurX/YFS, SSAOCompositFS; LinearizeDepthFS;
 // setup). On by default in Studio's edit view (calibration: a white
 // block on a white floor lit by Ambient alone reads 125 at the contact against
@@ -580,9 +578,9 @@ pub const LAMP1_GAIN: f32 = 0.36; // Lamp1 = this × Brightness × mix(k², 0, C
 pub const LAMP_COLOR_MEAN: f32 = 0.3333; // the colour mix's channel mean factor
 pub const LAMP_MOON_BELOW_SUN_Y: f32 = -0.3; // Lamp0 comes from the moon (−sun) once the sun is lower than this
 
-// Local light shadows (Future / Realistic), from Studio's own code (2026-11-05;
-// Studio measurements "Local light shadows"): DefaultUnifiedTiledFS variant 8
-// (Vulkan pack) and a running Studio's light / shadow buffers.
+// Local light shadows (Future / Realistic), as Studio (2026-11-05;
+// Studio measurements "Local light shadows"): its tiled part shading and a
+// running Studio's light / shadow buffers.
 pub const LOCAL_LIGHT_DIST: f32 = 580.0; // Globals.localLightDist: lights within this of the camera are shadow-mapped (beyond: Studio's voxel light map)
 pub const HYBRID_LERP_SLOPE: f32 = 0.05; // Globals.hybridLerpSlope: the hand-off from shadowed to voxel light over 1/this studs
 pub const EVSM_POS_EXP: f32 = 5.54; // Globals.evsmPosExp
@@ -594,6 +592,17 @@ pub const LSHADOW_NEAR: f32 = 0.1; // face near plane (far = Range)
 pub const LSHADOW_ATLAS: u32 = 2048; // rustudio's atlas side (Studio packs faces at 3/32 × 1/20 of its atlas; its size isn't read yet)
 pub const LSHADOW_FACE: u32 = 192; // pixels per face (estimated: Studio's ratios fit 192 on a 2048-wide atlas)
 pub const LSHADOW_MAX_LIGHTS: usize = 16; // shadowed lights at once: (2048/192)² faces / 6 (Studio has 128 slots and shrinks faces as its atlas fills)
+// The sun's shadow cascades (sun_shadow.rs; docs/MECHANICS.md "Sun shadow cascades").
+pub const SUN_CASCADE_SPLITS: [f32; 5] = [1e-5, 20.0, 45.0, 140.0, 600.0]; // view depths the four cascades span
+pub const SUN_CASCADE_TILES: [u32; 4] = [384, 768, 1024, 2048]; // texels across each cascade's tile (a running Studio's atlas matrices)
+pub const SUN_CASCADE_SNAP: f32 = 8.0; // cascades 1..3 sit on a light-space grid of 2 × radius / this
+pub const SUN_CASCADE_PANCAKE: f32 = 64.0; // studs toward the sun a cascade's depth reaches beyond its sphere (a running Studio's matrices are 2 × radius + 64 deep)
+pub const SUN_CASCADE_CASTER_DEPTH: f32 = 2000.0; // studs toward the sun casters are gathered from
+pub const SUN_CASCADE_UP_FLIP: f32 = 0.7; // light space's up turns from +Y to +Z when the light's |y| reaches this
+pub const SHADOW_SOFTNESS_BLUR: [f32; 2] = [1.71, 0.05]; // the blur's reach in studs = ShadowSoftness × [0] + [1] (as Studio); also what a cascade's sphere gives up for the shader's test
+pub const SUN_SHADOW_ATLAS: [u32; 2] = [3200, 2048]; // rustudio's atlas for the four tiles (Studio shares a 4096 × 7680 one with the local lights)
+pub const SUN_CASCADE_ORIGINS: [[u32; 2]; 4] = [[2816, 1024], [2048, 1024], [2048, 0], [0, 0]]; // each tile's corner in that atlas
+pub const SUN_DIST: f32 = 580.0; // Globals.sunDist: the sun's map hands off to the voxel sun from here, over 1 / HYBRID_LERP_SLOPE studs
 pub const LIGHT_INNER: f32 = 0.71; // light record m1 = Range × 1000 + this: full brightness to this × Range (all lights read)
 
 // Part materials, from Studio's own code and memory (2026-11-05;
@@ -835,4 +844,7 @@ pub const GC_BUDGET: usize = 20_000; // unparented instances looked at per pass 
 pub const GC_CYCLE_PASSES: usize = 2; // collector passes a Luau GC cycle is stepped over (each steps heap / this KB; keeps weak instance values clearing on quiet scripts)
 pub const GC_STEP_MIN_KB: usize = 256; // least Luau GC work per collector pass
 pub const GC_STEP_MAX_KB: usize = 16 * 1024; // most Luau GC work per collector pass (bounds the pass's time on huge heaps)
+pub const GC_FRAME_MAX_KB: f64 = 200.0; // most Luau GC work in one frame: Studio's FInt LuaGcMaxKb (200; its per-frame LuauGc job clamps to it)
+pub const GC_IDLE_CYCLE_S: f64 = 8.0; // seconds a background Luau GC cycle is spread over while no new unparented instance shows up (only ones scripts still hold)
+pub const GC_BUSY_ORPHANS: usize = 64; // unparented instances arriving (or freed) between two collector passes from which the Luau GC is stepped at the fast rate
 pub const HUMANOID_COYOTE_S: f32 = 0.1; // a jump still takes off this long after walking off a ledge (Studio via an offline Studio, 2026-11-09: always within 0.04 s, sometimes to 0.10 s, never from 0.11 s, at WalkSpeed 16 and 8; Running turns Freefall ~0.11 s after the floor goes)

@@ -4,7 +4,7 @@
 //! SurfaceLight), the sky's faces, and the "sky visibility" map that decides
 //! how much OutdoorAmbient a point gets.
 
-use glam::{Mat4, Vec3};
+use glam::Vec3;
 use rbx_dom_weak::types::{Ref, Variant};
 
 use crate::camera::Camera;
@@ -276,6 +276,8 @@ pub struct FrameLighting {
     /// grid's sun channel flips it to the moon itself.
     pub sun_true: Vec3,
     pub shadows: bool,
+    /// Lighting.ShadowSoftness: the sun's shadow blur (sun_shadow.rs).
+    pub shadow_softness: f32,
 }
 
 /// Lighting's time-of-day sky levels for a ClockTime and
@@ -457,7 +459,7 @@ pub fn globals(
     let (ccb, ccc, ccs, cct) = fx.cc.unwrap_or((0.0, 0.0, 0.0, Vec3::ONE));
     // Light debug views read raw: no curve, colour correction or bloom,
     // so the screen is sqrt(light / 4).
-    let raw_debug = matches!(shade_debug().as_deref(), Some("light" | "local" | "sun" | "ambient" | "albedo"));
+    let raw_debug = matches!(shade_debug().as_deref(), Some("light" | "local" | "sun" | "ambient" | "albedo" | "shadowmap" | "voxel-sun" | "sky-raw"));
     let no_tone = no_tone || raw_debug;
     let bloom_i = if raw_debug { 0.0 } else { bloom_i };
     let fx_cc_on = fx.cc.is_some() && !raw_debug;
@@ -488,9 +490,11 @@ pub fn globals(
             bloom_thr,
             bloom_size,
             if shadows && light_irr > 0.0 { 1.0 } else { 0.0 },
-            mech::SHADOW_PCF_TEXELS,
+            0.0,
         ],
-        shadow_vp: mat_cols(Mat4::IDENTITY),
+        sun_casc: [[[0.0; 4]; 4]; 4],
+        sun_sphere: [[0.0; 4]; 4],
+        sun_rect: [[0.0; 4]; 4],
         // z: RUSTUDIO_SHADE_DEBUG=normals|albedo shows those instead of light.
         sky_rot: [
             if stars { 1.0 } else { 0.0 },
@@ -504,6 +508,9 @@ pub fn globals(
                 Some("local") => 6.0,
                 Some("sun") => 7.0,
                 Some("ambient") => 8.0,
+                Some("shadowmap") => 9.0,
+                Some("voxel-sun") => 10.0,
+                Some("sky-raw") => 11.0,
                 _ => 0.0,
             },
             0.0,
@@ -553,7 +560,7 @@ pub fn globals(
         // Only ShadowMap / Future part shaders reflect the sky and draw the
         // sun's highlight (Voxel / Compatibility's FS uses the scale for
         // the sun highlight only).
-        env_spec: if mech::TECHNOLOGY_QUALITY.contains(&tech) {
+        env_spec: if !soft_style(d) || mech::TECHNOLOGY_QUALITY.contains(&tech) {
             [env_specular, mech::ENV_SPEC_ROUGHNESS, 1.0, 0.0]
         } else {
             [0.0, mech::ENV_SPEC_ROUGHNESS, 0.0, 0.0]
@@ -585,34 +592,8 @@ pub fn globals(
         sun: light_dir,
         sun_true: sun,
         shadows: shadows && light_irr > 0.0,
+        shadow_softness: f32_of(get("ShadowSoftness")).unwrap_or(mech::SHADOW_SOFTNESS).clamp(0.0, mech::SHADOW_SOFTNESS_MAX),
     }
-}
-
-/// The sun's shadow map projection: an orthographic box of
-/// SHADOW_EXTENT studs around a point ahead of the camera, snapped to its
-/// texels so the edges don't crawl as the camera moves.
-pub fn shadow_matrix(cam: &Camera, sun: Vec3, texels: u32) -> Mat4 {
-    let centre = cam.pos + cam.forward() * (mech::SHADOW_EXTENT * 0.5);
-    let up = if sun.y.abs() > 0.99 { Vec3::Z } else { Vec3::Y };
-    let view = Mat4::look_at_rh(Vec3::ZERO, -sun, up);
-    let e = mech::SHADOW_EXTENT;
-    // Snap the centre in light space.
-    let c = view.transform_point3(centre);
-    let step = 2.0 * e / texels as f32;
-    let snapped = Vec3::new(
-        (c.x / step).round() * step,
-        (c.y / step).round() * step,
-        c.z,
-    );
-    let proj = Mat4::orthographic_rh(
-        snapped.x - e,
-        snapped.x + e,
-        snapped.y - e,
-        snapped.y + e,
-        -snapped.z - mech::SHADOW_DEPTH,
-        -snapped.z + mech::SHADOW_DEPTH,
-    );
-    proj * view
 }
 
 // ------------------------------------------------------------ local lights

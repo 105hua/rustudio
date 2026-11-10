@@ -64,7 +64,7 @@ error.
 ## Rules that matter when drawing
 
 - `MaterialService.Use2022Materials` picks the 2022 table; false picks the
-  pre-2022 (legacy) table. Both are in the exe.
+  pre-2022 (legacy) table. Studio ships both.
 - On top of the table: per-material `MaterialService` overrides, then
   `MaterialVariant`s (each variant is itself a texture pack plus a tiling
   scale).
@@ -79,4 +79,30 @@ error.
 
 ## Status
 
-Implemented (round 9, `src/matpack.rs`): the three material tables are read from Studio (pre-2022, 2022 and 4K 2022; ids and colours with their addresses in `MECHANICS.md`), packs and maps come from the endpoint above and are cached by id, the maps are decoded into texture arrays and drawn repeating every 8 studs, as Studio's part shader does. Not drawn yet: the second (detail normal) pack, and roughness / metalness / height in the lighting. The self-test step "material-packs" checks Brick, Wood, Concrete, Metal, Grass, Slate and Fabric. Plastic's 2022 detail pack (9475422736) answers 401 without a login. 
+Implemented (round 9, `src/matpack.rs`): the three material tables are read from Studio (pre-2022, 2022 and 4K 2022; ids and colours in `MECHANICS.md`), packs and maps come from the endpoint above and are cached by id, the maps are decoded into texture arrays and drawn repeating every 8 studs, as Studio's part shader does. Not drawn yet: the second (detail normal) pack, and roughness / metalness / height in the lighting. The self-test step "material-packs" checks Brick, Wood, Concrete, Metal, Grass, Slate and Fabric. Plastic's 2022 detail pack (9475422736) answers 401 without a login. 
+
+## Pre-2022 Wang correction (2026-11-09)
+
+Texture-pack `<tiling>` is a layout enum (integer range 0..2), not a repeat
+multiplier. Legacy WoodPlanks and Grass both store 2; copying it into UV
+scale doubled their frequency. Loaded maps now leave density to the
+per-material UV scale and shader textureTiling. Realistic LightingStyle also
+selects HQ material normals when the old Technology flag is absent; the
+complete Studio quality selector remains unresolved. Neither pack has
+height; their relief comes from normals. Release build and three matpack
+tests pass. Exact camera/pixel parity remains unverified.
+
+### Play-camera and normal-frame continuation
+
+A reusable FOV-70 Scriptable camera probe is in
+`tools/parity_probe/materials/`. The built-in material normal frame now uses
+the explicit UV inverse, as SurfaceAppearance already did. The old
+cross-product shortcut reversed relief for downward screen Y. As in Studio,
+the vertex stage supplies a rotated tangent and the fragment stage uses
+`T*x + cross(N,T)*y + N*z`. Wood density (.125 × 1), Wang quarter-atlas
+coordinates, source-PNG RG normals, raw² colour and alpha tint mask were
+audited; no additional fitted texture-scale or albedo-strength changes were
+justified. Wood nail metalness is constant across the map; grayscale nail
+colour comes from the diffuse alpha tint mask, with a dark rim and normal
+relief. Grain contrast is close, but mean wood brightness and random UV
+phase still differ; do not claim exact pixel parity.

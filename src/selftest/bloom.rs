@@ -25,6 +25,10 @@ const STUDIO_PROFILE: [(f32, f32); 7] = [
     (16.0, 32.1),
     (20.0, 11.3),
 ];
+/// The view size of that capture (checks/compare/bloom/studio). Studio's
+/// glow is a pyramid whose depth follows the view's size, so
+/// the step renders the view at exactly this size.
+const STUDIO_VIEW: [u32; 2] = [863, 675];
 /// Studio's halo green / red six pixels out (the orange keeps its hue).
 const STUDIO_GREEN_SHARE: f32 = 0.77;
 const PROFILE_TOLERANCE: f32 = 14.0;
@@ -107,6 +111,7 @@ fn build(ed: &mut Editor) {
 /// The calibration view (held every frame: an earlier step may leave the
 /// camera orbiting or a key that flies it).
 fn place_camera(ed: &mut Editor) {
+    ed.view_render_size = Some(STUDIO_VIEW);
     ed.cam.mode = crate::camera::CameraMode::Fly;
     ed.cam.basis = None;
     ed.cam.pos = CAM;
@@ -229,7 +234,11 @@ impl SelfTest {
                 image::ExtendedColorType::Rgba8,
             );
         }
-        let rect = ed.viewport_rect;
+        // (the view was rendered at STUDIO_VIEW pixels: project onto that)
+        let rect = egui::Rect::from_min_size(
+            ed.viewport_rect.min,
+            egui::vec2(STUDIO_VIEW[0] as f32, STUDIO_VIEW[1] as f32),
+        );
         let mut notes = Vec::new();
         let mut ok = false;
         match (&frame, ed.cam.project(rect, BALL)) {
@@ -260,8 +269,10 @@ impl SelfTest {
                     && worst <= PROFILE_TOLERANCE
                     && (green - STUDIO_GREEN_SHARE).abs() <= 0.08;
                 notes.push(format!(
-                    "ball radius {:.1} px; largest rise {rise:.1} (allowed {MAX_RISE}), kink {kink:.1} ({MAX_KINK}), petals {:.1} px ({MAX_PETALS}); Studio's profile {} (largest difference {worst:.1}, allowed {PROFILE_TOLERANCE}); halo green / red {green:.2} vs Studio {STUDIO_GREEN_SHARE}",
+                    "ball radius {:.1} px in a {}x{} view; largest rise {rise:.1} (allowed {MAX_RISE}), kink {kink:.1} ({MAX_KINK}), petals {:.1} px ({MAX_PETALS}); Studio's profile {} (largest difference {worst:.1}, allowed {PROFILE_TOLERANCE}); halo green / red {green:.2} vs Studio {STUDIO_GREEN_SHARE}",
                     p.radius,
+                    frame.0,
+                    frame.1,
                     p.petals,
                     vs.join(", ")
                 ));
@@ -277,6 +288,7 @@ impl SelfTest {
             ),
         });
         ed.show_grid = true;
+        ed.view_render_size = None;
         ed.new_place();
         self.r4.phase = 116;
         false

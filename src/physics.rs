@@ -15,6 +15,10 @@
 
 #[path = "physics_rope.rs"]
 mod rope;
+#[path = "physics_client.rs"]
+pub mod client;
+#[path = "physics_joints.rs"]
+mod joints;
 
 use std::collections::{HashMap, HashSet};
 use std::sync::Mutex;
@@ -194,7 +198,23 @@ fn collider(sig: &Sig) -> (rp::ColliderBuilder, rp::Pose, bool) {
     };
     let mut offset = rp::Pose::IDENTITY;
     let mut pending = false;
-    let mesh = mesh_shape(sig);
+    // A moving CanCollide=false mesh only reports touches (it never pushes
+    // anything): it touches as its convex hull (reduced to 50 extreme
+    // points), not its decomposition. A compound of convex pieces on a moving
+    // body is re-bounded piece by piece every step: Place B's 25–60 client
+    // tumbleweeds (an 11-hull non-colliding mesh each) cost ~10 ms a step
+    // that way, 0.6 ms as hulls.
+    let mesh = if !sig.collide
+        && !sig.anchored
+        && sig.mesh.is_some()
+        && sig.fidelity != crate::collision::FIDELITY_BOX
+    {
+        let mut hull = sig.clone();
+        hull.fidelity = crate::collision::FIDELITY_HULL;
+        mesh_shape(&hull).map(|(s, p)| (crate::collision::touch_hull(&s), p))
+    } else {
+        mesh_shape(sig)
+    };
     let b = match sig.kind {
         _ if mesh.is_some() => {
             let (shape, p) = mesh.expect("mesh shape");
@@ -244,11 +264,63 @@ fn collider(sig: &Sig) -> (rp::ColliderBuilder, rp::Pose, bool) {
     (b, offset, pending)
 }
 
+/// Whether a joint or constraint is on. WeldConstraint never saves or
+/// replicates `Enabled`: a file and the Team Create wire carry `State`
+/// (Studio saves 3 for an enabled weld and 0 for a disabled one; the live
+/// wire sends 1), so bit 0 is Enabled. A script's write lands in `Enabled`.
+pub fn joint_enabled(doc: &Document, j: Ref) -> bool {
+    let Some(i) = doc.dom.get_by_ref(j) else { return false };
+    match i.properties.get(&ustr("Enabled")) {
+        Some(Variant::Bool(b)) => return *b,
+        _ => {}
+    }
+    match i.properties.get(&ustr("State")) {
+        Some(Variant::Int32(s)) if i.class == "WeldConstraint" => s & 1 != 0,
+        _ => !matches!(doc.prop(j, "Enabled"), Some(Variant::Bool(false))),
+    }
+}
+
+/// The part an attachment belongs to (its nearest BasePart ancestor).
+pub fn attachment_part(doc: &Document, a: Ref) -> Option<Ref> {
+    let mut cur = doc.dom.get_by_ref(a)?.parent();
+    while let Some(i) = doc.dom.get_by_ref(cur) {
+        if doc::is_a(&i.class, "BasePart") {
+            return Some(cur);
+        }
+        cur = i.parent();
+    }
+    None
+}
+
+/// The two parts a rigid joint holds: Part0 / Part1 (alias-aware: files and
+/// the live wire keep a WeldConstraint's as Part0Internal / Part1Internal),
+/// or a RigidConstraint's attachments' parts.
+pub fn joint_parts(doc: &Document, j: Ref) -> Option<(Ref, Ref)> {
+    let class = doc.class_of(j)?;
+    let pr = |k: &str| match doc.prop(j, k) {
+        Some(Variant::Ref(x)) if x.is_some() => Some(x),
+        _ => None,
+    };
+    if class == "RigidConstraint" {
+        return Some((
+            attachment_part(doc, pr("Attachment0")?)?,
+            attachment_part(doc, pr("Attachment1")?)?,
+        ));
+    }
+    Some((pr("Part0")?, pr("Part1")?))
+}
+
+/// In the client world a fixed collider moved by less than this (studs, and
+/// 1 − |q·q'|) stays put; the server's follow every write exactly.
+pub(super) const FOLLOWER_EPS_POS: f32 = 0.05;
+pub(super) const FOLLOWER_EPS_ROT: f32 = 1e-6;
+
 /// Joint classes that hold two parts rigidly together (one assembly).
-fn is_rigid_joint(class: &str) -> bool {
+pub fn is_rigid_joint(class: &str) -> bool {
     matches!(
         class,
-        "WeldConstraint"
+        "RigidConstraint"
+            | "WeldConstraint"
             | "Weld"
             | "ManualWeld"
             | "Motor6D"
@@ -803,10 +875,10 @@ pub struct StepResult {
 
 pub struct Physics {
     world: rp::PhysicsWorld,
-    parts: HashMap<Ref, PartBody>,
+    parts: rustc_hash::FxHashMap<Ref, PartBody>,
     asms: HashMap<u32, Assembly>,
     next_asm: u32,
-    by_collider: HashMap<rp::ColliderHandle, Ref>,
+    by_collider: rustc_hash::FxHashMap<rp::ColliderHandle, Ref>,
     /// Rigid joints: joint → (Part0, Part1), and part → its joints.
     joints: HashMap<Ref, (Ref, Ref)>,
     adj: HashMap<Ref, Vec<Ref>>,
@@ -814,6 +886,17 @@ pub struct Physics {
     accum: f32,
     /// Parts the physics leaves alone (the character's own parts).
     pub skip: HashSet<Ref>,
+    /// Parts another simulation moves (the client's copies of what the
+    /// server simulates): fixed colliders here, moved by their CFrame
+    /// writes (see physics_client.rs).
+    external: HashSet<Ref>,
+    /// Bumped whenever a dynamic body is added or removed.
+    dyn_version: u64,
+    /// How far a fixed collider may lag its part's CFrame (studs, rotation):
+    /// exact on the server, FOLLOWER_EPS_* in the client world.
+    pub(super) follower_eps: (f32, f32),
+    /// Parts built since last taken (recorded only when Some: the client).
+    fresh: Option<Vec<Ref>>,
     /// Parts to re-check on the next sync (e.g. after `skip` changed).
     queued: HashSet<Ref>,
     /// Mesh parts colliding with a stand-in until their decomposition is ready.
@@ -849,6 +932,12 @@ pub struct Physics {
     movers: HashMap<Ref, Mover>,
     /// RopeConstraints seen under Workspace (apply_ropes walks only these).
     pub(super) ropes: HashSet<Ref>,
+    /// Hinge / BallSocket / Prismatic / … constraints under Workspace and
+    /// the joints made for them (physics_joints.rs).
+    joint_cons: HashSet<Ref>,
+    live_joints: HashMap<Ref, joints::LiveJoint>,
+    /// The fixed body anchored constraint ends hang on.
+    ground: Option<rp::RigidBodyHandle>,
     /// Bodies that carry mover forces from the last step (reset each step).
     pushed: HashSet<rp::RigidBodyHandle>,
     /// Bodies driven by an unlimited LinearVelocity, for its friction
@@ -882,6 +971,12 @@ fn new_world(gravity: f32) -> rp::PhysicsWorld {
 
 impl Physics {
     pub fn new(doc: &mut Document) -> Self {
+        Self::new_skipping(doc, HashSet::new())
+    }
+
+    /// A world that leaves `skip` out from the start (the client's: its
+    /// replicated parts come in only near its own bodies, physics_client.rs).
+    pub fn new_skipping(doc: &mut Document, skip: HashSet<Ref>) -> Self {
         let gravity = doc
             .workspace()
             .and_then(|w| f32_of(doc.prop(w, "Gravity")))
@@ -920,15 +1015,19 @@ impl Physics {
             pending_spin: HashMap::new(),
             client_over: HashMap::new(),
             server_moved: HashSet::new(),
-            parts: HashMap::new(),
+            parts: Default::default(),
             asms: HashMap::new(),
             next_asm: 0,
-            by_collider: HashMap::new(),
+            by_collider: Default::default(),
             joints: HashMap::new(),
             adj: HashMap::new(),
             collector: Collector::default(),
             accum: 0.0,
             skip: HashSet::new(),
+            external: HashSet::new(),
+            dyn_version: 0,
+            follower_eps: (1e-5, 1e-9),
+            fresh: None,
             queued: HashSet::new(),
             mesh_pending: HashMap::new(),
             union_offsets: HashMap::new(),
@@ -939,6 +1038,9 @@ impl Physics {
             rebuilt: 0,
             movers: HashMap::new(),
             ropes: HashSet::new(),
+            joint_cons: HashSet::new(),
+            live_joints: HashMap::new(),
+            ground: None,
             pushed: HashSet::new(),
             lv_track: HashMap::new(),
             terrain: None,
@@ -949,6 +1051,7 @@ impl Physics {
             groups_seen: 0,
             char_group: crate::collision_groups::DEFAULT.to_string(),
         };
+        p.skip = skip;
         // Start reading the journal from here.
         let _ = doc.marks_for(doc::Reader::Physics);
         p.reconcile(doc);
@@ -973,11 +1076,15 @@ impl Physics {
         self.world = new_world(self.gravity);
         self.parts.clear();
         self.asms.clear();
+        self.dyn_version += 1;
         self.by_collider.clear();
         self.joints.clear();
         self.adj.clear();
         self.movers.clear();
         self.ropes.clear();
+        self.joint_cons.clear();
+        self.live_joints.clear();
+        self.ground = None;
         self.pushed.clear();
         self.terrain_colliders.clear();
         self.terrain_tris = 0;
@@ -988,8 +1095,10 @@ impl Physics {
         let mut seeds = HashSet::new();
         for i in doc.dom.descendants_of(ws) {
             let r = i.referent();
-            if i.class == "RopeConstraint" {
+            if i.class == "RopeConstraint" || i.class == "RodConstraint" {
                 self.ropes.insert(r);
+            } else if joints::is_joint_constraint(&i.class) {
+                self.joint_cons.insert(r);
             }
             if is_rigid_joint(&i.class) {
                 self.read_joint(doc, ws, r);
@@ -1043,17 +1152,12 @@ impl Physics {
         } else {
             class.is_some_and(|c| is_rigid_joint(&c))
         };
-        let live = rigid
-            && doc.is_ancestor(ws, j)
-            && !matches!(doc.prop(j, "Enabled"), Some(Variant::Bool(false)));
+        let live = rigid && doc.is_ancestor(ws, j) && joint_enabled(doc, j);
         if live {
             let parts = if animc {
                 crate::rig::joint_frames(doc, j).map(|(a, b, _, _)| (a, b))
             } else {
-                match (doc.prop(j, "Part0"), doc.prop(j, "Part1")) {
-                    (Some(Variant::Ref(a)), Some(Variant::Ref(b))) => Some((a, b)),
-                    _ => None,
-                }
+                joint_parts(doc, j)
             };
             if let Some((a, b)) = parts
             {
@@ -1084,6 +1188,7 @@ impl Physics {
         self.by_collider.remove(&pb.collider);
         self.world.remove_collider(pb.collider);
         if let Some(id) = pb.asm {
+            self.dyn_version += 1;
             if let Some(a) = self.asms.get_mut(&id) {
                 a.parts.retain(|x| *x != r);
                 if a.parts.is_empty() {
@@ -1126,6 +1231,9 @@ impl Physics {
         for r in &all {
             if self.wanted(doc, ws, *r) {
                 if let Some(mut v) = part_sig(doc, *r) {
+                    if self.external.contains(r) {
+                        v.1.anchored = true;
+                    }
                     // A part the client moved or resized collides as the client has it.
                     if let Some((xf, size)) = self.client_over.get(r) {
                         if v.1.anchored {
@@ -1172,12 +1280,22 @@ impl Physics {
                     self.mesh_pending.insert(*r, (m, sig.fidelity));
                 }
                 let b = b.collision_groups(self.part_groups(doc, *r));
+                // Where the client has it (follow_client): only the
+                // character's queries see it.
+                let b = if self.client_over.contains_key(r) {
+                    b.active_collision_types(rp::ActiveCollisionTypes::empty())
+                } else {
+                    b
+                };
                 let c = self
                     .world
                     .insert_collider(b.position(pose(xf) * offset), None);
                 self.by_collider.insert(c, *r);
                 if sig.mesh.as_deref().is_some_and(|m| crate::mesh_bvh::union_offset(m) != Vec3::ZERO) {
                     self.union_offsets.insert(c, offset);
+                }
+                if let Some(f) = self.fresh.as_mut() {
+                    f.push(*r);
                 }
                 self.parts.insert(
                     *r,
@@ -1211,6 +1329,7 @@ impl Physics {
             rb = rb.lock_rotations();
         }
         let body = self.world.insert_body(rb.build());
+        self.dyn_version += 1;
         let id = self.next_asm;
         self.next_asm += 1;
         let inv = root_pose.inverse();
@@ -1226,6 +1345,9 @@ impl Physics {
                 .world
                 .insert_collider(b.position(local * offset), Some(body));
             self.by_collider.insert(c, *r);
+            if let Some(f) = self.fresh.as_mut() {
+                f.push(*r);
+            }
             self.parts.insert(
                 *r,
                 PartBody {
@@ -1301,12 +1423,14 @@ impl Physics {
             if !same {
                 self.client_over.insert(s, (cx, csig.size));
                 if near(had, csig.size) {
+                    self.set_followed(s, true);
                     self.teleport(s, &cx);
                 } else {
                     resized.insert(s);
                 }
             } else if self.client_over.remove(&s).is_some() {
                 if near(had, ssig.size) {
+                    self.set_followed(s, false);
                     self.teleport(s, &sx);
                 } else {
                     resized.insert(s);
@@ -1316,6 +1440,24 @@ impl Physics {
         if !resized.is_empty() {
             if let Some(ws) = Self::workspace_of(server) {
                 self.build(server, ws, resized);
+            }
+        }
+    }
+
+    /// A collider placed where the client has its part stays out of the
+    /// server's contacts: in Roblox the server never sees a client-side
+    /// move, so its bodies can't react to one. The character (simulated
+    /// here with queries, which still see it) stands on it as the client's
+    /// would. Without this, a replicated part a LocalScript moves through
+    /// the server's resting bodies shoves them awake (Place E fixture: its spawn
+    /// lantern moved on the client woke the server's ~580 book parts every
+    /// frame, ≈1250 contact pairs, 50–90 ms steps).
+    fn set_followed(&mut self, r: Ref, on: bool) {
+        let Some(pb) = self.parts.get(&r) else { return };
+        if let Some(c) = self.world.colliders.get_mut(pb.collider) {
+            let want = if on { rp::ActiveCollisionTypes::empty() } else { rp::ActiveCollisionTypes::default() };
+            if c.active_collision_types() != want {
+                c.set_active_collision_types(want);
             }
         }
     }
@@ -1493,8 +1635,10 @@ impl Physics {
         terrain: &mut bool,
     ) {
         let class = doc.class_of(r);
-        if class.is_some_and(|c| c == "RopeConstraint") {
+        if class.is_some_and(|c| c == "RopeConstraint" || c == "RodConstraint") {
             self.ropes.insert(r);
+        } else if class.is_some_and(|c| joints::is_joint_constraint(&c)) {
+            self.joint_cons.insert(r);
         }
         if self.movers.contains_key(&r) || class.is_some_and(|c| is_mover_class(&c)) {
             movers.insert(r);
@@ -2107,9 +2251,22 @@ impl Physics {
         match pb.asm.and_then(|id| self.asms.get(&id)) {
             None => {
                 // Fixed collider: keep the shape's own turn (cylinders).
+                // A pose within `follower_eps` of where the collider is isn't
+                // set again: setting it flags the collider modified (a
+                // broad-phase leaf update every step). Place B's client moves
+                // ~850 far-off NPC limbs by 0.0001–0.03 studs every frame.
+                // Compared against the collider itself, so a slow real move
+                // still lands once it passes the tolerance.
                 let shape_offset = self.shape_offset(pb.collider);
+                let (ep, er) = self.follower_eps;
                 if let Some(c) = self.world.colliders.get_mut(pb.collider) {
-                    c.set_position(target * shape_offset);
+                    let want = target * shape_offset;
+                    let cur = *c.position();
+                    let same = (cur.translation - want.translation).length_squared() < ep * ep
+                        && cur.rotation.dot(want.rotation).abs() > 1.0 - er;
+                    if !same {
+                        c.set_position(want);
+                    }
                 }
             }
             Some(a) => {
@@ -2269,11 +2426,21 @@ impl Physics {
         let h = 1.0 / mech::PHYSICS_HZ;
         self.accum = (self.accum + dt).min(h * mech::MAX_PHYSICS_STEPS as f32);
         let _solve = crate::bench::scope("physics_solve");
+        let jsc = crate::bench::scope("ph_joints");
+        self.apply_joints(doc);
+        drop(jsc);
         while self.accum >= h - 1e-6 {
+            let msc = crate::bench::scope("ph_movers");
             self.apply_movers(doc);
             self.apply_drags(doc.id);
+            drop(msc);
+            let rsc = crate::bench::scope("ph_ropes_springs");
             self.apply_ropes(doc, h);
+            self.apply_springs(doc, h);
+            drop(rsc);
+            let wsc = crate::bench::scope("ph_world_step");
             self.world.step_with_events(&(), &self.collector);
+            drop(wsc);
             // Stats.ContactsCount: collider pairs touching after the step.
             crate::runtime::domains::services::perf::set_contacts(doc.id, self.world.narrow_phase.contact_pairs().filter(|p| p.has_any_active_contact()).count());
             self.track_velocity_constraints();
@@ -2578,6 +2745,22 @@ impl Physics {
                 }
             }
         }
+        // AssemblyAngularVelocity writes replace the spin (a part made
+        // this frame starts still, so the whole value waits as a delta).
+        for (r, w) in live::take_spin_sets(doc_id) {
+            if !w.is_finite() {
+                continue;
+            }
+            if !self.parts.contains_key(&r) {
+                self.pending_spin.insert(r, (w, 1));
+                continue;
+            }
+            if let Some(b) = self.body_of(r).and_then(|body| self.world.bodies.get_mut(body)) {
+                if b.is_dynamic() {
+                    b.set_angvel(rv(w), true);
+                }
+            }
+        }
     }
 
     /// BodyPosition / RocketPropulsion ReachedTarget (Studio 0.705): a
@@ -2714,6 +2897,8 @@ pub mod live {
     struct Shared {
         stats: HashMap<u64, Stats>,
         spins: HashMap<u64, Vec<(Ref, Vec3)>>,
+        /// AssemblyAngularVelocity writes: the assembly's spin becomes this.
+        spin_sets: HashMap<u64, Vec<(Ref, Vec3)>>,
         reached: HashMap<u64, Vec<Ref>>,
         /// RocketPropulsion fired: None flying, Some(point) hovering.
         rockets: HashMap<Ref, Option<Vec3>>,
@@ -2765,6 +2950,14 @@ pub mod live {
         sh.stats.insert(to, copy);
     }
 
+    /// The client's own simulation on top of the mirror (Play): its
+    /// parts' angular velocities and centres of mass (physics_client.rs).
+    pub fn overlay_spins(doc: u64, spins: impl IntoIterator<Item = (Ref, (Vec3, Vec3))>) {
+        let mut sh = shared();
+        let st = sh.stats.entry(doc).or_default();
+        st.spin.extend(spins);
+    }
+
     pub fn with_stats<R>(doc: u64, f: impl FnOnce(&Stats) -> R) -> Option<R> {
         shared().stats.get(&doc).map(f)
     }
@@ -2775,6 +2968,16 @@ pub mod live {
 
     pub(super) fn take_spins(doc: u64) -> Vec<(Ref, Vec3)> {
         shared().spins.remove(&doc).unwrap_or_default()
+    }
+
+    /// A script set a part's AssemblyAngularVelocity (its assembly spins at
+    /// `w` from the next step; an anchored part keeps the property instead).
+    pub fn queue_spin_set(doc: u64, r: Ref, w: Vec3) {
+        shared().spin_sets.entry(doc).or_default().push((r, w));
+    }
+
+    pub(super) fn take_spin_sets(doc: u64) -> Vec<(Ref, Vec3)> {
+        shared().spin_sets.remove(&doc).unwrap_or_default()
     }
 
     pub(super) fn push_reached(doc: u64, v: Vec<Ref>) {
@@ -4173,5 +4376,40 @@ mod tests {
         doc.mark_tree(w);
         p.sync(&mut doc);
         assert_eq!(p.counts(), (1, 3));
+    }
+
+    /// A live Team Create place (and a file) keeps a WeldConstraint's parts
+    /// as Part0Internal / Part1Internal and its Enabled as State: Studio
+    /// saves 3 enabled / 0 disabled, the live wire sends 1 (Place E's back rod
+    /// fell apart when only Part0 / Enabled were read).
+    #[test]
+    fn weld_constraint_internal_parts_and_state() {
+        let mut doc = Document::new_place();
+        let ws = doc.workspace().unwrap();
+        let a = doc.dom.insert(ws, part("A", Vec3::new(0.0, 30.0, 0.0), false));
+        let b = doc.dom.insert(ws, part("B", Vec3::new(2.0, 30.0, 0.0), false));
+        let c = doc.dom.insert(ws, part("C", Vec3::new(4.0, 30.0, 0.0), false));
+        let w1 = doc.dom.insert(a, InstanceBuilder::new("WeldConstraint")
+            .with_property("Part0Internal", a).with_property("Part1Internal", b)
+            .with_property("State", 1i32));
+        let w0 = doc.dom.insert(a, InstanceBuilder::new("WeldConstraint")
+            .with_property("Part0Internal", b).with_property("Part1Internal", c)
+            .with_property("State", 0i32));
+        assert!(joint_enabled(&doc, w1));
+        assert!(!joint_enabled(&doc, w0));
+        assert_eq!(joint_parts(&doc, w1), Some((a, b)));
+        let p = Physics::new(&mut doc);
+        assert_eq!(p.counts().0, 2, "A+B welded, C alone");
+        // A RigidConstraint joins its attachments' parts.
+        let mut doc = Document::new_place();
+        let ws = doc.workspace().unwrap();
+        let a = doc.dom.insert(ws, part("A", Vec3::new(0.0, 30.0, 0.0), false));
+        let b = doc.dom.insert(ws, part("B", Vec3::new(2.0, 30.0, 0.0), false));
+        let a0 = doc.dom.insert(a, InstanceBuilder::new("Attachment"));
+        let a1 = doc.dom.insert(b, InstanceBuilder::new("Attachment"));
+        doc.dom.insert(a, InstanceBuilder::new("RigidConstraint")
+            .with_property("Attachment0", a0).with_property("Attachment1", a1));
+        let p = Physics::new(&mut doc);
+        assert_eq!(p.counts().0, 1, "one assembly");
     }
 }

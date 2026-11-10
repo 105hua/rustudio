@@ -291,6 +291,11 @@ unsafe extern "C-unwind" fn index_fn(l: *mut ffi::lua_State) -> c_int {
         }
         check_key(l);
         ffi::lua_settop(l, 2);
+        // As Studio's CFrame / Vector3 getters (CFrame __index, Position:
+        // the value read and pushed, no call).
+        if let Some(n) = native_get(l, meta) {
+            return n;
+        }
         if upv_get(l, 1, 2) != ffi::LUA_TNIL {
             if !meta.self_first {
                 check_self(l, meta, 6);
@@ -333,6 +338,121 @@ unsafe extern "C-unwind" fn index_fn(l: *mut ffi::lua_State) -> c_int {
         ffi::lua_pushlstring(l, msg.as_ptr() as *const c_char, msg.len());
         drop(msg);
         ffi::lua_error(l)
+    }
+}
+
+/// mlua's userdata block for a CFrame: its length, first word (the storage
+/// variant) and where the `LCFrame` sits behind the pointer at +8; probed
+/// on a known value at install (`probe_cframe`), None if it didn't match.
+static CFRAME_UD: std::sync::OnceLock<Option<(usize, u64, usize)>> = std::sync::OnceLock::new();
+
+fn probe_cframe(lua: &Lua) -> Option<(usize, u64, usize)> {
+    use crate::math::Xform;
+    let known = crate::ltypes::LCFrame(Xform {
+        pos: glam::Vec3::new(1.5, -2.25, 3.125),
+        rot: glam::Mat3::from_cols_array(&[0.25, 0.5, 0.75, -1.0, 2.0, -3.0, 4.5, 5.5, 6.5]),
+    });
+    let u = lua.create_userdata(known).ok()?;
+    let want: [f32; 12] = unsafe { std::mem::transmute(known) };
+    let found = std::cell::Cell::new(None);
+    unsafe {
+        lua.exec_raw::<()>(&u, |l| {
+            let len = ffi::lua_objlen(l, -1) as usize;
+            let p = ffi::lua_touserdata(l, -1) as *const u64;
+            if len >= 16 {
+                let w0 = p.read_unaligned();
+                let rc = p.add(1).read_unaligned() as *const u8;
+                if !rc.is_null() && (rc as usize) % 8 == 0 {
+                    for at in (16..=64).step_by(4) {
+                        let got = (rc.add(at) as *const [f32; 12]).read_unaligned();
+                        if got.iter().zip(want.iter()).all(|(a, b)| a.to_bits() == b.to_bits()) {
+                            found.set(Some((len, w0, at)));
+                            break;
+                        }
+                    }
+                }
+            }
+            ffi::lua_settop(l, 0);
+        })
+        .ok()?;
+    }
+    found.get()
+}
+
+/// The CFrame at 1 (self already known to be one).
+unsafe fn cframe_at(l: *mut ffi::lua_State) -> Option<crate::math::Xform> {
+    let (len, w0, at) = (*CFRAME_UD.get()?)?;
+    unsafe {
+        if ffi::lua_objlen(l, 1) as usize != len {
+            return None;
+        }
+        let p = ffi::lua_touserdata(l, 1) as *const u64;
+        if p.read_unaligned() != w0 {
+            return None;
+        }
+        let rc = p.add(1).read_unaligned() as *const u8;
+        if rc.is_null() {
+            return None;
+        }
+        Some((rc.add(at) as *const crate::ltypes::LCFrame).read_unaligned().0)
+    }
+}
+
+/// A CFrame / Vector3 member answered natively (as the type's mlua getter
+/// would: same values), after the self check; None: not one of these.
+unsafe fn native_get(l: *mut ffi::lua_State, meta: &TypeMeta) -> Option<c_int> {
+    unsafe {
+        let key = str_at(l, 2);
+        match meta.name {
+            "Vector3" => {
+                let f: fn(glam::Vec3) -> Pushed = match key {
+                    "Magnitude" | "magnitude" => |v| Pushed::Num(v.length() as f64),
+                    "Unit" | "unit" => |v| Pushed::Vec(v.normalize_or_zero()),
+                    _ => return None,
+                };
+                if ffi::lua_type(l, 1) != ffi::LUA_TVECTOR {
+                    return None;
+                }
+                let p = ffi::lua_tovector(l, 1);
+                Some(f(glam::Vec3::new(*p, *p.add(1), *p.add(2))).push(l))
+            }
+            "CFrame" => {
+                let f: fn(&crate::math::Xform) -> Pushed = match key {
+                    "Position" | "p" => |x| Pushed::Vec(x.pos),
+                    "X" | "x" => |x| Pushed::Num(x.pos.x as f64),
+                    "Y" | "y" => |x| Pushed::Num(x.pos.y as f64),
+                    "Z" | "z" => |x| Pushed::Num(x.pos.z as f64),
+                    "LookVector" | "lookVector" => |x| Pushed::Vec(-x.rot.z_axis),
+                    "RightVector" | "rightVector" | "XVector" => |x| Pushed::Vec(x.rot.x_axis),
+                    "UpVector" | "upVector" | "YVector" => |x| Pushed::Vec(x.rot.y_axis),
+                    "ZVector" => |x| Pushed::Vec(x.rot.z_axis),
+                    _ => return None,
+                };
+                if !meta.self_first {
+                    check_self(l, meta, 6);
+                }
+                let x = cframe_at(l)?;
+                Some(f(&x).push(l))
+            }
+            _ => None,
+        }
+    }
+}
+
+enum Pushed {
+    Num(f64),
+    Vec(glam::Vec3),
+}
+
+impl Pushed {
+    unsafe fn push(self, l: *mut ffi::lua_State) -> c_int {
+        unsafe {
+            match self {
+                Pushed::Num(n) => ffi::lua_pushnumber(l, n),
+                Pushed::Vec(v) => ffi::lua_pushvector(l, v.x, v.y, v.z),
+            }
+        }
+        1
     }
 }
 
@@ -683,6 +803,9 @@ pub fn install(lua: &Lua, sample: &AnyUserData) -> mlua::Result<()> {
     }
     install_on(lua, &mt, meta, Value::Table(mt.clone()))?;
     mt.raw_set("__rs_dtmeta", true)?;
+    if name == "CFrame" {
+        CFRAME_UD.get_or_init(|| probe_cframe(lua));
+    }
     Ok(())
 }
 

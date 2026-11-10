@@ -28,6 +28,8 @@ mod union_density;
 mod mesh_density;
 mod packs;
 mod player;
+mod client_velocity;
+mod gui_modal;
 mod pause_menu;
 mod hud_resize;
 mod project;
@@ -92,6 +94,8 @@ pub struct SelfTest {
     gc: gc::GcTest,
     pm: player::PlayerTest,
     pmenu: pause_menu::PauseMenuTest,
+    cvel: client_velocity::ClientVelocityTest,
+    gmodal: gui_modal::GuiModalTest,
     hud: hud_resize::HudResizeTest,
     pj: project::ProjectTest,
     ui: ui::UiTest,
@@ -186,6 +190,8 @@ impl SelfTest {
             gc: gc::GcTest::default(),
             pm: player::PlayerTest::default(),
             pmenu: pause_menu::PauseMenuTest::default(),
+            cvel: client_velocity::ClientVelocityTest::default(),
+            gmodal: gui_modal::GuiModalTest::default(),
             hud: hud_resize::HudResizeTest::default(),
             pj: project::ProjectTest::default(),
             ui: ui::UiTest::default(),
@@ -2076,6 +2082,10 @@ impl SelfTest {
             60..=69 => return self.tick_player(f, ed),
             // The Esc menu frees a locked cursor and Resume takes it back.
             254..=255 => return self.tick_pause_menu(f, ed),
+            // Client scripts read the client's own parts' motion.
+            244..=245 => return self.tick_client_velocity(f, ed),
+            // A shown GuiButton.Modal frees a locked cursor.
+            246..=247 => return self.tick_gui_modal(f, ed),
             // Screen-fitted GUIs refit when the 3D view resizes (Place A HUD).
             242..=243 => return self.tick_hud_resize(f, ed),
             // Legacy surfaces, terrain colours and MaterialVariants against Studio.

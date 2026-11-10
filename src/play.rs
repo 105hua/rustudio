@@ -178,6 +178,8 @@ pub struct PlaySession {
     memstats_worst: f32,
     /// Places the parts of assemblies only the client has.
     client_joints: crate::client_joints::ClientJoints,
+    /// The client DataModel's own simulation (src/physics_client.rs).
+    client_sim: crate::physics::client::ClientSim,
     /// Humanoid state transitions so far (shown in Output, read by the self-test).
     pub state_log: Vec<String>,
     /// Clicks, chat, tools, sounds and other in-game interaction.
@@ -436,6 +438,24 @@ impl Editor {
             }
         }
         let two = mode == RunMode::Play;
+        // Cloud data stays in memory for any published place but the
+        // scratch experience (domains::data::local_mode_for).
+        let universe = self
+            .live_team_create_ids()
+            .map(|(u, _)| u)
+            .or_else(|| self.doc.cloud.as_ref().map(|o| o.universe_id))
+            .unwrap_or(0);
+        crate::runtime::domains::data::PLAY_UNIVERSE
+            .store(universe, std::sync::atomic::Ordering::Relaxed);
+        if crate::runtime::domains::data::local_mode_for(universe) && universe != 0 {
+            self.push_log(
+                crate::app::Level::Warn,
+                format!(
+                    "DataStores, MemoryStores and Messaging stay in memory for this Play \
+                     (universe {universe} is a published game; RUSTUDIO_LIVE_DATA=1 uses its real data)"
+                ),
+            );
+        }
         let server = match new_side(mode, Side::Server, two) {
             Ok(s) => s,
             Err(e) => {
@@ -563,6 +583,7 @@ impl Editor {
             memstats_frames: 0,
             memstats_worst: 0.0,
             client_joints: Default::default(),
+            client_sim: Default::default(),
             state_log: Vec::new(),
             game: Default::default(),
             mouse_delta: glam::Vec2::ZERO,
@@ -635,7 +656,7 @@ impl Editor {
                 }
                 rt.dispatch();
             });
-            self.replicate();
+            self.replicate_now();
             self.with_side(Side::Client, |rt, _, _| rt.warm_queries());
             self.setup_client_player();
             // Players.CharacterAutoLoads false: no character until a script
@@ -963,7 +984,15 @@ impl Editor {
         let Some(s) = self.play.as_mut() else { return };
         s.memstats_frames += 1;
         s.memstats_worst = s.memstats_worst.max(dt);
-        if s.time - s.gc_at < crate::mech::GC_INTERVAL {
+        let pass = s.time - s.gc_at >= crate::mech::GC_INTERVAL;
+        {
+            let _sc = crate::bench::scope("p9_gc_step");
+            for side in [Side::Server, Side::Client] {
+                self.with_side(side, |rt, _, _| rt.gc_step(dt as f64));
+            }
+        }
+        let Some(s) = self.play.as_mut() else { return };
+        if !pass {
             return;
         }
         s.gc_at = s.time;
@@ -1011,19 +1040,36 @@ impl Editor {
         );
     }
 
-    /// Streams queued server changes to the client.
+    /// Streams queued server changes to the client, within the frame's
+    /// replication budget (`replicate::apply_budgeted`).
     fn replicate(&mut self) {
+        self.replicate_with(true);
+    }
+
+    /// Applies every waiting server change now: engine steps that read the
+    /// client copy right after (player join, character spawn).
+    fn replicate_now(&mut self) {
+        self.replicate_with(false);
+    }
+
+    fn replicate_with(&mut self, budgeted: bool) {
         let ops = match self.server_world() {
             Some(w) => std::mem::take(&mut w.rep),
             None => return,
         };
-        if ops.is_empty() || self.play.as_ref().is_none_or(|p| p.client.is_none()) {
+        let idle = self.play.as_ref().is_none_or(|p| p.client.is_none() || p.map.backlog() == 0);
+        if ops.is_empty() && idle || self.play.as_ref().is_none_or(|p| p.client.is_none()) {
             return;
         }
         self.with_side(Side::Client, |rt, server, map| {
             if let Some(server) = server {
-                replicate::apply(server, rt, map, ops);
+                if budgeted {
+                    replicate::apply_budgeted(server, rt, map, ops);
+                } else {
+                    replicate::apply(server, rt, map, ops);
+                }
             }
+            let _sc = crate::bench::scope("rep_dispatch");
             rt.dispatch();
         });
     }
@@ -1096,6 +1142,11 @@ impl Editor {
                 .server_world()
                 .map(|w| std::mem::take(&mut w.outbox))
                 .unwrap_or_default();
+            // Behind the replication sent before them (Roblox keeps one order).
+            let to_client = match self.play.as_mut() {
+                Some(s) => s.map.gate_remotes(to_client),
+                None => to_client,
+            };
             crate::runtime::domains::services::perf::remotes(true, &to_client);
             if to_client.is_empty() {
                 if self.client_world().is_none_or(|w| w.outbox.is_empty()) {
@@ -1379,7 +1430,7 @@ impl Editor {
         // Replicate the new character, then the client's CharacterAdded and LocalScripts.
         self.record(RepOp::Parent(m));
         self.record(RepOp::Prop(player, "Character".into()));
-        self.replicate();
+        self.replicate_now();
         let (cplayer, cmodel) = match self.play.as_ref() {
             Some(s) => (s.map.s2c.get(&player).copied(), s.map.s2c.get(&m).copied()),
             None => (None, None),
@@ -1947,7 +1998,7 @@ impl Editor {
             .map(|s| std::mem::take(&mut s.game.menu.lua))
             .unwrap_or_default();
         for code in menu_lua {
-            if let Some(e) = self.run_luau(Side::Client, &code) {
+            if let Some(e) = self.run_luau_as(Side::Client, &code, crate::runtime::security::CORE) {
                 self.warn(format!("Settings: {e}"));
             }
         }
@@ -2311,6 +2362,7 @@ impl Editor {
                     doc::is_a(&i.class, "Accoutrement")
                         || doc::is_a(&i.class, "BasePart")
                         || i.class == "WeldConstraint"
+                        || i.class == "RigidConstraint"
                         || i.class == "Weld"
                 })
                 .count();
@@ -2847,6 +2899,10 @@ impl Editor {
                 fire_touches(rt, None);
                 fire_humanoid(rt, humanoid_server, seat_server, false);
                 if let Some(rs) = run_service {
+                    // A server frame in Studio's order (Run mode probe):
+                    // PreAnimation (then the Animator), Stepped,
+                    // PreSimulation, PostSimulation, Heartbeat (then tweens).
+                    rt.fire(rs, "PreAnimation", vec![Value::Number(dt as f64)]);
                     rt.fire(
                         rs,
                         "Stepped",
@@ -2875,6 +2931,11 @@ impl Editor {
         drop(sc);
         // 5. Replicate to the client, then client scripts.
         let sc = crate::bench::scope("p5_replicate");
+        // The server's Animator track slots, then the frame's replication.
+        self.with_side(Side::Server, |rt, _, _| crate::anim_replicate::publish(&rt.lua));
+        if let Some(s) = self.play.as_mut() {
+            s.map.begin_frame(dt as f64);
+        }
         self.replicate();
         drop(sc);
         let sc = crate::bench::scope("p6_client_lua");
@@ -2993,6 +3054,15 @@ impl Editor {
                 }
                 v
             };
+            // What the client simulates itself (parts its scripts made or
+            // cloned) reads the client world's motion, as in Studio.
+            let client_own = self
+                .play
+                .as_ref()
+                .map(|s| s.client_sim.own_motion(&s.map.c2s))
+                .unwrap_or_default();
+            let mut client_velocities = client_velocities;
+            client_velocities.extend(client_own.iter().map(|(r, m)| (*r, m.0)));
             drop(prep);
             let lua_sc = crate::bench::scope("p6b_lua");
             let server_doc_id = self.doc.id;
@@ -3001,7 +3071,13 @@ impl Editor {
                     w.velocities = client_velocities;
                     // Angular velocities / awake counts for the client's
                     // scripts (domains/world_part.rs reads them by document).
+                    let _s = crate::bench::scope("p6b_mirror");
                     crate::physics::live::mirror(server_doc_id, w.d().id, &map_s2c);
+                    crate::physics::live::overlay_spins(
+                        w.d().id,
+                        client_own.iter().map(|(r, m)| (*r, (m.1, m.2))),
+                    );
+                    drop(_s);
                     w.keys_down = keys.clone();
                     w.humanoid_states = client_states;
                     if !gui_layout.is_empty() {
@@ -3011,7 +3087,10 @@ impl Editor {
                 }
                 // AbsoluteSize / AbsolutePosition / ViewportSize changes from
                 // the new layout (a resized window refits screen-sized GUIs).
-                let _ = crate::runtime::ext::fire_layout_changes(&rt.lua);
+                {
+                    let _s = crate::bench::scope("p6b_layout_changes");
+                    let _ = crate::runtime::ext::fire_layout_changes(&rt.lua);
+                }
                 // GuiService.MenuOpened / MenuClosed (the Esc menu).
                 if let Some(gs) = gui_service {
                     for open in &menu_events {
@@ -3131,6 +3210,7 @@ impl Editor {
                 if let Some(mut w) = rt.world_mut() {
                     w.realtime = realtime;
                 }
+                let _s = crate::bench::scope("p6b_rt_step");
                 rt.step(dt as f64);
             });
             drop(lua_sc);
@@ -3144,6 +3224,39 @@ impl Editor {
             if let Some(s) = self.play.as_mut() {
                 if let Some(cd) = s.other_doc.as_mut() {
                     s.client_joints.solve(cd, &s.map.c2s);
+                }
+            }
+            drop(_cj);
+            let _cp = crate::bench::scope("p6e_client_physics");
+            if let Some(s) = self.play.as_mut() {
+                // Velocities client scripts gave parts (the character's own
+                // stay for client_root_movers).
+                let own: HashSet<Ref> =
+                    s.physics.skip.iter().filter_map(|r| s.map.s2c.get(r).copied()).collect();
+                let vel: Vec<(Ref, glam::Vec3)> = match s.client.as_mut().and_then(|c| c.world.as_mut()) {
+                    Some(mut w) => {
+                        let (keep, take) = std::mem::take(&mut w.velocity_requests)
+                            .into_iter()
+                            .partition(|(r, _)| own.contains(r));
+                        w.velocity_requests = keep;
+                        take
+                    }
+                    None => Vec::new(),
+                };
+                if let Some(cd) = s.other_doc.as_mut() {
+                    let out = s.client_sim.step(&s.physics, cd, &s.map.s2c, &s.map.c2s, &vel, dt);
+                    for r in out.fallen {
+                        cd.dom.transfer_within(r, Ref::none());
+                        cd.mark_tree(r);
+                    }
+                    // Its step published the client world's stats under the
+                    // client's document: the server's mirror goes back under
+                    // them for scripts that run before the next frame's.
+                    if s.client_sim.has_bodies() {
+                        crate::physics::live::mirror(server_doc_id, cd.id, &s.map.s2c);
+                        let own = s.client_sim.own_motion(&s.map.c2s);
+                        crate::physics::live::overlay_spins(cd.id, own.into_iter().map(|(r, m)| (r, (m.1, m.2))));
+                    }
                 }
             }
         }
@@ -3222,10 +3335,15 @@ impl Editor {
     /// Runs a Luau chunk on one side of the Play session (test harness);
     /// its prints go to Output like a script's. Returns an error message.
     pub fn run_luau(&mut self, side: Side, code: &str) -> Option<String> {
+        self.run_luau_as(side, code, crate::runtime::security::COMMAND)
+    }
+
+    /// `run_luau` at identity `id` (the in-game menu runs as a CoreScript).
+    pub fn run_luau_as(&mut self, side: Side, code: &str, id: u8) -> Option<String> {
         self.server_front();
         let r = self.with_side(side, |rt, _, _| {
-            // The command bar's identity (1), for this chunk and what it spawns.
-            let out = crate::runtime::security::with_main_identity(&rt.lua, crate::runtime::security::COMMAND, || {
+            // The given identity, for this chunk and what it spawns.
+            let out = crate::runtime::security::with_main_identity(&rt.lua, id, || {
                 // Scripts' _G and shared, with every host global.
                 let env = crate::globals_parity::harness_env(&rt.lua)?;
                 rt.lua.load(code).set_name("=harness").set_environment(env).exec()

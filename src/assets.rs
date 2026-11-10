@@ -26,6 +26,13 @@ static CONTENT_STATUS: std::sync::LazyLock<Mutex<HashMap<String, u8>>> = std::sy
 fn content_key(id: &str) -> String {
     match asset_ref(id) { Some(a) => format!("rbxassetid://{}{}",a.id,a.version.map(|v|format!("?version={v}")).unwrap_or_default()), None => id.to_string() }
 }
+/// Counts every change of a content status: who polls statuses (the
+/// AssetFetchStatus signals, domains/assets_cloud.rs) looks again only when
+/// this moved.
+static CONTENT_STATUS_GEN: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(1);
+pub fn content_status_generation() -> u64 {
+    CONTENT_STATUS_GEN.load(std::sync::atomic::Ordering::Relaxed)
+}
 pub fn content_fetch_status(id: &str) -> u8 {
     if id.is_empty() {return 3}
     CONTENT_STATUS.lock().ok().and_then(|s|s.get(&content_key(id)).copied()).unwrap_or(0)
@@ -41,6 +48,9 @@ pub fn content_failures_since(cursor: u64) -> (u64,Vec<String>) {
 pub fn content_track(id: &str, status: u8) {
     if let Ok(mut s)=CONTENT_STATUS.lock(){
         let old=s.insert(content_key(id),status);
+        if old!=Some(status) {
+            CONTENT_STATUS_GEN.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+        }
         if status==3 && old!=Some(3) && asset_ref(id).is_some() {
             let mut f=CONTENT_FAILURES.lock().unwrap_or_else(|e|e.into_inner());
             f.0+=1;let seq=f.0;f.1.push((seq,id.to_string()));

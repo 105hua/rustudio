@@ -110,6 +110,8 @@ pub struct LookGrab {
     /// The cursor was moved for the grab (LockCenter puts it in the middle):
     /// it goes back to `start` on release, as for a confined grab.
     moved: bool,
+    /// Consecutive frames the pointer still moved while supposedly locked.
+    moving: u32,
 }
 
 /// Sum of raw (unaccelerated, unclamped) mouse motion this frame.
@@ -160,6 +162,7 @@ impl Editor {
                 start,
                 confined,
                 frames: 0,
+                moving: 0,
             });
             let mode = if confined {
                 CursorGrab::Confined
@@ -234,6 +237,23 @@ impl Editor {
         // MouseBehavior itself keeps the game's value and applies again on
         // Resume.
         let (behavior, icon) = if menu { (0, true) } else { (behavior, icon) };
+        // A shown GuiButton.Modal lets go of the cursor too, unless the
+        // right button is down (gui_modal.rs; asked only while the game
+        // wants a lock).
+        let behavior = if behavior != 0
+            && !ctx.input(|i| i.pointer.secondary_down())
+            && self.play.as_ref().is_some_and(|s| s.showing == crate::runtime::Side::Client)
+            && crate::gui_modal::modal_shown(&self.doc, &self.gui.layout)
+        {
+            0
+        } else {
+            behavior
+        };
+        if menu {
+            self.free_cursor_for_menu(ctx);
+        } else if let Some(s) = self.play.as_mut() {
+            s.game.menu.cursor_freed = false;
+        }
         // LockCenter holds whatever the pointer is over, as Roblox does; it
         // only needs the pointer inside the game view to begin. A window that
         // lost focus has lost its grab too, so take it again on return.
@@ -244,6 +264,9 @@ impl Editor {
             )
         });
         if !focused {
+            // Ask for a real lock again on return; a confine fallback found
+            // earlier is re-detected if the platform still can't lock.
+            self.grab_use_confined = false;
             if let Some(g) = self.game_grab.take() {
                 self.cursor_cmd(ctx, V::CursorGrab(CursorGrab::None), "game-grab:unfocused");
                 if g.confined || g.moved {
@@ -264,6 +287,7 @@ impl Editor {
                 start,
                 confined,
                 frames: 0,
+                moving: 0,
             });
             self.cursor_cmd(
                 ctx,
@@ -276,15 +300,11 @@ impl Editor {
             );
         }
         if !want {
+            // (an open menu already let go: free_cursor_for_menu)
             if let Some(g) = self.game_grab.take() {
-                if menu {
-                    // (the cursor stays where the lock held it, as Roblox's does)
-                    self.cursor_cmd(ctx, V::CursorGrab(CursorGrab::None), "game-grab:menu");
-                } else {
-                    self.cursor_cmd(ctx, V::CursorGrab(CursorGrab::None), "game-grab:none");
-                    if g.confined || g.moved {
-                        self.cursor_cmd(ctx, V::CursorPosition(g.start), "game-grab:restore");
-                    }
+                self.cursor_cmd(ctx, V::CursorGrab(CursorGrab::None), "game-grab:none");
+                if g.confined || g.moved {
+                    self.cursor_cmd(ctx, V::CursorPosition(g.start), "game-grab:restore");
                 }
             }
         }
@@ -292,10 +312,14 @@ impl Editor {
         let mut fallback = false;
         if let Some(g) = self.game_grab.as_mut() {
             g.frames += 1;
-            // A locked cursor never moves. If it still does after a couple of
-            // frames, locking isn't supported here: confine it instead.
+            // A locked cursor never moves. If it keeps moving for several
+            // frames in a row, locking isn't supported here: confine it
+            // instead. One jump isn't enough: coming back to the window
+            // (alt-tab) reports the pointer's travel as a single big delta,
+            // and taking that for "can't lock" left the cursor free.
             if !g.confined && g.frames > 3 {
-                if pointer_delta.length() > 24.0 {
+                g.moving = if pointer_delta.length() > 24.0 { g.moving + 1 } else { 0 };
+                if g.moving >= 3 {
                     g.confined = true;
                     fallback = true;
                 }
@@ -346,6 +370,27 @@ impl Editor {
             if resp.hovered() || grabbed {
                 s.wheel += notches * mech::WHEEL_INPUT_PER_NOTCH;
             }
+        }
+    }
+
+    /// While the in-game menu is open nothing holds the cursor: SettingsHub
+    /// frees it (Modal + ForceShow) whatever the game's MouseBehavior. On the
+    /// frame it opens the window's grab is let go and the arrow shown even
+    /// if no grab is on record (a right-drag look, or a grab the platform
+    /// kept), so hovering any page can't find the cursor held; after that a
+    /// grab of either kind is dropped the moment one appears.
+    fn free_cursor_for_menu(&mut self, ctx: &egui::Context) {
+        use egui::viewport::CursorGrab;
+        use egui::ViewportCommand as V;
+        let opened = self.play.as_mut().is_some_and(|s| !std::mem::replace(&mut s.game.menu.cursor_freed, true));
+        let held = self.game_grab.take().is_some() | self.look_grab.take().is_some();
+        if opened || held {
+            // (the cursor stays where the lock held it, as Roblox's does)
+            self.cursor_cmd(ctx, V::CursorGrab(CursorGrab::None), "game-grab:menu");
+        }
+        if opened {
+            self.game_cursor_hidden = false;
+            self.cursor_cmd(ctx, V::CursorVisible(true), "game-cursor:show");
         }
     }
 
@@ -773,7 +818,7 @@ impl Editor {
                             extra.push(PartDraw {
                                 custom_mesh: Some(index), texture: Some(t.index),
                                 tex_mode: TexMode::Decal, color: dec.color,
-                                alpha: ((1.0 - dec.transparency) * d.alpha).min(0.998),
+                                alpha: ((1.0 - dec.transparency) * if dec.base_surface { d.alpha } else { 1.0 }).min(0.998),
                                 material: 0.0, material_id: 256, mat_layer: -1,
                                 surfaces: 0, cast_shadow: false, uvt: PartDraw::NO_UVT,
                                 emissive: [0.0; 3], reflectance: 0.0,
@@ -826,7 +871,7 @@ impl Editor {
                     },
                     size: s,
                     color: dec.color,
-                    alpha: ((1.0 - dec.transparency) * sp.draw.alpha).min(0.998),
+                    alpha: ((1.0 - dec.transparency) * if dec.base_surface { sp.draw.alpha } else { 1.0 }).min(0.998),
                     mesh: crate::render::MeshKind::Block,
                     material: 0.0,
                     placeholder: false,
@@ -1796,13 +1841,21 @@ impl Editor {
         let (wire_lines, wire_texts) = crate::runtime::domains::world::misc::wire_geometry(&self.doc);
         lines.extend(wire_lines.into_iter().map(|(pos, color)| LineVertex { pos, color }));
         let ppp = ctx.pixels_per_point();
-        let size = [
+        let mut size = [
             (rect.width() * ppp).round().max(1.0) as u32,
             (rect.height() * ppp).round().max(1.0) as u32,
         ];
-        let (globals, lights, shadows) = {
+        // (a fixed render size: the camera takes its aspect)
+        let rrect = match self.view_render_size {
+            Some(s) => {
+                size = s;
+                Rect::from_min_size(rect.min, egui::vec2(s[0] as f32, s[1] as f32) / ppp)
+            }
+            None => rect,
+        };
+        let (globals, lights, shadows, sun_cascades) = {
             let _l = crate::bench::scope("lighting");
-            self.frame_lighting(rect)
+            self.frame_lighting(rrect)
         };
         let vp_render = crate::bench::scope("vp_render");
         let tex = match (self.renderer.as_mut(), self.render_state.as_ref()) {
@@ -1811,10 +1864,11 @@ impl Editor {
                 size,
                 &Frame {
                     globals,
-                    cull_view_proj: self.cam.view_proj(rect),
+                    cull_view_proj: self.cam.view_proj(rrect),
                     fov_y: self.cam.fov_deg.to_radians(),
                     lights: &lights,
                     shadows,
+                    sun_cascades,
                     overlay: &overlay,
                     lines: &lines,
                     sky: self.cam.ortho.is_none(),
@@ -1867,6 +1921,10 @@ impl Editor {
 
         // GUIs over the 3D view: ScreenGuis (the player's while playing,
         // StarterGui's while editing), SurfaceGuis and BillboardGuis.
+        // Effects share these batches with world GUIs. Clear every frame,
+        // including when Show UI / RUSTUDIO_NO_GUI skips Gui::draw; otherwise
+        // live particles and beams accumulate all previous frames' geometry.
+        self.gui.world_batches.clear();
         let playing = self.play.is_some();
         // View > Show UI.
         let show_gui = self.ui.show_gui;
@@ -1934,7 +1992,6 @@ impl Editor {
         if self.renderer.is_some() && std::env::var_os("RUSTUDIO_NO_FX").is_none() {
             let doc_dir = self.doc.path.as_ref().and_then(|p| p.parent()).map(|p| p.to_path_buf());
             let Editor { gui, doc, cam, assets, effects, fixed_dt, play, scene, lighting, .. } = self;
-            let mut fx = Vec::new();
             // (round 26: see-through parts dim the effects behind them; the
             // server's :Emit reaches the client's view)
             let glass = if effects.is_empty() { Vec::new() } else { effects.glass(scene, doc.revision, cam) };
@@ -1954,9 +2011,7 @@ impl Editor {
                     glass: &glass,
                     server: server.zip(s2c.as_ref()).map(|((id, _), f)| (id, f as &dyn Fn(Ref) -> Option<Ref>)),
                 },
-                &mut fx,
             );
-            gui.world_batches.append(&mut fx);
             if live {
                 ctx.request_repaint();
             }
@@ -1966,7 +2021,7 @@ impl Editor {
             let _g = crate::bench::scope("gui_world_pass");
             // The same tone curve rule as the 3D view (lighting::tone_curve_on).
             let curve = crate::lighting::tone_curve_on(&self.doc).then_some(mech::TONE_CURVE);
-            r.draw_world_gui(rs, &self.gui.world_batches, curve);
+            r.draw_world_gui(rs, &self.gui.world_batches, self.effects.drawn(), curve);
         }
         if let Some(s) = self
             .play
@@ -1974,7 +2029,10 @@ impl Editor {
             .filter(|s| s.showing == crate::runtime::Side::Client)
         {
             s.game.gui_events.append(&mut self.gui.events);
-            s.game.gui_layout = self.gui.layout.clone();
+            // (handed over only when it changed: the game keeps the last one)
+            if self.gui.take_layout_change() {
+                s.game.gui_layout = self.gui.layout.clone();
+            }
         } else {
             self.gui.events.clear();
         }
@@ -2525,6 +2583,15 @@ impl Editor {
         if let Some(rx) = &st.lightgrid_job {
             match rx.try_recv() {
                 Ok(grid) => {
+                    if let Ok(points) = std::env::var("RUSTUDIO_LIGHTGRID_DEBUG") {
+                        for point in points.split(';') {
+                            let p: Vec<f32> = point.split(',').filter_map(|x| x.parse().ok()).collect();
+                            if p.len() != 3 { continue; }
+                            let pos = Vec3::new(p[0], p[1], p[2]);
+                            let v = (pos * 0.25).floor().as_ivec3().to_array();
+                            eprintln!("LIGHTGRID camera={:?} origin={:?} pos={:?} sky={:?}", self.cam.pos, grid.origin, pos, grid.sky_at(v));
+                        }
+                    }
                     if let (Some(renderer), Some(rs)) = (self.renderer.as_mut(), self.render_state.as_ref()) {
                         renderer.set_lightgrid(&rs.queue, &grid.data);
                         renderer.set_localgrid(&rs.queue, &grid.local);
@@ -2761,7 +2828,7 @@ impl Editor {
     pub fn frame_lighting(
         &mut self,
         rect: Rect,
-    ) -> (crate::render::Globals, Vec<crate::render::LightRaw>, bool) {
+    ) -> (crate::render::Globals, Vec<crate::render::LightRaw>, bool, [crate::sun_shadow::Cascade; crate::sun_shadow::CASCADES]) {
         {
             let _s = crate::bench::scope("lt_sky");
             self.sync_sky();
@@ -2823,14 +2890,18 @@ impl Editor {
                 fl.globals.fog_color = crate::lighting::sq(rgb).extend(1.0).to_array();
             }
         }
-        if fl.shadows {
-            fl.globals.shadow_vp = crate::render::mat_cols(crate::lighting::shadow_matrix(
-                &self.cam,
-                fl.sun,
-                mech::SHADOW_MAP_TEXELS,
-            ));
-        }
-        (fl.globals, lights, fl.shadows)
+        // The sun's shadow cascades (sun_shadow.rs), around this camera.
+        let aspect = (rect.width() / rect.height().max(1.0)).max(0.01);
+        let tan_y = (self.cam.fov_deg.to_radians() * 0.5).tan();
+        let cascades = crate::sun_shadow::cascades(
+            self.cam.pos,
+            self.cam.forward(),
+            [tan_y * aspect, tan_y],
+            fl.sun,
+            fl.shadow_softness,
+        );
+        (fl.globals.sun_casc, fl.globals.sun_sphere, fl.globals.sun_rect) = crate::sun_shadow::uniforms(&cascades);
+        (fl.globals, lights, fl.shadows, cascades)
     }
 }
 

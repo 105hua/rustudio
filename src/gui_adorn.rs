@@ -17,7 +17,7 @@ use crate::scene::{vec3_of, xform_of};
 
 const HANDLE_R: f32 = 0.55;
 
-fn is_adornment(class: &str) -> bool {
+pub(super) fn is_adornment(class: &str) -> bool {
     doc::is_a(class, "HandleAdornment") || doc::is_a(class, "HandlesBase")
 }
 
@@ -56,21 +56,18 @@ fn then(a: &Xform, b: &Xform) -> Xform {
 impl Gui {
     /// Adornments the scripts made, under the LocalPlayer's PlayerGui and in
     /// Workspace (found with `sync_roots`' scan: `adorn_roots`).
-    pub(super) fn draw_adornments(&self, d: &Document, cam: &Camera, rect: Rect, painter: &egui::Painter) {
+    pub(super) fn draw_adornments(&mut self, d: &Document, cam: &Camera, rect: Rect, painter: &egui::Painter) {
         let mut list: Vec<Ref> = self.adorn_roots.iter().copied().filter(|r| d.exists(*r)).collect();
-        // The LocalPlayer's PlayerGui (not journaled with Workspace).
-        if let Some(pg) = d
-            .find_child(d.dom.root_ref(), "Players")
-            .and_then(|p| match d.prop(p, "LocalPlayer") {
-                Some(Variant::Ref(lp)) if d.exists(lp) => d.find_child(lp, "PlayerGui"),
-                _ => None,
-            })
-        {
-            for r in d.subtree(pg) {
-                if d.class_of(r).is_some_and(|c| is_adornment(&c)) {
-                    list.push(r);
-                }
+        // The LocalPlayer's PlayerGui's, in tree order (`sync_roots` keeps
+        // the set from the journal; the order is found again when it changes).
+        if !self.adorn_pg.is_empty() {
+            if self.adorn_pg_order.is_none() {
+                self.adorn_pg_order = Some(match self.adorn_pg_of {
+                    Some(pg) => d.subtree(pg).into_iter().filter(|r| self.adorn_pg.contains(r)).collect(),
+                    None => Vec::new(),
+                });
             }
+            list.extend(self.adorn_pg_order.iter().flatten().copied().filter(|r| d.exists(*r)));
         }
         let proj = |p: Vec3| cam.project(rect, p);
         for a in list {

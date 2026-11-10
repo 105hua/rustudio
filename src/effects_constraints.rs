@@ -96,7 +96,7 @@ pub(super) fn draw(d: &Document, r: Ref, view: &View) -> Option<Draw> {
     };
     strip(&rows, &CSeq(vec![(0.0, rgb)]), &Seq::read(None, 0.0), 0.0,
         &Look { influence: 1.0, brightness: 1.0, emission: 0.0, alpha: 1.0 },
-        0.0, view, (TextureId::Managed(0), false))
+        0.0, false, &[], 0.0, view, (TextureId::Managed(0), false))
 }
 
 #[cfg(test)]

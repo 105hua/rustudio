@@ -44,21 +44,32 @@ impl Aff {
             t: [c.x - co * c.x + s * c.y, c.y - s * c.x - co * c.y],
         }
     }
+    pub(super) fn same(&self, o: &Aff) -> bool {
+        self.m == o.m && self.t == o.t
+    }
     pub(super) fn is_id(&self) -> bool {
         self.m == [1.0, 0.0, 0.0, 1.0] && self.t == [0.0, 0.0]
     }
 }
 
 /// One shape in canvas space with its clip, turn and draw order.
+#[derive(Clone)]
 pub(super) struct Item {
     pub shape: Shape,
     pub clip: Rect,
     pub aff: Aff,
     pub z: i32,
     pub seq: usize,
+    /// The object that drew it.
+    pub by: Ref,
+    /// Its canvas bounds and triangles (turned, clipped) once tessellated;
+    /// shared with the memo it is replayed from, so a kept item is
+    /// tessellated once (None: draws nothing).
+    pub tess: Arc<std::sync::OnceLock<Option<(Rect, Mesh)>>>,
 }
 
 /// A clickable / hoverable object found while drawing (canvas space).
+#[derive(Clone)]
 pub(super) struct LocalHit {
     pub r: Ref,
     pub rect: Rect,
@@ -73,6 +84,36 @@ pub(super) struct LocalHit {
     /// Drew something of its own (background, image, text, stroke…); an
     /// empty transparent container isn't picked by edit-mode clicks.
     pub painted: bool,
+}
+
+/// A drawn GuiObject's output from its last walk, in order: runs of its own
+/// pieces (shapes, hit boxes, layout boxes, what it read) and its children,
+/// each kept in its own `Memo`. Valid while the walk would reach it with the
+/// same inputs (`key`) and no journal mark touched it or anything under it
+/// (gui_input.rs `memo_up` drops it and every ancestor's, like Studio's
+/// LayoutDirty / ViewportDirty bits going up the LayoutNode tree).
+pub(super) struct Memo {
+    key: [u32; 28],
+    segs: Vec<Seg>,
+}
+
+pub(super) enum Seg {
+    Own {
+        items: Vec<Item>,
+        hits: Vec<LocalHit>,
+        boxes: Vec<(Ref, GuiBox)>,
+        reads: Vec<(Ref, Ref)>,
+        kids: Vec<Ref>,
+    },
+    Child { r: Ref, parent: Rect, laid: Option<Rect>, dn: Down },
+}
+
+/// A memo being written: where its current run of own pieces starts.
+pub(super) struct Rec {
+    start: [usize; 5],
+    segs: Vec<Seg>,
+    no_cache: Option<&'static str>,
+    vfs: usize,
 }
 
 /// Laying out one GUI root.
@@ -90,6 +131,11 @@ pub(super) struct Walk<'a, 'b> {
     pub abs_offset: [f32; 2],
     /// A ScreenGui's canvas origin on screen (UIBlur samples the view there).
     pub screen: Option<Pos2>,
+    /// The object being walked (none at the root): who reads what.
+    pub cur: Ref,
+    /// Memos being written, innermost last; and replay depth.
+    pub rec: Vec<Rec>,
+    pub replaying: u32,
 }
 
 /// Inherited while walking down the tree.
@@ -113,6 +159,8 @@ impl Walk<'_, '_> {
             aff: dn.aff,
             z: dn.z,
             seq: self.seq,
+            by: self.cur,
+            tess: Default::default(),
         });
     }
 
@@ -120,17 +168,20 @@ impl Walk<'_, '_> {
     pub(super) fn children(&mut self, parent: Ref, content: Rect, dn: Down) {
         let d = self.input.doc;
         // Folders organize GUI descendants without introducing a layout box.
-        fn gui_children(d: &Document, parent: Ref, out: &mut Vec<Ref>) {
+        // (what was read is kept for the GUI cache: gui_input.rs cache_marks)
+        fn gui_children(d: &Document, parent: Ref, out: &mut Vec<Ref>, gui: &mut Gui, by: Ref) {
+            gui.walk_kids.push(parent);
             for child in children(d, parent) {
+                gui.walk_reads.push((child, by));
                 match d.class_of(child).as_deref() {
-                    Some("Folder") => gui_children(d, child, out),
+                    Some("Folder") => gui_children(d, child, out, gui, by),
                     Some(class) if doc::is_a(class, "GuiObject") => out.push(child),
                     _ => {}
                 }
             }
         }
         let mut kids = Vec::new();
-        gui_children(d, parent, &mut kids);
+        gui_children(d, parent, &mut kids, self.gui, self.cur);
         let list = child_of_class(d, parent, "UIListLayout")
             .or_else(|| child_of_class(d, parent, "UIPageLayout"));
         let grid = child_of_class(d, parent, "UIGridLayout");
@@ -263,6 +314,8 @@ impl Walk<'_, '_> {
         if let Some(lay) = list.filter(|l| d.class_of(*l).is_some_and(|c| c == "UIPageLayout")) {
             let page = super::share().pages.get(&lay).copied();
             if let Some((from, to, alpha)) = page {
+                // (sliding: the page moves without a document mark)
+                self.gui.no_cache = Some("page sliding");
                 let off = |r: Ref| placed.get(&r).map(|p| p.min - content.min);
                 if let (Some(a), Some(b)) = (off(from).or(off(to)), off(to)) {
                     let o = a + (b - a) * alpha;
@@ -276,7 +329,7 @@ impl Walk<'_, '_> {
         let mut sorted = kids;
         sorted.sort_by_key(|k| num(d, *k, "ZIndex", 1.0) as i32);
         for k in sorted {
-            self.object(k, content, placed.get(&k).copied(), dn);
+            self.object_memo(k, content, placed.get(&k).copied(), dn);
         }
     }
 
@@ -494,6 +547,104 @@ impl Walk<'_, '_> {
         size.max(egui::Vec2::ZERO)
     }
 
+    /// What a memo depends on besides the document: where and how the walk
+    /// reaches the object.
+    fn memo_key(&self, parent: Rect, laid: Option<Rect>, dn: &Down) -> [u32; 28] {
+        let l = laid.unwrap_or(Rect::NOTHING);
+        [
+            parent.min.x, parent.min.y, parent.max.x, parent.max.y,
+            laid.is_some() as u32 as f32, l.min.x, l.min.y, l.max.x, l.max.y,
+            dn.aff.m[0], dn.aff.m[1], dn.aff.m[2], dn.aff.m[3], dn.aff.t[0], dn.aff.t[1],
+            dn.clip.min.x, dn.clip.min.y, dn.clip.max.x, dn.clip.max.y,
+            dn.alpha, dn.tint[0], dn.tint[1], dn.tint[2], dn.scale, dn.z as f32,
+            self.global_z as u32 as f32, self.abs_offset[0], self.abs_offset[1],
+        ]
+        .map(f32::to_bits)
+    }
+
+    fn lens(&self) -> [usize; 5] {
+        [self.items.len(), self.hits.len(), self.boxes.len(), self.gui.walk_reads.len(), self.gui.walk_kids.len()]
+    }
+
+    /// Ends the innermost memo's current run of own pieces.
+    fn close_own(&mut self) {
+        let lens = self.lens();
+        let Some(top) = self.rec.last_mut() else { return };
+        if lens != top.start {
+            let s = top.start;
+            top.segs.push(Seg::Own {
+                items: self.items[s[0]..].to_vec(),
+                hits: self.hits[s[1]..].to_vec(),
+                boxes: self.boxes[s[2]..].to_vec(),
+                reads: self.gui.walk_reads[s[3]..].to_vec(),
+                kids: self.gui.walk_kids[s[4]..].to_vec(),
+            });
+        }
+        top.start = lens;
+    }
+
+    /// A child GuiObject: from its memo when it has a valid one, else walked
+    /// (and its memo written, unless something it drew changes by itself).
+    pub(super) fn object_memo(&mut self, k: Ref, parent: Rect, laid: Option<Rect>, dn: Down) {
+        if self.replaying == 0 {
+            self.close_own();
+            if let Some(top) = self.rec.last_mut() {
+                top.segs.push(Seg::Child { r: k, parent, laid, dn });
+            }
+        }
+        let key = self.memo_key(parent, laid, &dn);
+        if !self.gui.memo_off && self.gui.memo.get(&k).is_some_and(|m| m.key == key) {
+            let m = self.gui.memo.remove(&k).unwrap();
+            self.replaying += 1;
+            for s in &m.segs {
+                match s {
+                    Seg::Own { items, hits, boxes, reads, kids } => {
+                        for it in items {
+                            self.seq += 1;
+                            let mut it = it.clone();
+                            it.seq = self.seq;
+                            self.items.push(it);
+                        }
+                        self.hits.extend(hits.iter().cloned());
+                        for (r, b) in boxes {
+                            self.gui.layout.insert(*r, *b);
+                            self.boxes.push((*r, *b));
+                        }
+                        self.gui.walk_reads.extend_from_slice(reads);
+                        self.gui.walk_kids.extend_from_slice(kids);
+                    }
+                    Seg::Child { r, parent, laid, dn } => self.object_memo(*r, *parent, *laid, *dn),
+                }
+            }
+            self.replaying -= 1;
+            self.gui.memo.insert(k, m);
+            self.gui.memo_hits += 1;
+        } else {
+            let replaying = std::mem::replace(&mut self.replaying, 0);
+            let lens = self.lens();
+            self.rec.push(Rec { start: lens, segs: Vec::new(), no_cache: self.gui.no_cache.take(), vfs: self.gui.walk_vfs.len() });
+            let cur = std::mem::replace(&mut self.cur, k);
+            self.object(k, parent, laid, dn);
+            self.cur = cur;
+            self.close_own();
+            let rec = self.rec.pop().unwrap();
+            if self.gui.no_cache.is_none() && self.gui.walk_vfs.len() == rec.vfs {
+                self.gui.memo.insert(k, Memo { key, segs: rec.segs });
+            } else {
+                self.gui.memo.remove(&k);
+            }
+            self.gui.no_cache = rec.no_cache.or(self.gui.no_cache);
+            self.replaying = replaying;
+            self.gui.memo_walks += 1;
+        }
+        if self.replaying == 0 {
+            let lens = self.lens();
+            if let Some(top) = self.rec.last_mut() {
+                top.start = lens;
+            }
+        }
+    }
+
     fn object(&mut self, r: Ref, parent: Rect, laid: Option<Rect>, dn: Down) {
         let d = self.input.doc;
         let Some(class) = d.class_of(r).map(|c| c.to_string()) else {
@@ -501,6 +652,17 @@ impl Walk<'_, '_> {
         };
         if !boolp(d, r, "Visible", true) {
             return;
+        }
+        // Drawn: its modifiers (and theirs: a UIStroke's UIGradient) are read.
+        self.gui.walk_kids.push(r);
+        for c in children(d, r) {
+            self.gui.walk_reads.push((c, r));
+            if !d.class_of(c).is_some_and(|k| doc::is_a(&k, "GuiObject")) {
+                for x in d.subtree(c) {
+                    self.gui.walk_reads.push((x, r));
+                    self.gui.walk_kids.push(x);
+                }
+            }
         }
         let size = self.own_size(r, parent, dn.scale, 0);
         let rect = match laid {
@@ -836,6 +998,7 @@ impl Walk<'_, '_> {
         let d = self.input.doc;
         let video = matches!(d.class_of(r).as_deref(), Some("VideoFrame" | "VideoDisplay"));
         let id = if video {
+            self.gui.no_cache = Some("video");
             crate::runtime::domains::media::video::surface_uri(r).unwrap_or_default()
         } else {
             text_prop(d, r, "Image")
@@ -1209,6 +1372,7 @@ impl Walk<'_, '_> {
             me,
         );
         // Caret in the focused TextBox (blinking).
+        if focused { self.gui.no_cache = Some("focused textbox"); }
         if focused && (self.ctx.input(|i| i.time) * 2.0) as i64 % 2 == 0 {
             let cx = pos.x + galley.rect.right() + 1.0;
             self.push(
@@ -1268,6 +1432,14 @@ impl Walk<'_, '_> {
         let Some(rs) = self.input.render_state else { return };
         let size = [(rect.width() * self.ctx.pixels_per_point()).ceil().clamp(1.0, 1024.0) as u32,
                     (rect.height() * self.ctx.pixels_per_point()).ceil().clamp(1.0, 1024.0) as u32];
+        // (a kept GUI is walked again while its ViewportFrames are dirty;
+        // anything under one, and its camera, is read)
+        self.gui.walk_vfs.push(r);
+        self.gui.walk_reads.push((cam, r));
+        for x in d.subtree(r) {
+            self.gui.walk_reads.push((x, r));
+            self.gui.walk_kids.push(x);
+        }
         if let Some(target) = self.gui.vf_targets.get_mut(&r) {
             // (what changes is drawn again at most 15 times a second)
             if target.size == size && (!target.dirty || target.at.elapsed().as_secs_f32() < 1.0 / 15.0) {
@@ -1493,7 +1665,7 @@ mod layout_tests {
         let mut input = DrawIn { render_state: None, doc: &doc, cam: &cam, rect, store: &mut store, doc_dir: None, playing: false };
         let _ = ctx.run_ui(Default::default(), |ui| {
             let ctx = ui.ctx();
-            let mut walk = Walk { gui: &mut gui, ctx, input: &mut input, items: Vec::new(), hits: Vec::new(), seq: 0, boxes: Vec::new(), global_z: false, abs_offset: [0.0; 2], screen: None };
+            let mut walk = Walk { gui: &mut gui, ctx, input: &mut input, items: Vec::new(), hits: Vec::new(), seq: 0, boxes: Vec::new(), global_z: false, abs_offset: [0.0; 2], screen: None, cur: Ref::none(), rec: Vec::new(), replaying: 0 };
             walk.children(parent, rect, Down { aff: Aff::ID, clip: rect, alpha: 1.0, tint: [1.0; 3], scale: 1.0, z: 0 });
             assert!(walk.boxes.iter().any(|(r, _)| *r == control), "nested Folder control was skipped");
             let boxes: Vec<_> = tabs.iter().map(|r| &walk.boxes.iter().find(|(k, _)| k == r).unwrap().1).collect();

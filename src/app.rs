@@ -271,6 +271,10 @@ pub struct Editor {
     pub game_cursor_hidden: bool,
     /// Cursor commands sent, newest last (the self-test checks them).
     pub cursor_log: Vec<String>,
+    /// The 3D view rendered at this many pixels instead of its panel's
+    /// (camera aspect from it; drawn scaled into the panel): self-test
+    /// steps that compare with a Studio capture at Studio's view size.
+    pub view_render_size: Option<[u32; 2]>,
     /// CPU time of the last frame's update + draw submission (ms).
     pub last_work_ms: f32,
     /// Local lights, sky faces and the sky-visibility map.
@@ -415,6 +419,7 @@ impl RustudioApp {
             game_grab: None,
             game_cursor_hidden: false,
             cursor_log: Vec::new(),
+            view_render_size: None,
             last_work_ms: 0.0,
             lighting: Default::default(),
             project: None,
@@ -1979,6 +1984,11 @@ impl Editor {
             })
         });
         if let Some(image) = shot {
+            if let Ok(hdr_path) = std::env::var("RUSTUDIO_DUMP_HDR") {
+                if let Some((w,h,data)) = self.renderer.as_ref().zip(self.render_state.as_ref()).and_then(|(r,rs)| r.read_hdr(rs)) {
+                    if std::fs::write(&hdr_path, data).is_ok() { eprintln!("HDR {w} {h} RGBA16Float {hdr_path}"); }
+                }
+            }
             let mut written = Vec::new();
             match save_png(&image, &path) {
                 Ok(()) => written.push(path.clone()),

@@ -85,7 +85,7 @@ const TABLE: &[(&str, &str, Color32)] = &[
     ("PartOperation", "squares", PART),
     ("SkateboardPlatform", "skateboarding", PART),
     // Containers
-    ("Model", "box", MODEL),
+    ("Model", "rs-model", MODEL),
     ("Folder", "folder", FOLDER),
     ("Configuration", "settings", MISC),
     ("WorldModel", "world", MODEL),

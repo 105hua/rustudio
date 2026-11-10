@@ -121,6 +121,11 @@ pub fn flush_immediate(lua: &Lua) {
         }
         let mut it = batch.into_iter();
         while let Some((r, name, args, seq)) = it.next() {
+            // A native frame step (domains::anim::hook_after) at its place.
+            if name.starts_with('\0') {
+                domains::anim::run_hook(lua, &name, &args);
+                continue;
+            }
             if !deliver_immediate(lua, r, name, args, seq) {
                 // State got borrowed under us: keep the rest for later.
                 if let Ok(Some(mut w)) = lua.try_app_data_mut::<World>() {

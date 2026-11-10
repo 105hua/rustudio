@@ -17,7 +17,7 @@
 //! checks the read requirements before the write ones (Instance.UniqueId
 //! write reports RobloxScript, its read tag; RunService.RunState write
 //! reports PluginOrOpenCloud). NotScriptable members stay "not a valid
-//! member". The message is Studio's exe format string:
+//! member". The message is Studio's format string:
 //! `The current thread cannot {verb} '{name}' (lacking capability {cap})`.
 //!
 //! rustudio's own Lua (chunks named `rustudio.*` and a few other engine
@@ -35,6 +35,9 @@ use std::sync::OnceLock;
 pub const GAME: u8 = 2;
 /// The command bar (rustudio's harness).
 pub const COMMAND: u8 = 1;
+/// Roblox's own CoreScripts (the in-game menu's Settings writing
+/// UserGameSettings: MasterVolume and friends are RobloxScript members).
+pub const CORE: u8 = 4;
 
 // Legacy capability bits.
 const PLUGIN: u8 = 0x1;
@@ -67,6 +70,7 @@ fn legacy_granted(id: u8) -> u8 {
         // WritePlayer for the command bar is unmeasured (harness tests make
         // Players); game scripts measured without it.
         COMMAND => PLUGIN | LOCAL_USER | WRITE_PLAYER,
+        CORE => PLUGIN | LOCAL_USER | WRITE_PLAYER | ROBLOX_SCRIPT,
         _ => 0,
     }
 }
@@ -259,6 +263,12 @@ pub fn rule(class: &str, name: &str) -> Option<&'static Rule> {
         cur = r.supers.get(cur)?;
     }
     None
+}
+
+/// Whether writing `class.name` needs a legacy capability (RobloxScript
+/// and the like): the identity check guards those writes.
+pub fn member_write_secured(class: &str, name: &str) -> bool {
+    rule(class, name).is_some_and(|r| r.write.legacy != 0)
 }
 
 // ------------------------------------------------------- thread identity
@@ -813,6 +823,21 @@ mod tests {
         let out = lines(rt);
         assert!(has(&out, "script-connected 2"), "{out:#?}");
         assert!(has(&out, "cmd-connected 1"), "{out:#?}");
+    }
+
+    /// The in-game menu's Settings write UserGameSettings as a CoreScript:
+    /// MasterVolume is a RobloxScript member the command bar can't set.
+    #[test]
+    fn menu_settings_write_master_volume_as_core() {
+        let (rt, _) = client("");
+        let code = r#"UserSettings():GetService("UserGameSettings").MasterVolume = 0.3
+            return UserSettings():GetService("UserGameSettings").MasterVolume"#;
+        let ms: f64 = with_main_identity(&rt.lua, COMMAND, || rt.lua.load(r#"local g=UserSettings():GetService("UserGameSettings") g.MouseSensitivity=0.7 return g.MouseSensitivity"#).eval()).unwrap();
+        assert!((ms - 0.7).abs() < 1e-6, "{ms}");
+        let as_cmd = with_main_identity(&rt.lua, COMMAND, || rt.lua.load(code).eval::<f64>());
+        assert!(as_cmd.is_err());
+        let as_core: f64 = with_main_identity(&rt.lua, CORE, || rt.lua.load(code).eval()).unwrap();
+        assert!((as_core - 0.3).abs() < 1e-6, "{as_core}");
     }
 
     /// A content id gives a game script Roblox content, not the person's

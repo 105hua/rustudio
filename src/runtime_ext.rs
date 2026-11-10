@@ -1137,6 +1137,33 @@ impl QueryGrid {
         }
     }
 
+    /// Removes many parts at once: each cell they were in is filtered once
+    /// (removing them one by one filtered a shared cell once per part:
+    /// quadratic when a 20k-part model left or arrived; round 2, bulk).
+    fn remove_many(&mut self, rs: &rustc_hash::FxHashSet<Ref>) {
+        let mut hit: rustc_hash::FxHashSet<[i32; 3]> = Default::default();
+        for r in rs {
+            self.big.remove(r);
+            if let Some((a, b)) = self.of.remove(r) {
+                for x in a[0]..=b[0] {
+                    for y in a[1]..=b[1] {
+                        for z in a[2]..=b[2] {
+                            hit.insert([x, y, z]);
+                        }
+                    }
+                }
+            }
+        }
+        for k in hit {
+            if let Some(v) = self.cells.get_mut(&k) {
+                v.retain(|x| !rs.contains(x));
+                if v.is_empty() {
+                    self.cells.remove(&k);
+                }
+            }
+        }
+    }
+
     /// A part moved or resized: nothing to do while it stays in the same
     /// cells (most moving parts, most frames).
     fn update(&mut self, p: &QPart) {
@@ -1383,8 +1410,15 @@ fn query_parts(lua: &Lua) -> mlua::Result<std::rc::Rc<Vec<QPart>>> {
                 let p = *p;
                 grid.update(&p);
             }
+            // Out of the grid all at once, then back in (re-read) one by one.
+            if touched.len() > 64 {
+                grid.remove_many(&touched);
+            }
+            let bulk = touched.len() > 64;
             for r in touched {
-                grid.remove(r);
+                if !bulk {
+                    grid.remove(r);
+                }
                 match (qpart(d, r), index.get(&r).copied()) {
                     (Some(p), Some(i)) => {
                         grid.insert(&p);
@@ -2530,6 +2564,7 @@ pub fn fire_layout_changes(lua: &Lua) -> mlua::Result<()> {
     {
         let mut w = world(lua)?;
         let view = w.input.view_size;
+        let mut all = false;
         if view[0] > 0.0 && w.viewport_seen != Some(view) {
             let had = w.viewport_seen.replace(view).is_some();
             let d = w.d();
@@ -2540,13 +2575,75 @@ pub fn fire_layout_changes(lua: &Lua) -> mlua::Result<()> {
             if let (true, Some(c)) = (had, cam) {
                 fires.push((c, "ViewportSize"));
             }
+            // Every box scaled from the screen may have moved.
+            all = true;
         }
-        let listened: Vec<Ref> = w
-            .listening
-            .iter()
-            .copied()
+        // Only what can have moved is looked at (Studio recomputes a GUI
+        // object's box when its layout is invalidated, not every frame): the
+        // objects drawn this frame or last (their box is the drawn one),
+        // those newly listened to, and for the rest (hidden GUIs, whose box
+        // comes from the UDim2s in `gui_rect`) the subtrees whose Size /
+        // Position / AnchorPoint / canvas or place in the tree changed, from
+        // the document's journal. Checking every listened instance each
+        // frame was 2.5 ms in Place E (6 800 listened, 2 250 of
+        // them hidden GUI objects, each a walk up to its ScreenGui).
+        let layout_props = LAYOUT_PROPS.get_or_init(|| {
+            ["Size", "Position", "AnchorPoint", "IgnoreGuiInset", "CanvasSize"].map(rbx_dom_weak::ustr)
+        });
+        let mut check: Vec<Ref> = Vec::new();
+        match w.dm().marks_for(doc::Reader::Layout) {
+            doc::Marks::All => all = true,
+            doc::Marks::Some(marks) => {
+                let mut roots: Vec<Ref> = Vec::new();
+                for m in marks {
+                    match m {
+                        doc::Mark::Prop(r, name) if layout_props.contains(&name) => roots.push(r),
+                        doc::Mark::Tree(r) => roots.push(r),
+                        _ => {}
+                    }
+                }
+                let mut seen_root: HashSet<Ref> = HashSet::new();
+                roots.retain(|r| seen_root.insert(*r));
+                let w = &*w;
+                let d = w.d();
+                for root in roots {
+                    if d.dom.get_by_ref(root).is_none() {
+                        continue;
+                    }
+                    check.extend(
+                        d.dom
+                            .descendants_of(root)
+                            .map(|i| i.referent())
+                            .filter(|r| w.listening.contains(r)),
+                    );
+                }
+            }
+        }
+        let fresh = std::mem::take(&mut w.listen_new);
+        if all {
+            check = w.listening.iter().copied().collect();
+        } else {
+            check.extend(fresh);
+            check.extend(w.input.gui_layout.keys().copied().filter(|r| w.listening.contains(r)));
+            // Drawn last frame, not this one: back to its UDim2 box.
+            check.extend(w.abs_laid.iter().copied().filter(|r| !w.input.gui_layout.contains_key(r)));
+            let mut seen: HashSet<Ref> = HashSet::with_capacity(check.len());
+            check.retain(|r| seen.insert(*r));
+        }
+        let listened: Vec<Ref> = check
+            .into_iter()
+            .filter(|r| w.listening.contains(r))
             .filter(|r| w.d().class_of(*r).is_some_and(|c| doc::is_a(&c, "GuiBase2d")))
             .collect();
+        let laid: HashSet<Ref> = {
+            let w = &*w;
+            if all {
+                listened.iter().copied().filter(|r| w.input.gui_layout.contains_key(r)).collect()
+            } else {
+                w.input.gui_layout.keys().copied().filter(|r| w.listening.contains(r)).collect()
+            }
+        };
+        w.abs_laid = laid;
         for r in listened {
             let now = abs_now(&w, r);
             match w.abs_seen.insert(r, now) {
@@ -2577,6 +2674,8 @@ pub fn fire_layout_changes(lua: &Lua) -> mlua::Result<()> {
     }
     Ok(())
 }
+
+static LAYOUT_PROPS: std::sync::OnceLock<[rbx_dom_weak::Ustr; 5]> = std::sync::OnceLock::new();
 
 fn gui_rect(w: &World, r: Ref, depth: usize) -> ([f32; 2], [f32; 2]) {
     let d = w.d();
@@ -3302,15 +3401,25 @@ pub fn call(
     this: Ref,
     args: &MultiValue,
 ) -> Option<mlua::Result<MultiValue>> {
-    Some(call_inner(lua, name, this, args))
+    let mask = match super::inst_class(lua, this) {
+        Ok((class, _)) => super::domains::call_claims(class.as_str(), name, false, None),
+        Err(_) => u16::MAX,
+    };
+    Some(call_inner(lua, name, this, args, mask))
 }
 
-fn call_inner(lua: &Lua, name: &str, this: Ref, args: &MultiValue) -> mlua::Result<MultiValue> {
+/// `call` asking only the domains in `domains` (the method's route,
+/// runtime_routes.rs).
+pub fn call_routed(lua: &Lua, name: &str, this: Ref, args: &MultiValue, domains: u16) -> mlua::Result<MultiValue> {
+    call_inner(lua, name, this, args, domains)
+}
+
+fn call_inner(lua: &Lua, name: &str, this: Ref, args: &MultiValue, domains: u16) -> mlua::Result<MultiValue> {
     // EditableMesh / EditableImage and AssetService's Editable* calls (editable.rs).
     if let Some(r) = super::editable::call(lua, name, this, args) {
         return r;
     }
-    if let Some(r) = super::domains::call(lua, name, this, args) {
+    if let Some(r) = super::domains::call_masked(lua, name, this, args, domains) {
         return r;
     }
     match name {

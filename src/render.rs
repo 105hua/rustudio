@@ -144,7 +144,11 @@ pub struct Globals {
     pub cc: [f32; 4],
     pub cc_tint: [f32; 4],
     pub bloom: [f32; 4],
-    pub shadow_vp: [[f32; 4]; 4],
+    /// The sun's shadow cascades (sun_shadow.rs): world to each tile's
+    /// (u, v, depth), each sphere (centre, radius²), each tile in the atlas.
+    pub sun_casc: [[[f32; 4]; 4]; 4],
+    pub sun_sphere: [[f32; 4]; 4],
+    pub sun_rect: [[f32; 4]; 4],
     pub sky_rot: [f32; 4],
     /// Skybox irradiance facing +X, −X, +Y, −Y, +Z, −Z, times EnvironmentDiffuseScale.
     pub env: [[f32; 4]; 6],
@@ -324,8 +328,9 @@ pub struct Frame<'a> {
     pub fov_y: f32,
     /// Local lights (at most MAX_LIGHTS).
     pub lights: &'a [LightRaw],
-    /// Draw the sun's shadow map (with `globals.shadow_vp`).
+    /// Draw the sun's shadow cascades (`sun_cascades`).
     pub shadows: bool,
+    pub sun_cascades: [crate::sun_shadow::Cascade; crate::sun_shadow::CASCADES],
     /// Drawn on top of what's already there (hover highlight).
     pub overlay: &'a [PartDraw],
     pub lines: &'a [LineVertex],
@@ -348,7 +353,10 @@ enum Pass {
 
 fn pass_of(p: &PartDraw) -> Option<Pass> {
     if p.tex_mode == TexMode::Decal && p.texture.is_some() {
-        Some(Pass::Decal)
+        // Texture batching changes coplanar decal layer order. Keep decals
+        // with the sorted translucent draws so their source order survives
+        // equal distances, and translucent hosts draw behind their decals.
+        None
     } else if p.alpha >= 0.999 && p.material_id != 1584 {
         Some(Pass::Opaque)
     } else {
@@ -691,14 +699,11 @@ struct Target {
     hdr_bg: wgpu::BindGroup,
     dof_bgs: [wgpu::BindGroup; 2],
     dof_views: [wgpu::TextureView; 2],
-    /// Bloom at half resolution: the bright pass, the two blurs across
-    /// (narrow, wide; bound together for the pass down) and the result.
-    bloom_bright_bg: wgpu::BindGroup,
-    bloom_bright_view: wgpu::TextureView,
-    bloom_h_bg: wgpu::BindGroup,
-    bloom_h_views: [wgpu::TextureView; 2],
-    bloom_v_bg: wgpu::BindGroup,
+    /// Linear bloom pyramid, from half resolution through 1/32 resolution.
     bloom_view: wgpu::TextureView,
+    bloom_levels: Vec<wgpu::TextureView>,
+    bloom_down_bgs: Vec<wgpu::BindGroup>,
+    bloom_up_bgs: Vec<wgpu::BindGroup>,
     /// SSAO at half resolution: the AO depth, then (occlusion, depth) ping-
     /// ponged through the blurs; a bind group per pass (depth + its input).
     ssao_depth_view: wgpu::TextureView,
@@ -719,6 +724,12 @@ pub struct Renderer {
     material_epoch: Instant,
     /// Fog for the world GUI pass (gui_fog).
     gui_fog: ([f32; 4], [f32; 3]),
+    /// The cascades as the beams read them (matrices, spheres, tiles).
+    gui_sun: crate::world_gui::SunCascades,
+    gui_lightgrid: [f32; 4],
+    gui_sun_params: [f32; 4],
+    /// Local lights in lights_buf this frame (the effects read them).
+    gui_n_lights: u32,
     sky: wgpu::RenderPipeline,
     opaque: wgpu::RenderPipeline,
     transparent: wgpu::RenderPipeline,
@@ -741,8 +752,9 @@ pub struct Renderer {
     ssao_apply: wgpu::RenderPipeline,
     /// Bloom: bright pass, blur across (two targets), blur down.
     bloom_bright: wgpu::RenderPipeline,
-    bloom_h: wgpu::RenderPipeline,
-    bloom_v: wgpu::RenderPipeline,
+    bloom_down: wgpu::RenderPipeline,
+    bloom_up: wgpu::RenderPipeline,
+    post_bloom_size: f32,
     shadow: wgpu::RenderPipeline,
     /// Local light shadow maps (Studio's Future path) and their pass.
     lshadow: LightShadows,
@@ -764,13 +776,15 @@ pub struct Renderer {
     shadow_globals_bg: wgpu::BindGroup,
     globals_layout: wgpu::BindGroupLayout,
     lights_buf: wgpu::Buffer,
+    /// The depth map the sun's cascades are drawn into, one at a time.
     shadow_view: wgpu::TextureView,
+    /// The sun's shadow cascades: the atlas the shaders read (sun_shadow.rs).
+    sun: crate::sun_shadow::SunShadows,
     sky_view: wgpu::TextureView,
     /// Studio's indoor environment (textures/sky/indoor512); white 1×1 until loaded.
     indoor_view: wgpu::TextureView,
     /// Studio's split-sum BRDF table (brdfLUT.dds, RG16F).
     brdf_view: wgpu::TextureView,
-    shadow_sampler: wgpu::Sampler,
     sky_sampler: wgpu::Sampler,
     /// Studio's light grid: skylight and sun per 4-stud voxel (lightgrid.rs).
     lightgrid_tex: wgpu::Texture,
@@ -863,17 +877,14 @@ impl Renderer {
                     3,
                     wgpu::BindingType::Sampler(wgpu::SamplerBindingType::Filtering),
                 ),
+                // The sun's shadow cascades: EVSM moments (sun_shadow.rs).
                 frag(
                     4,
                     wgpu::BindingType::Texture {
-                        sample_type: wgpu::TextureSampleType::Depth,
+                        sample_type: wgpu::TextureSampleType::Float { filterable: true },
                         view_dimension: wgpu::TextureViewDimension::D2,
                         multisampled: false,
                     },
-                ),
-                frag(
-                    5,
-                    wgpu::BindingType::Sampler(wgpu::SamplerBindingType::Comparison),
                 ),
                 frag(
                     7,
@@ -1073,13 +1084,6 @@ impl Renderer {
             &[vec![0u8, 0, 0, 255], vec![0, 0, 0, 255], vec![0, 0, 0, 255], vec![0, 0, 0, 255], vec![0, 0, 0, 255], vec![0, 0, 0, 255]],
         );
         let brdf_view = Self::brdf_lut_view(device, queue);
-        let shadow_sampler = device.create_sampler(&wgpu::SamplerDescriptor {
-            label: Some("shadow"),
-            mag_filter: wgpu::FilterMode::Linear,
-            min_filter: wgpu::FilterMode::Linear,
-            compare: Some(wgpu::CompareFunction::LessEqual),
-            ..Default::default()
-        });
         let sky_sampler = device.create_sampler(&wgpu::SamplerDescriptor {
             label: Some("sky"),
             mag_filter: wgpu::FilterMode::Linear,
@@ -1102,6 +1106,7 @@ impl Renderer {
             ..Default::default()
         });
         let lshadow = LightShadows::new(device);
+        let sun = crate::sun_shadow::SunShadows::new(device, &shadow_view);
         let globals_bg = Self::globals_group(
             device,
             &bgl,
@@ -1109,8 +1114,7 @@ impl Renderer {
             &lights_buf,
             &sky_view,
             &sky_sampler,
-            &shadow_view,
-            &shadow_sampler,
+            &sun.atlas_view,
             &lightgrid_view,
             &lightocc_view,
             &localgrid_view,
@@ -1418,11 +1422,11 @@ impl Renderer {
             multiview_mask: None,
             cache: None,
         });
-        // The sun's shadow map: depth only, both sides (thin parts), with a
-        // slope bias against acne.
+        // A cascade of the sun's shadow: depth only, both sides (thin
+        // parts). No depth bias: the EVSM test's minimum variance is the bias.
         let shadow_layout = device.create_pipeline_layout(&wgpu::PipelineLayoutDescriptor {
             label: Some("shadow"),
-            bind_group_layouts: &[Some(&shadow_bgl)],
+            bind_group_layouts: &[Some(&shadow_bgl), Some(&sun.pass_layout)],
             immediate_size: 0,
         });
         let shadow = device.create_render_pipeline(&wgpu::RenderPipelineDescriptor {
@@ -1444,11 +1448,7 @@ impl Renderer {
                 depth_write_enabled: Some(true),
                 depth_compare: Some(C::LessEqual),
                 stencil: Default::default(),
-                bias: wgpu::DepthBiasState {
-                    constant: 2,
-                    slope_scale: 2.0,
-                    clamp: 0.0,
-                },
+                bias: Default::default(),
             }),
             multisample: Default::default(),
             fragment: None,
@@ -1548,11 +1548,7 @@ impl Renderer {
                 depth_write_enabled: Some(true),
                 depth_compare: Some(C::LessEqual),
                 stencil: Default::default(),
-                bias: wgpu::DepthBiasState {
-                    constant: 2,
-                    slope_scale: 2.0,
-                    clamp: 0.0,
-                },
+                bias: Default::default(),
             }),
             multisample: Default::default(),
             fragment: None,
@@ -1591,8 +1587,14 @@ impl Renderer {
 
         let dof_v = fullscreen("dof down", "fs_dof_v", 1);
         let bloom_bright = fullscreen("bloom bright", "fs_bloom_bright", 1);
-        let bloom_h = fullscreen("bloom across", "fs_bloom_h", 2);
-        let bloom_v = fullscreen("bloom down", "fs_bloom_v", 1);
+        let bloom_down = fullscreen("bloom pyramid down", "fs_bloom_down", 1);
+        let bloom_up_desc = wgpu::RenderPipelineDescriptor {
+            label: Some("bloom pyramid up"), layout: Some(&layout),
+            vertex: wgpu::VertexState { module: &shader, entry_point: Some("vs_post"), compilation_options: Default::default(), buffers: &[] },
+            fragment: Some(wgpu::FragmentState { module: &shader, entry_point: Some("fs_bloom_up"), compilation_options: Default::default(), targets: &[Some(wgpu::ColorTargetState { format: HDR_FORMAT, blend: Some(wgpu::BlendState { color: wgpu::BlendComponent { src_factor: wgpu::BlendFactor::One, dst_factor: wgpu::BlendFactor::One, operation: wgpu::BlendOperation::Add }, alpha: wgpu::BlendComponent::REPLACE }), write_mask: wgpu::ColorWrites::ALL })] }),
+            primitive: Default::default(), depth_stencil: None, multisample: Default::default(), multiview_mask: None, cache: None,
+        };
+        let bloom_up = device.create_render_pipeline(&bloom_up_desc);
         let ssao_layout = device.create_bind_group_layout(&wgpu::BindGroupLayoutDescriptor {
             label: Some("ssao"),
             entries: &[
@@ -1752,6 +1754,10 @@ impl Renderer {
         let line_cap = 4096;
         let mut r = Renderer {
             gui_fog: ([0.0, 1e9, 0.0, 0.0], [0.0; 3]),
+            gui_sun: Default::default(),
+            gui_lightgrid: [0.0; 4],
+            gui_sun_params: [0.0, 580.0, 0.05, 0.0],
+            gui_n_lights: 0,
             world_gui: None,
             water,
             glass_layout,
@@ -1776,8 +1782,9 @@ impl Renderer {
             ssao_blur_y,
             ssao_apply,
             bloom_bright,
-            bloom_h,
-            bloom_v,
+            bloom_down,
+            bloom_up,
+            post_bloom_size: 24.0,
             shadow,
             terrain,
             terrain_shadow,
@@ -1794,10 +1801,10 @@ impl Renderer {
             globals_layout: bgl,
             lights_buf,
             shadow_view,
+            sun,
             sky_view,
             indoor_view,
             brdf_view,
-            shadow_sampler,
             sky_sampler,
             lightgrid_tex,
             lightgrid_view,
@@ -1899,6 +1906,62 @@ impl Renderer {
         for y in 0..h {
             let o = (y * row) as usize;
             out.extend_from_slice(&data[o..o + (w * 4) as usize]);
+        }
+        drop(data);
+        buf.unmap();
+        Some((w, h, out))
+    }
+
+    /// Raw RGBA16Float scene before bloom/tone, for render diagnostics.
+    pub fn read_hdr(&self, rs: &egui_wgpu::RenderState) -> Option<(u32, u32, Vec<u8>)> {
+        let target = self.target.as_ref()?;
+        let [w, h] = target.size;
+        let row = (w * 8).div_ceil(256) * 256;
+        let buf = rs.device.create_buffer(&wgpu::BufferDescriptor {
+            label: Some("read HDR"),
+            size: (row * h) as u64,
+            usage: wgpu::BufferUsages::COPY_DST | wgpu::BufferUsages::MAP_READ,
+            mapped_at_creation: false,
+        });
+        let mut enc = rs
+            .device
+            .create_command_encoder(&wgpu::CommandEncoderDescriptor {
+                label: Some("read HDR"),
+            });
+        enc.copy_texture_to_buffer(
+            wgpu::TexelCopyTextureInfo {
+                texture: &target.hdr,
+                mip_level: 0,
+                origin: wgpu::Origin3d::ZERO,
+                aspect: wgpu::TextureAspect::All,
+            },
+            wgpu::TexelCopyBufferInfo {
+                buffer: &buf,
+                layout: wgpu::TexelCopyBufferLayout {
+                    offset: 0,
+                    bytes_per_row: Some(row),
+                    rows_per_image: Some(h),
+                },
+            },
+            wgpu::Extent3d {
+                width: w,
+                height: h,
+                depth_or_array_layers: 1,
+            },
+        );
+        rs.queue.submit([enc.finish()]);
+        let slice = buf.slice(..);
+        let (tx, rx) = std::sync::mpsc::channel();
+        slice.map_async(wgpu::MapMode::Read, move |r| {
+            let _ = tx.send(r);
+        });
+        rs.device.poll(wgpu::PollType::wait_indefinitely()).ok()?;
+        rx.recv().ok()?.ok()?;
+        let data = slice.get_mapped_range().ok()?;
+        let mut out = Vec::with_capacity((w * h * 8) as usize);
+        for y in 0..h {
+            let o = (y * row) as usize;
+            out.extend_from_slice(&data[o..o + (w * 8) as usize]);
         }
         drop(data);
         buf.unmap();
@@ -2041,7 +2104,6 @@ impl Renderer {
         sky: &wgpu::TextureView,
         sky_sampler: &wgpu::Sampler,
         shadow: &wgpu::TextureView,
-        shadow_sampler: &wgpu::Sampler,
         lightgrid: &wgpu::TextureView,
         lightocc: &wgpu::TextureView,
         localgrid: &wgpu::TextureView,
@@ -2076,10 +2138,6 @@ impl Renderer {
                 wgpu::BindGroupEntry {
                     binding: 4,
                     resource: B::TextureView(shadow),
-                },
-                wgpu::BindGroupEntry {
-                    binding: 5,
-                    resource: B::Sampler(shadow_sampler),
                 },
                 wgpu::BindGroupEntry {
                     binding: 7,
@@ -2239,8 +2297,7 @@ impl Renderer {
             &self.lights_buf,
             &self.sky_view,
             &self.sky_sampler,
-            &self.shadow_view,
-            &self.shadow_sampler,
+            &self.sun.atlas_view,
             &self.lightgrid_view,
             &self.lightocc_view,
             &self.localgrid_view,
@@ -2306,6 +2363,8 @@ impl Renderer {
         key: [i32; 3],
         verts: &[crate::terrain::TerrainVertex],
     ) {
+        // (the sun's cascades and the lights' shadow maps hold the terrain)
+        self.static_gen += 1;
         if verts.is_empty() {
             self.terrain_chunks.remove(&key);
             return;
@@ -2335,6 +2394,7 @@ impl Renderer {
     pub fn clear_terrain(&mut self) {
         self.terrain_chunks.clear();
         self.terrain_grass.clear();
+        self.static_gen += 1;
     }
 
     /// Replaces one chunk's decoration grass (none = drop it).
@@ -2599,9 +2659,12 @@ impl Renderer {
                 })
                 .create_view(&Default::default())
         };
-        let bloom_bright_view = half_tex("bloom bright");
-        let bloom_h_views = [half_tex("bloom narrow"), half_tex("bloom wide")];
-        let bloom_view = half_tex("bloom");
+        let bloom_levels: Vec<_> = (1..=5).map(|level| device.create_texture(&wgpu::TextureDescriptor {
+            label: Some("bloom pyramid"), size: wgpu::Extent3d { width: (size[0] >> level).max(1), height: (size[1] >> level).max(1), depth_or_array_layers: 1 }, mip_level_count: 1, sample_count: 1,
+            dimension: wgpu::TextureDimension::D2, format: HDR_FORMAT,
+            usage: wgpu::TextureUsages::RENDER_ATTACHMENT | wgpu::TextureUsages::TEXTURE_BINDING, view_formats: &[],
+        }).create_view(&Default::default())).collect();
+        let bloom_view = bloom_levels[0].clone();
         let dof_views = [half_tex("dof across"), half_tex("dof down")];
         let pair = |label: &str, a: &wgpu::TextureView, b: &wgpu::TextureView| {
             device.create_bind_group(&wgpu::BindGroupDescriptor {
@@ -2624,9 +2687,8 @@ impl Renderer {
                 ],
             })
         };
-        let bloom_bright_bg = pair("bloom bright", &hdr_view, &self.black_view);
-        let bloom_h_bg = pair("bloom across", &bloom_bright_view, &self.black_view);
-        let bloom_v_bg = pair("bloom down", &bloom_h_views[0], &bloom_h_views[1]);
+        let bloom_down_bgs = (0..5).map(|i| pair("bloom pyramid down", if i == 0 { &hdr_view } else { &bloom_levels[i-1] }, &hdr_view)).collect();
+        let bloom_up_bgs = (1..5).map(|i| pair("bloom pyramid up", &bloom_levels[i], &hdr_view)).collect();
         let dof_bgs = [pair("dof across", &hdr_view, &self.black_view), pair("dof down", &dof_views[0], &self.black_view)];
         let hdr_bg = device.create_bind_group(&wgpu::BindGroupDescriptor {
             label: Some("post inputs"), layout: &self.tex_layout,
@@ -2712,12 +2774,10 @@ impl Renderer {
             hdr_bg,
             dof_views,
             dof_bgs,
-            bloom_bright_bg,
-            bloom_bright_view,
-            bloom_h_bg,
-            bloom_h_views,
-            bloom_v_bg,
             bloom_view,
+            bloom_levels,
+            bloom_down_bgs,
+            bloom_up_bgs,
             ssao_depth_view,
             ssao_views,
             ssao_bgs,
@@ -2733,13 +2793,22 @@ impl Renderer {
         &mut self,
         rs: &egui_wgpu::RenderState,
         batches: &[crate::world_gui::GuiBatch],
+        fx: Option<&crate::world_gui::FxFrame>,
         tone_curve: Option<[f32; 5]>,
     ) {
         let Some(t) = self.target.as_ref() else { return };
         let pass = self
             .world_gui
-            .get_or_insert_with(|| crate::world_gui::WorldGuiPass::new(&rs.device, DISPLAY_FORMAT));
-        if pass.effects(rs, &t.hdr_view, t.size, &t.depth, batches, tone_curve, self.gui_fog.0, self.gui_fog.1) {
+            .get_or_insert_with(|| crate::world_gui::WorldGuiPass::new(&rs.device, &rs.queue, DISPLAY_FORMAT));
+        pass.sun_atlas = self.sun.atlas_view.clone();
+        pass.sun_grid = self.lightgrid_view.clone();
+        pass.lightgrid = self.gui_lightgrid;
+        pass.sun_params = self.gui_sun_params;
+        pass.sun_cascades = self.gui_sun;
+        // (effects light themselves from the frame's local lights)
+        pass.lights = self.lights_buf.clone();
+        pass.n_lights = self.gui_n_lights;
+        if pass.effects(rs, &t.hdr_view, t.size, &t.depth, batches, fx, tone_curve, self.gui_fog.0, self.gui_fog.1) {
             self.finish_again(rs);
         }
     }
@@ -2747,13 +2816,30 @@ impl Renderer {
     /// The bloom and the final image again, from the HDR image as it is now
     /// (effects drawn into it after `render`; the frame's globals still
     /// bound).
+    fn encode_bloom(&self, encoder: &mut wgpu::CommandEncoder, target: &Target, size: f32) {
+        let scale = ((target.size[0] as f32 * target.size[1] as f32) / 2073600.0).sqrt();
+        let levels = (3.0 + (scale.log2() + (size / 7.0).log2().max(0.0)).max(-1.0)).min(5.999) as usize;
+        for i in 0..levels {
+            let mut pass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
+                label: Some("bloom pyramid down"), color_attachments: &[Some(wgpu::RenderPassColorAttachment { view: &target.bloom_levels[i], depth_slice: None, resolve_target: None, ops: wgpu::Operations { load: wgpu::LoadOp::Clear(wgpu::Color::BLACK), store: wgpu::StoreOp::Store } })], depth_stencil_attachment: None, timestamp_writes: None, occlusion_query_set: None, multiview_mask: None,
+            });
+            pass.set_pipeline(if i == 0 { &self.bloom_bright } else { &self.bloom_down });
+            pass.set_bind_group(0, &self.globals_bg, &[]); pass.set_bind_group(1, &target.bloom_down_bgs[i], &[]); pass.draw(0..3, 0..1);
+        }
+        for i in (1..levels).rev() {
+            let mut pass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
+                label: Some("bloom pyramid up"), color_attachments: &[Some(wgpu::RenderPassColorAttachment { view: &target.bloom_levels[i-1], depth_slice: None, resolve_target: None, ops: wgpu::Operations { load: wgpu::LoadOp::Load, store: wgpu::StoreOp::Store } })], depth_stencil_attachment: None, timestamp_writes: None, occlusion_query_set: None, multiview_mask: None,
+            });
+            pass.set_pipeline(&self.bloom_up); pass.set_bind_group(0, &self.globals_bg, &[]); pass.set_bind_group(1, &target.bloom_up_bgs[i-1], &[]); pass.draw(0..3, 0..1);
+        }
+    }
+
     fn finish_again(&self, rs: &egui_wgpu::RenderState) {
+        let _b = crate::bench::scope("fx_post_again");
         let Some(target) = self.target.as_ref() else { return };
         let mut encoder = rs.device.create_command_encoder(&wgpu::CommandEncoderDescriptor { label: Some("effects post") });
-        let steps: [(&str, &wgpu::RenderPipeline, &wgpu::BindGroup, Vec<&wgpu::TextureView>); 6] = [
-            ("bloom bright", &self.bloom_bright, &target.bloom_bright_bg, vec![&target.bloom_bright_view]),
-            ("bloom across", &self.bloom_h, &target.bloom_h_bg, vec![&target.bloom_h_views[0], &target.bloom_h_views[1]]),
-            ("bloom down", &self.bloom_v, &target.bloom_v_bg, vec![&target.bloom_view]),
+        self.encode_bloom(&mut encoder, target, self.post_bloom_size);
+        let steps: [(&str, &wgpu::RenderPipeline, &wgpu::BindGroup, Vec<&wgpu::TextureView>); 3] = [
             ("dof across", &self.dof_h, &target.dof_bgs[0], vec![&target.dof_views[0]]),
             ("dof down", &self.dof_v, &target.dof_bgs[1], vec![&target.dof_views[1]]),
             ("post", &self.post, &target.hdr_bg, vec![&target.display_view]),
@@ -2819,10 +2905,14 @@ impl Renderer {
         // cam_pos.w is unused by the camera math. Keep material animation
         // continuous across scene rebuilds, independently of lighting time.
         let mut globals = frame.globals;
+        self.post_bloom_size = globals.bloom[1];
         self.post_dof = globals.dof[2] > 0.0 || globals.dof[3] > 0.0;
         globals.cam_pos[3] = self.material_epoch.elapsed().as_secs_f32();
         queue.write_buffer(&self.globals_buf, 0, bytemuck::bytes_of(&globals));
         self.gui_fog = Self::gui_fog(&frame.globals);
+        self.gui_lightgrid = frame.globals.lightgrid;
+        self.gui_sun_params = [if frame.globals.sun_color[3] < 0.5 { 1.0 } else { 0.0 }, crate::mech::SUN_DIST, crate::mech::HYBRID_LERP_SLOPE, if frame.shadows { 1.0 } else { 0.0 }];
+        self.gui_sun = crate::world_gui::SunCascades { local: frame.globals.sun_casc, sphere: frame.globals.sun_sphere, rect: frame.globals.sun_rect };
         let mut stats = RenderStats {
             rebuilds: self.stats.rebuilds,
             ..Default::default()
@@ -2993,6 +3083,7 @@ impl Renderer {
         }
 
         let n_lights = frame.lights.len().min(crate::mech::MAX_LIGHTS);
+        self.gui_n_lights = n_lights as u32;
         if n_lights > 0 {
             queue.write_buffer(
                 &self.lights_buf,
@@ -3001,11 +3092,28 @@ impl Renderer {
             );
         }
 
-        // Shadow casters: static opaque cells inside the sun's box (trimmed
-        // like the view), plus this frame's moving opaque parts.
-        let mut shadow_ranges: Vec<((usize, usize), u32, u32)> = Vec::new();
-        if frame.shadows {
-            let sp = frustum(Mat4::from_cols_array_2d(&frame.globals.shadow_vp));
+        // The sun's shadow cascades (sun_shadow.rs): which to redraw.
+        let scene_gen = self.static_gen;
+        let sun_due = if frame.shadows {
+            self.sun.upload(queue, &frame.sun_cascades);
+            self.sun.plan(&frame.sun_cascades, scene_gen, !opaque_runs.is_empty())
+        } else {
+            self.sun.forget();
+            [false; crate::sun_shadow::CASCADES]
+        };
+
+        let target = self.target.as_ref()?;
+        let mut encoder = device.create_command_encoder(&wgpu::CommandEncoderDescriptor {
+            label: Some("viewport"),
+        });
+        for (ci, cascade) in frame.sun_cascades.iter().enumerate() {
+            if !sun_due[ci] {
+                continue;
+            }
+            // Casters: static opaque cells that can reach the cascade's box
+            // (trimmed like the view), plus this frame's moving opaque parts.
+            let sp = frustum(cascade.caster_view_proj());
+            let mut shadow_ranges: Vec<((usize, usize), u32, u32)> = Vec::new();
             for b in self.st.batches.iter().filter(|b| b.pass == Pass::Opaque) {
                 if !box_visible(&sp, b.lo, b.hi) {
                     continue;
@@ -3021,57 +3129,56 @@ impl Renderer {
                     _ => shadow_ranges.push((b.key, b.start, b.start + n)),
                 }
             }
-        }
-
-        let target = self.target.as_ref()?;
-        let mut encoder = device.create_command_encoder(&wgpu::CommandEncoderDescriptor {
-            label: Some("viewport"),
-        });
-        if frame.shadows {
-            let mut pass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
-                label: Some("sun shadow"),
-                color_attachments: &[],
-                depth_stencil_attachment: Some(wgpu::RenderPassDepthStencilAttachment {
-                    view: &self.shadow_view,
-                    depth_ops: Some(wgpu::Operations {
-                        load: wgpu::LoadOp::Clear(1.0),
-                        store: wgpu::StoreOp::Store,
+            {
+                let mut pass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
+                    label: Some("sun shadow cascade"),
+                    color_attachments: &[],
+                    depth_stencil_attachment: Some(wgpu::RenderPassDepthStencilAttachment {
+                        view: &self.shadow_view,
+                        depth_ops: Some(wgpu::Operations {
+                            load: wgpu::LoadOp::Clear(1.0),
+                            store: wgpu::StoreOp::Store,
+                        }),
+                        stencil_ops: None,
                     }),
-                    stencil_ops: None,
-                }),
-                timestamp_writes: None,
-                occlusion_query_set: None,
-                multiview_mask: None,
-            });
-            pass.set_pipeline(&self.shadow);
-            pass.set_bind_group(0, &self.shadow_globals_bg, &[]);
-            let cast =
-                |pass: &mut wgpu::RenderPass, key: (usize, usize), range: std::ops::Range<u32>| {
-                    if let Some(mesh) = self.meshes.get(key.0) {
-                        crate::runtime::domains::services::perf::draw(crate::runtime::domains::services::perf::SHADOW, 1, (mesh.count / 3) as u64 * (range.end - range.start) as u64);
-                        pass.set_vertex_buffer(0, mesh.vbuf.slice(..));
-                        pass.draw(0..mesh.count, range);
-                    }
-                };
-            pass.set_vertex_buffer(1, self.static_buf.slice(..));
-            for r in &shadow_ranges {
-                cast(&mut pass, r.0, r.1..r.2);
-            }
-            pass.set_vertex_buffer(1, self.instance_buf.slice(..));
-            for r in &opaque_runs {
-                cast(&mut pass, r.0, r.1..r.2);
-            }
-            if !self.terrain_chunks.is_empty() {
-                pass.set_pipeline(&self.terrain_shadow);
-                let sp = frustum(Mat4::from_cols_array_2d(&frame.globals.shadow_vp));
-                for c in self.terrain_chunks.values() {
-                    if box_visible(&sp, c.lo, c.hi) {
-                        crate::runtime::domains::services::perf::draw(crate::runtime::domains::services::perf::SHADOW, 1, (c.count / 3) as u64);
-                        pass.set_vertex_buffer(0, c.vbuf.slice(..));
-                        pass.draw(0..c.count, 0..1);
+                    timestamp_writes: None,
+                    occlusion_query_set: None,
+                    multiview_mask: None,
+                });
+                let side = cascade.tile.min(SHADOW_SIZE);
+                pass.set_viewport(0.0, 0.0, side as f32, side as f32, 0.0, 1.0);
+                pass.set_scissor_rect(0, 0, side, side);
+                pass.set_pipeline(&self.shadow);
+                pass.set_bind_group(0, &self.shadow_globals_bg, &[]);
+                self.sun.bind(&mut pass, ci);
+                let cast =
+                    |pass: &mut wgpu::RenderPass, key: (usize, usize), range: std::ops::Range<u32>| {
+                        if let Some(mesh) = self.meshes.get(key.0) {
+                            crate::runtime::domains::services::perf::draw(crate::runtime::domains::services::perf::SHADOW, 1, (mesh.count / 3) as u64 * (range.end - range.start) as u64);
+                            pass.set_vertex_buffer(0, mesh.vbuf.slice(..));
+                            pass.draw(0..mesh.count, range);
+                        }
+                    };
+                pass.set_vertex_buffer(1, self.static_buf.slice(..));
+                for r in &shadow_ranges {
+                    cast(&mut pass, r.0, r.1..r.2);
+                }
+                pass.set_vertex_buffer(1, self.instance_buf.slice(..));
+                for r in &opaque_runs {
+                    cast(&mut pass, r.0, r.1..r.2);
+                }
+                if !self.terrain_chunks.is_empty() {
+                    pass.set_pipeline(&self.terrain_shadow);
+                    for c in self.terrain_chunks.values() {
+                        if box_visible(&sp, c.lo, c.hi) {
+                            crate::runtime::domains::services::perf::draw(crate::runtime::domains::services::perf::SHADOW, 1, (c.count / 3) as u64);
+                            pass.set_vertex_buffer(0, c.vbuf.slice(..));
+                            pass.draw(0..c.count, 0..1);
+                        }
                     }
                 }
             }
+            self.sun.blur(&mut encoder, cascade, ci);
         }
         // Local light shadow maps (Studio's Future path): the lights the
         // light list gave a slot (LightRaw.extra.w), each a cube of EVSM
@@ -3388,6 +3495,7 @@ impl Renderer {
                 pass.draw(0..3, 0..1);
             }
         }
+        self.encode_bloom(&mut encoder, target, globals.bloom[1]);
         let mut fullscreen = |label: &str,
                               pipeline: &wgpu::RenderPipeline,
                               bg: &wgpu::BindGroup,
@@ -3420,24 +3528,6 @@ impl Renderer {
             if label == "dof across" { pass.set_bind_group(2, &target.ssao_bgs[0], &[]); }
             pass.draw(0..3, 0..1);
         };
-        fullscreen(
-            "bloom bright",
-            &self.bloom_bright,
-            &target.bloom_bright_bg,
-            &[&target.bloom_bright_view],
-        );
-        fullscreen(
-            "bloom across",
-            &self.bloom_h,
-            &target.bloom_h_bg,
-            &[&target.bloom_h_views[0], &target.bloom_h_views[1]],
-        );
-        fullscreen(
-            "bloom down",
-            &self.bloom_v,
-            &target.bloom_v_bg,
-            &[&target.bloom_view],
-        );
         if globals.dof[2] > 0.0 || globals.dof[3] > 0.0 {
             fullscreen("dof across", &self.dof_h, &target.dof_bgs[0], &[&target.dof_views[0]]);
             fullscreen("dof down", &self.dof_v, &target.dof_bgs[1], &[&target.dof_views[1]]);
@@ -3907,7 +3997,9 @@ fn shader_source() -> String {
     use crate::mech as m;
     let [a, b, c, d, e] = m::TONE_CURVE;
     format!(
-        "const TONE_A: f32 = {a:?};\nconst TONE_B: f32 = {b:?};\nconst TONE_C: f32 = {c:?};\nconst TONE_D: f32 = {d:?};\nconst TONE_E: f32 = {e:?};\nconst BLOOM_SIGMA_NARROW: f32 = {:?};\nconst BLOOM_SIGMA_WIDE: f32 = {:?};\nconst BLOOM_WIDE_SHARE: f32 = {:?};\nconst BLOOM_GAIN: f32 = {:?};\nconst BLOOM_MAX_RADIUS: i32 = {};\nconst ATMOS_BAND_DEG: f32 = {:?};\nconst ATMOS_BAND_POW: f32 = {:?};\nconst ATMOS_BAND_FLOOR: f32 = {:?};\nconst ENV_SPEC_LOD_SPAN: f32 = {:?};\nconst LIGHTGRID_BORDER: f32 = {:?};\nconst LIGHTOCC_DENSITY: f32 = {:?};\nconst LIGHTOCC_START_VOXELS: f32 = {:?};\nconst LIGHTOCC_LIGHT_SKIP_VOXELS: f32 = {:?};\nconst LIGHTOCC_MAX_STEPS: f32 = {:?};\nconst NEON_SEE_THROUGH_CUT: f32 = {:?};\nconst NEON_SEE_THROUGH_MAX: f32 = {:?};\nconst ATMOS_T_EPS: f32 = {:?};\nconst ATMOS_FOG_MIP: f32 = {:?};\nconst ATMOS_ENV_CUBE_LEVELS: f32 = {:?};\nconst ENV_SPEC_FADE: f32 = {:?};\nconst ENV_ROUGH_BASE: f32 = {:?};\nconst ENV_ROUGH_SCALE: f32 = {:?};\nconst ENV_SPEC_MIP_PER_ROUGHNESS: f32 = {:?};\nconst ENV_REFLECT_UP_GAIN: f32 = {:?};\nconst SSAO_DEPTH_SCALE: f32 = {:?};\nconst SSAO_DEPTH_MAX: f32 = {:?};\nconst SSAO_RADIUS_K: f32 = {:?};\nconst SSAO_RADIUS_MIN_TEXELS: f32 = {:?};\nconst SSAO_RADIUS_MAX_TEXELS: f32 = {:?};\nconst SSAO_SAMPLES: u32 = {}u;\nconst SSAO_DEPTH_GAIN: f32 = {:?};\nconst SSAO_BLUR_K: f32 = {:?};\nconst SSAO_BLUR_DEPTH: f32 = {:?};\nconst SSAO_BLUR_DEPTH_MIN: f32 = {:?};\nconst SSAO_BLUR_DEPTH_MAX: f32 = {:?};\nconst SSAO_UPSAMPLE_DEPTH: f32 = {:?};\nconst EVSM_POS_EXP: f32 = {:?};\nconst EVSM_NEG_EXP: f32 = {:?};\nconst EVSM_SHADOW_BIAS: f32 = {:?};\nconst EVSM_BLEED_CUT: f32 = {:?};\nconst LSHADOW_COLS: u32 = {}u;\nconst LSHADOW_CELL: f32 = {:?};\n{}",
+        "const SUN_DIST: f32 = {:?};\nconst HYBRID_LERP_SLOPE: f32 = {:?};\nconst TONE_A: f32 = {a:?};\nconst TONE_B: f32 = {b:?};\nconst TONE_C: f32 = {c:?};\nconst TONE_D: f32 = {d:?};\nconst TONE_E: f32 = {e:?};\nconst BLOOM_SIGMA_NARROW: f32 = {:?};\nconst BLOOM_SIGMA_WIDE: f32 = {:?};\nconst BLOOM_WIDE_SHARE: f32 = {:?};\nconst BLOOM_GAIN: f32 = {:?};\nconst BLOOM_MAX_RADIUS: i32 = {};\nconst ATMOS_BAND_DEG: f32 = {:?};\nconst ATMOS_BAND_POW: f32 = {:?};\nconst ATMOS_BAND_FLOOR: f32 = {:?};\nconst ENV_SPEC_LOD_SPAN: f32 = {:?};\nconst LIGHTGRID_BORDER: f32 = {:?};\nconst LIGHTOCC_DENSITY: f32 = {:?};\nconst LIGHTOCC_START_VOXELS: f32 = {:?};\nconst LIGHTOCC_LIGHT_SKIP_VOXELS: f32 = {:?};\nconst LIGHTOCC_MAX_STEPS: f32 = {:?};\nconst NEON_SEE_THROUGH_CUT: f32 = {:?};\nconst NEON_SEE_THROUGH_MAX: f32 = {:?};\nconst ATMOS_T_EPS: f32 = {:?};\nconst ATMOS_FOG_MIP: f32 = {:?};\nconst ATMOS_ENV_CUBE_LEVELS: f32 = {:?};\nconst ENV_SPEC_FADE: f32 = {:?};\nconst ENV_ROUGH_BASE: f32 = {:?};\nconst ENV_ROUGH_SCALE: f32 = {:?};\nconst ENV_SPEC_MIP_PER_ROUGHNESS: f32 = {:?};\nconst ENV_REFLECT_UP_GAIN: f32 = {:?};\nconst SSAO_DEPTH_SCALE: f32 = {:?};\nconst SSAO_DEPTH_MAX: f32 = {:?};\nconst SSAO_RADIUS_K: f32 = {:?};\nconst SSAO_RADIUS_MIN_TEXELS: f32 = {:?};\nconst SSAO_RADIUS_MAX_TEXELS: f32 = {:?};\nconst SSAO_SAMPLES: u32 = {}u;\nconst SSAO_DEPTH_GAIN: f32 = {:?};\nconst SSAO_BLUR_K: f32 = {:?};\nconst SSAO_BLUR_DEPTH: f32 = {:?};\nconst SSAO_BLUR_DEPTH_MIN: f32 = {:?};\nconst SSAO_BLUR_DEPTH_MAX: f32 = {:?};\nconst SSAO_UPSAMPLE_DEPTH: f32 = {:?};\nconst EVSM_POS_EXP: f32 = {:?};\nconst EVSM_NEG_EXP: f32 = {:?};\nconst EVSM_SHADOW_BIAS: f32 = {:?};\nconst EVSM_BLEED_CUT: f32 = {:?};\nconst LSHADOW_COLS: u32 = {}u;\nconst LSHADOW_CELL: f32 = {:?};\n{}",
+        m::SUN_DIST,
+        m::HYBRID_LERP_SLOPE,
         m::BLOOM_SIGMAS_PX[0],
         m::BLOOM_SIGMAS_PX[1],
         m::BLOOM_WIDE_SHARE,

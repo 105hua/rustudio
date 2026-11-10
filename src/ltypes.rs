@@ -128,8 +128,9 @@ pub fn vec_any<T: 'static>(v: &Value) -> Option<T> {
     if std::any::TypeId::of::<T>() != std::any::TypeId::of::<LVector3>() {
         return None;
     }
-    let b: Box<dyn std::any::Any> = Box::new(v3_opt(v)?);
-    b.downcast::<T>().ok().map(|b| *b)
+    // (T is LVector3: no boxing per call.)
+    let x = v3_opt(v)?;
+    (&mut Some(x) as &mut dyn std::any::Any).downcast_mut::<Option<T>>()?.take()
 }
 
 /// The vector type's metatable: Vector3's members (dtmeta builds the C

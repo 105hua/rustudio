@@ -981,7 +981,14 @@ mod tests {
             }
         }
         if let Ok(place) = std::env::var("RS_LG_PLACE") {
-            let doc = crate::doc::Document::open(std::path::Path::new(&place)).unwrap();
+            let mut doc = crate::doc::Document::open(std::path::Path::new(&place)).unwrap();
+            if std::env::var("RS_LG_PARTS").is_err() {
+                let mut scene = crate::scene::Scene::default();
+                scene.sync(&mut doc);
+                for p in scene.parts.iter().filter_map(|p| p.light) {
+                    o.add_prim(&p);
+                }
+            }
             if let Some(Ok(v)) = Voxels::from_dom(&doc.dom) {
                 o.add_terrain(&v);
             }
@@ -1020,7 +1027,7 @@ mod tests {
         }
         for (name, occ) in [("studio occupancy", &so), ("rustudio occupancy", &o)] {
             let t = std::time::Instant::now();
-            let g = skylight(occ);
+            let mut g = skylight(occ);
             let el = t.elapsed();
             let mut hist = [0usize; 5];
             let mut sum = 0u64;
@@ -1034,6 +1041,13 @@ mod tests {
                     7..=20 => 3,
                     _ => 4,
                 }] += 1;
+            }
+            if let (Ok(out), true) = (std::env::var("RS_LG_SKY_OUT"), name == "rustudio occupancy") {
+                if let Ok(sun) = std::env::var("RS_LG_SUN") {
+                    let v: Vec<f32> = sun.split(',').map(|s| s.parse().unwrap()).collect();
+                    sunlight(occ, &mut g, Vec3::new(v[0], v[1], v[2]));
+                }
+                std::fs::write(out, &g.data).unwrap();
             }
             println!(
                 "skylight from {name} ({el:?}): exact {:.4}, ≤2 {}, ≤6 {}, ≤20 {}, >20 {}, mean |d| {:.3}",

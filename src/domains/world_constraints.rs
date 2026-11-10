@@ -61,7 +61,8 @@ fn one_attachment(d: &Document, r: Ref, class: &str) -> bool {
 
 /// Whether the constraint could act now (everything but "simulated yet").
 fn could_act(d: &Document, r: Ref, class: &str) -> bool {
-    if !boolp(d, r, "Enabled", true) || !in_workspace(d, r) {
+    let on = if class == "WeldConstraint" { crate::physics::joint_enabled(d, r) } else { boolp(d, r, "Enabled", true) };
+    if !on || !in_workspace(d, r) {
         return false;
     }
     let ends: Vec<Option<Ref>> = if class == "WeldConstraint" || class == "NoCollisionConstraint" {
@@ -88,7 +89,32 @@ fn active(lua: &Lua, r: Ref, class: &str) -> mlua::Result<bool> {
     if !could_act(d, r, class) {
         return Ok(false);
     }
-    Ok(SEEN.with(|s| s.borrow().get(&d.id).is_some_and(|(_, set)| set.contains(&r))))
+    Ok(SEEN.with(|s| {
+        let mut s = s.borrow_mut();
+        let e = seen_fresh(&mut s, d);
+        e.contains(&r)
+    }))
+}
+
+/// The constraints under Workspace (simulated: Active), re-read when the
+/// tree changed since they were last asked for. Only on a read of Active:
+/// `step` did this walk of the whole Workspace on every tree change, which
+/// in a live Place A match is every frame (1 ms a frame, 110 ms at map spawn).
+fn seen_fresh<'a>(s: &'a mut HashMap<u64, (u64, HashSet<Ref>)>, d: &Document) -> &'a HashSet<Ref> {
+    let e = s.entry(d.id).or_insert((u64::MAX, HashSet::new()));
+    if e.0 != d.tree_revision {
+        e.0 = d.tree_revision;
+        e.1 = match d.workspace() {
+            Some(ws) => d
+                .dom
+                .descendants_of(ws)
+                .filter(|i| constraint_class(&i.class))
+                .map(|i| i.referent())
+                .collect(),
+            None => HashSet::new(),
+        };
+    }
+    &e.1
 }
 
 /// The two attachments' world frames.
@@ -319,6 +345,11 @@ pub fn prop_get(lua: &Lua, r: Ref, class: &str, key: &str) -> mlua::Result<Optio
     if class == "WeldConstraint" && key == "Active" {
         return Ok(Some(Value::Boolean(active(lua, r, class)?)));
     }
+    // Enabled isn't saved or replicated: it comes from State (bit 0).
+    if class == "WeldConstraint" && key == "Enabled" {
+        let w = world(lua)?;
+        return Ok(Some(Value::Boolean(crate::physics::joint_enabled(w.d(), r))));
+    }
     if doc::is_a(class, "Constraint") {
         if key == "Active" {
             return Ok(Some(Value::Boolean(active(lua, r, class)?)));
@@ -455,23 +486,6 @@ pub fn step(lua: &Lua, _dt: f64) -> mlua::Result<()> {
             Err(_) => return Ok(()),
         };
         let d = w.d();
-        // Constraints under Workspace now count as simulated (Active).
-        SEEN.with(|s| {
-            let mut s = s.borrow_mut();
-            let e = s.entry(d.id).or_insert((u64::MAX, HashSet::new()));
-            if e.0 != d.tree_revision {
-                e.0 = d.tree_revision;
-                e.1 = match d.workspace() {
-                    Some(ws) => d
-                        .dom
-                        .descendants_of(ws)
-                        .filter(|i| constraint_class(&i.class))
-                        .map(|i| i.referent())
-                        .collect(),
-                    None => HashSet::new(),
-                };
-            }
-        });
         (d.id, crate::physics::live::take_reached(d.id))
     };
     if !reached.is_empty() {

@@ -170,6 +170,8 @@ impl Walk<'_, '_> {
             .into_iter()
             .filter(|c| d.class_of(*c).is_some_and(|k| k == "ParticleEmitter2D"))
             .collect();
+        // (particles move every frame)
+        if !emitters.is_empty() { self.gui.no_cache = Some("particles2d"); }
         for em in emitters {
             self.emitter(em, rect, me);
         }
@@ -343,6 +345,8 @@ impl Walk<'_, '_> {
         if !boolp(d, b, "Enabled", true) || rect.width() <= 0.0 || rect.height() <= 0.0 {
             return;
         }
+        // (it shows the 3D view behind it, which changes every frame)
+        self.gui.no_cache = Some("uiblur");
         let Some(origin) = self.screen else { return };
         let radius = match enum_u32(d.prop(b, "Strength")).unwrap_or(2) {
             0 => 4.0,
@@ -397,6 +401,8 @@ impl Walk<'_, '_> {
                     aff: *aff,
                     z: (*z).max(me.z),
                     seq: self.seq,
+                    by: self.cur,
+                    tess: Default::default(),
                 });
             }
         }
@@ -435,7 +441,7 @@ impl Walk<'_, '_> {
 
     fn push_item(&mut self, shape: Shape, dn: &Down) {
         self.seq += 1;
-        self.items.push(Item { shape, clip: dn.clip, aff: dn.aff, z: dn.z, seq: self.seq });
+        self.items.push(Item { shape, clip: dn.clip, aff: dn.aff, z: dn.z, seq: self.seq, by: self.cur, tess: Default::default() });
     }
 }
 

@@ -86,8 +86,10 @@ local function start_tracking()
     if tracking then return end
     tracking = true
     for _, d in game:GetDescendants() do track(d) end
-    game.DescendantAdded:Connect(track)
-    game.DescendantRemoving:Connect(function(i)
+    -- Natively filtered DescendantAdded / Removing: no Lua call per instance.
+    local added, removing = G.class_signals({ "StyleLink", "InputContext", "ProximityPrompt", "HapticEffect", "HandleAdornment", "HandlesBase" })
+    added:Connect(track)
+    removing:Connect(function(i)
         local set_ = tracked[i.ClassName]
         if set_ then set_[i] = nil end
         tracked.Adorn[i] = nil
@@ -2065,8 +2067,9 @@ local function start_dialog_ui()
     end
     function rrs:WaitForChild() return remote end
     for _, d in game:GetDescendants() do dialog_track(d) end
-    game.DescendantAdded:Connect(dialog_track)
-    game.DescendantRemoving:Connect(function(i)
+    local dialog_added_sig, dialog_removing_sig = G.class_signals({ "Dialog" })
+    dialog_added_sig:Connect(dialog_track)
+    dialog_removing_sig:Connect(function(i)
         if dialog_set[i] then dialog_set[i] = nil dialog_removed:Fire(i) end
     end)
     local D = {

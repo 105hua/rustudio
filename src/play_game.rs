@@ -15,7 +15,7 @@ use crate::scene::vec3_of;
 use crate::theme;
 
 #[path = "game_menu.rs"]
-mod game_menu;
+pub mod game_menu;
 
 /// What's under the cursor (refs belong to the DataModel shown when picked).
 #[derive(Debug, Clone, Copy)]
@@ -1729,9 +1729,21 @@ impl Editor {
         if menu {
             clicks.clear();
             buttons.clear();
-            uis.clear();
             slots.clear();
             open_chat = false;
+            // A button let go while it's open still ends what its press began
+            // (UserInputService.InputEnded, gameProcessedEvent true): a camera
+            // pan or a held drag can't stay stuck holding the mouse after Resume.
+            uis = ctx.input(|i| {
+                i.events
+                    .iter()
+                    .filter_map(|e| match e {
+                        egui::Event::PointerButton { button: egui::PointerButton::Primary, pressed: false, .. } => Some((1, false, true)),
+                        egui::Event::PointerButton { button: egui::PointerButton::Secondary, pressed: false, .. } => Some((2, false, true)),
+                        _ => None,
+                    })
+                    .collect()
+            });
         }
         let painter = ui.painter_at(rect);
         let now = self.play.as_ref().map(|s| s.time).unwrap_or(0.0);

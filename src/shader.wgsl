@@ -22,8 +22,10 @@ struct Globals {
     fog_color: vec4<f32>,
     cc: vec4<f32>,           // ColorCorrection Brightness, Contrast, Saturation, on
     cc_tint: vec4<f32>,      // TintColor, w Bloom Intensity
-    bloom: vec4<f32>,        // x Threshold, y Size (BloomEffect units, 24 = Studio's glow), z shadows on, w shadow softness (texels)
-    shadow_vp: mat4x4<f32>,
+    bloom: vec4<f32>,        // x Threshold, y Size (BloomEffect units, 24 = Studio's glow), z shadows on
+    sun_casc: array<mat4x4<f32>, 4>, // the sun's shadow cascades: world to the tile's (u, v, depth)
+    sun_sphere: array<vec4<f32>, 4>, // each cascade's sphere: centre, radius squared
+    sun_rect: array<vec4<f32>, 4>,   // each tile in the atlas: corner, size (UV)
     sky_rot: vec4<f32>,      // x stars (0/1), y blur size
     env: array<vec4<f32>, 6>, // skybox irradiance x EnvironmentDiffuseScale (+X, -X, +Y, -Y, +Z, -Z)
     sky_tint: vec4<f32>,     // the sky (and its light) by time of day: 1 by day, a dim blue at dusk, 0 deep at night
@@ -54,8 +56,8 @@ struct Light {
 @group(0) @binding(1) var<storage, read> lights: array<Light>;
 @group(0) @binding(2) var sky_tex: texture_cube<f32>;
 @group(0) @binding(3) var sky_sampler: sampler;
-@group(0) @binding(4) var shadow_tex: texture_depth_2d;
-@group(0) @binding(5) var shadow_sampler: sampler_comparison;
+// The sun's shadow cascades (sun_shadow.rs): EVSM moments, four tiles.
+@group(0) @binding(4) var sun_evsm_tex: texture_2d<f32>;
 @group(0) @binding(11) var lightgrid_tex: texture_3d<f32>;
 // Local light shadows (Studio's Future path, Studio measurements "Local light
 // shadows"): EVSM moments per cube face, packed in one atlas.
@@ -126,19 +128,14 @@ const LIGHT_FALLOFF_K: f32 = 110.0;
 
 // Glass reflection (fitted to Studio's Glass cubes, day and unlit).
 
-/// Studio's tone mappers, then display gamma 2.0. Default: the measured
-/// rational curve y = x(ax+b) / (x(ax+c)+d) x e; Retro: none (clamped).
+/// ImageProcessFXCompositionLinearFS consumes linear scene values and emits
+/// the rational curve directly. Its coefficients already map to display colour;
+/// applying a second square root lifted highlights and flattened contrast.
 fn tonemap(x: vec3<f32>) -> vec3<f32> {
-    var y = max(x, vec3<f32>(0.0));
-    if (g.params.z < 0.5) {
-        let a = TONE_A;
-        let b = TONE_B;
-        let c = TONE_C;
-        let d = TONE_D;
-        let e = TONE_E;
-        y = y * (a * y + b) / (y * (a * y + c) + d) * e;
-    }
-    return sqrt(clamp(y, vec3<f32>(0.0), vec3<f32>(1.0)));
+    let y = max(x, vec3<f32>(0.0));
+    if (g.params.z >= 0.5) { return sqrt(clamp(y,vec3<f32>(0.0),vec3<f32>(1.0))); }
+    let mapped = y * (0.3 * y + vec3<f32>(0.4)) / (y * (0.3 * y + vec3<f32>(0.38)) + vec3<f32>(0.12));
+    return clamp(mapped,vec3<f32>(0.0),vec3<f32>(1.0));
 }
 
 /// Split-sum environment BRDF terms (A, B) for a roughness and N·V: the
@@ -456,30 +453,60 @@ fn vs_part(v: PartIn) -> PartOut {
     return part_out(v);
 }
 
-/// Sun shadow: 1 lit, 0 shadowed (3x3 PCF on the shadow map).
+/// Sun shadow: 1 lit, 0 shadowed. As Studio's part FS
+/// (DefaultUnifiedFlatOpaqueFS 8): the cascades' visibility, handed to the voxel sun over
+/// SUN_DIST .. SUN_DIST + 1 / HYBRID_LERP_SLOPE studs from the camera.
 fn sun_shadow(world: vec3<f32>, n: vec3<f32>) -> f32 {
-    if (g.bloom.z < 0.5) {
-        return 1.0;
+    if (g.bloom.z < 0.5) { return 1.0; }
+    let voxel = light_grid_sun(world, n);
+    if (g.sun_color.w > 0.5 && g.env_spec.z <= 0.5) { return voxel; }
+    let mapped = sun_shadow_map(world);
+    if (mapped < 0.0) { return voxel; }
+    if (g.sun_color.w < 0.5) {
+        return mix(mapped, voxel, clamp((length(world - g.cam_pos.xyz) - SUN_DIST) * HYBRID_LERP_SLOPE, 0.0, 1.0));
     }
-    // Soft without PrioritizeLightingQuality (Studio's Voxel part shaders,
-    // DefaultUnifiedFlatOpaqueFS 0-2): no shadow map, the sun is scaled by
-    // the light grid's sun channel (.y) alone.
-    if (g.sun_color.w > 0.5 && g.env_spec.z <= 0.5) {
-        return light_grid_sun(world, n);
+    return mapped * voxel;
+}
+
+/// The cascades alone (sun_shadow.rs): the first whose sphere holds the
+/// point, else the last; its EVSM moments at the point. −1 outside its tile.
+fn sun_shadow_map(world: vec3<f32>) -> f32 {
+    let d0 = world - g.sun_sphere[0].xyz;
+    let d1 = world - g.sun_sphere[1].xyz;
+    let d2 = world - g.sun_sphere[2].xyz;
+    var i = 3;
+    if (dot(d0, d0) < g.sun_sphere[0].w) {
+        i = 0;
+    } else if (dot(d1, d1) < g.sun_sphere[1].w) {
+        i = 1;
+    } else if (dot(d2, d2) < g.sun_sphere[2].w) {
+        i = 2;
     }
-    let p = g.shadow_vp * vec4<f32>(world + n * 0.08, 1.0);
-    let uv = vec2<f32>(p.x * 0.5 + 0.5, 0.5 - p.y * 0.5);
-    if (uv.x <= 0.0 || uv.x >= 1.0 || uv.y <= 0.0 || uv.y >= 1.0 || p.z <= 0.0 || p.z >= 1.0) {
-        return 1.0;
+    let p = g.sun_casc[i] * vec4<f32>(world, 1.0);
+    if (any(p.xy <= vec2<f32>(0.0)) || any(p.xy >= vec2<f32>(1.0))) {
+        return -1.0;
     }
-    let texel = g.bloom.w / f32(textureDimensions(shadow_tex).x);
-    var lit = 0.0;
-    for (var y = -1; y <= 1; y++) {
-        for (var x = -1; x <= 1; x++) {
-            lit += textureSampleCompareLevel(shadow_tex, shadow_sampler, uv + vec2<f32>(f32(x), f32(y)) * texel, p.z - 0.0015);
-        }
-    }
-    return lit / 9.0;
+    let r = g.sun_rect[i];
+    let m = textureSampleLevel(sun_evsm_tex, lshadow_sampler, r.xy + p.xy * r.zw, 0.0);
+    return evsm_visibility(m, 2.0 * p.z - 1.0);
+}
+
+/// Studio's EVSM test (the sun's cascades and the local lights' cube faces
+/// alike): Chebyshev on the positive and the negative warp of depth `z`
+/// (−1..1) with the bias as minimum variance, light-bleed cut
+/// (p − 0.2) × 1.25, the lesser of the two.
+fn evsm_visibility(m: vec4<f32>, z: f32) -> f32 {
+    let ep = exp(EVSM_POS_EXP * z);
+    let en = -exp(-EVSM_NEG_EXP * z);
+    let mv = vec2<f32>(EVSM_POS_EXP, EVSM_NEG_EXP) * EVSM_SHADOW_BIAS * vec2<f32>(ep, en);
+    let mv2 = mv * mv;
+    let vp = max(m.y - m.x * m.x, mv2.x);
+    let dp = ep - m.x;
+    let vn = max(m.w - m.z * m.z, mv2.y);
+    let dn = en - m.z;
+    let pp = select(clamp((vp / (vp + dp * dp) - EVSM_BLEED_CUT) / (1.0 - EVSM_BLEED_CUT), 0.0, 1.0), 1.0, ep <= m.x);
+    let pn = select(clamp((vn / (vn + dn * dn) - EVSM_BLEED_CUT) / (1.0 - EVSM_BLEED_CUT), 0.0, 1.0), 1.0, en <= m.z);
+    return min(pp, pn);
 }
 
 /// Studio's light grid skylight (lightgrid.rs; Studio measurements "Light grid
@@ -709,18 +736,7 @@ fn light_shadow(slot: i32, world: vec3<f32>) -> f32 {
     let cell = vec2<f32>(f32(k % LSHADOW_COLS), f32(k / LSHADOW_COLS));
     let uv = (cell + ndc * vec2<f32>(0.5, -0.5) + vec2<f32>(0.5)) * LSHADOW_CELL;
     let m = textureSampleLevel(lshadow_tex, lshadow_sampler, uv, 0.0);
-    let z = 2.0 * (w * s.pos.w) - 1.0;
-    let ep = exp(EVSM_POS_EXP * z);
-    let en = -exp(-EVSM_NEG_EXP * z);
-    let mv = vec2<f32>(EVSM_POS_EXP, EVSM_NEG_EXP) * EVSM_SHADOW_BIAS * vec2<f32>(ep, en);
-    let mv2 = mv * mv;
-    let vp = max(m.y - m.x * m.x, mv2.x);
-    let dp = ep - m.x;
-    let vn = max(m.w - m.z * m.z, mv2.y);
-    let dn = en - m.z;
-    let pp = select(clamp((vp / (vp + dp * dp) - EVSM_BLEED_CUT) / (1.0 - EVSM_BLEED_CUT), 0.0, 1.0), 1.0, ep <= m.x);
-    let pn = select(clamp((vn / (vn + dn * dn) - EVSM_BLEED_CUT) / (1.0 - EVSM_BLEED_CUT), 0.0, 1.0), 1.0, en <= m.z);
-    return min(pp, pn);
+    return evsm_visibility(m, 2.0 * (w * s.pos.w) - 1.0);
 }
 
 // The light shadow pass: one cube face at a time (render.rs), writing EVSM
@@ -816,7 +832,9 @@ fn fs_part(in: PartOut, @builtin(front_facing) front: bool) -> @location(0) vec4
     let code = u32(in.extra.x + 0.5);
     let kind = f32(code & 7u);
     let layer = i32(code >> 4u) - 1;
-    let material_lq = layer >= 0 && g.env_spec.z <= 0.5;
+    // Modern Realistic lighting uses the HQ material variant even when
+    // an old Technology property is absent (env_spec.z is legacy state).
+    let material_lq = layer >= 0 && g.env_spec.z <= 0.5 && g.sun_color.w > 0.5;
     // Material map coordinate and its screen gradients (taken here, in
     // uniform control flow): the mesh's UVs, or the box face in studs.
     var muv = face_studs(in.objn, in.local, in.half) * in.mscale.xy + in.mscale.zw;
@@ -915,7 +933,7 @@ fn fs_part(in: PartOut, @builtin(front_facing) front: bool) -> @location(0) vec4
             ms = mat_params[5u * u32(layer) + 4u];
         }
         let shader_type = u32(mp1.z + 0.5);
-        let lq = g.env_spec.z <= 0.5;
+        let lq = material_lq;
         let depth = 1.0 / in.clip.w;
         let fades = clamp(vec2<f32>(1.0) - depth * vec2<f32>(1.0 / MATERIAL_DIFFUSE_FADE_DEPTH, ENV_SPEC_FADE), vec2<f32>(0.0), vec2<f32>(1.0));
         var a: vec4<f32>;
@@ -996,15 +1014,18 @@ fn fs_part(in: PartOut, @builtin(front_facing) front: bool) -> @location(0) vec4
         }
         // Relief fades out with distance (CB0[28].y, as the reflections).
         xy *= fades.y;
-        // Cotangent frame from the screen gradients of position and uv.
-        let p1 = cross(wdy, n);
-        let p2 = cross(n, wdx);
-        let t = p1 * mdx.x + p2 * mdy.x;
-        let b = p1 * mdx.y + p2 * mdy.y;
-        let k = inverseSqrt(max(max(dot(t, t), dot(b, b)), 1e-20));
-        let bent = t * k * xy.x - b * k * xy.y + n * z;
-        if (!lq && dot(bent, bent) > 1e-8) {
-            n = normalize(bent);
+        // Invert the UV derivatives to recover the authored tangent frame.
+        // The cross-product cotangent shortcut changes handedness with the
+        // screen-space derivatives (WebGPU Y points down), reversing relief.
+        // Studio WangVS supplies a rotated object tangent; WangFS uses
+        // T * normal.x + cross(N, T) * normal.y + N * normal.z.
+        let det = mdx.x * mdy.y - mdx.y * mdy.x;
+        if (!lq && abs(det) > 1e-20) {
+            let t = (wdx * mdy.y - wdy * mdx.y) / det;
+            let b = (wdy * mdx.x - wdx * mdy.x) / det;
+            let tt = normalize(t - n * dot(n, t));
+            let bb = normalize(b - n * dot(n, b));
+            n = normalize(tt * xy.x - bb * xy.y + n * z);
         }
     }
     let packed = u32(in.extra.y + 0.5);
@@ -1060,11 +1081,11 @@ fn fs_part(in: PartOut, @builtin(front_facing) front: bool) -> @location(0) vec4
     } else {
         let l = normalize(g.sun_dir.xyz);
         let ndl = max(dot(n, l), 0.0);
-        let shadow = select(1.0, sun_shadow(in.world, n), ndl > 0.0);
+        let shadow = select(1.0, sun_shadow(in.world, normalize(in.normal)), ndl > 0.0);
         // Studio's skylight scales OutdoorAmbient and the sky's diffuse
         // light (SkyAmbient, AmbientCube[0..5] in the FS): the light grid,
         // parts and terrain alike.
-        let sv = light_grid(in.world, n);
+        let sv = light_grid(in.world, normalize(in.normal));
         let is_glass = kind > 2.5 && kind < 3.5;
         // Studio's HQ part FS (DefaultUnifiedFlatOpaqueFS / TiledFS /
         // PlasticReflectionFS variant 3, Studio measurements "Environment light
@@ -1109,7 +1130,7 @@ fn fs_part(in: PartOut, @builtin(front_facing) front: bool) -> @location(0) vec4
         let voxel_sun = g.sun_color.w > 0.5 && g.env_spec.z <= 0.5;
         var back = select(0.0, -nl, nl < 0.0 && g.bloom.z < 0.5);
         if (voxel_sun && nl < 0.0) {
-            back = -nl * sun_shadow(in.world, n);
+            back = -nl * sun_shadow(in.world, normalize(in.normal));
         }
         // LQ TiledFS.0 uses AmbientColorNoIBL / SkyAmbientNoIBL and
         // geometric (vertex) normals, with no environment BRDF contribution.
@@ -1126,6 +1147,9 @@ fn fs_part(in: PartOut, @builtin(front_facing) front: bool) -> @location(0) vec4
             var dl = light;
             if (dm > 5.5 && dm < 6.5) { dl = local.diffuse; }
             else if (dm > 6.5 && dm < 7.5) { dl = (kd - fs * sS * kd) * sun_light; }
+            else if (dm > 10.5) { dl = vec3<f32>(sv); }
+            else if (dm > 9.5) { dl = vec3<f32>(light_grid_sun(in.world, n)); }
+            else if (dm > 8.5) { dl = vec3<f32>(max(sun_shadow_map(in.world), 0.0)); }
             else if (dm > 7.5) { dl = light - local.diffuse - (kd - fs * sS * kd) * sun_light; }
             return vec4<f32>(dl * 0.25, 1.0);
         }
@@ -1210,7 +1234,7 @@ fn fs_part(in: PartOut, @builtin(front_facing) front: bool) -> @location(0) vec4
 
 // --------------------------------------------------------------- water
 // Terrain water after Studio's SmoothWater FS / VS (the HQ variant with
-// GBufferColor / GBufferDepth, shaders_glsl3.pack; water.rs): the opaque
+// GBufferColor / GBufferDepth; water.rs): the opaque
 // scene shows through, bent by the ripples and fading to the lit
 // WaterColor with depth; the sky reflects by the same Fresnel term as the
 // LQ shader; GGX sun glint (F0 0.02) off the animated normal maps.
@@ -1386,8 +1410,8 @@ fn fs_water(in: PartOut) -> @location(0) vec4<f32> {
 }
 
 // ------------------------------------------------------------- terrain
-// Studio's smooth terrain shader (SmoothCluster VS / FS HQ in its
-// shaders_glsl3.pack; terrain.rs TerrainVertex, terrain_mat.rs): three corner
+// Studio's smooth terrain shader (SmoothCluster VS / FS HQ;
+// terrain.rs TerrainVertex, terrain_mat.rs): three corner
 // materials per triangle, each projected on its own axis with its own random
 // turn and offset, blended by barycentric weight sharpened by the textures'
 // heights, recoloured in luma / chroma, lit with GGX (F0 0.04).
@@ -1617,6 +1641,11 @@ fn fs_terrain(in: TerrainOut) -> @location(0) vec4<f32> {
     return vec4<f32>(c, 1.0);
 }
 
+struct SunPass {
+    vp: mat4x4<f32>,
+};
+@group(1) @binding(0) var<uniform> sunp: SunPass;
+
 struct TerrainShadowOut {
     @builtin(position) clip: vec4<f32>,
 };
@@ -1624,11 +1653,16 @@ struct TerrainShadowOut {
 @vertex
 fn vs_terrain_shadow(v: TerrainIn) -> TerrainShadowOut {
     var o: TerrainShadowOut;
-    o.clip = g.shadow_vp * vec4<f32>(v.pos, 1.0);
+    o.clip = sunp.vp * vec4<f32>(v.pos, 1.0);
+    o.clip.z = max(o.clip.z, 0.0);
     return o;
 }
 
 // ------------------------------------------------------------- shadows
+
+// One cascade of the sun's shadow (sun_shadow.rs): depth along the light,
+// casters nearer the sun than the cascade's box flattened onto its near
+// plane (Studio's Pass_CastShadowsPancaked).
 
 struct ShadowOut {
     @builtin(position) clip: vec4<f32>,
@@ -1637,7 +1671,8 @@ struct ShadowOut {
 @vertex
 fn vs_shadow(v: PartIn) -> ShadowOut {
     var o: ShadowOut;
-    o.clip = g.shadow_vp * vec4<f32>(part_world(v), 1.0);
+    o.clip = sunp.vp * vec4<f32>(part_world(v), 1.0);
+    o.clip.z = max(o.clip.z, 0.0);
     // CastShadow false (render.rs NO_SHADOW_BIT): outside the clip box,
     // so the part casts nothing.
     if (((u32(v.extra.y + 0.5) >> 19u) & 1u) == 1u) {
@@ -1715,12 +1750,9 @@ fn vs_post(@builtin(vertex_index) i: u32) -> PostOut {
     return o;
 }
 
-// Bloom (round 19, fitted to Studio's bloom calibration scene within ~1
-// level, docs/MECHANICS.md "Bloom"): what is over Threshold keeps its linear
-// channel ratios (DownSampleGjoelLinearFS), and is spread by two Gaussians
-// (BLOOM_SIGMA_* pixels at Size
-// 24, scaled with Size) at half resolution, and is added before the tone
-// curve. A pass per axis with every texel weighted: no rings or petals.
+// Bloom (docs/MECHANICS.md "Bloom"), as Studio's pyramid: a linear
+// down-sample, mip down-samples, then tent up-samples; the CPU picks the
+// pyramid size and level from the view's resolution.
 @group(1) @binding(2) var bloom_tex: texture_2d<f32>;
 
 fn bloom_source(hdr: vec3<f32>) -> vec3<f32> {
@@ -1735,76 +1767,73 @@ fn bloom_source(hdr: vec3<f32>) -> vec3<f32> {
     // DownSampleGjoelLinearFS retains the linear channel ratios when
     // extracting the amount over threshold; taking another square root
     // here washed the recovered Neon emission toward white.
-    return (c / (m + 0.001)) * (m - g.bloom.x) * BLOOM_GAIN;
+    return (c / (m + 0.001)) * (m - g.bloom.x);
 }
 
-// Full resolution → half: each 2×2 block, thresholded pixel by pixel.
+// Filter the encoded scene, then decode, as Studio's UNORM scene target does.
+fn bloom_scene_sample(uv: vec2<f32>) -> vec3<f32> {
+    let dim = vec2<i32>(textureDimensions(hdr_tex));
+    let p = uv * vec2<f32>(dim) - vec2<f32>(0.5);
+    let base = vec2<i32>(floor(p));
+    let f = fract(p);
+    var taps: array<vec3<f32>,4>;
+    for(var i=0;i<4;i++) {
+        let q = clamp(base+vec2<i32>(i&1,i>>1),vec2<i32>(0),dim-vec2<i32>(1));
+        taps[i] = sqrt(clamp(textureLoad(hdr_tex,q,0).rgb*g.params.y*0.25,vec3<f32>(0.0),vec3<f32>(1.0)));
+    }
+    let encoded = mix(mix(taps[0],taps[1],f.x),mix(taps[2],taps[3],f.x),f.y);
+    return 4.0*encoded*encoded;
+}
+
+// DownSampleGjoel8UVVS + DownSampleGjoelLinearFS: nine bilinear
+// samples are decoded and averaged BEFORE thresholding. The source is the
+// encoded pre-tone scene (4 * rgb²), represented here directly as linear HDR.
 @fragment
 fn fs_bloom_bright(in: PostOut) -> @location(0) vec4<f32> {
-    let dim = vec2<i32>(textureDimensions(hdr_tex)) - vec2<i32>(1);
-    let ip = vec2<i32>(in.pos.xy) * 2;
-    var b = vec3<f32>(0.0);
-    for (var k = 0; k < 4; k++) {
-        let q = min(ip + vec2<i32>(k & 1, k >> 1), dim);
-        b += bloom_source(textureLoad(hdr_tex, q, 0).rgb * g.params.y);
+    let texel = 1.0 / vec2<f32>(textureDimensions(hdr_tex));
+    let offsets = array<vec2<f32>, 9>(
+        vec2<f32>(0.0), vec2<f32>(0.75, 0.0), vec2<f32>(-0.75, 0.0),
+        vec2<f32>(0.0, 0.75), vec2<f32>(0.0, -0.75),
+        vec2<f32>(0.70512277, 0.70512277), vec2<f32>(-0.70512277, -0.70512277),
+        vec2<f32>(0.70512277, -0.70512277), vec2<f32>(-0.70512277, 0.70512277));
+    var scene = vec3<f32>(0.0);
+    for (var k = 0; k < 9; k++) {
+        // (offsets in the half-resolution target's texels: CB1[0].zw)
+        let uv = clamp(in.uv + offsets[k] * texel * 2.0, texel * 0.5, vec2<f32>(1.0) - texel * 0.5);
+        scene += bloom_scene_sample(uv);
     }
-    return vec4<f32>(b * 0.25, 1.0);
+    return vec4<f32>(bloom_source(scene / 9.0), 1.0);
 }
 
-/// Bloom's two Gaussian widths in half-resolution texels.
-fn bloom_sigmas() -> vec2<f32> {
-    return max(vec2<f32>(BLOOM_SIGMA_NARROW, BLOOM_SIGMA_WIDE) * (g.bloom.y / 24.0) * 0.5, vec2<f32>(0.25));
+// Linear pyramid levels use the same nine-tap pattern without decode or threshold.
+// Every pyramid pass offsets its taps in its render TARGET's texels
+// (CB1[0].zw is the target's 1/size: DownSampleGjoel8UVVS ±0.75, UpSampleTentFS
+// ±2), i.e. ±1.5 source texels down and ±1 source texel up. Read as source
+// texels the glow came out twice as wide per level; in the target's it matches
+// Studio's capture of corpus/bloom.rbxlx (863x675) within 3 levels at every
+// distance (4-stud ball +12 px: 73 vs 71, +16: 33 vs 32).
+
+@fragment fn fs_bloom_down(in: PostOut) -> @location(0) vec4<f32> {
+    let t = 1.0 / vec2<f32>(textureDimensions(hdr_tex));
+    var c = textureSampleLevel(hdr_tex, hdr_sampler, in.uv, 0.0).rgb;
+    let offsets = array<vec2<f32>,8>(vec2<f32>(0.75,0.0),vec2<f32>(-0.75,0.0),vec2<f32>(0.0,0.75),vec2<f32>(0.0,-0.75),vec2<f32>(0.70512277),vec2<f32>(-0.70512277),vec2<f32>(0.70512277,-0.70512277),vec2<f32>(-0.70512277,0.70512277));
+    for(var i=0;i<8;i++){ c += textureSampleLevel(hdr_tex,hdr_sampler,clamp(in.uv+offsets[i]*t*2.0,t*0.5,vec2<f32>(1.0)-t*0.5),0.0).rgb; }
+    return vec4<f32>(c/9.0,1.0);
 }
-
-struct BloomPair {
-    @location(0) narrow: vec4<f32>,
-    @location(1) wide: vec4<f32>,
-};
-
-fn bloom_blur(ip: vec2<i32>, axis: vec2<i32>, src2: bool) -> BloomPair {
-    let s = bloom_sigmas();
-    let dim = vec2<i32>(textureDimensions(hdr_tex));
-    let r = min(i32(ceil(3.0 * s.y)), BLOOM_MAX_RADIUS);
-    var a = vec3<f32>(0.0);
-    var b = vec3<f32>(0.0);
-    var wa = 0.0;
-    var wb = 0.0;
-    for (var i = -r; i <= r; i++) {
-        let fi = f32(i);
-        let ka = exp(-fi * fi / (2.0 * s.x * s.x));
-        let kb = exp(-fi * fi / (2.0 * s.y * s.y));
-        // Outside the view counts as black (weights still add up).
-        wa += ka;
-        wb += kb;
-        let q = ip + axis * i;
-        if (any(q < vec2<i32>(0)) || any(q >= dim)) {
-            continue;
-        }
-        let x = textureLoad(hdr_tex, q, 0).rgb;
-        a += x * ka;
-        if (src2) {
-            b += textureLoad(bloom_tex, q, 0).rgb * kb;
-        } else {
-            b += x * kb;
-        }
-    }
-    var o: BloomPair;
-    o.narrow = vec4<f32>(a / wa, 1.0);
-    o.wide = vec4<f32>(b / wb, 1.0);
-    return o;
-}
-
-// Across: the bright image blurred by both widths.
-@fragment
-fn fs_bloom_h(in: PostOut) -> BloomPair {
-    return bloom_blur(vec2<i32>(in.pos.xy), vec2<i32>(1, 0), false);
-}
-
-// Down: the narrow one (binding 0) and the wide one (binding 2), mixed.
-@fragment
-fn fs_bloom_v(in: PostOut) -> @location(0) vec4<f32> {
-    let o = bloom_blur(vec2<i32>(in.pos.xy), vec2<i32>(0, 1), true);
-    return vec4<f32>(mix(o.narrow.rgb, o.wide.rgb, BLOOM_WIDE_SHARE), 1.0);
+@fragment fn fs_bloom_up(in: PostOut) -> @location(0) vec4<f32> {
+    let full = vec2<f32>(textureDimensions(bloom_tex));
+    let dim = vec2<f32>(textureDimensions(hdr_tex));
+    let lod = min(5.999,3.0+max(-1.0,log2(sqrt(full.x*full.y/2073600.0))+max(0.0,log2(g.bloom.y/7.0))));
+    let level = round(log2(full.x/dim.x));
+    let weight = select(1.0,fract(lod),level >= floor(lod)-0.1);
+    let t = 1.0 / dim;
+    var c = vec3<f32>(0.0);
+    for(var y=-1;y<=1;y++){for(var x=-1;x<=1;x++){
+        let w = select(1.0,2.0,x==0)*select(1.0,2.0,y==0);
+        let uv = clamp(in.uv+vec2<f32>(f32(x),f32(y))*t,0.5/dim,vec2<f32>(1.0)-0.5/dim);
+        c += textureSampleLevel(hdr_tex,hdr_sampler,uv,0.0).rgb*w;
+    }}
+    return vec4<f32>(c*(weight/16.0),1.0);
 }
 
 // Studio BokehFarCoCFS: 45 taps on four rings, radius 0.014 *

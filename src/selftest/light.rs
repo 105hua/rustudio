@@ -282,17 +282,27 @@ fn build(ed: &mut Editor, scene: &LightScene) {
             ),
         );
     }
-    // Studio's calibration view: from (4, 9, 22) toward (4, 2, 0), FOV 70.
+    // Studio's calibration view: from (4, 9, 22) toward (4, 2, 0), FOV 70,
+    // rendered at Studio's 863×675 (glow and anything else that follows the
+    // view's size come out as in its captures).
+    ed.view_render_size = Some(STUDIO_VIEW);
     ed.cam.pos = Vec3::new(4.0, 9.0, 22.0);
     ed.cam.yaw = 0.0;
     ed.cam.pitch = (-7.0f32).atan2(22.0);
     ed.cam.fov_deg = 70.0;
 }
 
+/// The view size of Studio's captures.
+const STUDIO_VIEW: [u32; 2] = [863, 675];
+
 /// Mean colour of a 5×5 patch around a world point in the last frame.
 fn sample(ed: &Editor, frame: &(u32, u32, Vec<u8>), p: Vec3) -> Option<[u8; 3]> {
     let (w, h, px) = frame;
-    let rect = ed.viewport_rect;
+    // (rendered at view_render_size pixels: project onto that)
+    let rect = match ed.view_render_size {
+        Some(s) => egui::Rect::from_min_size(ed.viewport_rect.min, egui::vec2(s[0] as f32, s[1] as f32)),
+        None => ed.viewport_rect,
+    };
     let scale = *w as f32 / rect.width().max(1.0);
     let sp = ed.cam.project(rect, p)?;
     let (cx, cy) = (
@@ -397,9 +407,11 @@ impl SelfTest {
     pub(super) fn tick_light(&mut self, f: u64, ed: &mut Editor) -> bool {
         let index = (self.r4.phase - 40) as usize / 2;
         if index == SCENES.len() {
+            ed.view_render_size = None;
             return self.tick_setters(f, ed);
         }
         let Some(scene) = SCENES.get(index) else {
+            ed.view_render_size = None;
             ed.show_grid = true;
             crate::matpack::set_enabled(true);
             self.r4.phase = 60;

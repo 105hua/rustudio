@@ -36,6 +36,57 @@ use crate::runtime::*;
 mod anim_ik;
 #[path = "anim_types.rs"]
 pub mod anim_types;
+#[path = "anim_tween.rs"]
+pub mod anim_tween;
+#[path = "anim_tracks.rs"]
+pub mod anim_tracks;
+
+/// Native steps queued among the frame's RunService events
+/// (`Runtime::fire`), run at their place in the signal queue: Studio steps
+/// TweenService after the client's PreRender handlers (the server's
+/// Heartbeat ones) and the Animator after the PreAnimation handlers.
+pub const HOOK_TWEEN: &str = "\0tween";
+pub const HOOK_ANIMATE: &str = "\0animate";
+
+/// The frame hook that follows a RunService event on this side, if any.
+pub fn hook_after(side: Side, event: &str) -> Option<&'static str> {
+    match event {
+        "PreAnimation" => Some(HOOK_ANIMATE),
+        "PreRender" if side == Side::Client => Some(HOOK_TWEEN),
+        "Heartbeat" if side != Side::Client => Some(HOOK_TWEEN),
+        _ => None,
+    }
+}
+
+/// Runs a queued frame hook (from the signal flush / dispatch).
+pub fn run_hook(lua: &Lua, name: &str, args: &[Value]) {
+    let dt = match args.first() {
+        Some(Value::Number(n)) => *n,
+        _ => 0.0,
+    };
+    let r = match name {
+        HOOK_TWEEN => {
+            let _s = crate::bench::scope("tween_step");
+            anim_tween::step(lua, dt)
+        }
+        HOOK_ANIMATE => {
+            let _s = crate::bench::scope("animate_step");
+            animate(lua, dt)
+        }
+        _ => Ok(()),
+    };
+    if let Err(e) = r {
+        if let Ok(mut w) = world(lua) {
+            w.output.push((crate::app::Level::Error, format!("{name}: {e}")));
+        }
+    }
+}
+
+/// The Animator's step: tracks (anim_tracks.rs), then IKControls.
+fn animate(lua: &Lua, dt: f64) -> mlua::Result<()> {
+    anim_tracks::step(lua, dt)?;
+    after(lua, dt as f32)
+}
 
 pub const METHODS: &[(&str, &str)] = &[
     // Humanoid
@@ -167,7 +218,6 @@ struct AnimState {
     frame: u64,
     dirty: bool,
     scanned: bool,
-    driven: bool,
     motors: Vec<Ref>,
     iks: Vec<Ref>,
     ik: HashMap<Ref, anim_ik::IkState>,
@@ -356,6 +406,8 @@ pub fn write_acts(class: &str, key: &str) -> bool {
 
 pub fn install(lua: &Lua) -> mlua::Result<()> {
     anim_types::install(lua)?;
+    anim_tween::install(lua)?;
+    anim_tracks::install(lua)?;
     let create = lua.create_function(|lua, class: String| {
         let r = super::super::ext::create_any(lua, &class)?;
         inst_value(lua, r)
@@ -422,7 +474,6 @@ pub fn install(lua: &Lua) -> mlua::Result<()> {
             Ok(Value::Table(t))
         })?,
     )?;
-    lua.globals().set("__rs_anim_after", lua.create_function(|lua, dt: f64| after(lua, dt as f32))?)?;
     let (call, props, writes): (Function, Function, Function) = lua
         .load(include_str!("anim_lib.luau"))
         .set_name("=rustudio.anim")
@@ -476,18 +527,6 @@ pub fn step(lua: &Lua, dt: f64) -> mlua::Result<()> {
     };
     if need {
         rescan(lua)?;
-    }
-    // IK runs at the end of the Animator's PreAnimation step: make sure that
-    // step is connected once there is a control to solve.
-    let drive = {
-        let s = state(lua);
-        !s.iks.is_empty() && !s.driven
-    };
-    if drive {
-        if let Ok(f) = lua.globals().get::<Function>("__rs_anim_drive") {
-            f.call::<()>(())?;
-            state(lua).driven = true;
-        }
     }
     step_motors(lua, dt as f32)
 }

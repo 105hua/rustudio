@@ -1199,25 +1199,15 @@ impl Rig {
             self.joints.iter().map(|j| j.motor).collect();
         let mut edges: Vec<(Ref, Ref)> = Vec::new();
         for i in doc.dom.descendants_of(model) {
-            let rigid = matches!(
-                i.class.as_str(),
-                "WeldConstraint" | "Weld" | "ManualWeld" | "Motor6D" | "Motor" | "Snap" | "Glue"
-                    | "ManualGlue"
-            );
-            let off = matches!(
-                i.properties.get(&ustr("Enabled")),
-                Some(Variant::Bool(false))
-            );
-            if !rigid || off || motors.contains(&i.referent()) {
+            // (AnimationConstraint is the rig's own; the rest hold parts
+            // rigidly. Parts are read alias-aware: a live Team Create place
+            // keeps a WeldConstraint's as Part0Internal / Part1Internal.)
+            let rigid = i.class != "AnimationConstraint" && crate::physics::is_rigid_joint(&i.class);
+            if !rigid || motors.contains(&i.referent()) || !crate::physics::joint_enabled(doc, i.referent()) {
                 continue;
             }
-            if let (Some(Variant::Ref(a)), Some(Variant::Ref(b))) = (
-                i.properties.get(&ustr("Part0")),
-                i.properties.get(&ustr("Part1")),
-            ) {
-                if a.is_some() && b.is_some() {
-                    edges.push((*a, *b));
-                }
+            if let Some((a, b)) = crate::physics::joint_parts(doc, i.referent()) {
+                edges.push((a, b));
             }
         }
         // An equipped Tool's parts follow its grip (play_game::tool_pose).

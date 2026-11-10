@@ -1161,6 +1161,20 @@ pub fn newindex(lua: &Lua, r: Ref, class: &str, key: &str, value: &Value) -> mlu
                     },
                     _ => value.clone(),
                 };
+                // RobloxScript members (MasterVolume, CameraYInverted…): the
+                // reflection database lists them as unscriptable, so the
+                // normal write would refuse them as read-only. The identity
+                // check already passed; finish the write here.
+                if crate::runtime::security::member_write_secured(class, key) {
+                    let changed = t.raw_get::<Value>(key)? != v;
+                    t.raw_set(key, v)?;
+                    if changed {
+                        let mut w = world(lua)?;
+                        w.fire(r, "Changed", vec![Value::String(lua.create_string(key)?)]);
+                        w.fire(r, &format!("Changed:{key}"), vec![]);
+                    }
+                    return Ok(true);
+                }
                 t.raw_set(key, v)?;
             }
             Ok(false)

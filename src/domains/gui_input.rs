@@ -481,6 +481,12 @@ pub fn install(lua: &Lua) -> mlua::Result<()> {
             inst_value(lua, root)
         })?,
     )?;
+    // class_signals({classes}): (added, removing) signals on game for the
+    // instances of those classes only (runtime::class_signals).
+    g.set(
+        "class_signals",
+        lua.create_function(|lua, classes: Vec<String>| crate::runtime::class_signals(lua, classes))?,
+    )?;
     g.set(
         "is_client",
         lua.create_function(|lua, ()| Ok(world(lua).is_ok_and(|w| w.side == Side::Client)))?,
