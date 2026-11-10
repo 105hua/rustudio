@@ -746,8 +746,9 @@ impl Editor {
                 ));
                 if origin.local_copy {
                     self.warn(format!(
-                        "This is a local copy of {}'s last saved version (Team Create is on; others may be editing it live). Ctrl+S saves it to a file; File > Save to Roblox asks first",
-                        origin.experience
+                        "This is a local copy of {}'s last saved version (Team Create is on; others may be editing it live). {} saves it to a file; File > Save to Roblox asks first",
+                        origin.experience,
+                        crate::studio_ui::shortcut_label("Ctrl+S")
                     ));
                 }
                 if let Some(why) = offline {

@@ -36,6 +36,7 @@ fn menu_item_at(ui: &mut egui::Ui, label: &str, shortcut: &str, enabled: bool, c
     let font = egui::FontId::proportional(13.0);
     p.text(egui::pos2(r.min.x + 24.0, r.center().y), egui::Align2::LEFT_CENTER, label, font.clone(), c);
     if !shortcut.is_empty() {
+        let shortcut = crate::studio_ui::shortcut_label(shortcut);
         p.text(egui::pos2(r.min.x + col, r.center().y), egui::Align2::LEFT_CENTER, shortcut, font, c);
     }
     resp
@@ -50,7 +51,7 @@ fn menu_metrics(ui: &egui::Ui, items: &[M]) -> (f32, f32) {
         match m {
             M::I(l, k, _) => {
                 label = label.max(width(l));
-                sc = sc.max(width(k));
+                sc = sc.max(width(&crate::studio_ui::shortcut_label(k)));
             }
             M::Sub(l, _) => label = label.max(width(l) + 16.0),
             M::S => {}

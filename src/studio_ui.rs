@@ -368,6 +368,33 @@ pub const MENUS: &[(&str, &[M])] = &[
     ("Help", HELP),
 ];
 
+/// A shortcut as this system writes it. The tables use Studio's Windows
+/// names, and "Ctrl" is the command key (egui's COMMAND): on macOS
+/// "Ctrl+Shift+S" shows as "⇧⌘S" and "Alt+P" as "⌥P", in Apple's modifier
+/// order (⌥⇧⌘), like Studio for Mac; elsewhere unchanged.
+pub fn shortcut_label(s: &str) -> std::borrow::Cow<'_, str> {
+    if !cfg!(target_os = "macos") || s.is_empty() {
+        return s.into();
+    }
+    mac_shortcut_label(s).into()
+}
+
+fn mac_shortcut_label(s: &str) -> String {
+    let parts: Vec<&str> = s.split('+').collect();
+    let (key, mods) = (parts[parts.len() - 1], &parts[..parts.len() - 1]);
+    let mut out = String::new();
+    for (name, sym) in [("Alt", "⌥"), ("Shift", "⇧"), ("Ctrl", "⌘")] {
+        if mods.contains(&name) {
+            out.push_str(sym);
+        }
+    }
+    out.push_str(match key {
+        "Del" => "⌫",
+        k => k,
+    });
+    out
+}
+
 /// Shortcut text ("Ctrl+Shift+V", "Alt+P", "F5", "Del") → egui shortcut.
 pub fn parse_shortcut(s: &str) -> Option<KeyboardShortcut> {
     if s.is_empty() {
@@ -457,6 +484,15 @@ pub fn run_type_key(t: RunType) -> &'static str {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn mac_shortcut_labels() {
+        assert_eq!(mac_shortcut_label("Ctrl+Shift+S"), "⇧⌘S");
+        assert_eq!(mac_shortcut_label("Ctrl+Alt+F6"), "⌥⌘F6");
+        assert_eq!(mac_shortcut_label("Alt+P"), "⌥P");
+        assert_eq!(mac_shortcut_label("F5"), "F5");
+        assert_eq!(mac_shortcut_label("Del"), "⌫");
+    }
 
     /// Every menu shortcut parses.
     #[test]
