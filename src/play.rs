@@ -1036,10 +1036,7 @@ impl Editor {
         s.memstats_at = s.time;
         s.memstats_frames = 0;
         s.memstats_worst = 0.0;
-        let rss = std::fs::read_to_string("/proc/self/status")
-            .ok()
-            .and_then(|t| t.lines().find(|l| l.starts_with("VmRSS:")).map(|l| l.split_whitespace().nth(1).unwrap_or("0").to_string()))
-            .unwrap_or_default();
+        let rss = crate::platform::resident_bytes().map(|b| (b / 1024).to_string()).unwrap_or_default();
         let time = s.time;
         let (rs2c, rc2s) = (s.map.s2c.len(), s.map.c2s.len());
         eprintln!(

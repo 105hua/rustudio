@@ -890,17 +890,7 @@ pub(crate) fn fallback_fonts() -> &'static [&'static [u8]] {
             .unwrap_or_default();
         scripts.sort();
         files.extend(scripts);
-        files.extend(
-            [
-                "/usr/share/fonts/noto/NotoSansSymbols2-Regular.ttf",
-                "/usr/share/fonts/truetype/noto/NotoSansSymbols2-Regular.ttf",
-                "/usr/share/fonts/noto/NotoSansSymbols-Regular.ttf",
-                "/usr/share/fonts/truetype/noto/NotoSansSymbols-Regular.ttf",
-                "/usr/share/fonts/TTF/DejaVuSans.ttf",
-                "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
-            ]
-            .map(std::path::PathBuf::from),
-        );
+        files.extend(crate::platform::fallback_font_files().iter().map(std::path::PathBuf::from));
         files
             .iter()
             .filter_map(|p| std::fs::read(p).ok())

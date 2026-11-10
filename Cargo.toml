@@ -67,6 +67,10 @@ opt-level = 2
 inherits = "release"
 debug = "line-tables-only"
 
+[target.'cfg(target_os = "macos")'.dependencies]
+# The Finder trash (platform.rs).
+objc2-foundation = { version = "0.3", default-features = false, features = ["std", "NSFileManager", "NSURL", "NSString", "NSError"] }
+
 [dev-dependencies]
 draco-core = { version = "2.3", default-features = false, features = ["decoder", "encoder"] }
 

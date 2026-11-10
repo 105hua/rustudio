@@ -5,6 +5,7 @@ mod ribbon_quick;
 mod cmeta;
 mod studio_content;
 mod paths;
+mod platform;
 mod dtmeta;
 mod cloud_ui;
 mod join_ui;
