@@ -8,7 +8,7 @@
   <a href="https://discord.gg/pdVZpADpWr"><img src="https://img.shields.io/badge/Discord-join%20the%20server-5865F2?logo=discord&logoColor=white" alt="Join the rustudio Discord"></a>
 </p>
 
-**A native Linux/Windows Roblox Studio, written in Rust.** Open, edit and save
+**A native Linux/Windows/macOS Roblox Studio, written in Rust.** Open, edit and save
 Roblox places, press Play and run them with real Luau, physics, characters
 and GUIs, without Wine.
 
@@ -40,7 +40,8 @@ quite yet.
 
 ## Install
 
-You need a Rust toolchain (1.85+) and a GPU with Vulkan (or OpenGL).
+You need a Rust toolchain (1.85+) and a GPU with Vulkan (or OpenGL), or on
+a Mac, macOS 11 or later (Metal).
 
 ```sh
 git clone https://github.com/rippelz/rustudio
@@ -78,16 +79,25 @@ If you already have Studio installed (e.g. via
 export RUSTUDIO_STUDIO_DIR=~/.var/app/org.vinegarhq.Vinegar/data/vinegar/versions/version-XXXX
 ```
 
+On macOS, download `rustudio-…-macos-universal.zip` from
+[Releases](https://github.com/rippelz/rustudio/releases) (Apple Silicon and
+Intel in one), unzip it and move `rustudio.app` to Applications. It isn't
+notarized by Apple, so the first time right-click it and choose **Open** (or
+allow it in System Settings > Privacy & Security). To build the app
+yourself instead: `tools/macos/bundle.sh` (`--universal` for both
+architectures).
+
 ## Platforms
 
 | Platform | Status |
 |---|---|
 | Linux x86_64 (Wayland or X11) | Supported, and the only one tested |
 | Linux ARM64 | Should build; untested |
-| macOS | Not supported yet (untested, likely needs small fixes) |
+| macOS 11+ (Apple Silicon and Intel) | Builds and runs (tested on Apple Silicon); see below |
 | Windows x86_64 (MSVC) | Builds and runs (tested on Windows 11); see below |
 
-CI checks every push on Linux and Windows.
+CI checks every push on Linux, Windows and macOS (where it also runs the
+tests and builds the app).
 
 Windows is new, so a few things don't work there yet:
 
@@ -99,6 +109,18 @@ Windows is new, so a few things don't work there yet:
 - Video playback is off (libvpx/libopus are loaded only on Linux), and a
   native crash doesn't write a crash report (panics still do).
 
+On macOS:
+
+- Data and settings go in `~/Library/Application Support/rustudio`, caches
+  and crash reports in `~/Library/Caches/rustudio`.
+- With Roblox Studio installed (`RobloxStudio.app`), rustudio uses its
+  content and downloads nothing.
+- Shortcuts are Studio for Mac's (⌘ for Ctrl, ⌥ for Alt; the delete key
+  deletes), ⌘Q asks about unsaved changes, and places and models open from
+  Finder. The session cookie goes in the login Keychain, and deleted project
+  files in the Trash.
+- Video playback needs `brew install libvpx opus`. Gamepads aren't read yet.
+
 ## Signing in
 
 Everything above works signed out. To open your own places or load private
@@ -106,7 +128,8 @@ assets, sign in with your Roblox session: use the account button at the top
 right and **Sign in with your browser** (rustudio shows a code that you
 confirm on roblox.com, in whatever browser you're signed in to), paste the
 `.ROBLOSECURITY` cookie there, or put it in `~/.config/rustudio/roblox-cookie`
-(`chmod 600`). rustudio stores it in your login keyring. Details are in
+(macOS: `~/Library/Application Support/rustudio/roblox-cookie`; `chmod 600`).
+rustudio stores it in your login keyring (the Keychain on macOS). Details are in
 [docs/AUTH.md](docs/AUTH.md).
 
 ## Docs

@@ -30,12 +30,13 @@ sections were dead).
 
 ## Where the cookie lives
 
-- Import source: `~/.config/rustudio/roblox-cookie`, mode `600`, one line
+- Import source: `~/.config/rustudio/roblox-cookie` (macOS:
+  `~/Library/Application Support/rustudio/roblox-cookie`), mode `600`, one line
   (with or without the `.ROBLOSECURITY=` prefix). Set by hand; never written
   by the app. A file readable by others is refused.
 - Runtime copy: the login keyring through the `keyring` crate (Secret
-  Service on Linux, Credential Manager on Windows), service `rustudio`, user
-  `roblox-cookie`. A session an older build stored with `secret-tool`
+  Service on Linux, Credential Manager on Windows, the login Keychain on
+  macOS), service `rustudio`, user `roblox-cookie`. A session an older build stored with `secret-tool`
   (attributes `service rustudio key roblox-cookie`) is read once, moved into
   the keyring and removed. The app reads the keyring first and imports from
   the file when the keyring has none (once per file value:
