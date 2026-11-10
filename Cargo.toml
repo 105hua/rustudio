@@ -67,6 +67,10 @@ opt-level = 2
 inherits = "release"
 debug = "line-tables-only"
 
+[target.'cfg(windows)'.dependencies]
+# The Recycle Bin (platform.rs).
+windows-sys = { version = "0.61", features = ["Win32_UI_Shell"] }
+
 [target.'cfg(target_os = "macos")'.dependencies]
 # The Finder trash (platform.rs), the app menu and Finder's Open (macos.rs).
 objc2 = "0.6"

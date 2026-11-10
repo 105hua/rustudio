@@ -45,18 +45,54 @@ pub fn load_average() -> String {
 }
 
 /// Moves `path` to the desktop's own trash where rustudio uses it (macOS:
-/// the Finder Trash, so Put Back works). None where the caller keeps the
-/// XDG trash itself (project_write.rs).
+/// the Finder Trash, so Put Back works; Windows: the Recycle Bin, so Restore
+/// works). None where the caller keeps the XDG trash itself
+/// (project_write.rs).
 pub fn native_trash(path: &Path) -> Option<Result<(), String>> {
     #[cfg(target_os = "macos")]
     {
         Some(trash_item(path).map(|_| ()))
     }
-    #[cfg(not(target_os = "macos"))]
+    #[cfg(windows)]
+    {
+        Some(recycle(path))
+    }
+    #[cfg(not(any(target_os = "macos", windows)))]
     {
         let _ = path;
         None
     }
+}
+
+/// The shell's delete with undo: the item goes to the Recycle Bin. Where the
+/// drive has no Recycle Bin (some network and removable drives) the shell
+/// would delete it outright, so it asks first (FOF_WANTNUKEWARNING), and
+/// answering No leaves the item where it is.
+#[cfg(windows)]
+fn recycle(path: &Path) -> Result<(), String> {
+    use std::os::windows::ffi::OsStrExt;
+    use windows_sys::Win32::UI::Shell::{
+        SHFileOperationW, FOF_ALLOWUNDO, FOF_NOCONFIRMATION, FOF_SILENT, FOF_WANTNUKEWARNING, FO_DELETE,
+        SHFILEOPSTRUCTW,
+    };
+    let abs = std::path::absolute(path).map_err(|e| e.to_string())?;
+    // pFrom is a list of paths, each ended by a NUL, the list by another.
+    let from: Vec<u16> = abs.as_os_str().encode_wide().chain([0, 0]).collect();
+    let mut op = SHFILEOPSTRUCTW {
+        wFunc: FO_DELETE,
+        pFrom: from.as_ptr(),
+        fFlags: (FOF_ALLOWUNDO | FOF_NOCONFIRMATION | FOF_SILENT | FOF_WANTNUKEWARNING) as u16,
+        ..Default::default()
+    };
+    // SAFETY: `op` is fully initialised and `from` outlives the call.
+    let r = unsafe { SHFileOperationW(&mut op) };
+    if r != 0 {
+        return Err(format!("the shell refused (error {r:#x})"));
+    }
+    if op.fAnyOperationsAborted != 0 {
+        return Err("cancelled".into());
+    }
+    Ok(())
 }
 
 /// NSFileManager's trash: where the item ended up.
@@ -136,6 +172,23 @@ mod tests {
         } else {
             assert_eq!(n, ["libvpx.so.9", "libvpx.so"]);
         }
+    }
+
+    #[cfg(windows)]
+    #[test]
+    fn trash_goes_to_recycle_bin() {
+        let dir = std::env::temp_dir().join(format!("rustudio-recycle-test-{}", std::process::id()));
+        std::fs::create_dir_all(dir.join("folder")).unwrap();
+        let f = dir.join("gone.txt");
+        std::fs::write(&f, "x").unwrap();
+        for p in [f, dir.join("folder")] {
+            match recycle(&p) {
+                Ok(()) => assert!(!p.exists(), "{}", p.display()),
+                // A CI runner's profile may have no Recycle Bin.
+                Err(e) => eprintln!("Recycle Bin unavailable here: {e}"),
+            }
+        }
+        let _ = std::fs::remove_dir_all(&dir);
     }
 
     #[cfg(target_os = "macos")]

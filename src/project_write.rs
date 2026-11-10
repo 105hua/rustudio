@@ -158,7 +158,8 @@ impl ProjectState {
     }
 
     /// Moves a file or folder to the desktop trash (macOS: the Finder Trash;
-    /// elsewhere the XDG spec's), never deleting it outright.
+    /// Windows: the Recycle Bin; elsewhere the XDG spec's), never deleting it
+    /// outright.
     fn to_trash(&mut self, path: &Path) {
         if !path.exists() || !self.writable(path) {
             return;
