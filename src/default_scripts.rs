@@ -46,6 +46,10 @@ pub fn studio_dir() -> Option<PathBuf> {
             }
         }
     }
+    // Roblox Studio installed on this Mac (RobloxStudio.app).
+    if let Some(d) = crate::paths::installed_studio() {
+        return Some(d);
+    }
     // Studio's content downloaded by rustudio itself (studio_content.rs).
     if let Some(d) = crate::studio_content::installed() {
         if has(&d) {
