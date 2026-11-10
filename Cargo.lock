@@ -2462,8 +2462,6 @@ dependencies = [
 [[package]]
 name = "mlua"
 version = "0.12.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7a7ae6b65bf54b7fdd4cf5b6f44f60862350ebf3fe3779b3a9cc005e7fa14f81"
 dependencies = [
  "bstr",
  "either",
@@ -3728,8 +3726,6 @@ dependencies = [
 [[package]]
 name = "rbx_dom_weak"
 version = "4.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "63614f84aae649ff71ef6e693d4fc9e2184c6ef55852d48a29685ebd0470114f"
 dependencies = [
  "ahash",
  "rbx_types",

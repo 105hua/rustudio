@@ -877,6 +877,12 @@ int lua_break(lua_State* L)
     return -1;
 }
 
+// rustudio: see lua.h
+void lua_hostcall(lua_State* L, int delta)
+{
+    L->nCcalls = (unsigned short)(L->nCcalls + delta);
+}
+
 int lua_isyieldable(lua_State* L)
 {
     if (!FFlag::LuauIsYieldableSimplify)

@@ -66,3 +66,17 @@ confirmed how Roblox places imported FBX meshes.
 | What | Licence | Used for |
 |---|---|---|
 | [Tabler Icons](https://tabler.io/icons) 3.50.0 (`app/assets/tabler/`: `tabler-icons.ttf`, `tabler-icons-filled.ttf`, the name → code point lists made from its CSS, and its `LICENSE`), © 2020-2026 Paweł Kuna | MIT | every ribbon, menu, top-row and class icon (src/ti.rs, src/class_icons.rs); no Roblox icon is copied |
+
+## Vendored and patched crates
+
+Under `vendor/`, each with its upstream licence file and a note of what
+rustudio changed and why:
+
+| Crate | Licence | Change |
+|---|---|---|
+| `luau0-src` (Luau) | MIT | host hooks, incl. `lua_hostcall` (`vendor/luau0-src/PATCHES.md`) |
+| `mlua` 0.12.2 | MIT | `Lua::with_current_state` for the direct Instance bridge (`vendor/mlua/PATCHES.md`) |
+| `rbx_dom_weak` 4.2.0 (rbx-dom) | MIT | bulk child detach and end-first child removal (`vendor/rbx_dom_weak/PATCHES.md`) |
+| `rustls` 0.23.46 | Apache-2.0 / ISC / MIT | `vendor/rustls/RUSTUDIO-PATCH.md` |
+| `egui` 0.36.2 | MIT / Apache-2.0 | click selection on press (see the root `Cargo.toml`) |
+| `mlua-sys` | MIT | see the root `Cargo.toml` |

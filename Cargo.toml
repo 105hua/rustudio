@@ -79,6 +79,15 @@ rustls = { path = "vendor/rustls" }
 # runtime::luau_flags.
 luau0-src = { path = "vendor/luau0-src" }
 mlua-sys = { path = "vendor/mlua-sys" }
+# mlua 0.12.2 + Lua::with_current_state (src/state.rs, marked rustudio):
+# the direct Instance bridge (runtime_routes.rs) calls Rust from raw C
+# functions and must make the calling Lua thread mlua's current one, as
+# mlua's own callbacks do.
+mlua = { path = "vendor/mlua" }
 # egui 0.36.2 patched (text_selection/, scroll_area.rs): double/
 # triple click select on the press, not the release, like Studio.
 egui = { path = "vendor/egui" }
+# rbx_dom_weak 4.2.0 + detach_children / detach_descendants and an
+# end-first child removal: bulk Destroy / ClearAllChildren without a scan
+# of the parent's child list per child (round 2 perf, bulk).
+rbx_dom_weak = { path = "vendor/rbx_dom_weak" }

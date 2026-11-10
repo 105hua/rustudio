@@ -273,6 +273,12 @@ LUA_API int lua_resume(lua_State* L, lua_State* from, int narg);
 LUA_API int lua_resumeerror(lua_State* L, lua_State* from);
 LUA_API int lua_status(lua_State* L);
 LUA_API int lua_isyieldable(lua_State* L);
+// rustudio: enter (1) / leave (-1) a stretch of a C function where the host
+// runs its own code directly (cmeta.rs fast paths): Lua called from there
+// is never yieldable, as from an ordinary C function, even when the C
+// function has a continuation (luaD_callint would otherwise count a call
+// made from it as yieldable, and a script pcall inside schedules reentry).
+LUA_API void lua_hostcall(lua_State* L, int delta);
 LUA_API void* lua_getthreaddata(lua_State* L);
 LUA_API void lua_setthreaddata(lua_State* L, void* data);
 LUA_API int lua_costatus(lua_State* L, lua_State* co);
