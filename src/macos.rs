@@ -1,9 +1,12 @@
 //! macOS integration: the menu bar's app menu, and files opened from Finder.
 //!
-//! **App menu.** winit's default app menu quits with `terminate:`, which
-//! ends the process at once: no "Discard unsaved changes?" and no saved
-//! layout. Here Quit (⌘Q) closes the window instead (`performClose:`), the
-//! same path as its close button, so the editor asks first. The menu has only
+//! **Quitting.** winit's default app menu quits with `terminate:`, and so
+//! does AppKit's answer to the Quit Apple Event (the Dock's Quit, logging
+//! out, AppleScript): the process ends at once, with no "Discard unsaved
+//! changes?" and no saved layout. Here both ask the window to close the way
+//! its close button does (`windowShouldClose:`, which winit turns into a
+//! close request), so the editor asks first; logging out waits for the answer
+//! like with any app holding unsaved work. The menu has only
 //! the standard Hide / Hide Others / Show All / Quit items: any other key
 //! equivalent here would take that key from the editor (⌘M is Studio's
 //! Import).
@@ -15,6 +18,7 @@
 //! [`take_opened`] each frame.
 
 use std::path::PathBuf;
+use std::sync::atomic::{AtomicPtr, Ordering};
 use std::sync::{Mutex, OnceLock};
 
 use objc2::rc::Retained;
@@ -45,7 +49,14 @@ pub fn install_menu() {
     menu.addItem(&others);
     menu.addItem(&item("Show All", Some(sel!(unhideAllApplications:)), ""));
     menu.addItem(&NSMenuItem::separatorItem(mtm));
-    menu.addItem(&item("Quit rustudio", Some(sel!(performClose:)), "q"));
+    let quit = item("Quit rustudio", Some(sel!(quitRequested:)), "q");
+    let handler = HANDLER.load(Ordering::Acquire);
+    if !handler.is_null() {
+        // SAFETY: the handler is leaked in install_open_handler: it lives
+        // for the whole process.
+        unsafe { quit.setTarget(Some(&*(handler as *const AnyObject))) };
+    }
+    menu.addItem(&quit);
 
     let app_item = NSMenuItem::new(mtm);
     app_item.setSubmenu(Some(&menu));
@@ -74,6 +85,42 @@ const fn four(c: &[u8; 4]) -> u32 {
 }
 const K_CORE_EVENT_CLASS: u32 = four(b"aevt");
 const K_AE_OPEN_DOCUMENTS: u32 = four(b"odoc");
+const K_AE_QUIT_APPLICATION: u32 = four(b"quit");
+
+/// The handler object (leaked at install), the Quit menu item's target.
+static HANDLER: AtomicPtr<OpenHandler> = AtomicPtr::new(std::ptr::null_mut());
+
+/// Asks the editor's window to close as its close button would; quits at
+/// once only when there is no window.
+fn request_close(mtm: MainThreadMarker) {
+    let app = NSApplication::sharedApplication(mtm);
+    // SAFETY: NSApplication / NSWindow / NSWindowDelegate methods with their
+    // documented argument and return types.
+    unsafe {
+        let mut win: Option<Retained<AnyObject>> = msg_send![&app, keyWindow];
+        if win.is_none() {
+            win = msg_send![&app, mainWindow];
+        }
+        if win.is_none() {
+            let windows: Retained<AnyObject> = msg_send![&app, windows];
+            win = msg_send![&windows, firstObject];
+        }
+        let Some(win) = win else {
+            app.terminate(None);
+            return;
+        };
+        let delegate: Option<Retained<AnyObject>> = msg_send![&win, delegate];
+        match delegate {
+            // winit's delegate answers NO and sends CloseRequested.
+            Some(d) => {
+                let _: bool = msg_send![&d, windowShouldClose: &*win];
+            }
+            None => {
+                let _: () = msg_send![&win, performClose: std::ptr::null::<AnyObject>()];
+            }
+        }
+    }
+}
 const KEY_DIRECT_OBJECT: u32 = four(b"----");
 
 define_class!(
@@ -98,7 +145,26 @@ define_class!(
                     forEventClass: K_CORE_EVENT_CLASS,
                     andEventID: K_AE_OPEN_DOCUMENTS
                 ];
+                let _: () = msg_send![
+                    &*NSAppleEventManager::sharedAppleEventManager(),
+                    setEventHandler: self as &AnyObject,
+                    andSelector: sel!(handleQuit:withReply:),
+                    forEventClass: K_CORE_EVENT_CLASS,
+                    andEventID: K_AE_QUIT_APPLICATION
+                ];
             }
+        }
+
+        /// The Quit Apple Event (the Dock's Quit, logging out, AppleScript).
+        #[unsafe(method(handleQuit:withReply:))]
+        fn handle_quit(&self, _event: &NSAppleEventDescriptor, _reply: &NSAppleEventDescriptor) {
+            request_close(self.mtm());
+        }
+
+        /// The app menu's Quit (⌘Q).
+        #[unsafe(method(quitRequested:))]
+        fn quit_requested(&self, _sender: Option<&AnyObject>) {
+            request_close(self.mtm());
         }
 
         #[unsafe(method(handleOpen:withReply:))]
@@ -150,5 +216,5 @@ pub fn install_open_handler() {
             None,
         );
     }
-    std::mem::forget(handler);
+    HANDLER.store(Retained::into_raw(handler), Ordering::Release);
 }
