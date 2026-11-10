@@ -36,7 +36,7 @@ Player
 - `Kick(msg)`: Studio shows the "Disconnected" dialog: `You have been kicked
   by this experience or its moderators. Moderation message:` + blank line +
   message. A LocalScript kicking another player: `Cannot kick a non-local
-  Player from a LocalScript` (exe string).
+  Player from a LocalScript` (Studio's message).
 - Properties: AgeChecked = Unchecked, FrustumStreaming = Default,
   User prints `U1.AQAAAAAAAAAAAAAAAAAAAAA`. DeviceTrustLevel isn't a member
   in the installed Studio build (hidden in the dump).
@@ -47,7 +47,7 @@ Player
 Players
 - BubbleChat false, ClassicChat true, MaxPlayers 12, PreferredPlayers 0.
 - `BanAsync` / `UnbanAsync`: config checks in this order with these texts
-  (exe strings): `Config must contain field UserIds with type array`,
+  (Studio's messages): `Config must contain field UserIds with type array`,
   `… Duration with type number`, `… DisplayReason with type string`,
   `… PrivateReason with type string`, `Duration must be a positive number or
   -1`, `UserIds exceeded the maximum length of {}`, `Expected type number in

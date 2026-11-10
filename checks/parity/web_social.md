@@ -390,14 +390,14 @@ Latest release coverage emits /tmp/web-social-after10.json; expected function
 count88/127, properties21/24, emitting-event registrations7/18.
 
 Important teleport follow-up: online Studio GetFVariable EnableStudioTeleports
-is true. The exe contains a StudioTeleportsManager and the alternate message
+is true. Studio has a StudioTeleportsManager and the alternate message
 Teleporting while using Roblox Studio is not permitted. A flag value alone does
 not prove which delegate is active; tracing its Studio-specific hook is pending.
 No valid online teleport was attempted. Existing legacy failure evidence is from
 the owned offline Studio, not proof of every online/beta Studio configuration.
 Do not replace the unknown TeleportAsync behavior with a guessed constant error.
 
-Teleport deeper trace: shared manager and validation have separate server/context checks and can reach HTTP via. Only the exe in installed Studio DLL/EXE inventory contains the manager name. The alternate Teleporting while using Roblox Studio... text is an indexed script-message table entry, not an established active teleport rejection path; bounded direct-reference search found no use of its index. It must not be used as a guessed constant. No online teleport or global flag setting changed (the Studio process also owns the user's published window).
+Teleport deeper trace: shared manager and validation have separate server/context checks and can reach HTTP via. Only Studio itself has the manager. The alternate Teleporting while using Roblox Studio... text is an indexed script-message table entry, not an established active teleport rejection path; bounded direct-reference search found no use of its index. It must not be used as a guessed constant. No online teleport or global flag setting changed (the Studio process also owns the user's published window).
 
 Self-view implemented from native engine and bundled
 Chrome/Integrations/SelfieView. Native methods dispatch protected SelfViewHidden

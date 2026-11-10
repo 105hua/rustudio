@@ -24,5 +24,5 @@ local function apply()
 	cam.FieldOfView = 70
 	cam.CFrame = at
 end
-RunService:BindToRenderStep("FtavtcTerrainCam", Enum.RenderPriority.Last.Value, apply)
+RunService:BindToRenderStep("PlaceBTerrainCam", Enum.RenderPriority.Last.Value, apply)
 RunService.RenderStepped:Connect(apply)

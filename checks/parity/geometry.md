@@ -90,7 +90,7 @@ so (Studio's corner around the wall end is at x ±1.49, z 16.4).
   (a Studio log line; not reproduced).
 - GeometryService:UnionAsync(part, parts, options) → array, SplitApart by
   default (2 pieces for a far part, 1 with SplitApart=false), {} for an empty
-  intersection; CSGOptions keys (from the exe): CollisionFidelity,
+  intersection; CSGOptions keys (Studio's): CollisionFidelity,
   RenderFidelity, FluidFidelity, SplitApart, UseOffCenterCoordinates,
   RebuildHistory, UseDynamicConvexDecomposition (warns deprecated); others
   `Key 'Foo' is not a valid member of CSGOptions`.
@@ -122,7 +122,7 @@ so (Studio's corner around the wall end is at x ±1.49, z 16.4).
   (Direction, Position, Size, Up) and BrushConfig (Decal, ColorBlendType,
   AlphaBlendType, BlendIntensity, FadeAngle); both report missing keys as
   `EditableImage::DrawImageProjected Param ProjectionParams, is missing X`;
-  size/vector checks from the exe strings. A 1×1 box over a 2×2 quad
+  size/vector checks from Studio's messages. A 1×1 box over a 2×2 quad
   mapped to an 8×8 image paints its middle 4×4 (as Studio).
 - MeshPart:ApplyMesh keeps Size, errors `ApplyMesh requires an MeshPart
   object`. MeshPart:GetSurfaceSlotsAsync errors `MeshPart:GetSurfaceSlotsAsync
@@ -134,7 +134,7 @@ so (Studio's corner around the wall end is at x ±1.49, z 16.4).
   {Constraint, ConstraintParent}, {WeldConstraint, WeldConstraintParent,
   WeldConstraintPart0/1}, {NoCollisionConstraint, NoCollisionParent,
   NoCollisionPart0/1}; options tolerance, weldConstraintPreserve,
-  dropAttachmentsWithoutConstraints (key names from the exe).
+  dropAttachmentsWithoutConstraints (Studio's key names).
 
 ## Coverage
 

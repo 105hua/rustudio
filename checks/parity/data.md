@@ -239,7 +239,7 @@ return normally, matching the Studio function-value probe. Testing overrides
 are scoped to the current runtime and never sent to Roblox. Normal mode
 GetConfigAsync/GetConfigForPlayerAsync yield and throw the observed
 `ConfigService: Failed to load config`; a missing player errors before loading.
-The exe provides the exact nonserver message
+Studio gives the exact nonserver message
 `ConfigService is only available in the game server.`
 
 Official primary sources corroborating override/refresh/event behavior:

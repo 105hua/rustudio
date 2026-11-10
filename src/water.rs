@@ -1,5 +1,5 @@
 //! Terrain water drawn like Studio's high-quality water shader (the
-//! shaders_glsl3.pack SmoothWater FS with GBufferColor / GBufferDepth; see
+//! SmoothWater FS with GBufferColor / GBufferDepth; see
 //! docs/MECHANICS.md "Round 24: water"): the scene behind the surface shows
 //! through, bent by the ripples and blended toward the lit WaterColor by
 //! depth; the sky reflects by the Fresnel term; the sun glints off the

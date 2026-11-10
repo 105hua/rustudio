@@ -6,8 +6,8 @@
 //! FStringTerrainMaterialTablePre2022 / FStringTerrainMaterialTable2022 /
 //! FStringTerrainColorTable of an offline Studio (0.744).
 //!
-//! How Studio's terrain shaders use it (SmoothCluster VS / FS HQ in
-//! shaders_glsl3.pack; docs/MECHANICS.md "Round 21"):
+//! How Studio's terrain shaders use it (SmoothCluster VS / FS HQ;
+//! docs/MECHANICS.md "Round 21"):
 //! - every triangle carries three corner materials; each corner's texture
 //!   coordinate is the world position projected on one of 18 axes, times the
 //!   face's `tiling`, turned by a random angle (× `rotation`) and moved by a

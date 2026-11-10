@@ -22,7 +22,7 @@ anim agreed that ApplyDescription* is mine).
 
 ## Endpoints (all through the login session, never a key)
 
-The paths are the ones in the exe, next to the `AvatarEditorService_*` names:
+The paths are the ones Studio uses, next to the `AvatarEditorService_*` names:
 
 | Method | Request |
 |---|---|
@@ -134,7 +134,7 @@ FaceControls never take this path.
 
 Heads come in Studio's MeshPart-head format: a `POST
 assetdelivery.roblox.com/v1/assets/batch` with `assetFormat:
-avatar_meshpart_head` (the string is in the exe). Plain asset delivery gives
+avatar_meshpart_head` (the string is Studio's). Plain asset delivery gives
 the legacy SpecialMesh head.
 
 Measured on a headless 1265×900 Play, 40 dynamic heads (8,778 corners

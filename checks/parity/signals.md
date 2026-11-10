@@ -14,7 +14,7 @@ newindex / `__rs_fire` wrappers).
 - Workspace.SignalBehavior is NotScriptable, CanLoad false in api-dump; the
   place file stores it as `SignalBehavior2` (rbx-dom database). Both names
   are read; missing = Default = Immediate.
-- Debug FFlags in the exe: `DebugForceDeferredSignalBehavior`,
+- Debug FFlags in Studio: `DebugForceDeferredSignalBehavior`,
   `DebugForceAncestryDeferredSignalBehavior` (not modelled).
 - Deferred re-entrancy: FInt `MaxDeferReentrancyDepth` (name,
   value = 80). increments a byte counter, compares

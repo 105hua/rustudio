@@ -1322,7 +1322,7 @@
    "name": "display gamma",
    "group": "lighting",
    "value": 2.0,
-   "source": "Studio shader pack (Future, Vulkan RBXS): output sqrt(c * Exposure)"
+   "source": "Studio's Future shaders: output sqrt(c * Exposure)"
   },
   {
    "name": "default tone curve a",
@@ -1673,7 +1673,7 @@
    "group": "materials",
    "value": 8,
    "unit": "studs",
-   "source": "shaders_glsl3.pack: part shaders sample material maps at TEXCOORD0 = studs / 8 (the studs map uses TEXCOORD0 x 4 with 2-stud tiles)"
+   "source": "Studio's part shaders sample material maps at TEXCOORD0 = studs / 8 (the studs map uses TEXCOORD0 x 4 with 2-stud tiles)"
   },
   {
    "name": "material table entries",
@@ -1931,7 +1931,7 @@
    "name": "terrain height blend",
    "group": "terrain",
    "value": "w = clamp((h - max(others) + s/2) / s), back to barycentrics by UV derivative x 7",
-   "source": "Studio shaders_glsl3.pack SmoothCluster FS HQ"
+   "source": "Studio's SmoothCluster FS HQ"
   },
   {
    "name": "terrain projection axes",
@@ -2235,13 +2235,13 @@
    "name": "world GUI fog",
    "group": "gui",
    "value": "lit world GUIs are fogged like the scene: mix(fog colour, colour, clamp(exp2(FogParams.z·d + FogParams.x) − FogParams.w)) before the exposure",
-   "source": "shaders_glsl3.pack UILitFogFSRRectClip (0x3efa69)"
+   "source": "Studio's UILitFogFSRRectClip"
   },
   {
    "name": "world GUI light",
    "group": "gui",
    "value": "out = mix(lin × Brightness, lin × light, LightInfluence); light = min(lightgrid × 120 + Ambient + SkyAmbient × skylight, LightConfig0.w) + (Lamp0·max(N·−L,0) + Lamp1·max(−N·−L,0)) × (1 − shadow) × skylight, the grid read 6 studs out along the normal",
-   "source": "shaders_glsl3.pack UITransformedLitFogVS (0x6b7b3), UILitFogFSRRectClip (0x3efa69)"
+   "source": "Studio's UITransformedLitFogVS, UILitFogFSRRectClip"
   },
   {
    "name": "light grid voxel",
@@ -2255,7 +2255,7 @@
    "group": "lighting",
    "value": 6,
    "unit": "studs",
-   "source": "shaders_glsl3.pack SmoothCluster VS: VARYING4 = (pos + normal * 6.0).yxz * CB0[21] + CB0[22]"
+   "source": "Studio's SmoothCluster VS: VARYING4 = (pos + normal * 6.0).yxz * CB0[21] + CB0[22]"
   },
   {
    "name": "light grid size",

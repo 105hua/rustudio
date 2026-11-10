@@ -156,10 +156,10 @@ Each group then feeds `creatorType=Group&creatorTargetId=<groupId>`. The older
 
      The `robloxctx-*` header is the likely reason the old probe of
      `MultiGetCanCollaborate` / `hasTenureBulk` got
-     `403 "Request Context Failure"` [inferred]. In the exe those two are made
+     `403 "Request Context Failure"` [inferred]. In Studio those two are made
      by `CollaboratorsService::serverMultiGetCanCollaborate` and
      `tenureEvictionCheck`, which run on **RCC**, and RCC has a request
-     context that a user client lacks [verified: exe strings; inferred: the cause].
+     context that a user client lacks [verified: Studio's messages; inferred: the cause].
 2. **Pre-warm** `POST gamejoin.roblox.com/v1/team-create-preemptive`
    `{"gameJoinAttemptId":"<GUID>","placeId":<id>}` (`PreLaunchTeamCreate` L25-46, flag `LuaStartPagePreLaunchTeamCreate`) [verified: lua].
    Offline Studio also sends it with `placeId:0` for "Server & Clients" tests [verified: offline-studio].
@@ -224,7 +224,7 @@ From the `NetworkClient` log lines [verified: exe]:
 
 ### RakNet path
 
-[verified: exe strings]
+[verified: Studio's messages]
 
 - Roblox's fork of RakNet. It does the stock offline handshake
   (`OpenRequest1` with MTU probing, `OpenReply1`, `OpenRequest2`, `OpenReply2`,
@@ -250,7 +250,7 @@ From the `NetworkClient` log lines [verified: exe]:
 
 ### RbxTransport path
 
-[verified: exe strings]
+[verified: Studio's messages]
 
 - QUIC through **ngtcp2** with OpenSSL TLS (`ngtcp2_crypto_ossl_configure_client_session`).
   It can also use WebTransport (`DebugRbxTransportClientUseWt`, "Initiating
@@ -299,7 +299,7 @@ From memory [recalled, unverified]:
   about 2024), the QUIC transport (about 2025), JoinData v2 and
   instance-intent items. Old captures and code will not decode a current
   session without the keys.
-- What the current exe confirms of that model:   `NewObjectItem`, `DeleteInstanceItem`, `DestroyInstanceItem`,   `ChangePropertyItem`, `ChangeAttributeItem`, `EventInvocationItem`,   `MarkerItem`, `PingItem`, `TagItem`, `JoinDataItem(V2)`, `ClusterItem`,   `SharedStringItem`, `StreamDataItem`, `InstanceIntentItem`,   `ResolveNewInstanceAtomicTreeItem`, `SharedReferencePropertyChangedItem`,   `StatsItem`. The vocabulary matches; the wire layout must be re-derived from the binary.
+- What current Studio confirms of that model:   `NewObjectItem`, `DeleteInstanceItem`, `DestroyInstanceItem`,   `ChangePropertyItem`, `ChangeAttributeItem`, `EventInvocationItem`,   `MarkerItem`, `PingItem`, `TagItem`, `JoinDataItem(V2)`, `ClusterItem`,   `SharedStringItem`, `StreamDataItem`, `InstanceIntentItem`,   `ResolveNewInstanceAtomicTreeItem`, `SharedReferencePropertyChangedItem`,   `StatsItem`. The vocabulary matches; the wire layout must be re-derived from the binary.
 
 ## 5. What flows during a session
 

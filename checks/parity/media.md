@@ -123,7 +123,7 @@ measured: 1..99999 → 200..20000).
 - IsVoiceEnabledForUserIdAsync (VoiceChatService and VoiceChatInternal):
   on the server (changed by the players_chat agent, 2026-11-08, from their
   signed-in Studio measurement): a connected player's UserId → that setting,
-  otherwise "… the player must be connected to the current server" (the exe
+  otherwise "… the player must be connected to the current server" (Studio
   also has "is not yet implemented on the server", which was rustudio's first
   answer); on a client, another user "… cannot access
   eligibility info for other users"; the local player: GET

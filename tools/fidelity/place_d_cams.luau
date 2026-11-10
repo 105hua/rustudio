@@ -31,5 +31,5 @@ local function apply()
 	cam.FieldOfView = 70
 	cam.CFrame = at
 end
-RunService:BindToRenderStep("DoobCam", Enum.RenderPriority.Last.Value, apply)
+RunService:BindToRenderStep("PlaceDCam", Enum.RenderPriority.Last.Value, apply)
 RunService.RenderStepped:Connect(apply)
