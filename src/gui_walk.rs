@@ -1663,7 +1663,7 @@ mod layout_tests {
         let mut store = AssetStore::default();
         let rect = Rect::from_min_size(Pos2::ZERO, egui::vec2(1000.0, 40.0));
         let mut input = DrawIn { render_state: None, doc: &doc, cam: &cam, rect, store: &mut store, doc_dir: None, playing: false };
-        let _ = ctx.run_ui(Default::default(), |ui| {
+        let mut out = ctx.run_ui(Default::default(), |ui| {
             let ctx = ui.ctx();
             let mut walk = Walk { gui: &mut gui, ctx, input: &mut input, items: Vec::new(), hits: Vec::new(), seq: 0, boxes: Vec::new(), global_z: false, abs_offset: [0.0; 2], screen: None, cur: Ref::none(), rec: Vec::new(), replaying: 0 };
             walk.children(parent, rect, Down { aff: Aff::ID, clip: rect, alpha: 1.0, tint: [1.0; 3], scale: 1.0, z: 0 });
@@ -1672,5 +1672,7 @@ mod layout_tests {
             assert!((boxes[0].size[0] - 490.0).abs() < 0.01);
             assert!((boxes[1].pos[0] - boxes[0].pos[0] - 500.0).abs() < 0.01);
         });
+        // (No renderer here: epaint asserts undelivered font-atlas updates.)
+        out.textures_delta.clear();
     }
 }
