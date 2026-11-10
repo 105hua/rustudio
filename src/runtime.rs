@@ -4662,11 +4662,15 @@ impl Runtime {
         // time instead, so per-call costs can be timed on a loaded machine.
         let cpu_clock = std::env::var_os("RUSTUDIO_CPU_CLOCK").is_some();
         let clock = lua.create_function(move |lua, ()| {
+            // (Unix only; elsewhere the wall clock below.)
+            #[cfg(unix)]
             if cpu_clock {
                 let mut ts = libc::timespec { tv_sec: 0, tv_nsec: 0 };
                 unsafe { libc::clock_gettime(libc::CLOCK_THREAD_CPUTIME_ID, &mut ts) };
                 return Ok(ts.tv_sec as f64 + ts.tv_nsec as f64 * 1e-9);
             }
+            #[cfg(not(unix))]
+            let _ = cpu_clock;
             let now = since.elapsed().as_secs_f64();
             Ok(match base {
                 Some(b) => {
