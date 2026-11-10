@@ -18,9 +18,10 @@ use std::sync::mpsc::{channel, Receiver, Sender};
 
 use egui::{Color32, CornerRadius, Pos2, Rect, RichText, Sense, Stroke, Vec2};
 use rustudio_account::cloud::GroupInfo;
-use rustudio_account::{parse_place_ref, CloudApi, CreatorKind, Experience, PublishKeyStore};
+use rustudio_account::{parse_place_ref, CloudApi, CreatorKind, Experience, ExperienceSource, PublishKeyStore};
 
 use crate::app::{Editor, PendingAction};
+use crate::cloud_ui::Paged;
 use crate::doc::Document;
 use crate::theme;
 
@@ -88,10 +89,8 @@ fn flat_terrain(doc: &mut Document) {
 type Listing = Option<Result<Vec<Experience>, String>>;
 
 enum Msg {
-    Mine(Result<Vec<Experience>, String>),
-    Shared(Result<Vec<Experience>, String>),
+    Page(ExperienceSource, u32, Result<(Vec<Experience>, bool), String>),
     Groups(Result<Vec<GroupInfo>, String>),
-    Group(u64, Result<Vec<Experience>, String>),
     Icon(u64, egui::ColorImage),
     Done,
 }
@@ -114,10 +113,8 @@ pub struct StartPage {
     tx: Sender<Msg>,
     rx: Receiver<Msg>,
     jobs: usize,
-    mine: Listing,
-    shared: Listing,
+    lists: HashMap<ExperienceSource, Paged>,
     groups: Option<Result<Vec<GroupInfo>, String>>,
-    group_lists: HashMap<u64, Listing>,
     icons: HashMap<u64, egui::TextureHandle>,
     icons_asked: HashSet<u64>,
     /// Whether the lists were loaded for a signed-in session yet.
@@ -128,10 +125,8 @@ impl StartPage {
     /// Drops the lists of the previous account (account switch); they load
     /// again for the new one.
     pub fn forget_lists(&mut self) {
-        self.mine = None;
-        self.shared = None;
+        self.lists.clear();
         self.groups = None;
-        self.group_lists.clear();
         self.loaded_signed_in = false;
     }
 }
@@ -151,10 +146,8 @@ impl Default for StartPage {
             tx,
             rx,
             jobs: 0,
-            mine: None,
-            shared: None,
+            lists: HashMap::new(),
             groups: None,
-            group_lists: HashMap::new(),
             icons: HashMap::new(),
             icons_asked: HashSet::new(),
             loaded_signed_in: false,
@@ -174,6 +167,7 @@ enum Do {
     Forget(u64),
     ForgetFile(PathBuf),
     Refresh,
+    More(ExperienceSource),
     Account,
     Copy(String),
 }
@@ -210,12 +204,12 @@ impl StartPage {
     fn poll(&mut self, ctx: &egui::Context) {
         while let Ok(m) = self.rx.try_recv() {
             match m {
-                Msg::Mine(r) => self.mine = Some(r),
-                Msg::Shared(r) => self.shared = Some(r),
-                Msg::Groups(r) => self.groups = Some(r),
-                Msg::Group(g, r) => {
-                    self.group_lists.insert(g, Some(r));
+                Msg::Page(src, page, r) => {
+                    if let Some(p) = self.lists.get_mut(&src) {
+                        p.arrived(page, r);
+                    }
                 }
+                Msg::Groups(r) => self.groups = Some(r),
                 Msg::Icon(u, img) => {
                     let t = ctx.load_texture(format!("start_icon_{u}"), img, egui::TextureOptions::LINEAR);
                     self.icons.insert(u, t);
@@ -259,30 +253,27 @@ impl Editor {
         let (client, ep) = self.start_client();
         let sp = &mut self.start;
         sp.icons_asked.clear();
-        sp.mine = Some(Ok(Vec::new()));
-        sp.spawn(client.clone(), ep.clone(), |a, tx| {
-            let r = a.ok_or_else(signed_out).and_then(|a| a.my_experiences().map_err(|e| e.0));
-            let _ = tx.send(Msg::Mine(r));
-        });
-        sp.shared = Some(Ok(Vec::new()));
-        sp.spawn(client.clone(), ep.clone(), |a, tx| {
-            let r = a.ok_or_else(signed_out).and_then(|a| a.shared_experiences().map_err(|e| e.0));
-            let _ = tx.send(Msg::Shared(r));
-        });
+        sp.lists.clear();
         sp.groups = Some(Ok(Vec::new()));
-        sp.group_lists.clear();
         sp.spawn(client, ep, |a, tx| {
             let r = a.ok_or_else(signed_out).and_then(|a| a.groups().map_err(|e| e.0));
             let _ = tx.send(Msg::Groups(r));
         });
+        self.start_reset_list(ExperienceSource::Mine);
+        self.start_reset_list(ExperienceSource::Shared);
     }
 
-    fn start_load_group(&mut self, g: u64) {
+    fn start_reset_list(&mut self, src: ExperienceSource) {
+        self.start.lists.insert(src, Paged::fresh());
+        self.start_load_page(src);
+    }
+
+    fn start_load_page(&mut self, src: ExperienceSource) {
+        let Some(page) = self.start.lists.get_mut(&src).and_then(Paged::next_page) else { return };
         let (client, ep) = self.start_client();
-        self.start.group_lists.insert(g, Some(Ok(Vec::new())));
         self.start.spawn(client, ep, move |a, tx| {
-            let r = a.ok_or_else(signed_out).and_then(|a| a.group_experiences(g).map_err(|e| e.0));
-            let _ = tx.send(Msg::Group(g, r));
+            let r = a.ok_or_else(signed_out).and_then(|a| a.experiences_page(src, page, 25).map_err(|e| e.0));
+            let _ = tx.send(Msg::Page(src, page, r));
         });
     }
 
@@ -326,10 +317,13 @@ impl Editor {
         }
         // Each group's experiences, as soon as the groups are known.
         if let Some(Ok(groups)) = &self.start.groups {
-            let missing: Vec<u64> =
-                groups.iter().map(|g| g.id).filter(|g| !self.start.group_lists.contains_key(g)).collect();
-            for g in missing {
-                self.start_load_group(g);
+            let missing: Vec<ExperienceSource> = groups
+                .iter()
+                .map(|g| ExperienceSource::Group(g.id))
+                .filter(|s| !self.start.lists.contains_key(s))
+                .collect();
+            for src in missing {
+                self.start_reset_list(src);
             }
         }
         let mut todo: Vec<Do> = Vec::new();
@@ -376,6 +370,7 @@ impl Editor {
                     }
                 }
                 Do::Refresh => self.start_load_all(),
+                Do::More(src) => self.start_load_page(src),
                 Do::Template(t) => {
                     let doc = t.build();
                     self.set_document(doc);
@@ -469,8 +464,9 @@ impl Editor {
             for g in groups {
                 let has = self
                     .start
-                    .group_lists
-                    .get(&g.id)
+                    .lists
+                    .get(&ExperienceSource::Group(g.id))
+                    .map(|p| &p.list)
                     .is_none_or(|l| matches!(l, None | Some(Ok(_))) && !matches!(l, Some(Ok(v)) if v.is_empty()));
                 if has && g.can_edit != Some(false) {
                     entries.push((format!("group:{}", g.id), g.name.clone(), true));
@@ -573,7 +569,7 @@ impl Editor {
     }
 
     /// A foldable section header (click to fold). Returns whether it's open.
-    fn fold_header(&mut self, ui: &mut egui::Ui, key: &str, title: &str, count: Option<usize>, todo: &mut Vec<Do>) -> bool {
+    fn fold_header(&mut self, ui: &mut egui::Ui, key: &str, title: &str, count: Option<String>, todo: &mut Vec<Do>) -> bool {
         let open = !self.start.collapsed.contains(key);
         let w = ui.available_width();
         let (r, resp) = ui.allocate_exact_size(Vec2::new(w, 30.0), Sense::click());
@@ -599,7 +595,7 @@ impl Editor {
             p.text(
                 Pos2::new(tr.max.x + 8.0, r.center().y + 1.0),
                 egui::Align2::LEFT_CENTER,
-                n.to_string(),
+                n,
                 egui::FontId::proportional(12.5),
                 theme::TEXT_DIM,
             );
@@ -617,8 +613,8 @@ impl Editor {
     }
 
     /// How many of a listing's experiences pass the search (None while loading / failed).
-    fn listing_count(&self, l: &Listing) -> Option<usize> {
-        match l {
+    fn listing_count(&self, src: ExperienceSource) -> Option<usize> {
+        match self.start.lists.get(&src).and_then(|p| p.list.as_ref()) {
             Some(Ok(v)) if !v.is_empty() => Some(v.iter().filter(|e| self.matches(&e.name)).count()),
             _ => None,
         }
@@ -652,7 +648,7 @@ impl Editor {
             .into_iter()
             .filter(|r| self.matches(&r.origin.name) || self.matches(&r.origin.experience))
             .collect();
-        if !(searching && recent.is_empty()) && self.fold_header(ui, "recent", "Recent", Some(recent.len()), todo) {
+        if !(searching && recent.is_empty()) && self.fold_header(ui, "recent", "Recent", Some(recent.len().to_string()), todo) {
             if recent.is_empty() {
                 ui.label(
                     RichText::new("Places you open from Roblox show up here.").color(theme::TEXT_DIM),
@@ -709,33 +705,38 @@ impl Editor {
         }
 
         // My Experiences, Shared with Me, then each group.
-        let mut lists: Vec<(String, String, Listing, String)> = vec![
-            ("mine".into(), "My Experiences".into(), self.start.mine.clone(), "This account owns no experiences.".into()),
-            ("shared".into(), "Shared with Me".into(), self.start.shared.clone(), "No experiences are shared with this account.".into()),
+        let mut lists: Vec<(String, String, ExperienceSource, String)> = vec![
+            ("mine".into(), "My Experiences".into(), ExperienceSource::Mine, "This account owns no experiences.".into()),
+            ("shared".into(), "Shared with Me".into(), ExperienceSource::Shared, "No experiences are shared with this account.".into()),
         ];
         let groups = match self.start.groups.clone() {
             Some(Ok(g)) => g,
             _ => Vec::new(),
         };
         for g in &groups {
-            let l = self.start.group_lists.get(&g.id).cloned().flatten();
+            let src = ExperienceSource::Group(g.id);
+            let l = self.start.lists.get(&src).and_then(|p| p.list.as_ref());
             // Groups with nothing in them, or that this account can't
             // edit / list, stay out of the way.
-            if matches!(&l, Some(Ok(v)) if v.is_empty()) && !self.start.busy() {
+            if matches!(l, Some(Ok(v)) if v.is_empty()) && !self.start.busy() {
                 continue;
             }
-            if g.can_edit == Some(false) || matches!(&l, Some(Err(_))) {
+            if g.can_edit == Some(false) || matches!(l, Some(Err(_))) {
                 continue;
             }
-            lists.push((format!("group:{}", g.id), g.name.clone(), l, "This group has no experiences.".into()));
+            lists.push((format!("group:{}", g.id), g.name.clone(), src, "This group has no experiences.".into()));
         }
-        for (key, title, l, empty) in lists {
-            let count = self.listing_count(&l);
-            if searching && count.unwrap_or(0) == 0 {
+        for (key, title, src, empty) in lists {
+            let more = self.start.lists.get(&src).is_some_and(|p| p.more);
+            let count = self.listing_count(src);
+            // A search only sees the pages loaded so far, so a list with
+            // more stays, with its Show more.
+            if searching && count.unwrap_or(0) == 0 && !more {
                 continue;
             }
+            let count = count.map(|n| if more { format!("{n}+") } else { n.to_string() });
             if self.fold_header(ui, &key, &title, count, todo) {
-                self.experience_grid(ui, &key, &l, &empty, todo);
+                self.experience_grid(ui, &key, src, &empty, todo);
                 ui.add_space(8.0);
             }
         }
@@ -746,7 +747,7 @@ impl Editor {
         }
 
         let files = self.ui.recent.iter().filter(|p| self.matches(&p.display().to_string())).count();
-        if !(searching && files == 0) && self.fold_header(ui, "files", "Recent Files", Some(files), todo) {
+        if !(searching && files == 0) && self.fold_header(ui, "files", "Recent Files", Some(files.to_string()), todo) {
             self.start_files(ui, usize::MAX, todo);
         }
         ui.add_space(24.0);
@@ -864,23 +865,44 @@ impl Editor {
             return;
         }
         let label = if open { "Show less".to_string() } else { format!("Show {} more", n - shown) };
-        let b = egui::Button::new(RichText::new(label).color(theme::TEXT))
-            .fill(theme::PANEL_DARK)
-            .corner_radius(CornerRadius::same(4));
-        let clicked = ui
-            .scope(|ui| {
-                ui.spacing_mut().button_padding = Vec2::new(14.0, 6.0);
-                ui.add(b).clicked()
-            })
-            .inner;
-        if clicked {
+        if pill_button(ui, &label, true) {
             todo.push(Do::ShowAll(key.to_string()));
         }
         ui.add_space(10.0);
     }
 
-    fn experience_grid(&mut self, ui: &mut egui::Ui, key: &str, list: &Listing, empty: &str, todo: &mut Vec<Do>) {
-        let exps = match list {
+    /// Under an experience section: "Show N more" opens it past its first
+    /// two rows; once everything loaded is shown, "Show more" asks Roblox for
+    /// the next page (a click, not scrolling, so passing a long section on
+    /// the way to the next one doesn't keep loading it).
+    fn experience_buttons(&self, ui: &mut egui::Ui, key: &str, src: ExperienceSource, n: usize, shown: usize, todo: &mut Vec<Do>) {
+        let (more, loading) = self.start.lists.get(&src).map_or((false, false), |p| (p.more, p.loading));
+        let open = self.start.expanded.contains(key);
+        let less = open && (n > per_row(ui) * 2 || more);
+        if shown >= n && !more && !less {
+            return;
+        }
+        ui.horizontal(|ui| {
+            if shown < n {
+                if pill_button(ui, &format!("Show {} more", n - shown), true) {
+                    todo.push(Do::ShowAll(key.to_string()));
+                }
+            } else if more {
+                let label = if loading { "Loading…" } else { "Show more" };
+                if pill_button(ui, label, !loading) {
+                    todo.push(Do::More(src));
+                }
+            }
+            if less && pill_button(ui, "Show less", true) {
+                todo.push(Do::ShowAll(key.to_string()));
+            }
+        });
+        ui.add_space(10.0);
+    }
+
+    fn experience_grid(&mut self, ui: &mut egui::Ui, key: &str, src: ExperienceSource, empty: &str, todo: &mut Vec<Do>) {
+        let list: Listing = self.start.lists.get(&src).and_then(|p| p.list.clone());
+        let exps = match &list {
             None => {
                 self.start_signed_out_or_loading(ui, todo);
                 return;
@@ -949,7 +971,7 @@ impl Editor {
                 }
             });
         });
-         self.show_all_button(ui, key, exps.len(), shown, todo);
+        self.experience_buttons(ui, key, src, exps.len(), shown, todo);
     }
 }
 
@@ -977,6 +999,17 @@ fn ago(now: u64, then: u64) -> String {
 
 /// Lays `n` cards out in rows that fill the width.
 /// Cards per row at the current width.
+fn pill_button(ui: &mut egui::Ui, label: &str, enabled: bool) -> bool {
+    let b = egui::Button::new(RichText::new(label).color(theme::TEXT))
+        .fill(theme::PANEL_DARK)
+        .corner_radius(CornerRadius::same(4));
+    ui.scope(|ui| {
+        ui.spacing_mut().button_padding = Vec2::new(14.0, 6.0);
+        ui.add_enabled(enabled, b).clicked()
+    })
+    .inner
+}
+
 fn per_row(ui: &egui::Ui) -> usize {
     (((ui.available_width() + GAP) / (CARD_W + GAP)).floor() as usize).max(1)
 }

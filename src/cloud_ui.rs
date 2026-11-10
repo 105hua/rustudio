@@ -13,7 +13,7 @@ use std::sync::Arc;
 use egui::RichText;
 use rustudio_account::cloud::{CloudPlace, GroupInfo, RecentPlace, VersionInfo};
 use rustudio_account::{
-    open_mode, parse_place_ref, CloudApi, CloudOrigin, OpenMode, Endpoints, Experience, PlaceCache, PublishKeyStore,
+    open_mode, parse_place_ref, CloudApi, CloudOrigin, OpenMode, Endpoints, Experience, ExperienceSource, PlaceCache, PublishKeyStore,
     SaveOutcome, TeamCreateStatus, VersionType,
 };
 
@@ -22,6 +22,53 @@ use crate::doc::Document;
 use crate::theme;
 
 type Listing = Option<Result<Vec<Experience>, String>>;
+
+/// An experience list that loads a page at a time.
+#[derive(Default)]
+pub(crate) struct Paged {
+    pub list: Listing,
+    pub page: u32,
+    pub more: bool,
+    pub loading: bool,
+}
+
+impl Paged {
+    pub fn fresh() -> Paged {
+        Paged { list: Some(Ok(Vec::new())), more: true, ..Default::default() }
+    }
+
+    /// The page to ask for next, marking it as on its way; None while one
+    /// is on its way or when there are no more.
+    pub fn next_page(&mut self) -> Option<u32> {
+        if self.loading || !self.more {
+            return None;
+        }
+        self.loading = true;
+        Some(self.page)
+    }
+
+    /// Adds an arrived page. One from before a Refresh has the wrong number
+    /// and is dropped.
+    pub fn arrived(&mut self, page: u32, r: Result<(Vec<Experience>, bool), String>) {
+        if page != self.page {
+            return;
+        }
+        self.loading = false;
+        match r {
+            Ok((rows, more)) => {
+                if let Some(Ok(list)) = &mut self.list {
+                    list.extend(rows);
+                }
+                self.page += 1;
+                self.more = more;
+            }
+            Err(e) => {
+                self.list = Some(Err(e));
+                self.more = false;
+            }
+        }
+    }
+}
 
 /// Builds the API for a job (the self-test swaps in a mock server's).
 pub type ApiFactory = Arc<dyn Fn() -> Option<CloudApi> + Send + Sync>;
@@ -68,10 +115,8 @@ pub struct Opened {
 
 enum Msg {
     Log(Level, String),
-    Mine(Result<Vec<Experience>, String>),
-    Shared(Result<Vec<Experience>, String>),
+    Page(ExperienceSource, u32, Result<(Vec<Experience>, bool), String>),
     Groups(Result<Vec<GroupInfo>, String>),
-    GroupExperiences(u64, Result<Vec<Experience>, String>),
     Places(u64, Result<Vec<CloudPlace>, String>),
     Icon(u64, egui::ColorImage),
     Versions(u64, Result<Vec<VersionInfo>, String>),
@@ -143,11 +188,9 @@ pub struct CloudUi {
     tx: Sender<Msg>,
     rx: Receiver<Msg>,
     jobs: usize,
-    mine: Listing,
-    shared: Listing,
+    lists: HashMap<ExperienceSource, Paged>,
     groups: Option<Result<Vec<GroupInfo>, String>>,
     group_sel: Option<u64>,
-    group_experiences: HashMap<u64, Listing>,
     places: HashMap<u64, Result<Vec<CloudPlace>, String>>,
     icons: HashMap<u64, egui::TextureHandle>,
     icon_images: Vec<(u64, egui::ColorImage)>,
@@ -226,11 +269,9 @@ impl CloudUi {
             tx,
             rx,
             jobs: 0,
-            mine: None,
-            shared: None,
+            lists: HashMap::new(),
             groups: None,
             group_sel: None,
-            group_experiences: HashMap::new(),
             places: HashMap::new(),
             icons: HashMap::new(),
             icon_images: Vec::new(),
@@ -301,11 +342,9 @@ impl CloudUi {
 
     /// Drops the lists of the previous account (account switch).
     pub fn forget_lists(&mut self) {
-        self.mine = None;
-        self.shared = None;
+        self.lists.clear();
         self.groups = None;
         self.group_sel = None;
-        self.group_experiences.clear();
         self.places.clear();
         self.versions.clear();
         self.versions_of = None;
@@ -320,20 +359,8 @@ impl CloudUi {
                 let ids: Vec<u64> = self.cache.recent().iter().map(|r| r.origin.universe_id).collect();
                 self.request_icons(api, ids);
             }
-            PickerTab::Mine => {
-                self.mine = Some(Ok(Vec::new()));
-                self.spawn(api, |a, tx| {
-                    let r = a.ok_or_else(Self::signed_out).and_then(|a| a.my_experiences().map_err(|e| e.0));
-                    let _ = tx.send(Msg::Mine(r));
-                });
-            }
-            PickerTab::Shared => {
-                self.shared = Some(Ok(Vec::new()));
-                self.spawn(api, |a, tx| {
-                    let r = a.ok_or_else(Self::signed_out).and_then(|a| a.shared_experiences().map_err(|e| e.0));
-                    let _ = tx.send(Msg::Shared(r));
-                });
-            }
+            PickerTab::Mine => self.reset_list(api, ExperienceSource::Mine),
+            PickerTab::Shared => self.reset_list(api, ExperienceSource::Shared),
             PickerTab::Groups => {
                 self.groups = Some(Ok(Vec::new()));
                 self.spawn(api, |a, tx| {
@@ -345,12 +372,24 @@ impl CloudUi {
     }
 
     fn load_group(&mut self, client: Option<crate::assets::SharedClient>, group: u64) {
-        self.group_experiences.insert(group, Some(Ok(Vec::new())));
-        self.spawn(self.factory(client), move |a, tx| {
+        let api = self.factory(client);
+        self.reset_list(api, ExperienceSource::Group(group));
+    }
+
+    /// Starts a list again from its first page.
+    fn reset_list(&mut self, api: ApiFactory, src: ExperienceSource) {
+        self.lists.insert(src, Paged::fresh());
+        self.load_page(api, src);
+    }
+
+    /// Asks for a list's next page, unless one is on its way or there are no more.
+    fn load_page(&mut self, api: ApiFactory, src: ExperienceSource) {
+        let Some(page) = self.lists.get_mut(&src).and_then(Paged::next_page) else { return };
+        self.spawn(api, move |a, tx| {
             let r = a
                 .ok_or_else(Self::signed_out)
-                .and_then(|a| a.group_experiences(group).map_err(|e| e.0));
-            let _ = tx.send(Msg::GroupExperiences(group, r));
+                .and_then(|a| a.experiences_page(src, page, 25).map_err(|e| e.0));
+            let _ = tx.send(Msg::Page(src, page, r));
         });
     }
 
@@ -563,8 +602,11 @@ impl Editor {
         while let Ok(m) = self.cloud.rx.try_recv() {
             match m {
                 Msg::Log(l, t) => self.push_log(l, t),
-                Msg::Mine(r) => self.cloud.mine = Some(r),
-                Msg::Shared(r) => self.cloud.shared = Some(r),
+                Msg::Page(src, page, r) => {
+                    if let Some(p) = self.cloud.lists.get_mut(&src) {
+                        p.arrived(page, r);
+                    }
+                }
                 Msg::Groups(r) => {
                     if let Ok(g) = &r {
                         if self.cloud.group_sel.is_none() {
@@ -572,9 +614,6 @@ impl Editor {
                         }
                     }
                     self.cloud.groups = Some(r);
-                }
-                Msg::GroupExperiences(g, r) => {
-                    self.cloud.group_experiences.insert(g, Some(r));
                 }
                 Msg::Places(u, r) => {
                     self.cloud.places.insert(u, r);
@@ -1513,8 +1552,8 @@ impl Editor {
                     self.cloud.tab = tab;
                     let empty = match tab {
                         PickerTab::Recent => true,
-                        PickerTab::Mine => self.cloud.mine.is_none(),
-                        PickerTab::Shared => self.cloud.shared.is_none(),
+                        PickerTab::Mine => !self.cloud.lists.contains_key(&ExperienceSource::Mine),
+                        PickerTab::Shared => !self.cloud.lists.contains_key(&ExperienceSource::Shared),
                         PickerTab::Groups => self.cloud.groups.is_none(),
                     };
                     if empty {
@@ -1525,12 +1564,12 @@ impl Editor {
                     let tab = self.cloud.tab;
                     self.cloud.refresh(client.clone(), tab);
                     if tab == PickerTab::Groups {
-                        self.cloud.group_experiences.clear();
+                        self.cloud.lists.retain(|s, _| !matches!(s, ExperienceSource::Group(_)));
                     }
                 }
                 PickerDo::Group(g) => {
                     self.cloud.group_sel = Some(g);
-                    if self.cloud.group_experiences.get(&g).is_none_or(|l| l.is_none()) {
+                    if !self.cloud.lists.contains_key(&ExperienceSource::Group(g)) {
                         self.cloud.load_group(client.clone(), g);
                     }
                 }
@@ -1545,6 +1584,10 @@ impl Editor {
                 PickerDo::Icons(ids) => {
                     let api = self.cloud.factory(client.clone());
                     self.cloud.request_icons(api, ids);
+                }
+                PickerDo::More(src) => {
+                    let api = self.cloud.factory(client.clone());
+                    self.cloud.load_page(api, src);
                 }
                 PickerDo::Versions(p, name) => {
                     self.cloud.versions_of = Some((p, name));
@@ -1599,14 +1642,14 @@ impl Editor {
             .auto_shrink([false, false])
             .show(ui, |ui| match c.tab {
                 PickerTab::Recent => recent_list(ui, c, todo),
-                PickerTab::Mine => {
-                    let l = c.mine.clone();
-                    experience_list(ui, c, &l, "This account owns no experiences.", todo);
-                }
-                PickerTab::Shared => {
-                    let l = c.shared.clone();
-                    experience_list(ui, c, &l, "No experiences are shared with this account (it isn't a collaborator on any).", todo);
-                }
+                PickerTab::Mine => experience_list(ui, c, ExperienceSource::Mine, "This account owns no experiences.", todo),
+                PickerTab::Shared => experience_list(
+                    ui,
+                    c,
+                    ExperienceSource::Shared,
+                    "No experiences are shared with this account (it isn't a collaborator on any).",
+                    todo,
+                ),
                 PickerTab::Groups => match c.groups.clone() {
                     None => {
                         ui.label(RichText::new("Press Refresh to list your groups.").color(theme::TEXT_DIM));
@@ -1648,9 +1691,11 @@ impl Editor {
                                     .color(theme::WARN),
                                 );
                             }
-                            match c.group_experiences.get(&g.id).cloned() {
-                                Some(l) => experience_list(ui, c, &l, "This group has no experiences.", todo),
-                                None => todo.push(PickerDo::Group(g.id)),
+                            let src = ExperienceSource::Group(g.id);
+                            if c.lists.contains_key(&src) {
+                                experience_list(ui, c, src, "This group has no experiences.", todo);
+                            } else {
+                                todo.push(PickerDo::Group(g.id));
                             }
                         }
                     }
@@ -1739,6 +1784,7 @@ enum PickerDo {
     Open(u64, Option<u64>),
     Forget(u64),
     Account,
+    More(ExperienceSource),
 }
 
 const ICON: f32 = 40.0;
@@ -1759,8 +1805,10 @@ fn date(iso: &str) -> &str {
     iso.get(..10).unwrap_or(iso)
 }
 
-fn experience_list(ui: &mut egui::Ui, c: &CloudUi, list: &Listing, empty: &str, todo: &mut Vec<PickerDo>) {
-    let exps = match list {
+fn experience_list(ui: &mut egui::Ui, c: &CloudUi, src: ExperienceSource, empty: &str, todo: &mut Vec<PickerDo>) {
+    let paged = c.lists.get(&src);
+    let more = paged.is_some_and(|p| p.more);
+    let exps = match paged.and_then(|p| p.list.as_ref()) {
         None => {
             ui.label(RichText::new("Press Refresh to list them.").color(theme::TEXT_DIM));
             return;
@@ -1776,11 +1824,22 @@ fn experience_list(ui: &mut egui::Ui, c: &CloudUi, list: &Listing, empty: &str, 
         ui.label(RichText::new(msg).color(theme::TEXT_DIM));
         return;
     }
-    let missing: Vec<u64> = exps.iter().map(|e| e.id).filter(|u| !c.icons_asked.contains(u)).collect();
-    if !missing.is_empty() {
-        todo.push(PickerDo::Icons(missing));
-    }
+    let h_id = ui.id().with("exp_row_h");
+    let row_h = ui.data(|d| d.get_temp::<f32>(h_id).unwrap_or(48.0));
+    let mut visible: Vec<u64> = Vec::new();
     for e in exps {
+        let expanded = c.expanded.contains(&e.id);
+        let probe = egui::Rect::from_min_size(ui.cursor().min, egui::vec2(ui.available_width(), row_h));
+
+        if !expanded && !ui.is_rect_visible(probe) {
+            ui.add_space(row_h);
+            continue;
+        }
+
+        visible.push(e.id);
+
+        let top = ui.cursor().top();
+
         ui.horizontal(|ui| {
             icon(ui, c, e.id);
             ui.vertical(|ui| {
@@ -1840,6 +1899,25 @@ fn experience_list(ui: &mut egui::Ui, c: &CloudUi, list: &Listing, empty: &str, 
             });
         }
         ui.add_space(2.0);
+
+        if !expanded {
+            let h = ui.cursor().top() - top - ui.spacing().item_spacing.y;
+            ui.data_mut(|d| d.insert_temp(h_id, h));
+        }
+    }
+
+    if more {
+        let probe = egui::Rect::from_min_size(ui.cursor().min, egui::vec2(ui.available_width(), row_h));
+        ui.label(RichText::new("Loading more…").small().color(theme::TEXT_DIM));
+        if ui.is_rect_visible(probe) {
+            todo.push(PickerDo::More(src));
+        }
+    }
+
+    visible.retain(|u| !c.icons_asked.contains(u));
+
+    if !visible.is_empty() {
+        todo.push(PickerDo::Icons(visible));
     }
 }
 

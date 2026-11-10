@@ -26,7 +26,7 @@ pub use api::{
     headshots, public_asset, Client, PlaceInfo, PublishResult, SignedOut, UniverseInfo, VersionType,
 };
 pub use cloud::{
-    open_mode, parse_place_ref, CloudApi, CloudOrigin, CreatorKind, Endpoints, Experience, PlaceCache,
+    open_mode, parse_place_ref, CloudApi, CloudOrigin, CreatorKind, Endpoints, Experience, ExperienceSource, PlaceCache,
     OpenMode, SaveOutcome, TeamCreateStatus,
 };
 pub use config::{AccountConfig, Bookmark, SavedAccount};

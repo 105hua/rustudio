@@ -56,6 +56,14 @@ impl Endpoints {
     }
 }
 
+/// Which experiences a list shows, as the tabs of Studio's Start Page.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub enum ExperienceSource {
+    Mine,
+    Shared,
+    Group(u64),
+}
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, Default)]
 pub enum CreatorKind {
     #[default]
@@ -326,6 +334,33 @@ impl CloudApi {
         let base = format!("{}/v1/user/universes", self.ep.develop);
         let rows = self.develop_pages(&base, "develop.roblox.com/v1/user/universes")?;
         Ok(newest_first(rows.iter().filter_map(Experience::from_json).collect()))
+    }
+
+    /// One page of a list, most recently updated first, as Studio's Start
+    /// Page asks for it (apis `universes/v1/search`, docs/TEAMCREATE.md).
+    /// Returns the page and whether Roblox has more after it.
+    pub fn experiences_page(&self, src: ExperienceSource, page: u32, page_size: u32) -> Result<(Vec<Experience>, bool)> {
+        let uid = self.session.profile.id;
+        let (creator_type, target) = match src {
+            ExperienceSource::Mine => ("User", uid),
+            ExperienceSource::Shared => ("Team", uid),
+            ExperienceSource::Group(g) => ("Group", g),
+        };
+        let url = format!(
+            "{}/universes/v1/search?creatorType={creator_type}&creatorTargetId={target}&isArchived=false&sortParam=LastUpdated&sortOrder=Desc&pageSize={page_size}&surface=StudioStartPage&PageIndex={page}",
+            self.ep.apis
+        );
+        let v = self.get_json(&url, "apis.roblox.com/universes/v1/search")?;
+        let rows: Vec<Experience> = v
+            .get("data")
+            .and_then(|d| d.as_array())
+            .into_iter()
+            .flatten()
+            .filter_map(Experience::from_json)
+            .collect();
+        let total = v.get("totalResults").and_then(|t| t.as_u64()).unwrap_or(0);
+        let more = !rows.is_empty() && ((page as u64 + 1) * page_size as u64) < total;
+        Ok((rows, more))
     }
 
     /// The account's groups (groups `v2/users/{id}/groups/roles`), each
@@ -1135,6 +1170,25 @@ mod tests {
         assert_eq!(groups.iter().map(|g| (g.id, g.can_edit)).collect::<Vec<_>>(), vec![(10, Some(true)), (11, Some(false))]);
         // The shared search asks as Studio's Start Page does.
         assert!(s.requests().iter().any(|r| r.path.contains("creatorType=Team&creatorTargetId=1&")));
+    }
+
+    #[test]
+    fn experience_pages_ask_by_source_and_stop_at_the_total() {
+        let s = roblox(Arc::new(Mutex::new(71)));
+        let a = api(&s, None);
+        let (rows, more) = a.experiences_page(ExperienceSource::Mine, 0, 25).unwrap();
+        assert_eq!((rows.len(), rows[0].id, more), (1, 5, false));
+        a.experiences_page(ExperienceSource::Shared, 0, 25).unwrap();
+        a.experiences_page(ExperienceSource::Group(10), 2, 25).unwrap();
+        let paths: Vec<String> = s.requests().into_iter().map(|r| r.path).collect();
+        for want in [
+            "creatorType=User&creatorTargetId=1&",
+            "creatorType=Team&creatorTargetId=1&",
+            "creatorType=Group&creatorTargetId=10&",
+        ] {
+            assert!(paths.iter().any(|p| p.contains(want) && p.contains("sortParam=LastUpdated&sortOrder=Desc")), "{want}");
+        }
+        assert!(paths.iter().any(|p| p.contains("creatorType=Group") && p.contains("PageIndex=2")));
     }
 
     #[test]
