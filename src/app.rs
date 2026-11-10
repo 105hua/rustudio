@@ -1266,6 +1266,11 @@ impl Editor {
             check(sc(Modifiers::COMMAND, Key::Num3), "tool_scale");
             check(sc(Modifiers::COMMAND, Key::Num4), "tool_rotate");
             check(sc(Modifiers::NONE, Key::Delete), "delete");
+            // A Mac keyboard's delete key is Backspace (Studio for Mac
+            // deletes with it too).
+            if cfg!(target_os = "macos") {
+                check(sc(Modifiers::NONE, Key::Backspace), "delete");
+            }
             check(sc(Modifiers::NONE, Key::F2), "rename");
             check(sc(Modifiers::NONE, Key::F), "focus");
             // egui turns Ctrl+C/X/V into clipboard events.
@@ -1591,6 +1596,11 @@ impl eframe::App for RustudioApp {
         let ctx = ui.ctx().clone();
         self.watchdog.begin(ctx.input(|i| !i.viewport().minimized.unwrap_or(false)) && (self.ed.play.is_some() || self.ed.harness.screenshot.is_some()));
         let ed = &mut self.ed;
+        // Files opened from Finder (double-click, Open With, the Dock icon).
+        #[cfg(target_os = "macos")]
+        for p in crate::macos::take_opened() {
+            ed.request(PendingAction::Open(Some(p)));
+        }
         ed.frame_no += 1;
         let frame_start = Instant::now();
         let now = Instant::now();
