@@ -2184,7 +2184,7 @@ impl SelfTest {
                             self.r4.perf_place.as_ref().map(|p| p.display().to_string()).unwrap_or_default(),
                             crate::mech::SELFTEST_PERF_SECONDS,
                             crate::mech::PERF_MIN_FPS,
-                            std::fs::read_to_string("/proc/loadavg").ok().and_then(|l| l.split_whitespace().next().map(str::to_string)).unwrap_or_else(|| "?".into()),
+                            crate::platform::load_average(),
                             std::thread::available_parallelism().map(|n| n.get()).unwrap_or(1)
                         ),
                     });

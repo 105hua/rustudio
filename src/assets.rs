@@ -72,8 +72,9 @@ pub fn content_dir() -> PathBuf {
     }
     let link = crate::paths::data().join("rustudio/content");
     if !link.exists() {
-        // No link to a Studio install: the copy rustudio downloaded.
-        if let Some(d) = crate::studio_content::installed() {
+        // No link to a Studio install: Studio installed on this Mac, else
+        // the copy rustudio downloaded.
+        if let Some(d) = crate::paths::installed_studio().or_else(crate::studio_content::installed) {
             return d.join("content");
         }
     }

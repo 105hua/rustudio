@@ -2,6 +2,9 @@ name: CI
 
 on:
   push:
+    # (branches as well as tags: a filter on one alone stops runs for the other)
+    branches: ['**']
+    tags: ['v*']
     paths-ignore: ['**.md', 'docs/**']
   pull_request:
     paths-ignore: ['**.md', 'docs/**']
@@ -24,3 +27,49 @@ jobs:
         if: runner.os == 'Linux'
         run: sudo apt-get update && sudo apt-get install -y pkg-config libasound2-dev
       - run: cargo check --workspace --all-targets
+
+  # macOS: Apple Silicon and Intel. The tests run here too (the GPU tests
+  # skip themselves when the runner has no Metal device).
+  macos:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo check --workspace --all-targets
+      - run: cargo test --workspace
+
+  # rustudio.app for Apple Silicon and Intel in one (ad-hoc signed, not
+  # notarized), as a build artifact; attached to the release for a v* tag.
+  macos-app:
+    runs-on: macos-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-apple-darwin,x86_64-apple-darwin
+      - uses: Swatinem/rust-cache@v2
+      - run: tools/macos/bundle.sh --universal
+      - name: Check the bundle
+        run: |
+          lipo -archs target/macos/rustudio.app/Contents/MacOS/rustudio | grep -q 'x86_64 arm64'
+          codesign --verify --strict target/macos/rustudio.app
+          test -f target/macos/rustudio.app/Contents/Resources/api-dump.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rustudio-macos-universal
+          path: target/macos/*.zip
+      - name: Attach to the release
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload "$GITHUB_REF_NAME" target/macos/*.zip --clobber ||
+            gh release create "$GITHUB_REF_NAME" target/macos/*.zip --prerelease --title "$GITHUB_REF_NAME" \
+              --notes "macOS: unzip, move rustudio.app to Applications, and the first time right-click it > Open (it isn't notarized)."

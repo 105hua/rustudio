@@ -264,7 +264,7 @@ impl Editor {
         ui.add(
             egui::TextEdit::singleline(&mut self.props.filter)
                 .id(egui::Id::new(PROPS_FILTER_ID))
-                .hint_text("Filter Properties (Ctrl+Shift+P)")
+                .hint_text(format!("Filter Properties ({})", crate::studio_ui::shortcut_label("Ctrl+Shift+P")))
                 .desired_width(f32::INFINITY),
         );
         ui.add_space(2.0);

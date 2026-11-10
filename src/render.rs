@@ -371,6 +371,37 @@ fn transparent_order(a_kind: f32, a_distance: f32, b_kind: f32, b_distance: f32)
 }
 
 #[cfg(test)]
+mod gpu_tests {
+    use super::*;
+
+    /// Every pipeline of the 3D view, built on this machine's GPU with the
+    /// limits the app asks for (main.rs): the WGSL through the platform's
+    /// shader compiler (Metal on macOS, Vulkan/SPIR-V on Linux), with wgpu's
+    /// validation errors caught. Skipped with a note where there is no GPU.
+    #[test]
+    fn renderer_pipelines_build_on_this_gpu() {
+        let instance = wgpu::Instance::new(wgpu::InstanceDescriptor::new_without_display_handle());
+        let Ok(adapter) = pollster::block_on(instance.request_adapter(&wgpu::RequestAdapterOptions::default())) else {
+            eprintln!("no GPU adapter here: skipped");
+            return;
+        };
+        let info = adapter.get_info();
+        let mut limits = wgpu::Limits::default();
+        limits.max_sampled_textures_per_shader_stage = 24;
+        limits.max_texture_dimension_2d = adapter.limits().max_texture_dimension_2d;
+        let desc = wgpu::DeviceDescriptor { required_limits: limits, ..Default::default() };
+        let (device, queue) = pollster::block_on(adapter.request_device(&desc))
+            .unwrap_or_else(|e| panic!("{} ({:?}) refused rustudio's limits: {e}", info.name, info.backend));
+        let scope = device.push_error_scope(wgpu::ErrorFilter::Validation);
+        let r = Renderer::new(&device, &queue);
+        drop(r);
+        let err = pollster::block_on(scope.pop());
+        assert!(err.is_none(), "{} ({:?}): {err:?}", info.name, info.backend);
+        eprintln!("renderer built on {} ({:?})", info.name, info.backend);
+    }
+}
+
+#[cfg(test)]
 mod transparent_order_tests {
     use super::transparent_order;
     use std::cmp::Ordering;

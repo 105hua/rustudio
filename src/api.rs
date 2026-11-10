@@ -68,7 +68,7 @@ pub struct Api {
 fn dump_path() -> std::path::PathBuf {
     std::env::var_os("RUSTUDIO_API_DUMP")
         .map(std::path::PathBuf::from)
-        .unwrap_or_else(|| concat!(env!("CARGO_MANIFEST_DIR"), "/api-dump.json").into())
+        .unwrap_or_else(|| crate::paths::resource("api-dump.json"))
 }
 
 /// The dump, parsed once; None when the file is missing.

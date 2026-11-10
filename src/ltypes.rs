@@ -4442,6 +4442,9 @@ mod direct_call_tests {
     /// (mlua's internal `error`), a Luau API assert left on in release
     /// builds -> SIGILL. Every raiser of the probe corpus, called direct.
     #[test]
+    // Debug builds keep Luau's API asserts on (vendor/luau0-src, src/lib.rs),
+    // and this is the case they trap on: release builds only.
+    #[cfg_attr(debug_assertions, ignore = "Luau API asserts are on in debug builds")]
     fn captured_raisers_called_direct_do_not_crash() {
         let lua = mlua::Lua::new();
         super::install(&lua, &lua.globals()).unwrap();

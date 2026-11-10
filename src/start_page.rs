@@ -439,11 +439,11 @@ impl Editor {
                     .corner_radius(CornerRadius::same(4)),
             )
         };
-        if big(ui, "+  New Experience", theme::ACCENT).on_hover_text("A new Baseplate place (Ctrl+N)").clicked() {
+        if big(ui, "+  New Experience", theme::ACCENT).on_hover_text(format!("A new Baseplate place ({})", crate::studio_ui::shortcut_label("Ctrl+N"))).clicked() {
             todo.push(Do::Template(Template::Baseplate));
         }
         ui.add_space(6.0);
-        if big(ui, "Open from File…", theme::PANEL_ALT).on_hover_text("Ctrl+O").clicked() {
+        if big(ui, "Open from File…", theme::PANEL_ALT).on_hover_text(crate::studio_ui::shortcut_label("Ctrl+O")).clicked() {
             todo.push(Do::OpenFile(None));
         }
         if big(ui, "Open Folder…", theme::PANEL_ALT)

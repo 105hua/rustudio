@@ -49,7 +49,7 @@ fn dump() -> Option<&'static Dump> {
     D.get_or_init(|| {
         let path = std::env::var_os("RUSTUDIO_API_DUMP")
             .map(std::path::PathBuf::from)
-            .unwrap_or_else(|| concat!(env!("CARGO_MANIFEST_DIR"), "/api-dump.json").into());
+            .unwrap_or_else(|| crate::paths::resource("api-dump.json"));
         let v: J = serde_json::from_str(&std::fs::read_to_string(path).ok()?).ok()?;
         let mut classes = v.get("Classes")?.as_array()?.clone();
         classes.sort_by(|a, b| a["Name"].as_str().cmp(&b["Name"].as_str()));

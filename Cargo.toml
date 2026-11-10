@@ -67,6 +67,14 @@ opt-level = 2
 inherits = "release"
 debug = "line-tables-only"
 
+[target.'cfg(target_os = "macos")'.dependencies]
+# The Finder trash (platform.rs), the app menu and Finder's Open (macos.rs).
+objc2 = "0.6"
+objc2-foundation = { version = "0.3", default-features = false, features = ["std", "NSFileManager", "NSURL", "NSString", "NSError", "NSAppleEventDescriptor", "NSAppleEventManager", "NSNotification", "NSObject"] }
+objc2-app-kit = { version = "0.3", default-features = false, features = ["std", "NSApplication", "NSResponder", "NSMenu", "NSMenuItem", "NSEvent"] }
+# (only for EventLoopBuilderExtMacOS, on eframe's own winit)
+winit = { version = "0.30", default-features = false }
+
 [dev-dependencies]
 draco-core = { version = "2.3", default-features = false, features = ["decoder", "encoder"] }
 

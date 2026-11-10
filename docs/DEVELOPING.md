@@ -41,7 +41,9 @@ FindPartOnRayWithIgnoreList", "index Position") with their call counts.
 calls inside one over 300 ms) and every engine call over 5 ms, to find
 hitches.
 
-`--screenshot`, `--self-test` and `--bench` run inside a headless gamescope,
+On macOS there is no gamescope: `--screenshot`, `--self-test` and `--bench`
+open a normal window (keep it in front; macOS slows down hidden windows).
+On Linux, `--screenshot`, `--self-test` and `--bench` run inside a headless gamescope,
 so they never open a window on your screen (`RUSTUDIO_VISIBLE_TESTS=1` shows
 them). gamescope's own lines (and its Xwayland's and Vulkan WSI layer's) stay
 out of the console: rustudio's stdout / stderr come through, gamescope's are

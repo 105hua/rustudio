@@ -23,7 +23,7 @@ const SURFACES: [(&str, u32, f32); 4] = [
 /// (−3, 9, 18) toward (−3, 2, −5), FOV 70).
 const STUDIO: [(f32, f32); 4] = [(125.0, 16.8), (122.0, 18.9), (104.0, 34.1), (123.0, 18.8)];
 
-/// Mean grey level and its standard deviation over a 15 × 15 patch.
+/// Mean grey level and its standard deviation over a 15 × 15 point patch.
 fn patch(ed: &Editor, frame: &(u32, u32, Vec<u8>), p: Vec3) -> Option<(f32, f32)> {
     let (w, h, px) = frame;
     let rect = ed.viewport_rect;
@@ -33,9 +33,12 @@ fn patch(ed: &Editor, frame: &(u32, u32, Vec<u8>), p: Vec3) -> Option<(f32, f32)
         ((sp.x - rect.min.x) * scale) as i64,
         ((sp.y - rect.min.y) * scale) as i64,
     );
+    // Studio's patch is 15 × 15 points; on a HiDPI screen (a Retina Mac)
+    // the frame has `scale` pixels per point, so the same area is wider.
+    let half = (7.0 * scale).round() as i64;
     let mut vals = Vec::new();
-    for dy in -7..=7 {
-        for dx in -7..=7 {
+    for dy in -half..=half {
+        for dx in -half..=half {
             let (x, y) = (cx + dx, cy + dy);
             if x < 0 || y < 0 || x >= *w as i64 || y >= *h as i64 {
                 continue;

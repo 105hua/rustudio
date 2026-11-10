@@ -157,7 +157,7 @@ E / F), with `RUSTUDIO_GAPS` (`../checks/coverage/gaps-*-r14.json`):
 | 2 | 18 | TweenBase.PlaybackState | default-only | Place B | **done**: Begin / Delayed / Playing / Paused / Completed / Cancelled from the tween's run |
 | 3 | 7 | Model.WorldPivot (write) | write-ignored | newer Place A build (Bo3Map) | **done**: with a PrimaryPart, sets its PivotOffset = PrimaryPart.CFrame⁻¹ · pivot; else the model's WorldPivotData; GetPivot / WorldPivot read it back |
 | 4 | 2 | UIGridStyleLayout.AbsoluteContentSize | default-only | Godelz RPG | **done**: the extent of the visible GuiObjects it lays out, as drawn last frame (UDim2 rects before) |
-| 5 | 2 | UserInputService.GamepadDisconnected | event-unwired | Place A, newer Place A | **done**: Play scans the joystick devices (/dev/input/by-id/*-event-joystick) about once a second and fires GamepadConnected / GamepadDisconnected with Gamepad1…8; GetConnectedGamepads / GetNavigationGamepads / GetGamepadConnected answer from it (buttons and sticks: not yet) |
+| 5 | 2 | UserInputService.GamepadDisconnected | event-unwired | Place A, newer Place A | **done**: Play scans the joystick devices (/dev/input/by-id/*-event-joystick; Linux only, none on macOS or Windows yet) about once a second and fires GamepadConnected / GamepadDisconnected with Gamepad1…8; GetConnectedGamepads / GetNavigationGamepads / GetGamepadConnected answer from it (buttons and sticks: not yet) |
 | 6 | 2 | Mouse.Icon | stub default | PlayerModule (shift-lock) | **done**: UserInputService.MouseIcon, else the PlayerMouse's Icon, is drawn centred on the pointer over the game view in place of the system arrow |
 
 After these, a stub-hit count from the noise of unset object properties

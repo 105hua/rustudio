@@ -5,6 +5,9 @@ mod ribbon_quick;
 mod cmeta;
 mod studio_content;
 mod paths;
+mod platform;
+#[cfg(target_os = "macos")]
+mod macos;
 mod dtmeta;
 mod cloud_ui;
 mod join_ui;
@@ -811,11 +814,27 @@ fn main() -> eframe::Result<()> {
             },
             ..Default::default()
         },
+        // macOS: rustudio sets the app menu itself (macos.rs).
+        #[cfg(target_os = "macos")]
+        event_loop_builder: Some(Box::new(|b| {
+            use winit::platform::macos::EventLoopBuilderExtMacOS;
+            b.with_default_menu(false);
+        })),
         ..Default::default()
     };
+    // Files opened from Finder arrive as Apple Events, not argv.
+    #[cfg(target_os = "macos")]
+    macos::install_open_handler();
     eframe::run_native(
         "rustudio",
         options,
-        Box::new(move |cc| Ok(Box::new(app::RustudioApp::new(cc, open, harness, demo)))),
+        Box::new(move |cc| {
+            #[cfg(target_os = "macos")]
+            {
+                macos::install_menu();
+                macos::set_wake(&cc.egui_ctx);
+            }
+            Ok(Box::new(app::RustudioApp::new(cc, open, harness, demo)))
+        }),
     )
 }

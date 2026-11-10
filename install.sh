@@ -11,6 +11,12 @@
 # (~/.local/share/rustudio, ~/.config/rustudio) are never touched.
 set -eu
 
+if [ "$(uname -s)" = Darwin ]; then
+    echo "On macOS, build the app instead: tools/macos/bundle.sh (then move" >&2
+    echo "target/macos/rustudio.app to Applications)." >&2
+    exit 1
+fi
+
 prefix="$HOME/.local"
 build=1
 uninstall=0
