@@ -42,6 +42,9 @@ static BASES: std::sync::LazyLock<Mutex<HashMap<String, Option<Arc<Base>>>>> =
 
 /// The skinned base of a mesh, parsed once from its bytes.
 pub fn base(id: &str, bytes: &[u8]) -> Option<Arc<Base>> {
+    if !crate::assets::place_content_ok(id) {
+        return None;
+    }
     if let Some(b) = BASES.lock().ok()?.get(id) {
         return b.clone();
     }

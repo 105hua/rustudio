@@ -1133,6 +1133,9 @@ impl Editor {
 
     fn sound_bytes(&mut self, id: &str) -> crate::assets::Fetch {
         use crate::assets::Fetch;
+        if !crate::assets::place_content_ok(id) {
+            return Fetch::Unavailable(format!("{id}: local files aren't place content while scripts run"));
+        }
         let dir = self
             .doc
             .path

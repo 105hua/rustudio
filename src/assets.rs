@@ -338,6 +338,8 @@ pub enum Fetch {
 /// Downloads cloud assets in the background into the disk cache.
 pub struct AssetStore {
     client: Option<SharedClient>,
+    /// Treat scripts as running whatever the live state (tests).
+    pub scripts_running: bool,
     pending: HashSet<AssetRef>,
     failed: HashMap<AssetRef, String>,
     memory: HashMap<AssetRef, Arc<Vec<u8>>>,
@@ -357,6 +359,7 @@ impl Default for AssetStore {
         let (tx, rx) = channel();
         AssetStore {
             client: None,
+            scripts_running: false,
             pending: HashSet::new(),
             failed: HashMap::new(),
             memory: HashMap::new(),
@@ -484,6 +487,62 @@ pub fn content_blocking(id: &str) -> Result<Arc<Vec<u8>>, String> {
     content_tracked(id, true)
 }
 
+// ------------------------------------------------- place content in Play
+
+/// Play/Run sessions alive (each holds a [`ScriptsRunning`]).
+static SCRIPTS_RUNNING: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
+
+/// Held while a place's scripts run (a Play/Run session): place content then
+/// loads only Roblox content, see [`place_content_ok`].
+pub struct ScriptsRunning(());
+impl ScriptsRunning {
+    pub fn new() -> Self {
+        SCRIPTS_RUNNING.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
+        ScriptsRunning(())
+    }
+}
+impl Drop for ScriptsRunning {
+    fn drop(&mut self) {
+        SCRIPTS_RUNNING.fetch_sub(1, std::sync::atomic::Ordering::SeqCst);
+    }
+}
+pub fn scripts_running() -> bool {
+    SCRIPTS_RUNNING.load(std::sync::atomic::Ordering::SeqCst) > 0
+}
+
+/// RUSTUDIO_ALLOW_LOCAL_CONTENT=1: local development, place properties may
+/// name files on this computer in Play too (scripts can then read them back
+/// through audio analysis or captures, so only for your own places).
+pub fn local_content_opt_in() -> bool {
+    static ON: std::sync::OnceLock<bool> = std::sync::OnceLock::new();
+    *ON.get_or_init(|| std::env::var("RUSTUDIO_ALLOW_LOCAL_CONTENT").is_ok_and(|v| v == "1"))
+}
+
+/// Whether `id` names a file on this computer (`file://`, an absolute or a
+/// relative path) rather than Roblox content (asset ids, `rbxasset://` in
+/// the content folder, engine-generated `rbxtemp://`).
+pub fn is_local_path(id: &str) -> bool {
+    let id = id.trim();
+    !id.is_empty() && (id.starts_with("file://") || (!id.contains("://") && asset_ref(id).is_none()))
+}
+
+/// Whether place content (a property's image, mesh or sound) may load given
+/// whether scripts are running. Roblox never loads local files for a place;
+/// rustudio's editor does (MECHANICS.md), but not while scripts run: what is
+/// rendered or played can be read back (CaptureService +
+/// CreateEditableImageAsync, GetWaveformAsync, AudioAnalyzer, raycasts and
+/// unions against a mesh). Checked before any cache keyed by id (#16).
+pub fn place_content_allowed(id: &str, running: bool) -> bool {
+    !running || !is_local_path(id) || local_content_opt_in()
+}
+
+/// [`place_content_allowed`] for the live Play state.
+pub fn place_content_ok(id: &str) -> bool {
+    place_content_allowed(id, scripts_running())
+}
+
+const LOCAL_IN_PLAY: &str = "local files aren't place content while scripts run (RUSTUDIO_ALLOW_LOCAL_CONTENT=1 allows them)";
+
 /// [`content_blocking`] for a running script that gets back what it loads
 /// (EditableImage pixels, EditableMesh vertices, video frames): Roblox content
 /// only. `file://` and plain paths would let a place's scripts read the
@@ -499,6 +558,9 @@ fn content_tracked(id: &str, paths: bool) -> Result<Arc<Vec<u8>>, String> {
     result
 }
 fn content_blocking_inner(id: &str, paths: bool) -> Result<Arc<Vec<u8>>, String> {
+    if paths && !place_content_ok(id) {
+        return Err(format!("{id}: {LOCAL_IN_PLAY}"));
+    }
     if let Some(b) = generated(id) {
         return Ok(b);
     }
@@ -755,8 +817,18 @@ impl AssetStore {
         self.pending.contains(&a).then(|| "still downloading".to_string())
     }
 
-    /// Bytes for any content id (cloud or local).
+    /// Whether place content `id` may load now ([`place_content_allowed`]):
+    /// callers with a cache keyed by id ask before looking in it.
+    pub fn allows(&self, id: &str) -> bool {
+        place_content_allowed(id, self.scripts_running || scripts_running())
+    }
+
+    /// Bytes for any content id (cloud or local; local only while no
+    /// scripts run).
     pub fn content(&mut self, id: &str, doc_dir: Option<&Path>) -> Fetch {
+        if !self.allows(id) {
+            return Fetch::Unavailable(format!("{id}: {LOCAL_IN_PLAY}"));
+        }
         let result=self.content_inner(id,doc_dir);
         track_fetch(id,&result);
         result
@@ -831,6 +903,9 @@ impl MeshCache {
         store: &mut AssetStore,
         upload: &mut MeshUpload,
     ) -> Option<LoadedMesh> {
+        if !store.allows(id) {
+            return None;
+        }
         if let Some(e) = self.entries.get(id) {
             return *e;
         }
@@ -958,6 +1033,9 @@ impl TextureCache {
     ) -> Option<LoadedTexture> {
         if id.starts_with("rbxtemp://rustudio/editable/") {
             return self.editable_image(id, upload);
+        }
+        if !store.allows(id) {
+            return None;
         }
         if let Some(e) = self.entries.get(id) {
             return e.clone();
@@ -1430,6 +1508,66 @@ mod tests {
         assert_eq!(id("http://www.roblox.com/asset/?ID=94746105"), Some(94746105));
     }
 
+    /// #16: while scripts run, a place's images and meshes come only from
+    /// Roblox content (a local file rendered could be captured and read
+    /// back), even when Edit already cached them; Roblox ids, the content
+    /// folder and generated images still load, and Edit keeps local files.
+    #[test]
+    fn local_place_content_is_not_loaded_while_scripts_run() {
+        let dir = std::env::temp_dir().join(format!("rustudio-play-content-{}", std::process::id()));
+        std::fs::create_dir_all(&dir).unwrap();
+        let path = dir.join("private.png");
+        let mut png = std::io::Cursor::new(Vec::new());
+        image::DynamicImage::ImageRgba8(image::RgbaImage::from_pixel(1, 1, image::Rgba([12, 34, 56, 255])))
+            .write_to(&mut png, image::ImageFormat::Png)
+            .unwrap();
+        let bytes = png.into_inner();
+        std::fs::write(&path, &bytes).unwrap();
+        let locals = [format!("file://{}", path.display()), path.display().to_string(), "private.png".to_string()];
+        let mut store = AssetStore::default();
+        let mut textures = TextureCache::default();
+        let mut up = |_: &Rgba| 7u32;
+        // Edit: local files render (and land in the texture cache).
+        for id in &locals {
+            assert!(matches!(store.content(id, Some(&dir)), Fetch::Ready(b) if *b == bytes), "{id}");
+            assert!(textures.image(id, Some(&dir), &mut store, &mut up).is_some(), "{id}");
+        }
+        // Play: neither a fresh load nor the cache gives them.
+        store.scripts_running = true;
+        for id in &locals {
+            assert!(matches!(store.content(id, Some(&dir)), Fetch::Unavailable(_)), "{id}");
+            assert!(textures.image(id, Some(&dir), &mut store, &mut up).is_none(), "{id}");
+            assert!(!store.allows(id), "{id}");
+        }
+        // Generated (capture) images and Roblox ids still do.
+        let id = "rbxtemp://rustudio/test-play-content.png";
+        register_generated(id, bytes.clone());
+        let generated_ok = matches!(store.content(id, None), Fetch::Ready(b) if *b == bytes)
+            && textures.image(id, None, &mut store, &mut up).is_some();
+        unregister_generated(id);
+        assert!(generated_ok);
+        for id in ["rbxassetid://12345", "rbxasset://textures/white.png", "http://www.roblox.com/asset/?id=5", "12345"] {
+            assert!(store.allows(id), "{id}");
+        }
+        // Back in Edit: the cached texture is there again.
+        store.scripts_running = false;
+        assert!(textures.image(&locals[0], Some(&dir), &mut store, &mut up).is_some());
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn place_content_policy() {
+        for id in ["file:///tmp/a.png", "/tmp/a.png", "a.png", "meshes/a.obj", " /x.wav "] {
+            assert!(is_local_path(id), "{id}");
+            assert!(place_content_allowed(id, false), "{id}");
+            assert!(!place_content_allowed(id, true) || local_content_opt_in(), "{id}");
+        }
+        for id in ["rbxassetid://1", "rbxasset://sounds/x.wav", "rbxtemp://rustudio/x", "1234", "rbxthumb://type=Asset&id=1&w=150&h=150", ""] {
+            assert!(!is_local_path(id), "{id}");
+            assert!(place_content_allowed(id, true), "{id}");
+        }
+    }
+
     #[test]
     fn resolves_local_ids_only() {
         assert!(resolve("rbxassetid://12345", None).is_none());
@@ -1493,6 +1631,9 @@ mod tests {
 /// disk cache, content folder) for ray tests; None when it isn't here.
 pub fn mesh_triangles(id: &str) -> Option<Arc<Vec<[Vec3; 3]>>> {
     static CACHE: Mutex<Option<HashMap<String, Option<Arc<Vec<[Vec3; 3]>>>>>> = Mutex::new(None);
+    if !place_content_ok(id) {
+        return None;
+    }
     if let Some(hit) = CACHE.lock().ok()?.get_or_insert_with(HashMap::new).get(id) {
         return hit.clone();
     }

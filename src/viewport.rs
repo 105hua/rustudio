@@ -2506,7 +2506,9 @@ impl Editor {
         }
         let faces = crate::lighting::sky_faces(&self.doc);
         let orient = crate::lighting::sky_orientation(&self.doc);
-        let key = format!("{}|{:?}", faces.join("|"), orient.to_array());
+        // Whether scripts run is part of the key: a local sky loaded in Edit
+        // isn't place content in Play (assets::place_content_allowed).
+        let key = format!("{}|{:?}|{}", faces.join("|"), orient.to_array(), crate::assets::scripts_running());
         if key == self.lighting.sky_key && !self.lighting.sky_failed {
             return;
         }

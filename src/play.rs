@@ -142,6 +142,9 @@ pub struct SideState {
 
 pub struct PlaySession {
     pub mode: RunMode,
+    /// Place content loads only Roblox content while this session lives
+    /// (assets::place_content_allowed).
+    _scripts_running: crate::assets::ScriptsRunning,
     saved_doc: Option<Document>,
     saved_cam: Camera,
     saved_sel: Vec<Ref>,
@@ -438,6 +441,9 @@ impl Editor {
             }
         }
         let two = mode == RunMode::Play;
+        // From before any script runs until the session ends: no local files
+        // as place content (assets::place_content_allowed).
+        let scripts_running = crate::assets::ScriptsRunning::new();
         // Cloud data stays in memory for any published place but the
         // scratch experience (domains::data::local_mode_for).
         let universe = self
@@ -559,6 +565,7 @@ impl Editor {
         physics.groups = groups;
         self.play = Some(PlaySession {
             mode,
+            _scripts_running: scripts_running,
             saved_doc: Some(saved_doc),
             saved_cam: self.cam.clone(),
             saved_sel,

@@ -395,6 +395,9 @@ fn media(lua: &Lua) -> mlua::Result<mlua::AppDataRefMut<'_, Media>> {
 static PCM: Mutex<Option<HashMap<String, Arc<Pcm>>>> = Mutex::new(None);
 
 fn pcm_cached(id: &str) -> Option<Arc<Pcm>> {
+    if !audio_allowed(id) {
+        return None;
+    }
     PCM.lock().ok()?.as_ref()?.get(id).cloned()
 }
 
@@ -435,7 +438,18 @@ fn decode(id: &str, bytes: Arc<Vec<u8>>) -> Got {
     Got::Pending(Load::Decode(rx))
 }
 
+/// Audio is script-readable (GetWaveformAsync, AudioAnalyzer), and a
+/// runtime means scripts run: Roblox content only, unless
+/// RUSTUDIO_ALLOW_LOCAL_CONTENT=1 (assets::place_content_allowed). Asked
+/// before the PCM cache so cached samples never bypass it (#16).
+fn audio_allowed(id: &str) -> bool {
+    crate::assets::place_content_allowed(id, true)
+}
+
 fn start_load(id: &str) -> Got {
+    if !audio_allowed(id) {
+        return Got::Failed("Invalid Asset identifier or not found".into());
+    }
     if let Some(p) = pcm_cached(id) {
         return Got::Ready(p);
     }
@@ -2087,6 +2101,28 @@ fn render_listener(ctx: &mut Ctx, li: Ref) -> mlua::Result<Option<Buf>> {
 #[cfg(test)]
 mod curve_tests {
     use super::*;
+
+    /// #16: a running place's audio (Sound.SoundId, AudioPlayer.Asset) is
+    /// readable through GetWaveformAsync / AudioAnalyzer, so local files
+    /// don't load, even with their samples already decoded and cached.
+    #[test]
+    fn local_audio_is_denied_even_if_pcm_is_cached() {
+        let path = std::env::temp_dir().join(format!("rustudio-private-audio-{}.wav", std::process::id()));
+        let path = path.to_string_lossy().into_owned();
+        for id in [format!("file://{path}"), path.clone(), "private.wav".to_string()] {
+            pcm_store(&id, Arc::new(Pcm { rate: 8000, chans: vec![vec![0.25, -0.25]] }));
+            let denied = matches!(start_load(&id), Got::Failed(_)) && pcm_cached(&id).is_none();
+            PCM.lock().unwrap().as_mut().unwrap().remove(&id);
+            assert!(denied || crate::assets::local_content_opt_in(), "local audio cache bypass: {id}");
+        }
+        // Roblox content still plays from the cache.
+        for id in ["rbxasset://sounds/x.wav", "rbxassetid://123", "rbxtemp://rustudio/tts/1"] {
+            pcm_store(id, Arc::new(Pcm { rate: 8000, chans: vec![vec![0.25, -0.25]] }));
+            let ready = matches!(start_load(id), Got::Ready(_));
+            PCM.lock().unwrap().as_mut().unwrap().remove(id);
+            assert!(ready, "{id}");
+        }
+    }
 
     /// Byte-for-byte what Studio saved (curves.rbxlx, 2026-11-08).
     #[test]

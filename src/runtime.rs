@@ -5293,6 +5293,20 @@ fn resume(lua: &Lua, th: &Thread, args: Vec<Value>) {
     }
 }
 
+/// A place script's chunk name: `@` + its full name. Instance names are
+/// place-controlled, so they must never land in the `=` namespace that
+/// security::internal_chunk trusts as rustudio's own (a ModuleScript named
+/// `rustudio.x` parented to nil). Luau shows `@` and `=` names alike
+/// (short_src: errors, tracebacks, debug.info "s") up to LUA_IDSIZE; past it
+/// `@` would keep the tail, so cut to the 255 bytes `=` shows.
+pub(crate) fn place_chunk_name(full_name: &str) -> String {
+    let mut end = full_name.len().min(255);
+    while !full_name.is_char_boundary(end) {
+        end -= 1;
+    }
+    format!("@{}", &full_name[..end])
+}
+
 /// Compiles a script's Source with `script` bound in its own environment.
 fn compile_script(lua: &Lua, r: Ref, shared: &Table) -> mlua::Result<Function> {
     let (source, name) = {
@@ -5314,7 +5328,7 @@ fn compile_script(lua: &Lua, r: Ref, shared: &Table) -> mlua::Result<Function> {
     let _ = shared;
     let env = crate::globals_parity::new_env(lua, Some(inst_value(lua, r)?))?;
     lua.load(source)
-        .set_name(format!("={name}"))
+        .set_name(place_chunk_name(&name))
         .set_environment(env)
         .into_function()
     })();

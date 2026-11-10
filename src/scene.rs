@@ -888,12 +888,9 @@ pub(crate) fn part_draw(doc: &Document, inst: &Instance) -> Option<ScenePart> {
             doc.class_of(*c).is_some_and(|k| matches!(k.as_str(), "SpecialMesh" | "BlockMesh" | "CylinderMesh"))
         })
     {
-        if let Some(path) = builtin.and_then(|name| crate::default_scripts::studio_dir()
-            .map(|root| root.join(format!("content/avatar/meshes/{name}.mesh"))))
-            .filter(|path| path.is_file())
-        {
+        if let Some(id) = builtin.and_then(|name| studio_avatar_mesh(&format!("meshes/{name}.mesh"))) {
             mesh_asset = Some(MeshAsset {
-                id: path.to_string_lossy().into_owned(),
+                id,
                 fit_to_part: true,
                 scale: Vec3::ONE,
                 offset: Vec3::ZERO,
@@ -967,12 +964,9 @@ pub(crate) fn part_draw(doc: &Document, inst: &Instance) -> Option<ScenePart> {
                     head_mesh = true;
                     let m = size.x.min(size.z);
                     draw_size = Vec3::new(m, size.y, m) * scale;
-                    let head = crate::default_scripts::studio_dir()
-                        .map(|d| d.join("content/avatar/heads/head.mesh"))
-                        .filter(|p| p.is_file());
-                    if let Some(head) = head {
+                    if let Some(head) = studio_avatar_mesh("heads/head.mesh") {
                         mesh_asset = Some(MeshAsset {
-                            id: head.to_string_lossy().into_owned(),
+                            id: head,
                             fit_to_part: true,
                             scale: Vec3::ONE,
                             offset: Vec3::ZERO,
@@ -1209,4 +1203,23 @@ mod tint_tests {
         assert!((p.draw.color[0] / p.draw.color[1] - 0.25).abs() < 1e-6);
         assert!((p.draw.color[2] / p.draw.color[1] - 0.0625).abs() < 1e-6);
     }
+}
+
+/// A mesh of the Studio install's content/avatar (the classic head, R6
+/// limbs) as an engine-generated id: the engine picks these files, not the
+/// place, so they still draw while scripts run, when local paths aren't
+/// place content (assets::place_content_allowed). Read once per file.
+fn studio_avatar_mesh(rel: &str) -> Option<String> {
+    static IDS: std::sync::Mutex<Option<std::collections::HashMap<String, Option<String>>>> =
+        std::sync::Mutex::new(None);
+    let mut g = IDS.lock().ok()?;
+    g.get_or_insert_with(Default::default)
+        .entry(rel.to_string())
+        .or_insert_with(|| {
+            let bytes = std::fs::read(crate::default_scripts::studio_dir()?.join("content/avatar").join(rel)).ok()?;
+            let id = format!("rbxtemp://rustudio/avatar/{rel}");
+            crate::assets::register_generated(&id, bytes);
+            Some(id)
+        })
+        .clone()
 }

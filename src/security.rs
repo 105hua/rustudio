@@ -342,8 +342,13 @@ pub fn with_main_identity<R>(lua: &Lua, id: u8, f: impl FnOnce() -> R) -> R {
 
 // --------------------------------------------------------------- callers
 
-/// Chunks of rustudio's own that aren't named `rustudio.*`.
+/// rustudio's own chunks (`=rustudio.*` and a few other engine names).
+/// Place scripts compile as `@` + their full name (runtime::place_chunk_name)
+/// and never match: instance names are place-controlled.
 fn internal_chunk(src: &[u8]) -> bool {
+    if src.starts_with(b"@") {
+        return false;
+    }
     let s = src.strip_prefix(b"=").unwrap_or(src);
     s.starts_with(b"rustudio.")
         || s.starts_with(b"gui_input.")
@@ -838,6 +843,81 @@ mod tests {
         assert!(as_cmd.is_err());
         let as_core: f64 = with_main_identity(&rt.lua, CORE, || rt.lua.load(code).eval()).unwrap();
         assert!((as_core - 0.3).abs() < 1e-6, "{as_core}");
+    }
+
+    /// A module's name can't impersonate an engine chunk (#16): game
+    /// scripts' chunk names come from instance names, so a ModuleScript
+    /// parented to nil and named `rustudio.x` (or another engine chunk name)
+    /// must still run as the game script it is. Script-facing names stay
+    /// Studio's: debug.info "s" and error positions show the bare name.
+    #[test]
+    fn detached_module_names_do_not_grant_engine_trust() {
+        const NAMES: [&str; 9] = [
+            "rustudio.audit", "rustudio.prelude", "gui_input.audit",
+            "CoreGui.RobloxGui.CoreScripts/audit", "StudioTestService",
+            "geometry_ops", "geometry_nav", "web_social_http", "stub-default",
+        ];
+        let (rt, s) = client(&format!(
+            r#"
+            for i, name in {{ {} }} do
+                local m = workspace["Module" .. i]
+                m.Parent = nil
+                m.Name = name
+                local r = require(m)
+                print("spoof", name, r.read, r.write, r.src, r.err)
+            end
+        "#,
+            NAMES.map(|n| format!("{n:?}")).join(", ")
+        ));
+        harness(
+            &rt,
+            r#"
+            for i = 1, 9 do
+                local m = Instance.new("ModuleScript")
+                m.Name = "Module" .. i
+                m.Source = [[
+                    local f = Instance.new("Folder")
+                    return {
+                        read = pcall(function() return f.DataCost end),
+                        write = pcall(function() f.RobloxLocked = true end),
+                        src = debug.info(1, "s"),
+                        err = select(2, pcall(function() error("boom") end)),
+                    }
+                ]]
+                m.Parent = workspace
+            end
+        "#,
+        );
+        rt.run_script(s);
+        rt.step(1.0 / 60.0);
+        let out = lines(rt);
+        for name in NAMES {
+            let want = format!("spoof {name} false false {name} {name}:6: boom");
+            assert!(has(&out, &want), "missing {want:?} in {out:#?}");
+        }
+    }
+
+    /// Long full names show as Studio's `=` chunk names do: the first 255
+    /// bytes, not `@`'s "..." + tail.
+    #[test]
+    fn place_chunk_names_show_like_engine_names() {
+        let lua = Lua::new();
+        let long = "Workspace.".to_string() + &"x".repeat(400);
+        for name in ["Workspace.Script", long.as_str()] {
+            let place: String = lua
+                .load(r#"return debug.info(1, "s")"#)
+                .set_name(crate::runtime::place_chunk_name(name))
+                .eval()
+                .unwrap();
+            let engine: String = lua
+                .load(r#"return debug.info(1, "s")"#)
+                .set_name(format!("={name}"))
+                .eval()
+                .unwrap();
+            assert_eq!(place, engine);
+        }
+        assert!(!internal_chunk(crate::runtime::place_chunk_name("rustudio.x").as_bytes()));
+        assert!(internal_chunk(b"=rustudio.x"));
     }
 
     /// A content id gives a game script Roblox content, not the person's

@@ -921,6 +921,9 @@ impl Gui {
         // face_file stats every face's file: once per face, not per text
         // object per frame (60 µs each, most of Place B's GUI walk). A face
         // not here yet is looked for again a second later.
+        if !store.allows(&font.0) {
+            return FontFamily::Proportional;
+        }
         let key = font.clone();
         let path = match self.faces.get(&key) {
             Some((p, at)) if p.is_some() || at.elapsed().as_secs_f32() < 1.0 => p.clone(),
@@ -935,6 +938,9 @@ impl Gui {
             self.no_cache = Some("font face missing");
             return FontFamily::Proportional;
         };
+        if !store.allows(&path) {
+            return FontFamily::Proportional;
+        }
         if let Some(name) = self.fonts.get(&path) {
             let fam = FontFamily::Name(name.clone().into());
             let ready = ctx.fonts(|f| f.definitions().families.contains_key(&fam));
@@ -1055,6 +1061,9 @@ impl Gui {
             self.editable_gens.insert(base.to_string(), now.max(gen));
             return Some(out);
         }
+        if !store.allows(id) {
+            return None;
+        }
         if let Some(i) = self.images.get(id) {
             return match i {
                 Img::Ready(h, s) => Some((h.id(), *s)),
@@ -1124,6 +1133,9 @@ impl Gui {
         id: &str,
         fit_to_part: bool,
     ) -> Option<Arc<Vec<[(Vec3, glam::Vec2, Vec3); 3]>>> {
+        if !store.allows(id) {
+            return None;
+        }
         let cache_key = format!("{fit_to_part}|{id}");
         if let Some(m) = self.vf_meshes.get(&cache_key) {
             return m.clone();
