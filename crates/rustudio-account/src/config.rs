@@ -88,7 +88,7 @@ impl AccountConfig {
         let body = toml::to_string_pretty(self)?;
         let text = format!(
             "# rustudio account settings. See docs/AUTH.md. The Roblox session itself is\n\
-             # in the login keyring (service rustudio, key roblox-cookie), never here.\n\n{body}"
+             # in the login keyring (service rustudio, user roblox-cookie), never here.\n\n{body}"
         );
         std::fs::write(path, text)?;
         Ok(())

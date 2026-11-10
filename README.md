@@ -94,8 +94,8 @@ Windows is new, so a few things don't work there yet:
 - Paths in this README are the Linux ones. On Windows, data and caches go
   in `%LOCALAPPDATA%\rustudio` (e.g. the Studio content download in
   `%LOCALAPPDATA%\rustudio\studio`) and settings in `%APPDATA%\rustudio`.
-- Signing in is untested (the session cookie still goes through
-  `secret-tool`).
+- Signing in is untested (the session cookie now goes through the
+  Windows Credential Manager, like the publishing key).
 - Video playback is off (libvpx/libopus are loaded only on Linux), and a
   native crash doesn't write a crash report (panics still do).
 

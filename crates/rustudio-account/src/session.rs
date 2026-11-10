@@ -2,16 +2,15 @@
 //! (docs/AUTH.md). Signed in means `users.roblox.com/v1/users/authenticated`
 //! accepted it; anything else is "signed out".
 //!
-//! Where the cookie comes from: the login keyring (`secret-tool`, service
-//! `rustudio`, key `roblox-cookie`), else `~/.config/rustudio/roblox-cookie`
+//! Where the cookie comes from: the login keyring (the `keyring` crate,
+//! service `rustudio`, user `roblox-cookie`), else `~/.config/rustudio/roblox-cookie`
 //! (mode 600, one line, written by hand), which is then imported into the
 //! keyring. The value lives only in memory and in those two places: it is
 //! never formatted into a message, log line, error or file. [`Cookie`]'s
 //! Debug and Display print `<redacted>`.
 
-use std::io::{Read, Write};
+use std::io::Read;
 use std::path::PathBuf;
-use std::process::{Command, Stdio};
 use std::sync::Mutex;
 
 use serde::{Deserialize, Serialize};
@@ -115,104 +114,156 @@ fn keyring_disabled() -> bool {
     std::env::var_os("RUSTUDIO_NO_KEYRING").is_some()
 }
 
-fn secret_lookup(attrs: &[&str]) -> Option<Cookie> {
+/// Sessions older builds stored with `secret-tool` (attributes `service
+/// rustudio key roblox-cookie`, plus `user <id>` for saved accounts). The
+/// keyring crate looks items up by `service` and `username`, so it doesn't
+/// see them. One is read once, moved into the keyring and then removed.
+#[cfg(all(unix, not(target_os = "macos"), not(test)))]
+mod legacy {
+    use super::Cookie;
+    use std::process::{Command, Stdio};
+
+    pub fn lookup(attrs: &[&str]) -> Option<Cookie> {
+        let out = Command::new("secret-tool")
+            .arg("lookup")
+            .args(attrs)
+            .stdin(Stdio::null())
+            .stderr(Stdio::null())
+            .output()
+            .ok()?;
+        if !out.status.success() {
+            return None;
+        }
+        Cookie::new(&String::from_utf8_lossy(&out.stdout))
+    }
+
+    pub fn clear(attrs: &[&str]) {
+        let _ = Command::new("secret-tool")
+            .arg("clear")
+            .args(attrs)
+            .stdin(Stdio::null())
+            .stdout(Stdio::null())
+            .stderr(Stdio::null())
+            .status();
+    }
+}
+
+/// Nothing was ever stored with `secret-tool` here.
+#[cfg(not(any(all(unix, not(target_os = "macos")), test)))]
+mod legacy {
+    use super::Cookie;
+
+    pub fn lookup(_attrs: &[&str]) -> Option<Cookie> {
+        None
+    }
+
+    pub fn clear(_attrs: &[&str]) {}
+}
+
+/// Tests stand in for `secret-tool` with a map (per test thread).
+#[cfg(test)]
+mod legacy {
+    use super::Cookie;
+    use std::cell::RefCell;
+    use std::collections::HashMap;
+
+    thread_local! {
+        pub static ITEMS: RefCell<HashMap<String, String>> = Default::default();
+    }
+
+    pub fn lookup(attrs: &[&str]) -> Option<Cookie> {
+        ITEMS.with(|m| {
+            m.borrow()
+                .get(&attrs.join(" "))
+                .and_then(|v| Cookie::new(v))
+        })
+    }
+
+    pub fn clear(attrs: &[&str]) {
+        ITEMS.with(|m| m.borrow_mut().remove(&attrs.join(" ")));
+    }
+}
+
+/// Reads a session from the keyring (entry `user` under service
+/// `rustudio`), else from where `secret-tool` kept it before.
+fn secret_lookup(user: &str, legacy_attrs: &[&str]) -> Option<Cookie> {
     if keyring_disabled() {
         return None;
     }
-    let out = Command::new("secret-tool")
-        .arg("lookup")
-        .args(attrs)
-        .stdin(Stdio::null())
-        .stderr(Stdio::null())
-        .output()
-        .ok()?;
-    if !out.status.success() {
-        return None;
+    if let Ok(Some(v)) = crate::store::load(user) {
+        return Cookie::new(&String::from_utf8_lossy(&v));
     }
-    Cookie::new(&String::from_utf8_lossy(&out.stdout))
+    let c = legacy::lookup(legacy_attrs)?;
+    if crate::store::save(user, c.0.as_bytes()).is_ok() {
+        legacy::clear(legacy_attrs);
+    }
+    Some(c)
 }
 
-/// Stores a value in the keyring (passed on stdin, never argv).
-fn secret_store(label: &str, attrs: &[&str], c: &Cookie) -> Result<()> {
+fn secret_store(user: &str, c: &Cookie) -> Result<()> {
     if keyring_disabled() {
         return Err(Error::new("keyring disabled (RUSTUDIO_NO_KEYRING)"));
     }
-    let mut child = Command::new("secret-tool")
-        .arg("store")
-        .arg(format!("--label={label}"))
-        .args(attrs)
-        .stdin(Stdio::piped())
-        .stdout(Stdio::null())
-        .stderr(Stdio::null())
-        .spawn()
-        .map_err(|e| Error(format!("secret-tool not available: {e}")))?;
-    if let Some(mut stdin) = child.stdin.take() {
-        stdin.write_all(c.0.as_bytes())?;
-    }
-    let st = child.wait()?;
-    if st.success() {
-        Ok(())
-    } else {
-        Err(Error::new("the login keyring refused to store the session"))
-    }
+    crate::store::save(user, c.0.as_bytes())
+        .map_err(|_| Error::new("the login keyring refused to store the session"))
 }
 
-fn secret_clear(attrs: &[&str]) {
+/// Removes the keyring entry and any copy `secret-tool` kept, so an old one
+/// can't come back after sign-out.
+fn secret_clear(user: &str, legacy_attrs: &[&str]) {
     if keyring_disabled() {
         return;
     }
-    let _ = Command::new("secret-tool")
-        .arg("clear")
-        .args(attrs)
-        .stdin(Stdio::null())
-        .stdout(Stdio::null())
-        .stderr(Stdio::null())
-        .status();
+    let _ = crate::store::delete(user);
+    legacy::clear(legacy_attrs);
 }
 
-/// The keyring copy, through `secret-tool lookup service rustudio key roblox-cookie`.
+const LEGACY_COOKIE: [&str; 4] = ["service", KEYRING_SERVICE, "key", KEYRING_KEY];
+
+/// The keyring copy (service `rustudio`, user `roblox-cookie`).
 pub fn keyring_cookie() -> Option<Cookie> {
-    secret_lookup(&["service", KEYRING_SERVICE, "key", KEYRING_KEY])
+    secret_lookup(KEYRING_KEY, &LEGACY_COOKIE)
 }
 
 /// Stores the cookie in the keyring as the active session.
 pub fn keyring_store(c: &Cookie) -> Result<()> {
-    secret_store(
-        "rustudio Roblox session",
-        &["service", KEYRING_SERVICE, "key", KEYRING_KEY],
-        c,
-    )
+    secret_store(KEYRING_KEY, c)
 }
 
 /// Removes the keyring copy (sign out). The import file is the person's and
 /// is left alone.
 pub fn keyring_clear() -> Result<()> {
-    secret_clear(&["service", KEYRING_SERVICE, "key", KEYRING_KEY]);
+    secret_clear(KEYRING_KEY, &LEGACY_COOKIE);
     Ok(())
 }
 
 /// Saved accounts (account switching): each signed-in account's session is
-/// kept under `service rustudio key roblox-account user <id>`, next to the
-/// active one. Switching copies a saved session into the active slot.
+/// kept under user `roblox-account-<id>`, next to the active one. Switching
+/// copies a saved session into the active slot.
 const ACCOUNT_KEY: &str = "roblox-account";
+
+fn account_user(user_id: u64) -> String {
+    format!("{ACCOUNT_KEY}-{user_id}")
+}
 
 pub fn account_cookie(user_id: u64) -> Option<Cookie> {
     let id = user_id.to_string();
-    secret_lookup(&["service", KEYRING_SERVICE, "key", ACCOUNT_KEY, "user", &id])
+    secret_lookup(
+        &account_user(user_id),
+        &["service", KEYRING_SERVICE, "key", ACCOUNT_KEY, "user", &id],
+    )
 }
 
 pub fn account_store(user_id: u64, c: &Cookie) -> Result<()> {
-    let id = user_id.to_string();
-    secret_store(
-        &format!("rustudio Roblox account {id}"),
-        &["service", KEYRING_SERVICE, "key", ACCOUNT_KEY, "user", &id],
-        c,
-    )
+    secret_store(&account_user(user_id), c)
 }
 
 pub fn account_forget(user_id: u64) {
     let id = user_id.to_string();
-    secret_clear(&["service", KEYRING_SERVICE, "key", ACCOUNT_KEY, "user", &id]);
+    secret_clear(
+        &account_user(user_id),
+        &["service", KEYRING_SERVICE, "key", ACCOUNT_KEY, "user", &id],
+    );
 }
 
 /// Next to the cookie file: the one-way key of the file's cookie once it has
@@ -741,6 +792,77 @@ mod tests {
         assert!(Cookie::new("").is_none());
         assert!(Cookie::new("   \n").is_none());
         assert!(Cookie::new(".ROBLOSECURITY=").is_none());
+    }
+
+    fn legacy_put(attrs: &[&str], v: &str) {
+        legacy::ITEMS.with(|m| m.borrow_mut().insert(attrs.join(" "), v.to_string()));
+    }
+
+    fn legacy_has(attrs: &[&str]) -> bool {
+        legacy::ITEMS.with(|m| m.borrow().contains_key(&attrs.join(" ")))
+    }
+
+    fn stored(user: &str) -> Option<String> {
+        crate::store::load(user)
+            .unwrap()
+            .map(|v| String::from_utf8(v).unwrap())
+    }
+
+    #[test]
+    fn session_round_trips_through_the_keyring() {
+        assert!(keyring_cookie().is_none());
+        keyring_store(&Cookie::new("cookie-value-1").unwrap()).unwrap();
+        assert_eq!(stored("roblox-cookie").as_deref(), Some("cookie-value-1"));
+        assert_eq!(keyring_cookie().unwrap().0, "cookie-value-1");
+        keyring_clear().unwrap();
+        assert!(keyring_cookie().is_none());
+        assert!(stored("roblox-cookie").is_none());
+    }
+
+    #[test]
+    fn secret_tool_session_moves_into_the_keyring() {
+        legacy_put(
+            &["service", "rustudio", "key", "roblox-cookie"],
+            "old-cookie-value\n",
+        );
+        assert_eq!(keyring_cookie().unwrap().0, "old-cookie-value");
+        assert_eq!(stored("roblox-cookie").as_deref(), Some("old-cookie-value"));
+        assert!(!legacy_has(&LEGACY_COOKIE));
+        assert_eq!(keyring_cookie().unwrap().0, "old-cookie-value");
+    }
+
+    #[test]
+    fn keyring_copy_wins_over_secret_tool() {
+        keyring_store(&Cookie::new("new-cookie-value").unwrap()).unwrap();
+        legacy_put(&LEGACY_COOKIE, "old-cookie-value");
+        assert_eq!(keyring_cookie().unwrap().0, "new-cookie-value");
+    }
+
+    #[test]
+    fn sign_out_clears_the_secret_tool_copy_too() {
+        keyring_store(&Cookie::new("new-cookie-value").unwrap()).unwrap();
+        legacy_put(&LEGACY_COOKIE, "old-cookie-value");
+        keyring_clear().unwrap();
+        assert!(!legacy_has(&LEGACY_COOKIE));
+        assert!(keyring_cookie().is_none());
+    }
+
+    #[test]
+    fn saved_accounts_have_their_own_entries() {
+        let old = ["service", "rustudio", "key", "roblox-account", "user", "42"];
+        legacy_put(&old, "account-42-cookie");
+        assert_eq!(account_cookie(42).unwrap().0, "account-42-cookie");
+        assert_eq!(
+            stored("roblox-account-42").as_deref(),
+            Some("account-42-cookie")
+        );
+        assert!(!legacy_has(&old));
+        account_store(7, &Cookie::new("account-7-cookie").unwrap()).unwrap();
+        assert_eq!(account_cookie(7).unwrap().0, "account-7-cookie");
+        assert!(keyring_cookie().is_none());
+        account_forget(42);
+        assert!(account_cookie(42).is_none());
+        assert_eq!(account_cookie(7).unwrap().0, "account-7-cookie");
     }
 }
 

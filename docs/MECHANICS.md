@@ -389,7 +389,7 @@ now sit where Place A puts them (Attachment.WorldCFrame was missing).
 |---|---|---|
 | Place formats | .rbxl (binary), .rbxlx (XML) | request; rbx_binary / rbx_xml |
 | Model formats | .rbxm (binary), .rbxmx (XML) | request |
-| Sign-in | one: the .ROBLOSECURITY session — login keyring (secret-tool, service rustudio, key roblox-cookie), imported from ~/.config/rustudio/roblox-cookie (mode 600, one line) when the keyring has none | AUTH.md (the person's decision) |
+| Sign-in | one: the .ROBLOSECURITY session — login keyring (keyring crate, service rustudio, user roblox-cookie; older secret-tool entries are moved over), imported from ~/.config/rustudio/roblox-cookie (mode 600, one line) when the keyring has none | AUTH.md (the person's decision) |
 | Signed in | GET users.roblox.com/v1/users/authenticated answered 200 this run (id, name, displayName); anything else is "signed out" (a rejected cookie: "signed out (Roblox did not accept the saved session: HTTP 401)") | AUTH.md; self-test "account-session" |
 | Profile cache | ~/.cache/rustudio/session.json: profile + avatar.roblox.com/v1/avatar JSON, keyed by SHA-256 of an app prefix + the cookie; display only, a different cookie misses it | AUTH.md |
 | CSRF | a state-changing POST answered 403 with a new, non-empty x-csrf-token is sent again with X-CSRF-TOKEN, at most 3 times; the token is kept for the session |; verified on Upload.ashx?assetid=0 |
