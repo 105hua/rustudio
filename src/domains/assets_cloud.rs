@@ -282,7 +282,7 @@ pub fn install(lua: &Lua) -> mlua::Result<()> {
                 )?);
                 world(lua)?.fire(r, &format!("AssetFetchStatus:{id}"), vec![v]);
                 std::thread::spawn(move || {
-                    let ok = crate::assets::content_blocking(&id).is_ok();
+                    let ok = crate::assets::script_content_blocking(&id).is_ok();
                     *result.lock().unwrap() = Some(ok);
                 });
             }

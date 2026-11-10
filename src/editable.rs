@@ -552,7 +552,7 @@ fn asset_call(lua: &Lua, name: &str, args: &MultiValue) -> mlua::Result<MultiVal
                 ContentType::Object(r) => with(|s| s.images.get(r).map(|i| new_image(i.w, i.h, (*i.px).clone())))
                     .ok_or_else(|| rt_err("CreateEditableImageAsync: the object is not an EditableImage"))?,
                 ContentType::Uri(u) => {
-                    let bytes = crate::assets::content_blocking(u).map_err(|e| rt_err(format!("CreateEditableImageAsync: {e}")))?;
+                    let bytes = crate::assets::script_content_blocking(u).map_err(|e| rt_err(format!("CreateEditableImageAsync: {e}")))?;
                     let d = crate::texture::decode(&bytes).map_err(|e| rt_err(format!("CreateEditableImageAsync: {e}")))?;
                     new_image(d.width, d.height, d.pixels)
                 }
@@ -850,7 +850,7 @@ fn image_call(lua: &Lua, name: &str, this: Ref, args: &MultiValue) -> mlua::Resu
 fn mesh_from_uri(uri: &str) -> mlua::Result<Mesh> {
     let bytes = crate::assets::generated(uri)
         .map(Ok)
-        .unwrap_or_else(|| crate::assets::content_blocking(uri))
+        .unwrap_or_else(|| crate::assets::script_content_blocking(uri))
         .map_err(|e| rt_err(format!("CreateEditableMeshAsync: {e}")))?;
     let d = crate::mesh::parse(&bytes).map_err(|e| rt_err(format!("CreateEditableMeshAsync: {e}")))?;
     Ok(Mesh::from_mesh_data(&d))

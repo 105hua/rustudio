@@ -249,7 +249,7 @@ by id.
 | Value | Setting | Source |
 |---|---|---|
 | Formats | Roblox mesh 1.00–5.00, 6.00 and 7.00 (plain COREMESH), OBJ; Draco-compressed 7.00 meshes are skipped with an Output warning | community-documented mesh format |
-| Sources | `rbxasset://` → the content folder you choose (RUSTUDIO_CONTENT_DIR, else ~/.local/share/rustudio/content); `file://`, absolute and relative paths; `rbxassetid://`, `?id=` and plain ids download (below) | clean room: no Roblox program files, no private endpoints |
+| Sources | `rbxasset://` → the content folder you choose (RUSTUDIO_CONTENT_DIR, else ~/.local/share/rustudio/content); `file://`, absolute and relative paths (for a place's own properties; a script loading content itself gets only `rbxasset://`, which stays inside the content folder, and cloud ids); `rbxassetid://`, `?id=` and plain ids download (below) | clean room: no Roblox program files, no private endpoints |
 | MeshPart | mesh stretched to the part's Size | Roblox docs |
 | SpecialMesh (FileMesh) | mesh at its own size × Scale, shifted by Offset | Roblox docs |
 

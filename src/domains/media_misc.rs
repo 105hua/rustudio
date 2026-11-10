@@ -398,7 +398,7 @@ fn load_video(lua: &Lua, id: &str) -> Result<(VideoInfo, Arc<Track>), String> {
     if id.trim().is_empty() {
         return Err("Invalid Asset identifier or not found".into());
     }
-    let bytes = outside_budget(lua, || crate::assets::content_blocking(id))?;
+    let bytes = outside_budget(lua, || crate::assets::script_content_blocking(id))?;
     let t = vid::demux(bytes).ok_or_else(|| "not a WebM video".to_string())?;
     Ok((VideoInfo { len: t.len, w: t.w as f32, h: t.h as f32 }, Arc::new(t)))
 }

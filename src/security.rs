@@ -815,6 +815,39 @@ mod tests {
         assert!(has(&out, "cmd-connected 1"), "{out:#?}");
     }
 
+    /// A content id gives a game script Roblox content, not the person's
+    /// files: `file://` and plain paths don't load, and nothing of the image
+    /// reaches the script.
+    #[test]
+    fn content_ids_do_not_read_local_files() {
+        let dir = std::env::temp_dir().join(format!("rustudio-content-ids-{}", std::process::id()));
+        std::fs::create_dir_all(&dir).unwrap();
+        let png = dir.join("private.png");
+        image::RgbaImage::from_pixel(1, 1, image::Rgba([12, 34, 56, 255]))
+            .save(&png)
+            .unwrap();
+        let path = png.display().to_string();
+        let (rt, s) = client(&format!(
+            r#"
+            local assets = game:GetService("AssetService")
+            for _, id in {{ {file:?}, {path:?} }} do
+                local ok, image = pcall(function() return assets:CreateEditableImageAsync(Content.fromUri(id)) end)
+                print("loaded", ok, if ok then buffer.readu8(image:ReadPixelsBuffer(Vector2.zero, Vector2.one), 0) else nil)
+            end
+        "#,
+            file = format!("file://{path}"),
+        ));
+        rt.run_script(s);
+        rt.step(1.0 / 60.0);
+        let out = lines(rt);
+        let _ = std::fs::remove_dir_all(&dir);
+        assert_eq!(
+            out.iter().filter(|t| *t == "loaded false nil").count(),
+            2,
+            "{out:#?}"
+        );
+    }
+
     /// A module runs at its requirer's identity, once per identity: a
     /// command-bar require doesn't hand game scripts its result.
     #[test]

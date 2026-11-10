@@ -11,7 +11,7 @@
 //! * `file://` URLs and plain paths (relative ones next to the open file).
 
 use std::collections::{HashMap, HashSet};
-use std::path::{Path, PathBuf};
+use std::path::{Component, Path, PathBuf};
 use std::sync::mpsc::{channel, Receiver, Sender};
 use std::sync::{Arc, Mutex};
 
@@ -278,6 +278,13 @@ pub fn resolve(id: &str, doc_dir: Option<&Path>) -> Option<PathBuf> {
     let id = id.trim();
     if let Some(rest) = id.strip_prefix("rbxasset://") {
         let rest = rest.trim_start_matches('/');
+        // rbxasset:// names a file in the content folder, nothing outside it.
+        if !Path::new(rest)
+            .components()
+            .all(|c| matches!(c, Component::Normal(_) | Component::CurDir))
+        {
+            return None;
+        }
         let p = content_dir().join(rest);
         // Like Studio: what isn't in content/ may be in the platform
         // content beside it (PlatformContent/pc/textures/sky/... holds the
@@ -464,12 +471,24 @@ fn fetch_cached(id: u64, local: bool) -> Result<Arc<Vec<u8>>, String> {
 /// Any content id's bytes, blocking (background threads): generated
 /// meshes, local files (rbxasset://, paths), else a public asset.
 pub fn content_blocking(id: &str) -> Result<Arc<Vec<u8>>, String> {
+    content_tracked(id, true)
+}
+
+/// [`content_blocking`] for a running script that gets back what it loads
+/// (EditableImage pixels, EditableMesh vertices, video frames): Roblox content
+/// only. `file://` and plain paths would let a place's scripts read the
+/// person's own files.
+pub fn script_content_blocking(id: &str) -> Result<Arc<Vec<u8>>, String> {
+    content_tracked(id, false)
+}
+
+fn content_tracked(id: &str, paths: bool) -> Result<Arc<Vec<u8>>, String> {
     content_track(id,1);
-    let result=content_blocking_inner(id);
+    let result=content_blocking_inner(id, paths);
     content_track(id,if result.is_ok(){2}else{3});
     result
 }
-fn content_blocking_inner(id: &str) -> Result<Arc<Vec<u8>>, String> {
+fn content_blocking_inner(id: &str, paths: bool) -> Result<Arc<Vec<u8>>, String> {
     if let Some(b) = generated(id) {
         return Ok(b);
     }
@@ -477,10 +496,10 @@ fn content_blocking_inner(id: &str) -> Result<Arc<Vec<u8>>, String> {
         return public_cached(a.id);
     }
     match resolve(id, None) {
-        Some(p) => std::fs::read(&p)
+        Some(p) if paths || id.trim().starts_with("rbxasset://") => std::fs::read(&p)
             .map(Arc::new)
             .map_err(|e| format!("{}: {e}", p.display())),
-        None => Err(format!("{id} is not a local or cloud asset id")),
+        _ => Err(format!("{id} is not a local or cloud asset id")),
     }
 }
 
@@ -1416,6 +1435,18 @@ mod tests {
             resolve("meshes/a.obj", Some(Path::new("/w"))),
             Some(PathBuf::from("/w/meshes/a.obj"))
         );
+    }
+
+    #[test]
+    fn rbxasset_ids_stay_in_the_content_folder() {
+        for id in [
+            "rbxasset://../../secret.png",
+            "rbxasset:///../secret.png",
+            "rbxasset://textures/../../secret.png",
+        ] {
+            assert_eq!(resolve(id, None), None, "{id}");
+        }
+        assert!(resolve("rbxasset://textures/./a.png", None).is_some());
     }
 
     #[test]
