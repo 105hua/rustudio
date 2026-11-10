@@ -133,7 +133,9 @@ pub fn install() {
             };
             libc::sigaltstack(&ss, std::ptr::null_mut());
         }
-        for sig in [libc::SIGSEGV, libc::SIGBUS, libc::SIGILL, libc::SIGFPE, libc::SIGABRT] {
+        // (SIGTRAP: a trap instruction on arm64, e.g. Luau's __builtin_trap,
+        // which is SIGILL on x86_64.)
+        for sig in [libc::SIGSEGV, libc::SIGBUS, libc::SIGILL, libc::SIGFPE, libc::SIGTRAP, libc::SIGABRT] {
             let mut sa: libc::sigaction = std::mem::zeroed();
             sa.sa_sigaction = on_signal as *const () as usize;
             sa.sa_flags = libc::SA_SIGINFO | libc::SA_ONSTACK | libc::SA_RESETHAND;
@@ -147,7 +149,7 @@ pub fn install() {
 }
 
 #[cfg(unix)]
-static mut OLD: [libc::sigaction; 5] = unsafe { std::mem::zeroed() };
+static mut OLD: [libc::sigaction; 6] = unsafe { std::mem::zeroed() };
 
 #[cfg(unix)]
 fn slot(sig: libc::c_int) -> usize {
@@ -156,7 +158,8 @@ fn slot(sig: libc::c_int) -> usize {
         libc::SIGBUS => 1,
         libc::SIGILL => 2,
         libc::SIGFPE => 3,
-        _ => 4,
+        libc::SIGTRAP => 4,
+        _ => 5,
     }
 }
 
@@ -167,6 +170,7 @@ fn sig_name(sig: libc::c_int) -> &'static [u8] {
         libc::SIGBUS => b"SIGBUS",
         libc::SIGILL => b"SIGILL",
         libc::SIGFPE => b"SIGFPE",
+        libc::SIGTRAP => b"SIGTRAP (trap instruction)",
         _ => b"SIGABRT (abort)",
     }
 }
